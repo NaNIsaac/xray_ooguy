@@ -1,26 +1,25 @@
 /**
  * BEAMLINE TOOLKIT — Electronic Logbook & Snapshot System
+ * Academic Print Specification: Booktabs style, zero emojis, exact timestamps.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
- * Note: No optional chaining (?.), no fetch API, uses localStorage.
  */
 
 (function () {
   "use strict";
 
   var currentTagFilter = "";
-  var currentSearchQuery = "";
 
   function getLogs() {
     return Storage.get("logbook_entries", [
       {
         id: 1,
         timestamp: "2026-08-08 09:30:15",
-        sample: "Si(111)_Std",
+        sample: "Si(111)_Calibration_Std",
         energy: "10.000",
         distance: "500",
         exposure: "1.0",
         tags: ["#calib", "#Si", "#detector"],
-        memo: "디텍터 500mm 기준 CeO2 캘리브레이션 링 정렬 완료. 빔센터 (1024.5, 1021.2) px 확정."
+        memo: "디텍터 500 mm 기준 CeO2 캘리브레이션 링 정렬 완료. 빔센터 (1024.5, 1021.2) px 확정."
       },
       {
         id: 2,
@@ -29,8 +28,8 @@
         energy: "12.400",
         distance: "750",
         exposure: "5.0",
-        tags: ["#SAXS", "#Au", "#good"],
-        memo: "금 나노입자 액상 산란 측정. 폼팩터 진동 명확히 관측됨. 백그라운드 버퍼 10회 평균 측정 완료."
+        tags: ["#SAXS", "#Au", "#transmission"],
+        memo: "금 나노입자 액상 산란 측정. 폼팩터 진동 관측 확인. 백그라운드 버퍼 10회 평균 측정 완료."
       }
     ]);
   }
@@ -49,7 +48,7 @@
     var memo = document.getElementById("log-input-memo").value.trim();
 
     if (!memo) {
-      alert("로그 메모 내용을 입력해주세요.");
+      alert("로그 메모 내용을 입력하십시오.");
       return;
     }
 
@@ -88,17 +87,16 @@
     logs.unshift(newEntry);
     saveLogs(logs);
 
-    // Clear form
     document.getElementById("log-input-memo").value = "";
     document.getElementById("log-input-tags").value = "";
 
     if (window.showToast) {
-      window.showToast("새 로그 항목이 저장되었습니다.", "success");
+      window.showToast("새 로그 항목이 저장되었습니다.", "info");
     }
   }
 
   function deleteLogEntry(id) {
-    if (!confirm("이 로그 항목을 삭제하시겠습니까?")) return;
+    if (!confirm("선택한 로그 항목을 삭제하시겠습니까?")) return;
     var logs = getLogs();
     var filtered = [];
     for (var i = 0; i < logs.length; i++) {
@@ -161,38 +159,36 @@
     container.innerHTML = "";
 
     if (displayLogs.length === 0) {
-      container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 13px;">일치하는 로그 항목이 없습니다.</div>';
+      container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--ink-muted); font-size: 12px;">일치하는 로그 기록이 없습니다.</div>';
       return;
     }
 
     for (var j = 0; j < displayLogs.length; j++) {
       var entry = displayLogs[j];
       var itemDiv = document.createElement("div");
-      itemDiv.className = "log-item";
+      itemDiv.className = "log-entry-item";
 
       var tagsHtml = "";
       if (entry.tags && entry.tags.length > 0) {
         for (var k = 0; k < entry.tags.length; k++) {
           var tag = entry.tags[k];
-          tagsHtml += '<span class="log-tag" onclick="filterByTag(\'' + tag + '\')">' + tag + '</span>';
+          tagsHtml += '<span class="log-tag-chip" onclick="filterByTag(\'' + tag + '\')">' + tag + '</span>';
         }
       }
 
       itemDiv.innerHTML =
-        '<div class="log-meta">' +
+        '<div class="log-entry-header">' +
           '<div>' +
-            '<strong style="color:var(--text-main); font-size:12px;">' + entry.sample + '</strong> ' +
-            '<span class="badge badge-subtle">' + entry.energy + ' keV</span> ' +
-            '<span class="badge badge-subtle">' + entry.distance + ' mm</span> ' +
-            '<span class="badge badge-subtle">' + entry.exposure + ' s</span>' +
+            '<span class="log-entry-title">' + escapeHtml(entry.sample) + '</span> ' +
+            '<span class="mono" style="margin-left:8px; font-size:11px;">[E = ' + escapeHtml(entry.energy) + ' keV | D = ' + escapeHtml(entry.distance) + ' mm | T = ' + escapeHtml(entry.exposure) + ' s]</span>' +
           '</div>' +
           '<div>' +
-            '<span style="font-family:var(--font-mono); margin-right:8px;">' + entry.timestamp + '</span>' +
-            '<button class="btn btn-sm btn-danger" style="padding:1px 5px;" onclick="deleteLogEntry(' + entry.id + ')">삭제</button>' +
+            '<span class="mono" style="margin-right:8px; color:var(--ink-muted);">' + entry.timestamp + '</span>' +
+            '<button class="btn btn-sm btn-danger" style="padding:1px 6px;" onclick="deleteLogEntry(' + entry.id + ')">삭제</button>' +
           '</div>' +
         '</div>' +
-        '<div class="log-content">' + escapeHtml(entry.memo) + '</div>' +
-        (tagsHtml ? '<div class="log-tags">' + tagsHtml + '</div>' : '');
+        '<div class="log-entry-memo">' + escapeHtml(entry.memo) + '</div>' +
+        (tagsHtml ? '<div class="log-entry-tags">' + tagsHtml + '</div>' : '');
 
       container.appendChild(itemDiv);
     }
@@ -202,7 +198,6 @@
     return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
-  // Export functions
   function exportLogsCSV() {
     var logs = getLogs();
     var csvContent = "\uFEFFID,Timestamp,Sample,Energy(keV),Distance(mm),Exposure(s),Tags,Memo\n";
@@ -222,7 +217,7 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("CSV 파일이 다운로드되었습니다.", "success");
+    if (window.showToast) window.showToast("CSV 파일이 다운로드되었습니다.", "info");
   }
 
   function exportLogsJSON() {
@@ -235,12 +230,12 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("JSON 파일이 다운로드되었습니다.", "success");
+    if (window.showToast) window.showToast("JSON 파일이 다운로드되었습니다.", "info");
   }
 
   function copyLogsMarkdown() {
     var logs = getLogs();
-    var md = "| 일시 | 시료명 | 에너지(keV) | 거리(mm) | 노출(s) | 태그 | 메모 |\n";
+    var md = "| 일시 (Timestamp) | 시료명 (Sample) | 에너지 (keV) | 거리 (mm) | 노출 (s) | 태그 (Tags) | 메모 (Memo) |\n";
     md += "|:---|:---|:---|:---|:---|:---|:---|\n";
 
     for (var i = 0; i < logs.length; i++) {
@@ -252,7 +247,7 @@
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(md).then(function () {
-        if (window.showToast) window.showToast("클립보드에 마크다운 표가 복사되었습니다.", "success");
+        if (window.showToast) window.showToast("클립보드에 마크다운 표가 복사되었습니다.", "info");
       });
     } else {
       var temp = document.createElement("textarea");
@@ -261,11 +256,10 @@
       temp.select();
       document.execCommand("copy");
       document.body.removeChild(temp);
-      if (window.showToast) window.showToast("클립보드에 마크다운 표가 복사되었습니다.", "success");
+      if (window.showToast) window.showToast("클립보드에 마크다운 표가 복사되었습니다.", "info");
     }
   }
 
-  // Expose to global
   window.addLogEntry = addLogEntry;
   window.deleteLogEntry = deleteLogEntry;
   window.filterByTag = filterByTag;

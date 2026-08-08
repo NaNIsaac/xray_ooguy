@@ -1,13 +1,13 @@
 /**
  * BEAMLINE TOOLKIT — Experiment Management (Notes, Checklist, Samples, DAQ, Kanban)
+ * Academic Print Specification: Consolas numbers, booktabs styling, zero emojis.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
- * Note: No optional chaining (?.), no CSS Grid, localStorage driven.
  */
 
 (function () {
   "use strict";
 
-  // --- 1. Auto-saving Lab Notes ---
+  // --- 4.1 Auto-saving Lab Notes ---
   var noteSaveTimer = null;
 
   function initLabNotes() {
@@ -15,7 +15,7 @@
     var noteStatus = document.getElementById("exp-notes-status");
     if (!noteArea) return;
 
-    var savedNote = Storage.get("lab_notes", "# 빔라인 실험 노트\n\n- 실험 시작 시간: 2026-08-08\n- 빔 에너지: 10.0 keV\n- 주요 목표: 상전이 및 산란 프로파일 정밀 측정\n");
+    var savedNote = Storage.get("lab_notes", "BEAMLINE EXPERIMENTAL PROTOCOL & OBSERVATION LOG\n\n- Date: 2026-08-08\n- Incident Beam Energy: 10.000 keV\n- Target: Reciprocal space mapping & phase transition analysis\n");
     noteArea.value = savedNote;
 
     noteArea.addEventListener("input", function () {
@@ -26,7 +26,7 @@
         if (noteStatus) {
           var now = new Date();
           var timeStr = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0") + ":" + String(now.getSeconds()).padStart(2, "0");
-          noteStatus.textContent = "자동 저장됨 (" + timeStr + ")";
+          noteStatus.textContent = "자동 저장 완료 (" + timeStr + ")";
         }
       }, 500);
     });
@@ -42,10 +42,10 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("실험 노트 텍스트 파일이 다운로드되었습니다.", "success");
+    if (window.showToast) window.showToast("실험 노트 텍스트 파일이 다운로드되었습니다.", "info");
   }
 
-  // --- 2. Interactive Checklist ---
+  // --- 4.2 Interactive Checklist ---
   function getChecklists() {
     return Storage.get("checklists", DEFAULT_CHECKLISTS);
   }
@@ -75,7 +75,7 @@
   }
 
   function resetChecklists() {
-    if (!confirm("체크리스트를 기본 템플릿으로 초기화하시겠습니까?")) return;
+    if (!confirm("체크리스트를 기본 프로토콜 템플릿으로 초기화하시겠습니까?")) return;
     saveChecklists(DEFAULT_CHECKLISTS);
     if (window.showToast) window.showToast("체크리스트가 초기화되었습니다.", "info");
   }
@@ -104,9 +104,9 @@
       for (var i = 0; i < group.items.length; i++) {
         var it = group.items[i];
         var isChecked = it.done ? "checked" : "";
-        var strikeStyle = it.done ? "text-decoration: line-through; color: var(--text-muted);" : "";
+        var strikeStyle = it.done ? "text-decoration: line-through; color: var(--ink-muted);" : "";
         itemsHtml +=
-          '<div style="display:flex; align-items:center; padding: 6px 0; border-bottom: 1px dashed var(--border-light);">' +
+          '<div style="display:flex; align-items:center; padding: 6px 0; border-bottom: 1px solid var(--rule-light);">' +
             '<input type="checkbox" ' + isChecked + ' onchange="toggleCheckItem(' + g + ', ' + i + ')" style="margin-right: 10px; cursor:pointer;" id="chk_' + g + '_' + i + '">' +
             '<label for="chk_' + g + '_' + i + '" style="flex:1; cursor:pointer; font-size:12px; ' + strikeStyle + '">' + escapeHtml(it.text) + '</label>' +
           '</div>';
@@ -115,15 +115,12 @@
       groupDiv.innerHTML =
         '<div class="card-header">' +
           '<span class="card-title">' + escapeHtml(group.title) + '</span>' +
-          '<span class="badge ' + (pct === 100 ? "badge-green" : "badge-blue") + '">' + doneCount + '/' + total + ' (' + pct + '%)</span>' +
+          '<span class="badge">' + doneCount + ' / ' + total + ' (' + pct + '%)</span>' +
         '</div>' +
         '<div class="card-body">' +
-          '<div style="height: 6px; background: var(--bg-subtle); border-radius: 3px; margin-bottom: 12px; overflow: hidden;">' +
-            '<div style="height: 100%; width: ' + pct + '%; background: ' + (pct === 100 ? "var(--green)" : "var(--blue)") + '; transition: width 0.2s;"></div>' +
-          '</div>' +
           itemsHtml +
           '<div style="display:flex; margin-top: 10px;">' +
-            '<input type="text" class="form-control form-control-sm" id="check-new-input-' + g + '" placeholder="새 항목 추가..." style="margin-right: 6px;" onkeydown="if(event.keyCode===13) addCheckItem(' + g + ')">' +
+            '<input type="text" class="form-control form-control-sm" id="check-new-input-' + g + '" placeholder="새 점검 항목 추가..." style="margin-right: 6px;" onkeydown="if(event.keyCode===13) addCheckItem(' + g + ')">' +
             '<button class="btn btn-sm btn-secondary" onclick="addCheckItem(' + g + ')">추가</button>' +
           '</div>' +
         '</div>';
@@ -132,11 +129,11 @@
     }
   }
 
-  // --- 3. Sample List Manager ---
+  // --- 4.3 Sample List Manager ---
   function getSampleList() {
     return Storage.get("sample_list", [
       { id: 1, name: "LaB6_Std_01", material: "LaB6", thickness: "100 μm", pos: "X: 0.0, Y: 12.5, Z: 0.0, Th: 0.0", notes: "표준 분말 교정용 캡슐" },
-      { id: 2, name: "ThinFilm_STO_02", material: "SrTiO3", thickness: "50 nm", pos: "X: 15.2, Y: 10.0, Z: -2.1, Th: 15.4", notes: "기판 위에 에피택셜 성장 샘플" },
+      { id: 2, name: "ThinFilm_STO_02", material: "SrTiO3", thickness: "50 nm", pos: "X: 15.2, Y: 10.0, Z: -2.1, Th: 15.4", notes: "기판 위에 에피택셜 성장 시료" },
       { id: 3, name: "Protein_Crystal_A", material: "Lysozyme", thickness: "200 μm", pos: "X: -5.0, Y: 8.2, Z: 1.4, Th: 45.0", notes: "극저온 100K 윈도우 유지 측정" }
     ]);
   }
@@ -154,7 +151,7 @@
     var notes = document.getElementById("sample-add-notes").value.trim();
 
     if (!name) {
-      alert("시료명을 입력해주세요.");
+      alert("시료명을 입력하십시오.");
       return;
     }
 
@@ -170,18 +167,17 @@
 
     saveSampleList(list);
 
-    // Clear modal/inputs
     document.getElementById("sample-add-name").value = "";
     document.getElementById("sample-add-mat").value = "";
     document.getElementById("sample-add-thick").value = "";
     document.getElementById("sample-add-pos").value = "";
     document.getElementById("sample-add-notes").value = "";
 
-    if (window.showToast) window.showToast("시료가 등록되었습니다.", "success");
+    if (window.showToast) window.showToast("시료가 등록되었습니다.", "info");
   }
 
   function deleteSample(id) {
-    if (!confirm("이 시료를 목록에서 삭제하시겠습니까?")) return;
+    if (!confirm("선택한 시료를 목록에서 삭제하시겠습니까?")) return;
     var list = getSampleList();
     var filtered = [];
     for (var i = 0; i < list.length; i++) {
@@ -202,7 +198,7 @@
     tbody.innerHTML = "";
 
     if (list.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:20px;">등록된 시료가 없습니다.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--ink-muted); padding:20px;">등록된 시료가 없습니다.</td></tr>';
       return;
     }
 
@@ -220,20 +216,20 @@
     }
   }
 
-  // --- 4. DAQ Setting Calculator ---
+  // --- 4.4 DAQ Setting Calculator ---
   function calcDAQ() {
     var detSelect = document.getElementById("daq-detector").value;
     var fps = parseFloat(document.getElementById("daq-fps").value);
     var runTime_s = parseFloat(document.getElementById("daq-runtime").value);
     var bitDepth = parseInt(document.getElementById("daq-bitdepth").value, 10);
 
-    var pixelCount = 1024 * 1024; // 1M default
-    if (detSelect === "eiger4m") pixelCount = 2070 * 2167; // ~4.5M
-    else if (detSelect === "eiger9m") pixelCount = 3110 * 3269; // ~10M
-    else if (detSelect === "eiger16m") pixelCount = 4150 * 4371; // ~18M
-    else if (detSelect === "pilatus2m") pixelCount = 1475 * 1679; // ~2.5M
-    else if (detSelect === "pilatus6m") pixelCount = 2463 * 2527; // ~6.2M
-    else if (detSelect === "custom2k") pixelCount = 2048 * 2048; // 4M
+    var pixelCount = 1024 * 1024;
+    if (detSelect === "eiger4m") pixelCount = 2070 * 2167;
+    else if (detSelect === "eiger9m") pixelCount = 3110 * 3269;
+    else if (detSelect === "eiger16m") pixelCount = 4150 * 4371;
+    else if (detSelect === "pilatus2m") pixelCount = 1475 * 1679;
+    else if (detSelect === "pilatus6m") pixelCount = 2463 * 2527;
+    else if (detSelect === "custom2k") pixelCount = 2048 * 2048;
 
     if (isNaN(fps) || fps <= 0 || isNaN(runTime_s) || runTime_s <= 0) return;
 
@@ -243,19 +239,19 @@
     var totalFrames = Math.round(fps * runTime_s);
     var totalData_GB = (dataRate_MB_s * runTime_s) / 1024;
 
-    document.getElementById("daq-res-rate").textContent = dataRate_MB_s.toFixed(2) + " MB/s (" + (dataRate_MB_s * 8).toFixed(1) + " Mbit/s)";
-    document.getElementById("daq-res-frames").textContent = totalFrames.toLocaleString() + " frames";
-    document.getElementById("daq-res-size").textContent = totalData_GB.toFixed(2) + " GB (" + (totalData_GB / 1024).toFixed(3) + " TB)";
+    document.getElementById("daq-res-rate").innerHTML = dataRate_MB_s.toFixed(2) + " MB/s (" + (dataRate_MB_s * 8).toFixed(1) + " Mbit/s)";
+    document.getElementById("daq-res-frames").innerHTML = totalFrames.toLocaleString() + " frames";
+    document.getElementById("daq-res-size").innerHTML = totalData_GB.toFixed(2) + " GB (" + (totalData_GB / 1024).toFixed(3) + " TB)";
 
     if (window.recordCalculation) {
-      window.recordCalculation("DAQ Estimation", detSelect + " @ " + fps + " Hz, " + runTime_s + "s", dataRate_MB_s.toFixed(1) + " MB/s, Total " + totalData_GB.toFixed(2) + " GB");
+      window.recordCalculation("4.4 DAQ Estimator", detSelect + " @ " + fps + " Hz, " + runTime_s + " s", dataRate_MB_s.toFixed(1) + " MB/s, Total " + totalData_GB.toFixed(2) + " GB");
     }
   }
 
-  // --- 5. Kanban Board ---
+  // --- 4.5 Kanban Board ---
   function getKanbanTasks() {
     return Storage.get("kanban_tasks", [
-      { id: 1, title: "빔라인 정렬 & 캘리브레이션", status: "done", desc: "LaB6 표준 시료 측정 및 센터 보정" },
+      { id: 1, title: "빔라인 정렬 & 캘리브레이션", status: "done", desc: "LaB6 표준 시료 측정 및 빔센터 보정" },
       { id: 2, title: "배치 1 시료 저온 스캔", status: "in_progress", desc: "100K 진공 챔버 온도 안정화 후 측정" },
       { id: 3, title: "데이터 원격 자동 백업 확인", status: "in_progress", desc: "NAS 서버와 실시간 rsync 체크" },
       { id: 4, title: "배치 2 방위각 스캔 및 흡수 보정", status: "todo", desc: "Chi-Phi 모터 틸트 회절 스캔" }
@@ -268,7 +264,7 @@
   }
 
   function addKanbanTask() {
-    var title = prompt("새로운 작업 제목을 입력하세요:");
+    var title = prompt("새로운 작업 제목을 입력하십시오:");
     if (!title || !title.trim()) return;
     var desc = prompt("작업 설명 또는 메모 (선택사항):") || "";
 
@@ -281,7 +277,7 @@
     });
 
     saveKanbanTasks(tasks);
-    if (window.showToast) window.showToast("새 작업 카드가 생성되었습니다.", "success");
+    if (window.showToast) window.showToast("새 작업 항목이 등록되었습니다.", "info");
   }
 
   function moveKanbanTask(id, nextStatus) {
@@ -321,7 +317,7 @@
     for (var i = 0; i < tasks.length; i++) {
       var t = tasks[i];
       var card = document.createElement("div");
-      card.className = "kanban-card";
+      card.className = "kanban-task-card";
 
       var moveButtons = "";
       if (t.status === "todo") {
@@ -331,16 +327,16 @@
         countProg++;
         moveButtons =
           '<button class="btn btn-sm btn-secondary" onclick="moveKanbanTask(' + t.id + ', \'todo\')">⬅ 대기</button> ' +
-          '<button class="btn btn-sm btn-success" onclick="moveKanbanTask(' + t.id + ', \'done\')">완료 ➔</button>';
+          '<button class="btn btn-sm btn-primary" onclick="moveKanbanTask(' + t.id + ', \'done\')">완료 ➔</button>';
       } else if (t.status === "done") {
         countDone++;
         moveButtons = '<button class="btn btn-sm btn-secondary" onclick="moveKanbanTask(' + t.id + ', \'in_progress\')">⬅ 재개</button>';
       }
 
       card.innerHTML =
-        '<div class="kanban-card-title">' + escapeHtml(t.title) + '</div>' +
-        (t.desc ? '<div style="font-size:11px; color:var(--text-sub); margin-bottom:8px;">' + escapeHtml(t.desc) + '</div>' : '') +
-        '<div class="kanban-card-meta">' +
+        '<div class="kanban-task-title">' + escapeHtml(t.title) + '</div>' +
+        (t.desc ? '<div style="font-size:11px; color:var(--ink-secondary); margin-bottom:8px;">' + escapeHtml(t.desc) + '</div>' : '') +
+        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
           '<div>' + moveButtons + '</div>' +
           '<button class="btn btn-sm btn-danger" style="padding:1px 5px;" onclick="deleteKanbanTask(' + t.id + ')">✕</button>' +
         '</div>';
@@ -362,7 +358,6 @@
     return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
-  // Export functions to global scope
   window.initLabNotes = initLabNotes;
   window.exportNotesTxt = exportNotesTxt;
   window.toggleCheckItem = toggleCheckItem;

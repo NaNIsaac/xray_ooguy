@@ -1,7 +1,7 @@
 /**
  * BEAMLINE TOOLKIT — Optics Calculation Engine
+ * Academic Print Specification: Consolas/Mono outputs, sup tags (no unicode superscripts), zero emojis.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
- * Note: No optional chaining (?.), no CSS Grid.
  */
 
 (function () {
@@ -53,11 +53,11 @@
 
     var resSummary = document.getElementById("optics-conv-summary");
     if (resSummary) {
-      resSummary.textContent = energy_keV.toFixed(4) + " keV ⟷ " + lambda_A.toFixed(4) + " Å ⟷ " + freq_Hz.toExponential(3) + " Hz";
+      resSummary.innerHTML = energy_keV.toFixed(4) + " keV ⟷ " + lambda_A.toFixed(4) + " Å ⟷ " + freq_Hz.toExponential(3) + " Hz";
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("Energy/Wavelength", sourceField + "=" + energy_eV.toFixed(2) + " eV", lambda_A.toFixed(4) + " Å (" + energy_keV.toFixed(4) + " keV)");
+      window.recordCalculation("1.1 Energy/Wavelength", sourceField + " = " + energy_eV.toFixed(2) + " eV", lambda_A.toFixed(4) + " Å (" + energy_keV.toFixed(4) + " keV)");
     }
   }
 
@@ -81,10 +81,10 @@
       var sinTheta = lambda_A / (2 * dVal);
 
       if (sinTheta > 1) {
-        resThetaDeg.textContent = "회절 불가 (λ > 2d)";
-        resTwoThetaDeg.textContent = "N/A";
-        resLambda.textContent = lambda_A.toFixed(5) + " Å";
-        resQ.textContent = "N/A";
+        resThetaDeg.innerHTML = "회절 불가 (λ > 2d)";
+        resTwoThetaDeg.innerHTML = "N/A";
+        resLambda.innerHTML = lambda_A.toFixed(5) + " Å";
+        resQ.innerHTML = "N/A";
         return;
       }
 
@@ -93,13 +93,13 @@
       var twoThetaDeg = thetaDeg * 2;
       var qVal = (4 * Math.PI / lambda_A) * sinTheta;
 
-      resThetaDeg.textContent = thetaDeg.toFixed(4) + "° (" + (thetaRad * 1000).toFixed(3) + " mrad)";
-      resTwoThetaDeg.textContent = twoThetaDeg.toFixed(4) + "°";
-      resLambda.textContent = lambda_A.toFixed(5) + " Å";
-      resQ.textContent = qVal.toFixed(4) + " Å⁻¹ (" + (qVal * 10).toFixed(3) + " nm⁻¹)";
+      resThetaDeg.innerHTML = thetaDeg.toFixed(4) + "° (" + (thetaRad * 1000).toFixed(3) + " mrad)";
+      resTwoThetaDeg.innerHTML = twoThetaDeg.toFixed(4) + "°";
+      resLambda.innerHTML = lambda_A.toFixed(5) + " Å";
+      resQ.innerHTML = qVal.toFixed(4) + " Å<sup>-1</sup> (" + (qVal * 10).toFixed(3) + " nm<sup>-1</sup>)";
 
       if (window.recordCalculation) {
-        window.recordCalculation("Bragg θ Calc", "E=" + energy_keV + " keV, d=" + dVal + " Å", "θ=" + thetaDeg.toFixed(4) + "°, 2θ=" + twoThetaDeg.toFixed(4) + "°");
+        window.recordCalculation("1.2 Bragg θ Calc", "E=" + energy_keV + " keV, d=" + dVal + " Å", "θ=" + thetaDeg.toFixed(4) + "°, 2θ=" + twoThetaDeg.toFixed(4) + "°");
       }
     } else {
       // Find Energy from Theta
@@ -110,14 +110,14 @@
       var energy_keV2 = energy_eV2 / 1000;
       var qVal2 = (4 * Math.PI / lambda_A2) * Math.sin(thetaRad2);
 
-      resThetaDeg.textContent = thetaDegInput.toFixed(4) + "°";
-      resTwoThetaDeg.textContent = (thetaDegInput * 2).toFixed(4) + "°";
-      resEnergy.textContent = energy_keV2.toFixed(4) + " keV (" + energy_eV2.toFixed(1) + " eV)";
-      resLambda.textContent = lambda_A2.toFixed(5) + " Å";
-      resQ.textContent = qVal2.toFixed(4) + " Å⁻¹";
+      resThetaDeg.innerHTML = thetaDegInput.toFixed(4) + "°";
+      resTwoThetaDeg.innerHTML = (thetaDegInput * 2).toFixed(4) + "°";
+      resEnergy.innerHTML = energy_keV2.toFixed(4) + " keV (" + energy_eV2.toFixed(1) + " eV)";
+      resLambda.innerHTML = lambda_A2.toFixed(5) + " Å";
+      resQ.innerHTML = qVal2.toFixed(4) + " Å<sup>-1</sup>";
 
       if (window.recordCalculation) {
-        window.recordCalculation("Bragg E Calc", "θ=" + thetaDegInput + "°, d=" + dVal + " Å", "E=" + energy_keV2.toFixed(4) + " keV");
+        window.recordCalculation("1.2 Bragg E Calc", "θ=" + thetaDegInput + "°, d=" + dVal + " Å", "E=" + energy_keV2.toFixed(4) + " keV");
       }
     }
   }
@@ -147,8 +147,6 @@
     var d_nm = 1e6 / linesPerMm; // d in nm
     var alphaRad = (alphaDeg * Math.PI) / 180;
 
-    // m*lambda = d * (sin(alpha) + sin(beta))
-    // sin(beta) = (m*lambda / d) - sin(alpha) (for reflection grating convention)
     var sinBeta = (order * lambda_nm) / d_nm - Math.sin(alphaRad);
 
     var resBeta = document.getElementById("grating-res-beta");
@@ -156,25 +154,24 @@
     var resLambda = document.getElementById("grating-res-lambda");
 
     if (Math.abs(sinBeta) > 1) {
-      resBeta.textContent = "회절 불가 (|sin β| > 1)";
-      resDispersion.textContent = "N/A";
+      resBeta.innerHTML = "회절 불가 (|sin β| > 1)";
+      resDispersion.innerHTML = "N/A";
       return;
     }
 
     var betaRad = Math.asin(sinBeta);
     var betaDeg = (betaRad * 180) / Math.PI;
 
-    // Angular dispersion dbeta/dlambda = m / (d * cos(beta)) in rad/nm
     var cosBeta = Math.cos(betaRad);
     var dispersion_rad_per_nm = cosBeta !== 0 ? Math.abs(order / (d_nm * cosBeta)) : 0;
     var dispersion_mrad_per_eV = (dispersion_rad_per_nm * 1000 * (lambda_nm / energy_eV));
 
-    resLambda.textContent = lambda_nm.toFixed(4) + " nm (" + (lambda_nm * 10).toFixed(4) + " Å)";
-    resBeta.textContent = betaDeg.toFixed(4) + "° (" + (betaRad * 1000).toFixed(3) + " mrad)";
-    resDispersion.textContent = (dispersion_rad_per_nm * 1000).toFixed(3) + " mrad/nm (" + dispersion_mrad_per_eV.toFixed(4) + " mrad/eV)";
+    resLambda.innerHTML = lambda_nm.toFixed(4) + " nm (" + (lambda_nm * 10).toFixed(4) + " Å)";
+    resBeta.innerHTML = betaDeg.toFixed(4) + "° (" + (betaRad * 1000).toFixed(3) + " mrad)";
+    resDispersion.innerHTML = (dispersion_rad_per_nm * 1000).toFixed(3) + " mrad/nm (" + dispersion_mrad_per_eV.toFixed(4) + " mrad/eV)";
 
     if (window.recordCalculation) {
-      window.recordCalculation("Grating Calc", linesPerMm + " l/mm, E=" + energy_eV + " eV, α=" + alphaDeg + "°", "β=" + betaDeg.toFixed(4) + "° (m=" + order + ")");
+      window.recordCalculation("1.3 Grating Calc", linesPerMm + " lines/mm, E=" + energy_eV + " eV, α=" + alphaDeg + "°", "β=" + betaDeg.toFixed(4) + "° (m=" + order + ")");
     }
   }
 
@@ -189,7 +186,6 @@
 
     if (isNaN(thickness_um) || thickness_um <= 0 || isNaN(energy_keV) || energy_keV <= 0) return;
 
-    // Scaling approximation: delta ~ 1/E^2, beta ~ 1/E^3 to 1/E^4 away from edges
     var eRatio = 10.0 / energy_keV;
     var delta = mat.delta_10keV * Math.pow(eRatio, 2);
     var beta = mat.beta_10keV * Math.pow(eRatio, 3.5);
@@ -197,21 +193,20 @@
     var lambda_A = CONSTANTS.hc_keV_nm * 10 / energy_keV;
     var lambda_cm = lambda_A * 1e-8;
 
-    // Linear absorption coefficient mu = 4 * pi * beta / lambda (in cm^-1)
     var mu_cm = (4 * Math.PI * beta) / lambda_cm;
     var thick_cm = thickness_um * 1e-4;
     var transmittance = Math.exp(-mu_cm * thick_cm);
     var absorption_len_um = mu_cm > 0 ? (1 / mu_cm) * 1e4 : 0;
     var critical_angle_deg = (Math.sqrt(2 * delta) * 180) / Math.PI;
 
-    document.getElementById("refract-res-delta").textContent = delta.toExponential(4);
-    document.getElementById("refract-res-beta").textContent = beta.toExponential(4);
-    document.getElementById("refract-res-trans").textContent = (transmittance * 100).toFixed(3) + "% (T = " + transmittance.toFixed(5) + ")";
-    document.getElementById("refract-res-atten-len").textContent = absorption_len_um.toFixed(2) + " μm (" + (absorption_len_um / 1000).toFixed(3) + " mm)";
-    document.getElementById("refract-res-crit").textContent = critical_angle_deg.toFixed(4) + "° (" + (critical_angle_deg * 60).toFixed(2) + " arcmin)";
+    document.getElementById("refract-res-delta").innerHTML = delta.toExponential(4);
+    document.getElementById("refract-res-beta").innerHTML = beta.toExponential(4);
+    document.getElementById("refract-res-trans").innerHTML = (transmittance * 100).toFixed(3) + "% (T = " + transmittance.toFixed(5) + ")";
+    document.getElementById("refract-res-atten-len").innerHTML = absorption_len_um.toFixed(2) + " μm (" + (absorption_len_um / 1000).toFixed(3) + " mm)";
+    document.getElementById("refract-res-crit").innerHTML = critical_angle_deg.toFixed(4) + "° (" + (critical_angle_deg * 60).toFixed(2) + " arcmin)";
 
     if (window.recordCalculation) {
-      window.recordCalculation("Transmittance & Refraction", mat.name + ", " + thickness_um + " μm @ " + energy_keV + " keV", "T=" + (transmittance * 100).toFixed(2) + "%, θc=" + critical_angle_deg.toFixed(3) + "°");
+      window.recordCalculation("1.4 Transmittance", mat.name + ", " + thickness_um + " μm @ " + energy_keV + " keV", "T = " + (transmittance * 100).toFixed(2) + "%, θc = " + critical_angle_deg.toFixed(3) + "°");
     }
   }
 
@@ -224,15 +219,14 @@
     if (isNaN(e1_keV) || isNaN(th1_deg) || isNaN(e2_keV) || e1_keV <= 0 || th1_deg <= 0 || e2_keV <= 0) return;
 
     var th1_rad = (th1_deg * Math.PI) / 180;
-    // E1 * sin(th1) = E2 * sin(th2)
     var sinTh2 = (e1_keV * Math.sin(th1_rad)) / e2_keV;
 
     var resTh2 = document.getElementById("ea-res-th2");
     var resDelta = document.getElementById("ea-res-delta");
 
     if (Math.abs(sinTh2) > 1) {
-      resTh2.textContent = "도달 불가 (sin θ₂ > 1)";
-      resDelta.textContent = "N/A";
+      resTh2.innerHTML = "도달 불가 (sin θ<sub>2</sub> > 1)";
+      resDelta.innerHTML = "N/A";
       return;
     }
 
@@ -240,11 +234,11 @@
     var th2_deg = (th2_rad * 180) / Math.PI;
     var deltaDeg = th2_deg - th1_deg;
 
-    resTh2.textContent = th2_deg.toFixed(5) + "° (2θ = " + (th2_deg * 2).toFixed(5) + "°)";
-    resDelta.textContent = (deltaDeg >= 0 ? "+" : "") + deltaDeg.toFixed(5) + "° (" + (deltaDeg * 3600).toFixed(1) + " arcsec)";
+    resTh2.innerHTML = th2_deg.toFixed(5) + "° (2θ = " + (th2_deg * 2).toFixed(5) + "°)";
+    resDelta.innerHTML = (deltaDeg >= 0 ? "+" : "") + deltaDeg.toFixed(5) + "° (" + (deltaDeg * 3600).toFixed(1) + " arcsec)";
 
     if (window.recordCalculation) {
-      window.recordCalculation("Energy-Angle Shift", e1_keV + " keV (" + th1_deg + "°) → " + e2_keV + " keV", "θ₂ = " + th2_deg.toFixed(4) + "° (Δ = " + deltaDeg.toFixed(4) + "°)");
+      window.recordCalculation("1.5 Energy-Angle Shift", e1_keV + " keV (" + th1_deg + "°) → " + e2_keV + " keV", "θ2 = " + th2_deg.toFixed(4) + "° (Δ = " + deltaDeg.toFixed(4) + "°)");
     }
   }
 
@@ -258,14 +252,13 @@
     var thetaRad = (braggDeg * Math.PI) / 180;
     var chiRad = (deltaChiDeg * Math.PI) / 180;
 
-    // For standard 4-circle Eulerian cradle: tan(delta_phi) ~ tan(chi) * sin(theta)
     var deltaPhiDeg = 0;
     if (Math.abs(Math.cos(chiRad)) > 1e-6) {
       var tanPhi = Math.tan(chiRad) * Math.sin(thetaRad);
       deltaPhiDeg = (Math.atan(tanPhi) * 180) / Math.PI;
     }
 
-    document.getElementById("chiphi-res-phi").textContent = deltaPhiDeg.toFixed(4) + "° (" + (deltaPhiDeg * 60).toFixed(2) + " arcmin)";
+    document.getElementById("chiphi-res-phi").innerHTML = deltaPhiDeg.toFixed(4) + "° (" + (deltaPhiDeg * 60).toFixed(2) + " arcmin)";
   }
 
   // --- 7. Critical Angle & Total External Reflection ---
@@ -276,11 +269,10 @@
 
     if (isNaN(density) || isNaN(energy_keV) || isNaN(zOverA) || density <= 0 || energy_keV <= 0) return;
 
-    // delta = (r_e * lambda^2 / 2pi) * (N_A * density * Z/A)
     var lambda_A = CONSTANTS.hc_keV_nm * 10 / energy_keV;
     var lambda_m = lambda_A * 1e-10;
     var rho_kg_m3 = density * 1000;
-    var n_e = (CONSTANTS.N_A * rho_kg_m3 * zOverA) / 1e-3; // electron density in m^-3
+    var n_e = (CONSTANTS.N_A * rho_kg_m3 * zOverA) / 1e-3;
     var delta = (CONSTANTS.r_e * Math.pow(lambda_m, 2) * n_e) / (2 * Math.PI);
 
     var theta_c_rad = Math.sqrt(2 * delta);
@@ -288,10 +280,10 @@
     var theta_c_mrad = theta_c_rad * 1000;
     var q_c = (4 * Math.PI / lambda_A) * Math.sin(theta_c_rad);
 
-    document.getElementById("crit-res-delta").textContent = delta.toExponential(4);
-    document.getElementById("crit-res-deg").textContent = theta_c_deg.toFixed(4) + "° (" + (theta_c_deg * 60).toFixed(2) + " arcmin)";
-    document.getElementById("crit-res-mrad").textContent = theta_c_mrad.toFixed(3) + " mrad";
-    document.getElementById("crit-res-qc").textContent = q_c.toFixed(4) + " Å⁻¹";
+    document.getElementById("crit-res-delta").innerHTML = delta.toExponential(4);
+    document.getElementById("crit-res-deg").innerHTML = theta_c_deg.toFixed(4) + "° (" + (theta_c_deg * 60).toFixed(2) + " arcmin)";
+    document.getElementById("crit-res-mrad").innerHTML = theta_c_mrad.toFixed(3) + " mrad";
+    document.getElementById("crit-res-qc").innerHTML = q_c.toFixed(4) + " Å<sup>-1</sup>";
   }
 
   // --- 8. Q-Space & Reciprocal Space Converter ---
@@ -365,20 +357,17 @@
   window.calcCriticalAngle = calcCriticalAngle;
   window.calcQSpace = calcQSpace;
 
-  // Initialize event bindings when view is ready
   function initOpticsView() {
-    // Populate Material dropdowns
     var refractSelect = document.getElementById("refract-mat");
     if (refractSelect && refractSelect.options.length === 0) {
       for (var i = 0; i < MATERIALS_DB.length; i++) {
         var opt = document.createElement("option");
         opt.value = i;
-        opt.textContent = MATERIALS_DB[i].name + " (ρ=" + MATERIALS_DB[i].density_g_cm3 + " g/cm³)";
+        opt.textContent = MATERIALS_DB[i].name + " (ρ = " + MATERIALS_DB[i].density_g_cm3 + " g/cm³)";
         refractSelect.appendChild(opt);
       }
     }
 
-    // Populate Bragg Preset buttons
     var braggPresetsEl = document.getElementById("bragg-presets");
     if (braggPresetsEl && braggPresetsEl.children.length === 0) {
       for (var j = 0; j < 8; j++) {
@@ -393,7 +382,6 @@
       }
     }
 
-    // Run initial calculations
     calcEnergyConverter("kev");
     calcBragg();
     calcGrating();

@@ -1,13 +1,13 @@
 /**
  * BEAMLINE TOOLKIT — Reference Data, Unit Converters & Crystallography DB
+ * Academic Print Specification: Booktabs tables, zero emojis, exact units.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
- * Note: No optional chaining (?.), no CSS Grid.
  */
 
 (function () {
   "use strict";
 
-  // --- 1. Comprehensive Unit Converter ---
+  // --- 5.1 Comprehensive Unit Converter ---
   function convertUnits(category, source) {
     if (category === "length") {
       var valAng = parseFloat(document.getElementById("unit-len-ang").value);
@@ -63,7 +63,7 @@
     }
   }
 
-  // --- 2. Interactive Crystal d-spacing DB Table ---
+  // --- 5.2 Interactive Crystal d-spacing DB Table ---
   function renderCrystalDB() {
     var tbody = document.getElementById("crystal-db-body");
     var searchInput = document.getElementById("crystal-search-input");
@@ -85,9 +85,9 @@
         var tr = document.createElement("tr");
         tr.innerHTML =
           '<td><strong>' + item.material + '</strong></td>' +
-          '<td><span class="badge badge-blue">(' + item.hkl + ')</span></td>' +
-          '<td class="mono" style="font-weight:700; color:var(--blue);">' + item.d_spacing_A.toFixed(5) + ' Å</td>' +
-          '<td class="mono">' + (item.lattice_a ? 'a=' + item.lattice_a.toFixed(4) + ' Å' : '-') + '</td>' +
+          '<td><span class="mono">(' + item.hkl + ')</span></td>' +
+          '<td class="mono" style="font-weight:700; color:var(--accent-ink);">' + item.d_spacing_A.toFixed(5) + ' Å</td>' +
+          '<td class="mono">' + (item.lattice_a ? 'a = ' + item.lattice_a.toFixed(4) + ' Å' : '-') + '</td>' +
           '<td>' + item.system + '</td>' +
           '<td>' +
             '<button class="btn btn-sm btn-secondary" style="padding:1px 6px;" onclick="sendDSpacingToBragg(' + item.d_spacing_A + ')">브래그 적용</button>' +
@@ -107,12 +107,12 @@
       if (braggD) {
         braggD.value = dVal;
         if (window.calcBragg) window.calcBragg();
-        if (window.showToast) window.showToast("d=" + dVal + " Å 값이 브래그 계산기에 전송되었습니다.", "success");
+        if (window.showToast) window.showToast("d = " + dVal + " Å 값이 브래그 계산기에 전송되었습니다.", "info");
       }
     }, 100);
   }
 
-  // --- 3. Render Useful Links ---
+  // --- 5.3 Render Useful Links ---
   function renderLinks() {
     var container = document.getElementById("useful-links-container");
     if (!container) return;
@@ -129,24 +129,23 @@
       for (var j = 0; j < cat.links.length; j++) {
         var lnk = cat.links[j];
         linkItems +=
-          '<div style="padding: 10px 0; border-bottom: 1px solid var(--border-light);">' +
-            '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">' +
-              '<a href="' + lnk.url + '" target="_blank" rel="noopener noreferrer" style="font-size:13px; font-weight:700;">' + lnk.title + ' ↗</a>' +
-              '<span class="badge badge-subtle">' + lnk.url.split("/")[2] + '</span>' +
+          '<div style="padding: 8px 0; border-bottom: 1px solid var(--rule-light);">' +
+            '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">' +
+              '<a href="' + lnk.url + '" target="_blank" rel="noopener noreferrer" style="font-size:12px; font-weight:700;">' + lnk.title + '</a>' +
+              '<span class="mono" style="font-size:10px; color:var(--ink-muted);">' + lnk.url.split("/")[2] + '</span>' +
             '</div>' +
-            '<div style="font-size:11px; color:var(--text-sub);">' + lnk.desc + '</div>' +
+            '<div style="font-size:11px; color:var(--ink-secondary);">' + lnk.desc + '</div>' +
           '</div>';
       }
 
       catDiv.innerHTML =
-        '<div class="card-header"><span class="card-title">🔗 ' + cat.category + '</span></div>' +
+        '<div class="card-header"><span class="card-title">' + cat.category + '</span></div>' +
         '<div class="card-body">' + linkItems + '</div>';
 
       container.appendChild(catDiv);
     }
   }
 
-  // Expose to window
   window.convertUnits = convertUnits;
   window.renderCrystalDB = renderCrystalDB;
   window.sendDSpacingToBragg = sendDSpacingToBragg;

@@ -1,7 +1,7 @@
 /**
  * BEAMLINE TOOLKIT — Settings, Calculation History & Storage Management
+ * Academic Print Specification: Consolas font, booktabs table layout, zero emojis.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
- * Note: No optional chaining (?.), no CSS Grid.
  */
 
 (function () {
@@ -18,7 +18,7 @@
     tbody.innerHTML = "";
 
     if (history.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:16px;">저장된 계산 히스토리가 없습니다.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:16px;">저장된 계산 히스토리가 없습니다.</td></tr>';
       return;
     }
 
@@ -26,16 +26,16 @@
       var item = history[i];
       var tr = document.createElement("tr");
       tr.innerHTML =
-        '<td class="mono" style="color:var(--text-muted);">' + item.timestamp + '</td>' +
+        '<td class="mono" style="color:var(--ink-muted); font-size:11px;">' + item.timestamp + '</td>' +
         '<td><strong>' + escapeHtml(item.tool) + '</strong></td>' +
         '<td class="mono" style="font-size:11px;">' + escapeHtml(item.inputs) + '</td>' +
-        '<td class="mono" style="color:var(--blue); font-weight:700;">' + escapeHtml(item.result) + '</td>';
+        '<td class="mono" style="color:var(--accent-ink); font-weight:700;">' + escapeHtml(item.result) + '</td>';
       tbody.appendChild(tr);
     }
   }
 
   function clearCalculationHistory() {
-    if (!confirm("모든 계산 히스토리를 초기화하시겠습니까?")) return;
+    if (!confirm("모든 계산 히스토리를 영구 삭제하시겠습니까?")) return;
     Storage.set("calc_history", []);
     renderSettingsHistory();
     if (window.renderDashboardHistory) window.renderDashboardHistory();
@@ -63,7 +63,7 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("전체 데이터 백업 파일이 저장되었습니다.", "success");
+    if (window.showToast) window.showToast("전체 데이터 백업 파일이 저장되었습니다.", "info");
   }
 
   function restoreAllData(event) {
@@ -81,12 +81,12 @@
         if (parsed.samples) Storage.set("sample_list", parsed.samples);
         if (parsed.kanban) Storage.set("kanban_tasks", parsed.kanban);
 
-        if (window.showToast) window.showToast("백업 데이터 복원이 완료되었습니다!", "success");
+        if (window.showToast) window.showToast("백업 데이터 복원이 완료되었습니다.", "info");
         setTimeout(function () {
           window.location.reload();
         }, 800);
       } catch (err) {
-        alert("백업 파일 읽기 실패: 올바른 JSON 형식이 아닙니다.");
+        alert("백업 파일 읽기 실패: 올바른 JSON 규격이 아닙니다.");
       }
     };
     reader.readAsText(file);
@@ -96,7 +96,6 @@
     return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
-  // Expose to window
   window.renderSettingsHistory = renderSettingsHistory;
   window.clearCalculationHistory = clearCalculationHistory;
   window.backupAllData = backupAllData;
