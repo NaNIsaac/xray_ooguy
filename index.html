@@ -53,6 +53,9 @@
         <a class="nav-item" data-route="settings" href="#settings">
           <span>SETTINGS</span>
         </a>
+        <a class="nav-item" data-route="about" href="#about">
+          <span>ABOUT</span>
+        </a>
       </nav>
 
       <div class="sidebar-footer">
@@ -92,6 +95,7 @@
           <button class="tab-pill" data-route="experiment">4. EXPERIMENT</button>
           <button class="tab-pill" data-route="reference">5. REFERENCE</button>
           <button class="tab-pill" data-route="settings">6. SETTINGS</button>
+          <button class="tab-pill" data-route="about">7. ABOUT (제작자)</button>
         </div>
       </nav>
 
@@ -1548,8 +1552,153 @@
                         <td><code class="mono">[Alt + 7]</code></td>
                         <td>SETTINGS 설정 바로가기</td>
                       </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 8]</code></td>
+                        <td>ABOUT 제작자 소개 바로가기</td>
+                      </tr>
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- =================================================================
+             8. ABOUT VIEW (Creator Portfolio & Research & Coffee Donation)
+             ================================================================= -->
+        <section id="view-about" class="view-section">
+          <div class="section-banner">
+            <div class="banner-info">
+              <h2>제작자 소개 및 연구 포트폴리오 (About the Creator)</h2>
+              <p>연구자 프로필, X선 광학·결맞음 회절 이미징(BCDI) 연구 분야 및 프로젝트 후원</p>
+            </div>
+          </div>
+
+          <div class="flex-row">
+
+            <!-- 1. Profile & Academic Background -->
+            <div class="col-6">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">1. 연구자 프로필 (Profile & Biography)</span>
+                </div>
+                <div class="card-body">
+                  <div style="margin-bottom:12px;">
+                    <div style="font-family:var(--font-serif); font-size:16px; font-weight:700; color:var(--ink-primary);">
+                      Isaac Yong (용준혁 / Isaac)
+                    </div>
+                    <div style="font-size:12px; color:var(--accent-ink); font-weight:600; margin-top:2px;">
+                      방사광 X선 광학 & 결맞음 회절 이미징 (CDI / BCDI) 연구원
+                    </div>
+                  </div>
+
+                  <table class="lab-table" style="margin-bottom:12px;">
+                    <tbody>
+                      <tr>
+                        <th style="width:110px;">학력 (Degree)</th>
+                        <td>
+                          <strong>서강대학교 물리학과 학사 졸업</strong><br>
+                          <strong>서강대학교 대학원 물리학과 석사 재학 중</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>연구실 (Lab)</th>
+                        <td><strong>CUPT 연구실</strong> (Coherent Ultrafast Probe & Transformative Lab)</td>
+                      </tr>
+                      <tr>
+                        <th>이메일 (Email)</th>
+                        <td><a href="mailto:isaacyong@naver.com" class="mono">isaacyong@naver.com</a></td>
+                      </tr>
+                      <tr>
+                        <th>깃허브 (GitHub)</th>
+                        <td><a href="https://github.com/SJB7777" target="_blank" rel="noopener noreferrer" class="mono">github.com/SJB7777</a></td>
+                      </tr>
+                      <tr>
+                        <th>프로젝트 저장소</th>
+                        <td><a href="https://github.com/SJB7777/xray" target="_blank" rel="noopener noreferrer" class="mono">github.com/SJB7777/xray</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <p style="font-size:11px; color:var(--ink-secondary); line-height:1.6;">
+                    방사광 가속기(Pohang Light Source / SPring-8 / ESRF) 기반의 고결맞음 X선 회절 빔라인에서 나노 결정 및 응집물질의 구조 복원, 실험 자동화 및 광학 시뮬레이션 툴킷을 개발하고 있습니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Research Fields & Portfolio -->
+            <div class="col-6">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">2. 핵심 연구 분야 & 기술 스택 (Portfolio)</span>
+                </div>
+                <div class="card-body">
+                  <div style="margin-bottom:10px;">
+                    <strong style="font-family:var(--font-serif); font-size:12px; color:var(--ink-primary);">🔬 주요 연구 및 개발 도메인 (Core Expertise):</strong>
+                  </div>
+                  <ul style="padding-left:18px; font-size:12px; line-height:1.7; color:var(--ink-secondary); margin-bottom:14px;">
+                    <li><strong>X-ray Optics & Wave Propagation:</strong> 브래그 모노크로메이터, 회절격자 분산, 복소 굴절률 감쇠 및 결맞음 파동 전파 시뮬레이션</li>
+                    <li><strong>Coherent Diffraction Imaging (CDI / BCDI):</strong> 브래그 결맞음 회절 이미징 위상 복원(Phase Retrieval), 3차원 나노 변형률(Strain) 텐서 맵핑</li>
+                    <li><strong>Beamline Instrumentation & DAQ:</strong> 고속 픽셀 디텍터(Eiger / Pilatus) 초당 수 기가바이트 데이터 스트리밍 계산 및 수집 자동화</li>
+                    <li><strong>Scientific Data Science:</strong> 대용량 회절 데이터 파이프라인 처리, reciprocal space 3D 슬라이싱 및 분산 알고리즘</li>
+                    <li><strong>Laboratory Automation:</strong> 오일러 크래들 Chi-Phi 4축 모터 틸트 보정, 빔 풋프린트 & 열팽창 실시간 연산</li>
+                  </ul>
+
+                  <div class="result-box">
+                    <div class="result-label">CUPT LAB RESEARCH HIGHLIGHT</div>
+                    <div style="font-family:var(--font-serif); font-size:12px; color:var(--ink-primary); line-height:1.5;">
+                      "결맞음 X선 산란 및 회절 물리학을 기반으로 미시 세계의 격자 결함과 위상 전이를 정밀하게 관측합니다."
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Coffee Donation & Support -->
+            <div class="col-12">
+              <div class="card" style="border:var(--rule-heavy); background-color:var(--bg-paper-subtle);">
+                <div class="card-header" style="background-color:var(--bg-paper);">
+                  <span class="card-title">3. 프로젝트 후원 및 커피 한 잔 (Buy Me a Coffee / Support)</span>
+                  <span class="card-tag">Community & Research Support</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row" style="align-items:center;">
+                    <div class="col-8">
+                      <div style="font-family:var(--font-serif); font-size:13px; font-weight:700; color:var(--ink-primary); margin-bottom:6px;">
+                        BEAMLINE TOOLKIT 오픈소스 연구 툴킷 개발을 응원해주세요!
+                      </div>
+                      <p style="font-size:12px; color:var(--ink-secondary); line-height:1.6; margin-bottom:8px;">
+                        본 시스템은 전 세계 방사광 빔라인 연구원, 포닥, 대학원생 및 광학 엔지니어 분들이 현장에서 빠르고 정확하게 계산하고 기록할 수 있도록 100% 무료 무의존성 오픈소스로 개발·유지보수되고 있습니다.<br>
+                        개발자에게 따뜻한 커피 한 잔을 선물해주시면 서버 도메인 유지비 및 새로운 물리 모듈(XANES/EXAFS 에너지 스캔, 회절 피크 피팅 수트 등) 개발에 큰 힘이 됩니다.
+                      </p>
+                      <div style="font-size:11px; color:var(--ink-muted);">
+                        • 이메일 문의 및 공동 연구 제안: <a href="mailto:isaacyong@naver.com" class="mono">isaacyong@naver.com</a><br>
+                        • 깃허브 이슈 & 피처 요청: <a href="https://github.com/SJB7777/xray/issues" target="_blank" rel="noopener noreferrer" class="mono">github.com/SJB7777/xray/issues</a>
+                      </div>
+                    </div>
+                    <div class="col-4" style="text-align:center;">
+                      <div style="border:var(--rule-main); padding:16px; background-color:var(--bg-paper); display:inline-block; width:100%; box-sizing:border-box;">
+                        <div style="font-family:var(--font-serif); font-size:13px; font-weight:700; margin-bottom:6px;">
+                          [ 커피 한 잔 후원하기 ]
+                        </div>
+                        <div style="font-size:11px; color:var(--ink-secondary); margin-bottom:12px;">
+                          Buy Isaac a Coffee
+                        </div>
+                        <a href="https://github.com/SJB7777" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block" style="text-decoration:none; padding:8px 0; font-size:12px; justify-content:center;">
+                          GitHub Sponsors / 후원 페이지 ➔
+                        </a>
+                        <div style="margin-top:8px;">
+                          <a href="mailto:isaacyong@naver.com" class="btn btn-secondary btn-block" style="text-decoration:none; padding:6px 0; font-size:11px; justify-content:center;">
+                            연구 협업 및 후원 문의
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

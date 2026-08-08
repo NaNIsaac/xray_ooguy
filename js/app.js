@@ -93,7 +93,8 @@
     logbook: { title: "LOGBOOK", subtitle: "실험 조건 수동 기록 및 히스토리 스냅샷" },
     experiment: { title: "EXPERIMENT", subtitle: "실험 노트, 체크리스트, 샘플 관리, DAQ & 칸반" },
     reference: { title: "REFERENCE", subtitle: "단위 변환기, 결정 d-spacing DB, 유용한 연구 링크" },
-    settings: { title: "SETTINGS", subtitle: "테마 설정, 계산 히스토리 및 단축키 안내" }
+    settings: { title: "SETTINGS", subtitle: "테마 설정, 계산 히스토리 및 단축키 안내" },
+    about: { title: "ABOUT", subtitle: "제작자 소개, 연구 포트폴리오 및 프로젝트 후원" }
   };
 
   function navigateTo(route) {
@@ -230,7 +231,7 @@
   // Keyboard Shortcuts Setup
   function setupShortcuts() {
     document.addEventListener("keydown", function (e) {
-      // Alt + 1 ~ 7 for tab switching
+      // Alt + 1 ~ 8 for tab switching
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         var keyMap = {
           "1": "dashboard",
@@ -239,7 +240,8 @@
           "4": "logbook",
           "5": "experiment",
           "6": "reference",
-          "7": "settings"
+          "7": "settings",
+          "8": "about"
         };
         if (keyMap[e.key]) {
           e.preventDefault();
