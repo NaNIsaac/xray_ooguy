@@ -61,12 +61,20 @@
       <div class="sidebar-footer">
         <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;">Client Offline-Ready</div>
         <div style="margin-bottom:6px;">CentOS 7 / Chrome / Firefox</div>
-        <div style="display:flex;">
-          <button id="btn-theme-toggle" class="btn btn-sm btn-secondary" onclick="toggleTheme()" style="text-align:center; padding:3px 4px; font-size:10px; flex:1; margin-right:4px; white-space:nowrap;">
-            다크 모드
+        <div style="display:flex; margin-bottom:4px;">
+          <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; margin-right:3px; white-space:nowrap;">
+            라이트
           </button>
-          <button id="btn-lang-toggle" class="btn btn-sm btn-secondary" onclick="window.i18n && window.i18n.toggleLang()" style="text-align:center; padding:3px 4px; font-size:10px; flex:1; white-space:nowrap;">
-            한/Eng
+          <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; white-space:nowrap;">
+            다크
+          </button>
+        </div>
+        <div style="display:flex;">
+          <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('ko')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; margin-right:3px; white-space:nowrap;">
+            한국어
+          </button>
+          <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; white-space:nowrap;">
+            English
           </button>
         </div>
       </div>
@@ -113,8 +121,8 @@
         <section id="view-dashboard" class="view-section active">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>빔라인 래피드 대시보드 (Quick Dashboard)</h2>
-              <p>자주 사용하는 광학 계산기, 물리량 분석기 및 최근 계산 히스토리 바로가기</p>
+              <h2 id="banner-dash-title">빔라인 래피드 대시보드 (Quick Dashboard)</h2>
+              <p id="banner-dash-desc">자주 사용하는 광학 계산기, 물리량 분석기 및 최근 계산 히스토리 바로가기</p>
             </div>
             <div class="banner-actions">
               <button class="btn btn-sm btn-primary" onclick="window.location.hash='#optics'">광학 계산기 열기</button>
@@ -250,8 +258,8 @@
         <section id="view-optics" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>X선 광학 계산기 (X-ray Optics Suite)</h2>
-              <p>파장, 브래그 회절, 격자 분산, 복소 굴절률, 흡수 및 상호 공간 Q 벡터 정밀 계산</p>
+              <h2 id="banner-opt-title">X선 광학 및 회절/투과율 정밀 계산기 (X-ray Optics Suite)</h2>
+              <p id="banner-opt-desc">파장, 브래그 회절, 격자 분산, 복소 굴절률, 흡수 및 상호 공간 Q 벡터 정밀 계산</p>
             </div>
           </div>
 
@@ -666,8 +674,8 @@
         <section id="view-beamline" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>빔라인 물리량 및 기하학적 파라미터 (Beamline Physics)</h2>
-              <p>빔 풋프린트, 광자 플럭스, 분해능, 결맞음 CDI/BCDI 샘플링 및 슬릿 지오메트리 계산</p>
+              <h2 id="banner-beam-title">빔라인 물리량 및 기하학적 파라미터 (Beamline Physics)</h2>
+              <p id="banner-beam-desc">빔 풋프린트, 광자 플럭스, 분해능, 결맞음 CDI/BCDI 샘플링 및 슬릿 지오메트리 계산</p>
             </div>
           </div>
 
@@ -1044,8 +1052,8 @@
         <section id="view-logbook" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>전자 빔라인 로그북 (Electronic Logbook)</h2>
-              <p>실험 조건 수동 기록, 빠른 태그 검색, 브라우저 저장 및 데이터 내보내기</p>
+              <h2 id="banner-log-title">전자 빔라인 로그북 (Electronic Logbook)</h2>
+              <p id="banner-log-desc">실험 조건 수동 기록, 빠른 태그 검색, 브라우저 저장 및 데이터 내보내기</p>
             </div>
             <div class="banner-actions">
               <button class="btn btn-sm btn-secondary" onclick="copyLogsMarkdown()" style="margin-right:6px;">마크다운 복사</button>
@@ -1124,8 +1132,8 @@
         <section id="view-experiment" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>실험 종합 관리 (Experiment Suite)</h2>
-              <p>실시간 자동 저장 실험 노트, 빔라인 체크리스트, 시료 관리, DAQ 산출 및 칸반 보드</p>
+              <h2 id="banner-exp-title">실험 종합 관리 (Experiment Suite)</h2>
+              <p id="banner-exp-desc">실시간 자동 저장 실험 노트, 빔라인 체크리스트, 시료 관리, DAQ 산출 및 칸반 보드</p>
             </div>
           </div>
 
@@ -1318,8 +1326,8 @@
         <section id="view-reference" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>결정 격자 DB & 연구자 참고 자료 (Reference)</h2>
-              <p>단위 변환기, 주요 결정 격자 d-spacing 검색 및 공인된 방사광 시설 링크</p>
+              <h2 id="banner-ref-title">결정 격자 DB & 연구자 참고 자료 (Reference)</h2>
+              <p id="banner-ref-desc">단위 변환기, 주요 결정 격자 d-spacing 검색 및 공인된 방사광 시설 링크</p>
             </div>
           </div>
 
@@ -1440,8 +1448,8 @@
         <section id="view-settings" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>설정 및 히스토리 관리 (Settings & History)</h2>
-              <p>테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
+              <h2 id="banner-set-title">설정 및 히스토리 관리 (Settings & History)</h2>
+              <p id="banner-set-desc">테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
             </div>
           </div>
 
@@ -1451,20 +1459,19 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">0. 언어 설정 (Language Selection: 한국어 / English)</span>
-                  <button class="btn btn-sm btn-primary" onclick="window.i18n && window.i18n.toggleLang()">언어 전환 (Toggle)</button>
+                  <span class="card-title">0. 언어 설정 (Language Selection)</span>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
                       <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current">현재 언어: 한국어 (Korean)</div>
-                      <div style="font-size:11px; color:var(--ink-secondary);">
-                        한국어와 영어(English) 다국어 인터페이스를 전환합니다. 모든 광학 단위 및 계산기는 즉시 반영됩니다.
+                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc">
+                        한국어와 영어(English) 인터페이스를 즉시 전환합니다. 모든 물리량 및 계산기가 실시간으로 갱신됩니다.
                       </div>
                     </div>
                     <div style="margin-top:6px;">
-                      <button class="btn btn-sm btn-secondary" onclick="window.i18n && window.i18n.setLang('ko', true)" style="margin-right:6px;">한국어 (Korean)</button>
-                      <button class="btn btn-sm btn-secondary" onclick="window.i18n && window.i18n.setLang('en', true)">English (US)</button>
+                      <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('ko')" style="margin-right:6px; font-weight:700;">한국어 (Korean)</button>
+                      <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="font-weight:700;">English (영어)</button>
                     </div>
                   </div>
                 </div>
@@ -1476,19 +1483,18 @@
               <div class="card">
                 <div class="card-header">
                   <span class="card-title">1. 화면 테마 모드 설정 (Display Theme Mode)</span>
-                  <button class="btn btn-sm btn-primary" id="btn-settings-theme" onclick="toggleTheme()">테마 전환 (Toggle)</button>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
-                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 모드: 종이 모드 (Paper Light #fdfcf8)</div>
-                      <div style="font-size:11px; color:var(--ink-secondary);">
-                        학술 인쇄물 종이색(#fdfcf8)과 흑백 반전 다크 잉크 모드(#121417)를 상호 전환합니다.
+                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 모드: 라이트 모드 (Light Mode #fdfcf8)</div>
+                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-theme-desc">
+                        라이트 모드(#fdfcf8)와 고대비 흑백 반전 다크 모드(#121417)를 전환합니다.
                       </div>
                     </div>
                     <div style="margin-top:6px;">
-                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="margin-right:6px;">종이 모드 (Light)</button>
-                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')">흑백 반전 (Dark)</button>
+                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="margin-right:6px; font-weight:700;">라이트 모드 (Light)</button>
+                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')" style="font-weight:700;">다크 모드 (Dark)</button>
                     </div>
                   </div>
                 </div>
@@ -1601,8 +1607,8 @@
         <section id="view-about" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>제작자 소개 및 연구 포트폴리오 (About the Creator)</h2>
-              <p>연구자 프로필, X선 광학·결맞음 회절 이미징(BCDI) 연구 분야 및 프로젝트 후원</p>
+              <h2 id="banner-about-title">제작자 소개 및 연구 포트폴리오 (About the Creator)</h2>
+              <p id="banner-about-desc">연구자 프로필, X선 광학·결맞음 회절 이미징(BCDI) 연구 분야 및 프로젝트 후원</p>
             </div>
           </div>
 

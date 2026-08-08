@@ -74,6 +74,69 @@ body.theme-dark,
   --rule-faint: 1px solid #2d333f;
 }
 
+/* Explicit Full-Element Dark Mode Overrides (CentOS 7 Guaranteed) */
+html[data-theme="dark"] body,
+html[data-theme="dark"] #app-layout,
+html[data-theme="dark"] #main-wrapper,
+html[data-theme="dark"] #content-area,
+html[data-theme="dark"] .view-section {
+  background-color: #121417 !important;
+  color: #fdfcf8 !important;
+}
+
+html[data-theme="dark"] #sidebar,
+html[data-theme="dark"] #top-header,
+html[data-theme="dark"] #top-tab-strip,
+html[data-theme="dark"] .sidebar-header,
+html[data-theme="dark"] .sidebar-footer,
+html[data-theme="dark"] .card-header,
+html[data-theme="dark"] .result-box,
+html[data-theme="dark"] #academic-footer {
+  background-color: #1c2128 !important;
+  color: #fdfcf8 !important;
+  border-color: #424956 !important;
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .card-body,
+html[data-theme="dark"] .tool-tile,
+html[data-theme="dark"] .tab-pill,
+html[data-theme="dark"] .sub-tab-btn,
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] table,
+html[data-theme="dark"] th,
+html[data-theme="dark"] td,
+html[data-theme="dark"] .lab-table tr,
+html[data-theme="dark"] .nav-item {
+  background-color: #121417 !important;
+  color: #fdfcf8 !important;
+  border-color: #424956 !important;
+}
+
+html[data-theme="dark"] .tab-pill.active,
+html[data-theme="dark"] .nav-item.active {
+  background-color: #fdfcf8 !important;
+  color: #121417 !important;
+  border-color: #fdfcf8 !important;
+}
+
+html[data-theme="dark"] .btn-secondary,
+html[data-theme="dark"] .btn,
+html[data-theme="dark"] .preset-chip {
+  background-color: #1c2128 !important;
+  color: #fdfcf8 !important;
+  border-color: #555e6d !important;
+}
+
+html[data-theme="dark"] .btn-secondary:hover,
+html[data-theme="dark"] .btn:hover,
+html[data-theme="dark"] .preset-chip:hover {
+  background-color: #fdfcf8 !important;
+  color: #121417 !important;
+}
+
 /* Base Reset (Zero Radius, Zero Shadows, Zero Gradients) */
 *, *::before, *::after {
   box-sizing: border-box;
