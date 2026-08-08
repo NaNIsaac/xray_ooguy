@@ -1,7 +1,7 @@
 /**
  * BEAMLINE TOOLKIT — Main Application Controller & Hash Router
- * Academic Print Specification: Numbered sections, zero emojis, exact state control.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
+ * Note: No optional chaining (?.), no CSS Grid, no external libraries.
  */
 
 (function () {
@@ -11,6 +11,7 @@
   var App = {
     currentRoute: "dashboard",
     history: [],
+    favorites: ["optics_energy", "optics_bragg", "beamline_footprint", "ref_units"],
     theme: "light"
   };
 
@@ -35,7 +36,7 @@
     }
   };
 
-  // Toast Notification System (Academic Minimal Banner)
+  // Toast Notification System
   function showToast(message, type) {
     var container = document.getElementById("toast-container");
     if (!container) return;
@@ -43,7 +44,7 @@
     type = type || "info";
     var toast = document.createElement("div");
     toast.className = "toast toast-" + type;
-    toast.textContent = "[시스템] " + message;
+    toast.textContent = message;
 
     container.appendChild(toast);
 
@@ -67,11 +68,12 @@
 
       var list = Storage.get("calc_history", []);
       list.unshift(item);
-      if (list.length > 30) {
-        list = list.slice(0, 30);
+      if (list.length > 25) {
+        list = list.slice(0, 25);
       }
       Storage.set("calc_history", list);
 
+      // Refresh settings history table if view is active
       if (window.renderSettingsHistory) {
         window.renderSettingsHistory();
       }
@@ -83,15 +85,15 @@
     }
   }
 
-  // Router logic with Academic Section Numbering
+  // Router logic
   var routes = {
-    dashboard: { title: "0. DASHBOARD", subtitle: "종합 현황 및 주요 도구 색인" },
-    optics: { title: "1. OPTICS", subtitle: "X선 광학 및 회절·투과율 계산 수트" },
-    beamline: { title: "2. BEAMLINE", subtitle: "빔라인 물리량 및 기하학적 파라미터" },
-    logbook: { title: "3. LOGBOOK", subtitle: "실험 전자 기록 및 히스토리 스냅샷" },
-    experiment: { title: "4. EXPERIMENT", subtitle: "실험 종합 관리 및 워크플로우" },
-    reference: { title: "5. REFERENCE", subtitle: "결정 격자 DB & 연구자 참고 데이터" },
-    settings: { title: "6. SETTINGS", subtitle: "계산 이력 및 데이터 아카이브" }
+    dashboard: { title: "DASHBOARD", subtitle: "빠른 도구 바로가기 및 계산 현황" },
+    optics: { title: "OPTICS", subtitle: "X선 광학 및 회절/투과율 정밀 계산기" },
+    beamline: { title: "BEAMLINE", subtitle: "빔라인 물리량 및 기하학적 파라미터 계산기" },
+    logbook: { title: "LOGBOOK", subtitle: "실험 조건 수동 기록 및 히스토리 스냅샷" },
+    experiment: { title: "EXPERIMENT", subtitle: "실험 노트, 체크리스트, 샘플 관리, DAQ & 칸반" },
+    reference: { title: "REFERENCE", subtitle: "단위 변환기, 결정 d-spacing DB, 유용한 연구 링크" },
+    settings: { title: "SETTINGS", subtitle: "테마 설정, 계산 히스토리 및 단축키 안내" }
   };
 
   function navigateTo(route) {
@@ -100,10 +102,12 @@
     }
     App.currentRoute = route;
 
+    // Update URL hash without breaking
     if (window.location.hash !== "#" + route) {
       window.location.hash = "#" + route;
     }
 
+    // Update Views
     var sections = document.querySelectorAll(".view-section");
     for (var i = 0; i < sections.length; i++) {
       sections[i].classList.remove("active");
@@ -113,6 +117,7 @@
       targetSection.classList.add("active");
     }
 
+    // Update Sidebar Navigation active status
     var navLinks = document.querySelectorAll(".nav-item");
     for (var j = 0; j < navLinks.length; j++) {
       var link = navLinks[j];
@@ -124,17 +129,20 @@
       }
     }
 
+    // Update Header Breadcrumb
     var breadcrumbTitle = document.getElementById("breadcrumb-current");
     if (breadcrumbTitle) {
       breadcrumbTitle.textContent = routes[route].title;
     }
 
+    // Scroll main view and window to top
     var contentArea = document.getElementById("content-area");
     if (contentArea) {
       contentArea.scrollTop = 0;
     }
     window.scrollTo(0, 0);
 
+    // Trigger tab specific on-show handlers
     if (route === "dashboard" && window.renderDashboard) {
       window.renderDashboard();
     } else if (route === "logbook" && window.renderLogbook) {
@@ -154,35 +162,40 @@
     navigateTo(route);
   }
 
-  // Theme Management (Paper vs Dark Ink Inversion)
+  // Theme Management
   function applyTheme(themeName) {
     App.theme = themeName;
     document.documentElement.setAttribute("data-theme", themeName);
     Storage.set("theme", themeName);
     var themeBtn = document.getElementById("btn-theme-toggle");
     if (themeBtn) {
-      themeBtn.textContent = themeName === "dark" ? "종이 모드 (Light)" : "흑백 반전 (Dark)";
+      themeBtn.textContent = themeName === "dark" ? "라이트 모드" : "다크 모드";
     }
   }
 
   function toggleTheme() {
     var nextTheme = App.theme === "dark" ? "light" : "dark";
     applyTheme(nextTheme);
-    showToast((nextTheme === "dark" ? "흑백 반전" : "종이") + " 모드로 전환되었습니다.", "info");
+    showToast((nextTheme === "dark" ? "다크" : "라이트") + " 모드로 변경되었습니다.", "info");
   }
 
-  // Live Clock
+  // Live Real-time Clock
   function startClock() {
     var clockEl = document.getElementById("header-live-time");
     function tick() {
       if (clockEl) {
         var now = new Date();
         var yyyy = now.getFullYear();
-        var mm = String(now.getMonth() + 1).padStart(2, "0");
-        var dd = String(now.getDate()).padStart(2, "0");
-        var hh = String(now.getHours()).padStart(2, "0");
-        var min = String(now.getMinutes()).padStart(2, "0");
-        var ss = String(now.getSeconds()).padStart(2, "0");
+        var mm = String(now.getMonth() + 1);
+        if (mm.length === 1) mm = "0" + mm;
+        var dd = String(now.getDate());
+        if (dd.length === 1) dd = "0" + dd;
+        var hh = String(now.getHours());
+        if (hh.length === 1) hh = "0" + hh;
+        var min = String(now.getMinutes());
+        if (min.length === 1) min = "0" + min;
+        var ss = String(now.getSeconds());
+        if (ss.length === 1) ss = "0" + ss;
         clockEl.textContent = yyyy + "-" + mm + "-" + dd + " " + hh + ":" + min + ":" + ss;
       }
     }
@@ -193,6 +206,7 @@
   // Keyboard Shortcuts Setup
   function setupShortcuts() {
     document.addEventListener("keydown", function (e) {
+      // Alt + 1 ~ 7 for tab switching
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         var keyMap = {
           "1": "dashboard",
@@ -219,13 +233,17 @@
   window.navigateTo = navigateTo;
   window.toggleTheme = toggleTheme;
 
+  // Initialize application
   function init() {
+    // Load theme
     var savedTheme = Storage.get("theme", "light");
     applyTheme(savedTheme);
 
+    // Setup routes & listeners
     window.addEventListener("hashchange", handleHashChange);
     handleHashChange();
 
+    // Setup Navigation click handlers
     var navItems = document.querySelectorAll(".nav-item[data-route]");
     for (var i = 0; i < navItems.length; i++) {
       (function (item) {
@@ -237,6 +255,7 @@
       })(navItems[i]);
     }
 
+    // Setup Theme Toggle Button
     var themeToggleBtn = document.getElementById("btn-theme-toggle");
     if (themeToggleBtn) {
       themeToggleBtn.addEventListener("click", toggleTheme);
@@ -246,6 +265,7 @@
     setupShortcuts();
   }
 
+  // Run when DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {

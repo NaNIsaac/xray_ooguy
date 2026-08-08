@@ -3,81 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BEAMLINE TOOLKIT — 방사광 X선 광학 계산 및 실험 관리 시스템</title>
-  <meta name="description" content="방사광 및 X선 빔라인 연구원을 위한 학술 인쇄물 규격 계산기, 광학 시뮬레이션, 전자 로그북 및 실험 관리 시스템">
+  <title>BEAMLINE TOOLKIT — 방사광 빔라인 계산기 & 연구 노트</title>
+  <meta name="description" content="방사광 및 X선 빔라인 연구원을 위한 올인원 계산기, 광학 시뮬레이션, 로그북, 실험 노트 툴킷">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <noscript>
     <div style="background:#1a1a1a; color:#fdfcf8; padding:8px 16px; font-family:Georgia, serif; font-size:12px; border-bottom:1px solid #1a1a1a;">
-      [안내] 자바스크립트가 비활성화되어 있습니다. 계산기와 저장 기능을 정상적으로 사용하려면 JavaScript를 활성화하십시오.
+      [안내] 자바스크립트가 비활성화되어 있습니다. 계산기와 저장 기능을 정상적으로 사용하려면 JavaScript를 활성화해주세요.
     </div>
   </noscript>
 
   <div id="app-layout">
 
-    <!-- Fixed Left Academic Navigation Sidebar -->
+    <!-- Fixed Left Sidebar -->
     <aside id="sidebar">
       <div class="sidebar-header">
         <span class="brand-title">BEAMLINE TOOLKIT</span>
-        <span class="brand-badge">SEC. 1.0</span>
+        <span class="brand-badge">v1.0</span>
       </div>
 
       <nav class="sidebar-nav">
-        <div class="nav-section-title">주요 도구 (Index)</div>
+        <div class="nav-section-title">메인 메뉴</div>
         <a class="nav-item active" data-route="dashboard" href="#dashboard">
-          <span>0. DASHBOARD</span>
+          <span>DASHBOARD</span>
         </a>
         <a class="nav-item" data-route="optics" href="#optics">
-          <span>1. OPTICS</span>
+          <span>OPTICS</span>
           <span class="nav-badge">8 Tools</span>
         </a>
         <a class="nav-item" data-route="beamline" href="#beamline">
-          <span>2. BEAMLINE</span>
+          <span>BEAMLINE</span>
           <span class="nav-badge">7 Tools</span>
         </a>
 
-        <div class="nav-section-title">실험 및 기록 (Protocol)</div>
+        <div class="nav-section-title">실험 및 기록</div>
         <a class="nav-item" data-route="logbook" href="#logbook">
-          <span>3. LOGBOOK</span>
+          <span>LOGBOOK</span>
         </a>
         <a class="nav-item" data-route="experiment" href="#experiment">
-          <span>4. EXPERIMENT</span>
+          <span>EXPERIMENT</span>
         </a>
 
-        <div class="nav-section-title">참고 자료 & 설정 (Appendix)</div>
+        <div class="nav-section-title">데이터 & 도구</div>
         <a class="nav-item" data-route="reference" href="#reference">
-          <span>5. REFERENCE</span>
+          <span>REFERENCE</span>
         </a>
         <a class="nav-item" data-route="settings" href="#settings">
-          <span>6. SETTINGS</span>
+          <span>SETTINGS</span>
         </a>
       </nav>
 
       <div class="sidebar-footer">
-        <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;">CentOS 7 / Firefox ESR / Chrome</div>
-        <div>Offline Native Compatible</div>
+        <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;">Client Offline-Ready</div>
+        <div>CentOS 7 / Chrome / Firefox</div>
       </div>
     </aside>
 
     <!-- Main View Wrapper -->
     <div id="main-wrapper">
 
-      <!-- Top Running Masthead Header -->
+      <!-- Top Header -->
       <header id="top-header">
         <div class="header-left">
           <div class="page-breadcrumb">
-            <span style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
+            <span style="color:var(--ink-muted);">BEAMLINE</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="breadcrumb-current">0. DASHBOARD</span>
+            <span id="breadcrumb-current">DASHBOARD</span>
           </div>
         </div>
 
         <div class="header-right">
           <span id="header-live-time"></span>
           <button id="btn-theme-toggle" class="header-btn">
-            흑백 반전 모드
+            다크 모드
           </button>
         </div>
       </header>
@@ -86,16 +86,16 @@
       <main id="content-area">
 
         <!-- =================================================================
-             0. DASHBOARD VIEW
+             1. DASHBOARD VIEW
              ================================================================= -->
         <section id="view-dashboard" class="view-section active">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>0. DASHBOARD — 종합 현황 및 주요 도구 색인</h2>
-              <p>방사광 광학계, 빔라인 기하학적 파라미터 및 최근 계산 이력 요약</p>
+              <h2>빔라인 래피드 대시보드 (Quick Dashboard)</h2>
+              <p>자주 사용하는 광학 계산기, 물리량 분석기 및 최근 계산 히스토리 바로가기</p>
             </div>
             <div class="banner-actions">
-              <button class="btn btn-sm btn-primary" onclick="window.location.hash='#optics'">1. OPTICS 계산기 열기</button>
+              <button class="btn btn-sm btn-primary" onclick="window.location.hash='#optics'">광학 계산기 열기</button>
             </div>
           </div>
 
@@ -104,11 +104,11 @@
             <div class="col-4">
               <div class="tool-tile" onclick="window.location.hash='#optics'">
                 <div class="tile-top">
-                  <span class="tile-section-num">§ 1.1</span>
                   <span class="badge">OPTICS</span>
+                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">E = hc/λ</span>
                 </div>
                 <div class="tile-title">에너지 - 파장 변환</div>
-                <div class="tile-desc">eV, keV, nm, Å, Hz 상호 변환 (<i class="formula">E = hc/λ = hν</i>)</div>
+                <div class="tile-desc">eV, keV, nm, Å, Hz 단위 상호 즉시 변환 (<i class="formula">hc = 12398.42 eV·Å</i>)</div>
               </div>
             </div>
 
@@ -116,11 +116,11 @@
             <div class="col-4">
               <div class="tool-tile" onclick="window.location.hash='#optics'">
                 <div class="tile-top">
-                  <span class="tile-section-num">§ 1.2</span>
                   <span class="badge">OPTICS</span>
+                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">λ = 2d sin θ</span>
                 </div>
                 <div class="tile-title">브래그 법칙 (Bragg's Law)</div>
-                <div class="tile-desc">결정 격자면 <i class="formula">d</i>-spacing 및 회절각 <i class="formula">λ = 2d</i> sin <i class="formula">θ</i> 계산</div>
+                <div class="tile-desc">결정 격자 d-spacing과 에너지에 따른 <i class="formula">θ / 2θ</i> 각도 및 Q-space 계산</div>
               </div>
             </div>
 
@@ -128,11 +128,11 @@
             <div class="col-4">
               <div class="tool-tile" onclick="window.location.hash='#beamline'">
                 <div class="tile-top">
-                  <span class="tile-section-num">§ 2.1</span>
                   <span class="badge">BEAMLINE</span>
+                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">L = V / sin θ</span>
                 </div>
-                <div class="tile-title">시료 상 빔 풋프린트</div>
-                <div class="tile-desc">입사각 및 빔 수직 크기에 따른 풋프린트 길이 <i class="formula">L = V / sin θ</i> 검증</div>
+                <div class="tile-title">시료 빔 풋프린트 (Footprint)</div>
+                <div class="tile-desc">입사각 및 빔 크기에 따른 시료 상 풋프린트 길이 및 스필오버 검증</div>
               </div>
             </div>
 
@@ -140,11 +140,11 @@
             <div class="col-4">
               <div class="tool-tile" onclick="window.location.hash='#beamline'">
                 <div class="tile-top">
-                  <span class="tile-section-num">§ 2.5</span>
                   <span class="badge">BEAMLINE</span>
+                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">σ ≥ 2</span>
                 </div>
-                <div class="tile-title">CDI / BCDI 결맞음 오버샘플링</div>
-                <div class="tile-desc">나이퀴스트-섀넌 기준 <i class="formula">σ = (λD)/(pS) ≥ 2</i> 충족 판정</div>
+                <div class="tile-title">CDI / BCDI 오버샘플링</div>
+                <div class="tile-desc">나이퀴스트-섀넌 기준에 따른 스펙클 크기 및 <i class="formula">σ ≥ 2</i> 충족 판정</div>
               </div>
             </div>
 
@@ -152,11 +152,11 @@
             <div class="col-4">
               <div class="tool-tile" onclick="window.location.hash='#logbook'">
                 <div class="tile-top">
-                  <span class="tile-section-num">§ 3.0</span>
                   <span class="badge">LOGBOOK</span>
+                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">CSV / Markdown</span>
                 </div>
-                <div class="tile-title">전자 빔라인 로그북</div>
-                <div class="tile-desc">시료별 빔 조건 수동 기록, 태그 검색 및 데이터 내보내기</div>
+                <div class="tile-title">실험 전자 로그북</div>
+                <div class="tile-desc">시료별 빔 조건 수동 기록, 태그 검색 및 CSV/JSON 데이터 내보내기</div>
               </div>
             </div>
 
@@ -164,11 +164,11 @@
             <div class="col-4">
               <div class="tool-tile" onclick="window.location.hash='#experiment'">
                 <div class="tile-top">
-                  <span class="tile-section-num">§ 4.0</span>
                   <span class="badge">EXPERIMENT</span>
+                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">Auto-Save</span>
                 </div>
                 <div class="tile-title">실험 노트 & 칸반 보드</div>
-                <div class="tile-desc">자동 저장 메모, 시료 목록 관리 및 단계별 빔타임 진행 보드</div>
+                <div class="tile-desc">자동 저장 메모장, 시료 리스트 관리 및 단계별 작업 보드</div>
               </div>
             </div>
           </div>
@@ -178,18 +178,18 @@
             <div class="col-8">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">§ 0.1 최근 계산 이력 (Recent Calculation Trail)</span>
-                  <button class="btn btn-sm btn-secondary" onclick="window.location.hash='#settings'">전체 내역 보기</button>
+                  <span class="card-title">최근 계산 기록 (Recent History)</span>
+                  <button class="btn btn-sm btn-secondary" onclick="window.location.hash='#settings'">전체 보기</button>
                 </div>
                 <div class="card-body" style="padding:0;">
                   <div class="table-responsive">
                     <table class="lab-table">
                       <thead>
                         <tr>
-                          <th>시간 (Time)</th>
-                          <th>도구명 (Module)</th>
-                          <th>입력 조건 (Inputs)</th>
-                          <th>계산 결과 (Outputs)</th>
+                          <th>시간</th>
+                          <th>도구</th>
+                          <th>입력 조건</th>
+                          <th>계산 결과</th>
                         </tr>
                       </thead>
                       <tbody id="dashboard-history-body">
@@ -204,14 +204,14 @@
             <div class="col-4">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">§ 0.2 주요 물리 상수 (CODATA Standard)</span>
+                  <span class="card-title">주요 물리 상수 (CODATA)</span>
                 </div>
                 <div class="card-body">
                   <div style="font-size:12px; line-height:1.75;">
                     <div><strong><i class="formula">hc</i></strong>: <span class="mono">12398.41984 eV·Å</span></div>
                     <div><strong><i class="formula">hc</i></strong>: <span class="mono">1.239842 keV·nm</span></div>
-                    <div><strong><i class="formula">r</i><sub>e</sub></strong>: <span class="mono">2.81794 × 10<sup>-15</sup> m</span></div>
-                    <div><strong><i class="formula">c</i></strong>: <span class="mono">299,792,458 m/s</span></div>
+                    <div><strong><i class="formula">r</i><sub>e</sub> (전자반경)</strong>: <span class="mono">2.8179 × 10<sup>-15</sup> m</span></div>
+                    <div><strong><i class="formula">c</i> (광속)</strong>: <span class="mono">299,792,458 m/s</span></div>
                     <div><strong>Si(111) <i class="formula">d</i></strong>: <span class="mono">3.13560 Å</span></div>
                     <div><strong>Ge(111) <i class="formula">d</i></strong>: <span class="mono">3.26636 Å</span></div>
                   </div>
@@ -223,23 +223,23 @@
 
 
         <!-- =================================================================
-             1. OPTICS VIEW
+             2. OPTICS VIEW
              ================================================================= -->
         <section id="view-optics" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>1. OPTICS — X선 광학 및 회절·투과율 계산 수트</h2>
-              <p>파장, 브래그 회절, 격자 분산, 복소 굴절률 감쇠 및 상호공간 Q-벡터 정밀 계산</p>
+              <h2>X선 광학 계산기 (X-ray Optics Suite)</h2>
+              <p>파장, 브래그 회절, 격자 분산, 복소 굴절률, 흡수 및 상호 공간 Q 벡터 정밀 계산</p>
             </div>
           </div>
 
           <div class="flex-row">
 
-            <!-- 1.1 Energy - Wavelength - Frequency -->
+            <!-- 1. Energy - Wavelength - Frequency -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.1 에너지 - 파장 - 주파수 상호 변환</span>
+                  <span class="card-title">1. 에너지 - 파장 - 주파수 변환</span>
                   <span class="card-tag"><i class="formula">E = hc/λ = hν</i></span>
                 </div>
                 <div class="card-body">
@@ -277,19 +277,19 @@
                   </div>
 
                   <div class="result-box highlight">
-                    <div class="result-label">등가 물리량 산출 결과</div>
+                    <div class="result-label">실시간 등가 변환값</div>
                     <div id="optics-conv-summary" class="result-value primary">10.0000 keV ⟷ 1.2398 Å ⟷ 2.418 × 10<sup>18</sup> Hz</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 1.2 Bragg's Law -->
+            <!-- 2. Bragg's Law -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.2 브래그 회절 법칙 (Bragg's Law)</span>
-                  <span class="card-tag"><i class="formula">nλ = 2d sin θ</i></span>
+                  <span class="card-title">2. 브래그 법칙 (Bragg's Law)</span>
+                  <span class="card-tag"><i class="formula">λ = 2d sin θ</i></span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -297,8 +297,8 @@
                       <div class="form-group">
                         <label class="form-label">계산 모드</label>
                         <select id="bragg-mode" class="form-control" onchange="calcBragg()">
-                          <option value="find_theta">에너지 → 회절각 (θ / 2θ) 계산</option>
-                          <option value="find_energy">회절각 (θ) → 에너지 계산</option>
+                          <option value="find_theta">에너지 → θ / 2θ 각도 계산</option>
+                          <option value="find_energy">θ 각도 → 에너지 계산</option>
                         </select>
                       </div>
                     </div>
@@ -311,7 +311,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label">주요 결정면 프리셋</label>
+                    <label class="form-label">자주 쓰는 결정면 프리셋</label>
                     <div id="bragg-presets" class="preset-bar"></div>
                   </div>
 
@@ -352,18 +352,18 @@
               </div>
             </div>
 
-            <!-- 1.3 Grating Diffraction -->
+            <!-- 3. Grating Diffraction -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.3 회절격자 분산 방정식 (Grating Diffraction)</span>
+                  <span class="card-title">3. 회절격자 (Diffraction Grating)</span>
                   <span class="card-tag"><i class="formula">mλ = d(sin α + sin β)</i></span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">격자선 밀도 <span class="unit">(lines/mm, mm<sup>-1</sup>)</span></label>
+                        <label class="form-label">격자선 밀도 <span class="unit">(선/mm, mm<sup>-1</sup>)</span></label>
                         <input type="number" id="grating-lines" class="form-control mono" value="1200" step="any" oninput="calcGrating()">
                       </div>
                     </div>
@@ -381,7 +381,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">회절 차수 <i class="formula">m</i></label>
+                        <label class="form-label">회절 차수 <i class="formula">m</i> <span class="unit">(차수)</span></label>
                         <input type="number" id="grating-order" class="form-control mono" value="1" step="1" oninput="calcGrating()">
                       </div>
                     </div>
@@ -407,18 +407,18 @@
               </div>
             </div>
 
-            <!-- 1.4 Refractive Index & Transmittance -->
+            <!-- 4. Refractive Index & Transmittance -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.4 복소 굴절률 및 투과율 감쇠</span>
-                  <span class="card-tag"><i class="formula">n = 1 - δ + iβ</i></span>
+                  <span class="card-title">4. 굴절률 및 투과율 (<i class="formula">n = 1 - δ + iβ</i>)</span>
+                  <span class="card-tag">Beer-Lambert Attenuation</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label class="form-label">재료 선택 (Materials Database)</label>
+                        <label class="form-label">재료 선택 (Materials DB)</label>
                         <select id="refract-mat" class="form-control" onchange="calcRefractive()"></select>
                       </div>
                     </div>
@@ -459,11 +459,11 @@
               </div>
             </div>
 
-            <!-- 1.5 Energy-Angle Converter -->
+            <!-- 5. Energy-Angle Converter -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.5 에너지-각도 보정 (Energy-Angle Calibration)</span>
+                  <span class="card-title">5. 에너지-각도 보정 (Energy-Angle Shift)</span>
                   <span class="card-tag"><i class="formula">E<sub>1</sub> sin θ<sub>1</sub> = E<sub>2</sub> sin θ<sub>2</sub></i></span>
                 </div>
                 <div class="card-body">
@@ -504,12 +504,12 @@
               </div>
             </div>
 
-            <!-- 1.6 Chi-Phi Tilt -->
+            <!-- 6. Chi-Phi Tilt -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.6 Chi-Phi 오일러 크래들 각도 보정</span>
-                  <span class="card-tag"><i class="formula">tan Δφ = tan Δχ · sin θ</i></span>
+                  <span class="card-title">6. Chi-Phi 오일러 크래들 보정</span>
+                  <span class="card-tag">4-Circle Diffractometer</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -539,11 +539,11 @@
               </div>
             </div>
 
-            <!-- 1.7 Critical Angle Total External Reflection -->
+            <!-- 7. Critical Angle Total External Reflection -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.7 전반사 임계각 (Total External Reflection)</span>
+                  <span class="card-title">7. 전반사 임계각 (Total External Reflection)</span>
                   <span class="card-tag"><i class="formula">θ<sub>c</sub> = √(2δ)</i></span>
                 </div>
                 <div class="card-body">
@@ -584,18 +584,18 @@
                       </div>
                     </div>
                     <div class="result-formula">
-                      굴절률 감소량 <i class="formula">δ</i> = <span id="crit-res-delta">-</span>
+                      <i class="formula">δ</i> = <span id="crit-res-delta">-</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 1.8 Q-Space Converter -->
+            <!-- 8. Q-Space Converter -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1.8 상호공간 산란벡터 Q-Space 변환</span>
+                  <span class="card-title">8. 상호공간 Q-Space 변환</span>
                   <span class="card-tag"><i class="formula">Q = (4π/λ) sin θ = 2π/d</i></span>
                 </div>
                 <div class="card-body">
@@ -639,23 +639,23 @@
 
 
         <!-- =================================================================
-             2. BEAMLINE VIEW
+             3. BEAMLINE VIEW
              ================================================================= -->
         <section id="view-beamline" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>2. BEAMLINE — 빔라인 물리량 및 기하학적 파라미터</h2>
-              <p>시료 상 빔 풋프린트, 광자 플럭스, 에너지 분해능, CDI 결맞음 오버샘플링 및 슬릿 개구폭 계산</p>
+              <h2>빔라인 물리량 및 기하학적 파라미터 (Beamline Physics)</h2>
+              <p>빔 풋프린트, 광자 플럭스, 분해능, 결맞음 CDI/BCDI 샘플링 및 슬릿 지오메트리 계산</p>
             </div>
           </div>
 
           <div class="flex-row">
 
-            <!-- 2.1 Footprint -->
+            <!-- 1. Footprint -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.1 시료 상 빔 풋프린트 (Beam Footprint)</span>
+                  <span class="card-title">1. 시료 상 빔 풋프린트 (Beam Footprint)</span>
                   <span class="card-tag"><i class="formula">L = V / sin θ</i></span>
                 </div>
                 <div class="card-body">
@@ -680,7 +680,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">시료 길이 (Beam axis) <span class="unit">(mm)</span></label>
+                        <label class="form-label">시료 길이 (길이 방향) <span class="unit">(mm)</span></label>
                         <input type="number" id="fp-sample-len" class="form-control mono" value="15" step="any" oninput="calcFootprint()">
                       </div>
                     </div>
@@ -693,24 +693,24 @@
                         <div id="fp-res-len" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">수평 빔 폭 (H)</div>
+                        <div class="result-label">수평 빔 폭</div>
                         <div id="fp-res-h" class="result-value">-</div>
                       </div>
                     </div>
                     <div class="result-formula">
-                      수용 상태 판정: <strong id="fp-res-spill">-</strong>
+                      상태 판정: <strong id="fp-res-spill">-</strong>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 2.2 Beam Flux -->
+            <!-- 2. Beam Flux -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.2 빔라인 전달 광자 플럭스 (Delivered Photon Flux)</span>
-                  <span class="card-tag"><i class="formula">F = I<sub>ring</sub> · F<sub>0</sub> · η<sub>total</sub></i></span>
+                  <span class="card-title">2. 빔라인 광자 플럭스 (Photon Flux)</span>
+                  <span class="card-tag">Delivered Flux</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -753,7 +753,7 @@
                         <div id="flux-res-total" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">광학계 전송 효율 (<i class="formula">η</i><sub>total</sub>)</div>
+                        <div class="result-label">광학계 전송 효율</div>
                         <div id="flux-res-eff" class="result-value">-</div>
                       </div>
                     </div>
@@ -762,28 +762,28 @@
               </div>
             </div>
 
-            <!-- 2.3 Energy Resolution -->
+            <!-- 3. Energy Resolution -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.3 단색기 에너지 분해능 (Intrinsic ΔE/E)</span>
-                  <span class="card-tag"><i class="formula">ΔE/E = √[(ΔE/E)<sub>Darwin</sub><sup>2</sup> + (Δθ/tan θ)<sup>2</sup>]</i></span>
+                  <span class="card-title">3. 에너지 분해능 (Energy Resolution ΔE/E)</span>
+                  <span class="card-tag">Monochromator Intrinsic</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">단색기 결정 (Crystal)</label>
+                        <label class="form-label">모노크로메이터 결정</label>
                         <select id="res-crystal" class="form-control" onchange="calcEnergyResolution()">
-                          <option value="si111">Si(111) — ΔE/E ~ 1.33 × 10<sup>-4</sup></option>
-                          <option value="si311">Si(311) — ΔE/E ~ 2.80 × 10<sup>-5</sup> (고분해능)</option>
-                          <option value="ge111">Ge(111) — ΔE/E ~ 3.20 × 10<sup>-4</sup></option>
+                          <option value="si111">Si(111) — ΔE/E ~ 1.3 × 10<sup>-4</sup></option>
+                          <option value="si311">Si(311) — ΔE/E ~ 2.8 × 10<sup>-5</sup> (고분해능)</option>
+                          <option value="ge111">Ge(111) — ΔE/E ~ 3.2 × 10<sup>-4</sup></option>
                         </select>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">동작 에너지 <span class="unit">(keV)</span></label>
+                        <label class="form-label">에너지 <span class="unit">(keV)</span></label>
                         <input type="number" id="res-energy" class="form-control mono" value="10.0" step="any" oninput="calcEnergyResolution()">
                       </div>
                     </div>
@@ -806,7 +806,7 @@
                         <div id="res-res-de-over-e" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">브래그 각도 (<i class="formula">θ</i>)</div>
+                        <div class="result-label">브래그 각도</div>
                         <div id="res-res-theta" class="result-value">-</div>
                       </div>
                     </div>
@@ -815,11 +815,11 @@
               </div>
             </div>
 
-            <!-- 2.4 Angular Resolution -->
+            <!-- 4. Angular Resolution -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.4 디텍터 각도 분해능 (Angular Resolution)</span>
+                  <span class="card-title">4. 디텍터 각도 분해능 (Angular Resolution)</span>
                   <span class="card-tag"><i class="formula">Δθ = Pixel / Distance</i></span>
                 </div>
                 <div class="card-body">
@@ -845,7 +845,7 @@
                         <div id="ang-res-mrad" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">각도 분해능 (° / arcsec)</div>
+                        <div class="result-label">각도 분해능 (° / ")</div>
                         <div id="ang-res-deg" class="result-value">-</div>
                       </div>
                     </div>
@@ -854,12 +854,12 @@
               </div>
             </div>
 
-            <!-- 2.5 CDI / BCDI Oversampling -->
+            <!-- 5. CDI / BCDI Oversampling -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.5 CDI / BCDI 결맞음 오버샘플링</span>
-                  <span class="card-tag"><i class="formula">σ = (λ · D) / (p · S) ≥ 2</i></span>
+                  <span class="card-title">5. CDI / BCDI 결맞음 오버샘플링</span>
+                  <span class="card-tag"><i class="formula">σ = (λ·D) / (p·S) ≥ 2</i></span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -883,7 +883,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">시료 크기 <span class="unit">(nm)</span></label>
+                        <label class="form-label">시료/결정 크기 <span class="unit">(nm)</span></label>
                         <input type="number" id="cdi-sample-size" class="form-control mono" value="300" step="any" oninput="calcCDIOversampling()">
                       </div>
                     </div>
@@ -896,24 +896,24 @@
                         <div id="cdi-res-sigma" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">디텍터 상 스펙클 크기</div>
+                        <div class="result-label">디텍터 스펙클 크기</div>
                         <div id="cdi-res-speckle" class="result-value">-</div>
                       </div>
                     </div>
                     <div class="result-formula">
-                      나이퀴스트 충족 판정: <span id="cdi-res-verdict" class="badge badge-subtle">-</span>
+                      판정 결과: <span id="cdi-res-verdict" class="badge badge-subtle">-</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 2.6 Slit Size -->
+            <!-- 6. Slit Size -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.6 슬릿 간격 및 빔 수용폭 (Slit Acceptance)</span>
-                  <span class="card-tag"><i class="formula">w = mult · √[s<sup>2</sup> + (Dθ)<sup>2</sup>]</i></span>
+                  <span class="card-title">6. 슬릿 간격 및 수용각 (Slit Opening)</span>
+                  <span class="card-tag">Beam Acceptance</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -937,7 +937,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">가우시안 수용 배율</label>
+                        <label class="form-label">가우시안 배율</label>
                         <select id="slit-sig-mult" class="form-control" onchange="calcSlitAcceptance()">
                           <option value="2.355">1 × FWHM (~76% 빔 수용)</option>
                           <option value="3">3 × σ (~99.7% 완전 수용)</option>
@@ -963,18 +963,18 @@
               </div>
             </div>
 
-            <!-- 2.7 Thermal Expansion -->
+            <!-- 7. Thermal Expansion -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2.7 결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)</span>
-                  <span class="card-tag"><i class="formula">Δθ = -α · ΔT · tan θ</i></span>
+                  <span class="card-title">7. 결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)</span>
+                  <span class="card-tag"><i class="formula">Δθ = -α ΔT tan θ</i></span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">단색기 재질</label>
+                        <label class="form-label">모노크로메이터 재질</label>
                         <select id="therm-mat" class="form-control" onchange="calcThermalShift()">
                           <option value="si">Silicon (α = 2.6 × 10<sup>-6</sup> K<sup>-1</sup>)</option>
                           <option value="diamond">Diamond (α = 1.0 × 10<sup>-6</sup> K<sup>-1</sup>)</option>
@@ -1017,13 +1017,13 @@
 
 
         <!-- =================================================================
-             3. LOGBOOK VIEW
+             4. LOGBOOK VIEW
              ================================================================= -->
         <section id="view-logbook" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>3. LOGBOOK — 실험 전자 기록 및 히스토리 스냅샷</h2>
-              <p>시료별 빔 조건 수동 기록, 태그 검색, 브라우저 로컬 저장 및 마크다운/CSV 데이터 내보내기</p>
+              <h2>전자 빔라인 로그북 (Electronic Logbook)</h2>
+              <p>실험 조건 수동 기록, 빠른 태그 검색, 브라우저 저장 및 데이터 내보내기</p>
             </div>
             <div class="banner-actions">
               <button class="btn btn-sm btn-secondary" onclick="copyLogsMarkdown()" style="margin-right:6px;">마크다운 복사</button>
@@ -1037,7 +1037,7 @@
             <div class="col-4">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">3.1 새 실험 로그 항목 작성</span>
+                  <span class="card-title">새 로그 항목 작성</span>
                 </div>
                 <div class="card-body">
                   <div class="form-group">
@@ -1066,11 +1066,11 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label">태그 (쉼표 또는 공백 구분)</label>
-                    <input type="text" id="log-input-tags" class="form-control" placeholder="예: #calib #roomTemp">
+                    <input type="text" id="log-input-tags" class="form-control" placeholder="예: #calib, #roomTemp">
                   </div>
                   <div class="form-group">
-                    <label class="form-label">실험 메모 & 관측 사항</label>
-                    <textarea id="log-input-memo" class="form-control" placeholder="실험 진행 상황, 회절 피크 관측, 주의사항 등을 기록하십시오..."></textarea>
+                    <label class="form-label">실험 메모 & 특이사항</label>
+                    <textarea id="log-input-memo" class="form-control" placeholder="실험 진행 상황, 회절 피크 관측, 주의사항 등을 기록하세요..."></textarea>
                   </div>
                   <button class="btn btn-primary btn-block" onclick="addLogEntry()">로그 저장하기</button>
                 </div>
@@ -1081,7 +1081,7 @@
             <div class="col-8">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">3.2 기록된 실험 로그 (<span id="logbook-total-count">0 entries</span>)</span>
+                  <span class="card-title">기록된 실험 로그 (<span id="logbook-total-count">0 entries</span>)</span>
                   <div style="display:flex; align-items:center;">
                     <span id="logbook-active-filter" style="font-size:11px; margin-right:8px; display:none;"></span>
                     <input type="text" id="log-search-query" class="form-control form-control-sm" placeholder="검색어 입력..." style="width:140px;" oninput="renderLogbook()">
@@ -1097,26 +1097,26 @@
 
 
         <!-- =================================================================
-             4. EXPERIMENT VIEW
+             5. EXPERIMENT VIEW
              ================================================================= -->
         <section id="view-experiment" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>4. EXPERIMENT — 실험 종합 관리 및 워크플로우</h2>
-              <p>실시간 자동 저장 실험 노트, 빔라인 체크리스트, 시료 관리, DAQ 전송량 산출 및 칸반 보드</p>
+              <h2>실험 종합 관리 (Experiment Suite)</h2>
+              <p>실시간 자동 저장 실험 노트, 빔라인 체크리스트, 시료 관리, DAQ 산출 및 칸반 보드</p>
             </div>
           </div>
 
           <div class="flex-row">
 
-            <!-- 4.1 Live Lab Notes -->
+            <!-- 1. Live Lab Notes -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">4.1 실시간 실험 노트 (Auto-Saving Lab Notes)</span>
+                  <span class="card-title">실시간 실험 노트 (Auto-Saving Lab Notes)</span>
                   <div>
                     <span id="exp-notes-status" style="font-size:11px; color:var(--ink-muted); margin-right:8px;">자동 저장됨</span>
-                    <button class="btn btn-sm btn-secondary" onclick="exportNotesTxt()">텍스트 다운로드</button>
+                    <button class="btn btn-sm btn-secondary" onclick="exportNotesTxt()">다운로드</button>
                   </div>
                 </div>
                 <div class="card-body">
@@ -1125,12 +1125,12 @@
               </div>
             </div>
 
-            <!-- 4.2 Checklist -->
+            <!-- 2. Checklist -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">4.2 빔라인 점검 체크리스트 (Beamline Checklist)</span>
-                  <button class="btn btn-sm btn-secondary" onclick="resetChecklists()">기본값 초기화</button>
+                  <span class="card-title">빔라인 점검 체크리스트 (Beamline Checklist)</span>
+                  <button class="btn btn-sm btn-secondary" onclick="resetChecklists()">기본값 리셋</button>
                 </div>
                 <div class="card-body" id="exp-checklist-container">
                   <!-- Populated by JS -->
@@ -1138,16 +1138,16 @@
               </div>
             </div>
 
-            <!-- 4.3 Sample List Manager -->
+            <!-- 3. Sample List Manager -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">4.3 시료 관리 목록 (Sample List — <span id="sample-total-count">0 samples</span>)</span>
+                  <span class="card-title">시료 관리 목록 (Sample List - <span id="sample-total-count">0 samples</span>)</span>
                   <div>
                     <input type="text" id="sample-add-name" class="form-control form-control-sm" placeholder="시료명" style="display:inline-block; width:110px; margin-right:4px;">
                     <input type="text" id="sample-add-mat" class="form-control form-control-sm" placeholder="재료" style="display:inline-block; width:90px; margin-right:4px;">
                     <input type="text" id="sample-add-thick" class="form-control form-control-sm" placeholder="두께" style="display:inline-block; width:80px; margin-right:4px;">
-                    <input type="text" id="sample-add-pos" class="form-control form-control-sm" placeholder="모터 X,Y,Z,Th" style="display:inline-block; width:130px; margin-right:4px;">
+                    <input type="text" id="sample-add-pos" class="form-control form-control-sm" placeholder="모터위치 X,Y,Z,Th" style="display:inline-block; width:140px; margin-right:4px;">
                     <input type="text" id="sample-add-notes" class="form-control form-control-sm" placeholder="메모" style="display:inline-block; width:130px; margin-right:4px;">
                     <button class="btn btn-sm btn-primary" onclick="addSample()">+ 시료 추가</button>
                   </div>
@@ -1157,12 +1157,12 @@
                     <table class="lab-table">
                       <thead>
                         <tr>
-                          <th>시료명 (Sample ID)</th>
-                          <th>재료 (Material)</th>
-                          <th>두께 (Thickness)</th>
+                          <th>시료명</th>
+                          <th>재료</th>
+                          <th>두께</th>
                           <th>모터 위치 (X, Y, Z, Th)</th>
-                          <th>메모 (Notes)</th>
-                          <th>작업 (Action)</th>
+                          <th>메모</th>
+                          <th>작업</th>
                         </tr>
                       </thead>
                       <tbody id="sample-table-body">
@@ -1174,18 +1174,18 @@
               </div>
             </div>
 
-            <!-- 4.4 DAQ Settings Calculator -->
+            <!-- 4. DAQ Settings Calculator -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">4.4 DAQ 데이터 수집 및 대역폭 계산기</span>
+                  <span class="card-title">DAQ 데이터 수집 용량 계산기</span>
                   <span class="card-tag">Storage Estimator</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">디텍터 모델 (Detector)</label>
+                        <label class="form-label">디텍터 모델</label>
                         <select id="daq-detector" class="form-control" onchange="calcDAQ()">
                           <option value="eiger4m">Eiger2 X 4M (2070 × 2167)</option>
                           <option value="eiger9m">Eiger2 X 9M (3110 × 3269)</option>
@@ -1227,11 +1227,11 @@
                         <div id="daq-res-rate" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">총 수집 프레임 수</div>
+                        <div class="result-label">총 프레임 수</div>
                         <div id="daq-res-frames" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">필요 저장 용량 (Total Storage)</div>
+                        <div class="result-label">필요 저장 용량 (Total Size)</div>
                         <div id="daq-res-size" class="result-value primary">-</div>
                       </div>
                     </div>
@@ -1240,11 +1240,11 @@
               </div>
             </div>
 
-            <!-- 4.5 Kanban Board -->
+            <!-- 5. Kanban Board -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">4.5 빔타임 작업 칸반 보드 (Beamtime Kanban)</span>
+                  <span class="card-title">빔타임 작업 칸반 보드 (Kanban)</span>
                   <button class="btn btn-sm btn-primary" onclick="addKanbanTask()">+ 새 작업</button>
                 </div>
                 <div class="card-body">
@@ -1291,23 +1291,23 @@
 
 
         <!-- =================================================================
-             5. REFERENCE VIEW
+             6. REFERENCE VIEW
              ================================================================= -->
         <section id="view-reference" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>5. REFERENCE — 결정 격자 DB & 연구자 참고 데이터</h2>
-              <p>단위 변환기, 주요 결정 격자면 <i class="formula">d</i>-spacing 검색 및 공인된 방사광 시설 링크</p>
+              <h2>결정 격자 DB & 연구자 참고 자료 (Reference)</h2>
+              <p>단위 변환기, 주요 결정 격자 d-spacing 검색 및 공인된 방사광 시설 링크</p>
             </div>
           </div>
 
           <div class="flex-row">
 
-            <!-- 5.1 Multi Unit Converter -->
+            <!-- 1. Multi Unit Converter -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">5.1 다차원 단위 변환기 (Multi-Unit Physical Converter)</span>
+                  <span class="card-title">단위 변환기 (Multi-Unit Converter)</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -1374,12 +1374,12 @@
               </div>
             </div>
 
-            <!-- 5.2 Crystal DB -->
+            <!-- 2. Crystal DB -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">5.2 주요 결정 격자면 d-spacing 데이터베이스 (<span id="crystal-db-count">0 reflections</span>)</span>
-                  <input type="text" id="crystal-search-input" class="form-control form-control-sm" placeholder="결정 또는 밀러 지수 검색..." style="width:180px;" oninput="renderCrystalDB()">
+                  <span class="card-title">주요 결정 격자 d-spacing 데이터베이스 (<span id="crystal-db-count">0 reflections</span>)</span>
+                  <input type="text" id="crystal-search-input" class="form-control form-control-sm" placeholder="결정 또는 hkl 검색..." style="width:180px;" oninput="renderCrystalDB()">
                 </div>
                 <div class="card-body" style="padding:0;">
                   <div class="table-responsive">
@@ -1388,10 +1388,10 @@
                         <tr>
                           <th>결정 재료 (Material)</th>
                           <th>밀러 지수 (hkl)</th>
-                          <th>격자면 간격 (<i class="formula">d</i>-spacing)</th>
-                          <th>격자 상수 (<i class="formula">a</i>)</th>
-                          <th>결정계 (Crystal System)</th>
-                          <th>작업 (Action)</th>
+                          <th>격자면 간격 (d-spacing)</th>
+                          <th>격자 상수 (Lattice a)</th>
+                          <th>결정계 (System)</th>
+                          <th>적용</th>
                         </tr>
                       </thead>
                       <tbody id="crystal-db-body">
@@ -1403,7 +1403,7 @@
               </div>
             </div>
 
-            <!-- 5.3 Useful Links -->
+            <!-- 3. Useful Links -->
             <div class="col-12" id="useful-links-container">
               <!-- Populated by JS -->
             </div>
@@ -1413,23 +1413,23 @@
 
 
         <!-- =================================================================
-             6. SETTINGS VIEW
+             7. SETTINGS VIEW
              ================================================================= -->
         <section id="view-settings" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2>6. SETTINGS — 계산 이력 및 데이터 아카이브</h2>
-              <p>테마 변경, 계산 히스토리 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
+              <h2>설정 및 히스토리 관리 (Settings & History)</h2>
+              <p>테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
             </div>
           </div>
 
           <div class="flex-row">
 
-            <!-- 6.1 Calculation History -->
+            <!-- 1. Calculation History -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">6.1 전체 계산 히스토리 아카이브 (<span id="history-total-count">0 runs</span>)</span>
+                  <span class="card-title">전체 계산 히스토리 (<span id="history-total-count">0 runs</span>)</span>
                   <button class="btn btn-sm btn-danger" onclick="clearCalculationHistory()">히스토리 전체 삭제</button>
                 </div>
                 <div class="card-body" style="padding:0;">
@@ -1437,10 +1437,10 @@
                     <table class="lab-table">
                       <thead>
                         <tr>
-                          <th>시간 (Timestamp)</th>
-                          <th>도구명 (Module)</th>
-                          <th>입력 파라미터 (Inputs)</th>
-                          <th>계산 결과 (Outputs)</th>
+                          <th>시간</th>
+                          <th>도구명</th>
+                          <th>입력 파라미터</th>
+                          <th>계산 결과</th>
                         </tr>
                       </thead>
                       <tbody id="settings-history-body">
@@ -1452,16 +1452,16 @@
               </div>
             </div>
 
-            <!-- 6.2 Data Backup and Restore -->
+            <!-- 2. Data Backup and Restore -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">6.2 로컬 데이터 백업 및 복원 (JSON Backup)</span>
+                  <span class="card-title">로컬스토리지 데이터 백업 및 복원</span>
                 </div>
                 <div class="card-body">
                   <p style="font-size:12px; color:var(--ink-secondary); margin-bottom:12px;">
                     모든 로그북, 실험 노트, 시료 목록, 체크리스트 및 계산 히스토리는 브라우저의 <code>localStorage</code>에 안전하게 저장됩니다.
-                    다른 분석 환경으로 이동할 때 JSON 파일로 내보내거나 가져올 수 있습니다.
+                    다른 PC나 브라우저로 이동할 때 JSON 파일로 내보내거나 가져올 수 있습니다.
                   </p>
                   <div style="display:flex; align-items:center;">
                     <button class="btn btn-primary" onclick="backupAllData()" style="margin-right:10px;">전체 백업 다운로드</button>
@@ -1474,42 +1474,42 @@
               </div>
             </div>
 
-            <!-- 6.3 Keyboard Shortcuts -->
+            <!-- 3. Keyboard Shortcuts -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">6.3 키보드 단축키 규격 (Keyboard Shortcuts)</span>
+                  <span class="card-title">키보드 단축키 안내 (Keyboard Shortcuts)</span>
                 </div>
                 <div class="card-body">
                   <table class="lab-table">
                     <tbody>
                       <tr>
                         <td><code class="mono">[Alt + 1]</code></td>
-                        <td>0. DASHBOARD 바로가기</td>
+                        <td>DASHBOARD 탭 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 2]</code></td>
-                        <td>1. OPTICS 광학 계산기 바로가기</td>
+                        <td>OPTICS 광학 계산기 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 3]</code></td>
-                        <td>2. BEAMLINE 빔라인 물리량 바로가기</td>
+                        <td>BEAMLINE 빔라인 계산기 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 4]</code></td>
-                        <td>3. LOGBOOK 실험 로그북 바로가기</td>
+                        <td>LOGBOOK 실험 로그북 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 5]</code></td>
-                        <td>4. EXPERIMENT 실험 노트 & 칸반 바로가기</td>
+                        <td>EXPERIMENT 실험 노트 & 칸반 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 6]</code></td>
-                        <td>5. REFERENCE 참고 자료 바로가기</td>
+                        <td>REFERENCE 참고 자료 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 7]</code></td>
-                        <td>6. SETTINGS 설정 바로가기</td>
+                        <td>SETTINGS 설정 바로가기</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1524,7 +1524,7 @@
              ACADEMIC REFERENCE FOOTER (CODATA Fundamental Physical Constants)
              ================================================================= -->
         <footer id="academic-footer">
-          <div class="footer-title">APPENDIX A — CODATA FUNDAMENTAL PHYSICAL CONSTANTS & BEAMLINE SPECIFICATIONS</div>
+          <div class="footer-title">CODATA FUNDAMENTAL PHYSICAL CONSTANTS & BEAMLINE SPECIFICATIONS</div>
           <table class="footer-constants-table">
             <thead>
               <tr>
@@ -1644,7 +1644,7 @@
       var history = window.Storage ? window.Storage.get("calc_history", []) : [];
       tbody.innerHTML = "";
       if (history.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:14px;">저장된 최근 계산 이력이 없습니다.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:16px;">최근 계산 기록이 없습니다.</td></tr>';
         return;
       }
       var slice = history.slice(0, 6);
@@ -1652,7 +1652,7 @@
         var item = slice[i];
         var tr = document.createElement("tr");
         tr.innerHTML =
-          '<td class="mono" style="color:var(--ink-muted); font-size:11px;">' + item.timestamp + '</td>' +
+          '<td class="mono" style="color:var(--ink-muted);">' + item.timestamp + '</td>' +
           '<td><strong>' + item.tool + '</strong></td>' +
           '<td class="mono" style="font-size:11px;">' + item.inputs + '</td>' +
           '<td class="mono" style="color:var(--accent-ink); font-weight:700;">' + item.result + '</td>';
