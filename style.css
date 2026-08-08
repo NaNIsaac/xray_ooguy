@@ -83,7 +83,9 @@
 
 html, body {
   width: 100%;
+  max-width: 100%;
   height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll on window/body */
   background-color: var(--bg-paper);
   color: var(--ink-primary);
   font-family: var(--font-serif);
@@ -138,7 +140,9 @@ sub {
 #app-layout {
   display: flex;
   width: 100%;
+  max-width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
   background-color: var(--bg-paper);
 }
 
@@ -255,11 +259,15 @@ sub {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  width: calc(100% - var(--sidebar-width));
+  max-width: 100%;
+  overflow-x: hidden; /* 가로 스크롤 절대 방지 */
   background-color: var(--bg-paper);
 }
 
-/* Top Running Header (Academic Masthead & Tab Bar) */
+/* Top Running Header (Masthead & Horizontally Scrollable Tab Bar) */
 #top-header {
+  height: var(--header-height);
   min-height: var(--header-height);
   border-bottom: var(--rule-main);
   background-color: var(--bg-paper);
@@ -270,13 +278,19 @@ sub {
   position: sticky;
   top: 0;
   z-index: 90;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .page-breadcrumb {
@@ -287,6 +301,8 @@ sub {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 6px 0;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .breadcrumb-sep {
@@ -295,15 +311,31 @@ sub {
   font-weight: 400;
 }
 
-/* Horizontal Top Navigation Tabs */
+/* Horizontal Top Navigation Tabs: ONLY THIS AREA HORIZONTALLY SCROLLS! */
 .top-nav-tabs {
   display: flex;
   align-items: center;
-  margin-left: 16px;
+  margin-left: 12px;
   border-left: var(--rule-light);
-  padding-left: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
   overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.top-nav-tabs::-webkit-scrollbar {
+  height: 3px;
+}
+.top-nav-tabs::-webkit-scrollbar-thumb {
+  background: var(--ink-muted);
+}
+.top-nav-tabs::-webkit-scrollbar-track {
+  background: var(--bg-paper-subtle);
 }
 
 .tab-btn {
@@ -320,6 +352,7 @@ sub {
   background: transparent;
   display: inline-block;
   line-height: 1.2;
+  flex-shrink: 0;
 }
 
 .tab-btn:hover {
@@ -343,6 +376,7 @@ sub {
   margin-bottom: 16px;
   padding-bottom: 8px;
   border-bottom: var(--rule-light);
+  max-width: 100%;
 }
 
 .sub-tab-btn {
@@ -369,6 +403,8 @@ sub {
   display: flex;
   align-items: center;
   padding: 6px 0;
+  flex-shrink: 0;
+  margin-left: 10px;
 }
 
 #header-live-time {
@@ -376,6 +412,7 @@ sub {
   font-size: 11px;
   color: var(--ink-muted);
   margin-right: 14px;
+  white-space: nowrap;
 }
 
 .header-btn {
@@ -386,6 +423,7 @@ sub {
   border: var(--rule-main);
   padding: 4px 10px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .header-btn:hover {
@@ -393,16 +431,24 @@ sub {
   color: var(--bg-paper);
 }
 
-/* Main Content Area */
+/* Main Content Area (Fixed without horizontal scroll) */
 #content-area {
   flex: 1;
-  padding: 24px 28px 48px 28px;
+  padding: 20px 24px 48px 24px;
   overflow-y: auto;
+  overflow-x: hidden; /* 컨텐츠 영역은 가로 스크롤 완전 방지 고정 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* View Sections */
 .view-section {
   display: none;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+  box-sizing: border-box;
 }
 
 .view-section.active {
@@ -996,6 +1042,22 @@ select.form-control {
   font-family: var(--font-serif);
   font-size: 11px;
   color: var(--ink-muted);
+}
+
+/* Responsive Breakpoint for Mobile / Small Screens */
+@media (max-width: 768px) {
+  #sidebar {
+    display: none;
+  }
+  #main-wrapper {
+    width: 100%;
+  }
+  .col-12, .col-8, .col-6, .col-4, .col-3 {
+    width: 100%;
+  }
+  #content-area {
+    padding: 16px 14px 40px 14px;
+  }
 }
 
 /* ==========================================================================
