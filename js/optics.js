@@ -122,15 +122,12 @@
     }
   }
 
-  // Preset picker for Bragg d-spacing
+  // Preset picker for Bragg d-spacing (Silent & instantaneous update)
   function applyBraggPreset(dVal, name) {
     var input = document.getElementById("bragg-d");
     if (input) {
       input.value = dVal;
       calcBragg();
-      if (window.showToast) {
-        window.showToast("결정면 " + name + " (d = " + dVal + " Å) 적용 완료", "info");
-      }
     }
   }
 

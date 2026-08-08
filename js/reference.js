@@ -107,7 +107,6 @@
       if (braggD) {
         braggD.value = dVal;
         if (window.calcBragg) window.calcBragg();
-        if (window.showToast) window.showToast("d = " + dVal + " Å 값이 브래그 계산기에 전송되었습니다.", "info");
       }
     }, 100);
   }
