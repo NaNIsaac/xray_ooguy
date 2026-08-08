@@ -135,11 +135,12 @@
       breadcrumbTitle.textContent = routes[route].title;
     }
 
-    // Scroll main view to top
+    // Scroll main view and window to top
     var contentArea = document.getElementById("content-area");
     if (contentArea) {
       contentArea.scrollTop = 0;
     }
+    window.scrollTo(0, 0);
 
     // Trigger tab specific on-show handlers
     if (route === "dashboard" && window.renderDashboard) {

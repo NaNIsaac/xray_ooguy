@@ -1035,3 +1035,143 @@ textarea.form-control {
   font-weight: 600;
   text-align: center;
 }
+
+/* ==========================================================================
+   Responsive Mobile Layout (Non-sticky Top Navigation)
+   When screen width <= 860px, sidebar transforms into a top-of-page navigation
+   bar that scrolls away with the page to maximize workspace visibility.
+   ========================================================================== */
+@media (max-width: 860px) {
+  #app-layout {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+  }
+
+  /* Sidebar placed at document top, scrolling out of view when user scrolls down */
+  #sidebar {
+    width: 100%;
+    min-width: 100%;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .sidebar-header {
+    padding: 10px 14px;
+    justify-content: space-between;
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 8px;
+  }
+
+  .nav-section-title {
+    display: none;
+  }
+
+  .nav-item {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 12px;
+    margin: 2px 4px;
+    border-radius: var(--radius-sm);
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    font-size: 12px;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+  }
+
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-item.active {
+    background-color: rgba(0, 123, 255, 0.25);
+    border-bottom-color: #58a6ff;
+    color: #58a6ff;
+  }
+
+  .nav-item .nav-icon {
+    margin-right: 6px;
+    font-size: 13px;
+  }
+
+  .nav-item .nav-badge {
+    margin-left: 6px;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  /* Main wrapper and header scroll naturally with the page */
+  #main-wrapper {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  #top-header {
+    position: static;
+    height: auto;
+    min-height: 46px;
+    padding: 8px 14px;
+    flex-wrap: wrap;
+  }
+
+  #content-area {
+    height: auto;
+    overflow: visible;
+    padding: 12px 10px;
+  }
+
+  .section-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .banner-actions {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .col-3, .col-4, .col-6, .col-8, .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .flex-row {
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+
+  .card-header {
+    flex-wrap: wrap;
+  }
+
+  .kanban-board {
+    flex-direction: column;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .kanban-col {
+    min-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 12px;
+  }
+}
+
