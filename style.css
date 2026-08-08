@@ -13,8 +13,8 @@
    - Full @media print support for physical datasheet output
    ========================================================================== */
 
-:root {
-  /* Core Academic Monochrome Palette */
+:root, [data-theme="light"], html[data-theme="light"] {
+  /* Core Academic Monochrome Palette (Paper Light) */
   --bg-paper: #fdfcf8;
   --bg-paper-subtle: #f6f4eb;
   --bg-paper-hover: #ece9db;
@@ -48,26 +48,30 @@
 }
 
 /* Inverted Dark Mode Variables (Pure Academic Inverted Ink) */
+:root[data-theme="dark"],
+html[data-theme="dark"],
+body[data-theme="dark"],
+body.theme-dark,
 [data-theme="dark"] {
   --bg-paper: #121417;
-  --bg-paper-subtle: #1a1e24;
-  --bg-paper-hover: #262c35;
-  --bg-paper-active: #323a45;
+  --bg-paper-subtle: #1c2128;
+  --bg-paper-hover: #262c36;
+  --bg-paper-active: #343c49;
   
   --ink-primary: #fdfcf8;
-  --ink-secondary: #d0cec5;
-  --ink-muted: #94928b;
-  --ink-faint: #63615a;
+  --ink-secondary: #d5d3cc;
+  --ink-muted: #9c9a93;
+  --ink-faint: #6c6a63;
   --ink-inverse: #121417;
 
-  --accent-ink: #5ca4e6;
-  --accent-ink-hover: #8cc4ff;
+  --accent-ink: #66b2ff;
+  --accent-ink-hover: #99ccff;
   --accent-ink-subtle: #0d2847;
 
   --rule-heavy: 1.5px solid #fdfcf8;
   --rule-main: 1px solid #fdfcf8;
-  --rule-light: 1px solid #3c424d;
-  --rule-faint: 1px solid #282c33;
+  --rule-light: 1px solid #424956;
+  --rule-faint: 1px solid #2d333f;
 }
 
 /* Base Reset (Zero Radius, Zero Shadows, Zero Gradients) */
@@ -664,7 +668,7 @@ sub {
 
 .form-control:focus {
   border-color: var(--accent-ink);
-  background-color: #ffffff;
+  background-color: var(--bg-paper-hover);
 }
 
 .form-control-sm {

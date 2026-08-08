@@ -60,10 +60,15 @@
 
       <div class="sidebar-footer">
         <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;">Client Offline-Ready</div>
-        <div style="margin-bottom:8px;">CentOS 7 / Chrome / Firefox</div>
-        <button id="btn-theme-toggle" class="btn btn-sm btn-block btn-secondary" onclick="toggleTheme()" style="text-align:center; padding:4px 0; font-size:11px;">
-          다크 모드 (Invert)
-        </button>
+        <div style="margin-bottom:6px;">CentOS 7 / Chrome / Firefox</div>
+        <div style="display:flex;">
+          <button id="btn-theme-toggle" class="btn btn-sm btn-secondary" onclick="toggleTheme()" style="text-align:center; padding:3px 4px; font-size:10px; flex:1; margin-right:4px; white-space:nowrap;">
+            다크 모드
+          </button>
+          <button id="btn-lang-toggle" class="btn btn-sm btn-secondary" onclick="window.i18n && window.i18n.toggleLang()" style="text-align:center; padding:3px 4px; font-size:10px; flex:1; white-space:nowrap;">
+            한/Eng
+          </button>
+        </div>
       </div>
     </aside>
 
@@ -1442,11 +1447,35 @@
 
           <div class="flex-row">
 
+            <!-- 0. Language Selection Card -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">0. 언어 설정 (Language Selection: 한국어 / English)</span>
+                  <button class="btn btn-sm btn-primary" onclick="window.i18n && window.i18n.toggleLang()">언어 전환 (Toggle)</button>
+                </div>
+                <div class="card-body">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                    <div>
+                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current">현재 언어: 한국어 (Korean)</div>
+                      <div style="font-size:11px; color:var(--ink-secondary);">
+                        한국어와 영어(English) 다국어 인터페이스를 전환합니다. 모든 광학 단위 및 계산기는 즉시 반영됩니다.
+                      </div>
+                    </div>
+                    <div style="margin-top:6px;">
+                      <button class="btn btn-sm btn-secondary" onclick="window.i18n && window.i18n.setLang('ko', true)" style="margin-right:6px;">한국어 (Korean)</button>
+                      <button class="btn btn-sm btn-secondary" onclick="window.i18n && window.i18n.setLang('en', true)">English (US)</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- 1. Theme Configuration Card -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">화면 테마 모드 설정 (Display Theme Mode)</span>
+                  <span class="card-title">1. 화면 테마 모드 설정 (Display Theme Mode)</span>
                   <button class="btn btn-sm btn-primary" id="btn-settings-theme" onclick="toggleTheme()">테마 전환 (Toggle)</button>
                 </div>
                 <div class="card-body">
@@ -1805,8 +1834,9 @@
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
-  <!-- Load Scripts in Dependency Order -->
+  <!-- Load Scripts in Dependency Order (CentOS 7 Offline-Safe) -->
   <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
   <script src="js/optics.js"></script>
   <script src="js/beamline.js"></script>

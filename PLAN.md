@@ -27,7 +27,7 @@
 - **3. LOGBOOK:** 실험 전자 로그북, 태그 검색, 마크다운/CSV/JSON 내보내기, 히스토리 관리
 - **4. EXPERIMENT:** 실시간 자동저장 메모장, 빔라인 체크리스트, 시료 관리 테이블, DAQ 수집 용량 산출, 칸반 보드
 - **5. REFERENCE:** 다차원 단위 변환기, 결정 격자면 d-spacing DB, 공인 방사광 시설 링크
-- **6. SETTINGS:** 흑백 반전 모드(다크), 전체 계산 히스토리 아카이브, 전체 데이터 백업 및 복원, 키보드 단축키
+- **6. SETTINGS:** 한영 다국어 선택 (한국어 / English), 흑백 반전 모드(다크), 전체 계산 히스토리 아카이브, 전체 데이터 백업 및 복원, 키보드 단축키
 - **7. ABOUT (제작자 포트폴리오 & 후원):** Isaac Yong (용이삭) 프로필 (서강대 물리학과 학사 졸 / 석사 재학, CUPT 연구실), 연구 도메인(X선 광학, BCDI, DAQ, 실험자동화), GitHub 링크([SJB7777](https://github.com/SJB7777)), 이메일([isaacyong@naver.com](mailto:isaacyong@naver.com)), [GitHub Sponsors 후원](https://github.com/sponsors/SJB7777) 연동
 - **부록 A (Footer):** CODATA 기본 물리 상수 및 주요 결정 격자면 정밀 수치 테이블
 

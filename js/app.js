@@ -179,11 +179,20 @@
     navigateTo(route);
   }
 
-  // Theme Management
+  // Theme Management (Robust CSS Variables & ClassList Toggle)
   function applyTheme(themeName) {
     App.theme = themeName;
     document.documentElement.setAttribute("data-theme", themeName);
+    document.body.setAttribute("data-theme", themeName);
+    if (themeName === "dark") {
+      document.documentElement.classList.add("theme-dark");
+      document.body.classList.add("theme-dark");
+    } else {
+      document.documentElement.classList.remove("theme-dark");
+      document.body.classList.remove("theme-dark");
+    }
     Storage.set("theme", themeName);
+    
     var themeBtn = document.getElementById("btn-theme-toggle");
     if (themeBtn) {
       themeBtn.textContent = themeName === "dark" ? "종이 모드" : "다크 모드";
@@ -201,7 +210,6 @@
   function toggleTheme() {
     var nextTheme = App.theme === "dark" ? "light" : "dark";
     applyTheme(nextTheme);
-    showToast((nextTheme === "dark" ? "다크" : "라이트") + " 모드로 변경되었습니다.", "info");
   }
 
   // Live Real-time Clock
@@ -257,10 +265,16 @@
   window.showToast = showToast;
   window.recordCalculation = recordCalculation;
   window.navigateTo = navigateTo;
+  window.applyTheme = applyTheme;
   window.toggleTheme = toggleTheme;
 
   // Initialize application
   function init() {
+    // Initialize i18n
+    if (window.i18n && window.i18n.init) {
+      window.i18n.init();
+    }
+
     // Load theme
     var savedTheme = Storage.get("theme", "light");
     applyTheme(savedTheme);
