@@ -185,7 +185,15 @@
     Storage.set("theme", themeName);
     var themeBtn = document.getElementById("btn-theme-toggle");
     if (themeBtn) {
-      themeBtn.textContent = themeName === "dark" ? "라이트 모드" : "다크 모드";
+      themeBtn.textContent = themeName === "dark" ? "종이 모드" : "다크 모드";
+    }
+    var settingsThemeText = document.getElementById("settings-theme-current");
+    if (settingsThemeText) {
+      settingsThemeText.textContent = themeName === "dark" ? "현재 모드: 흑백 반전 다크 모드 (Dark Ink #121417)" : "현재 모드: 종이 모드 (Paper Light #fdfcf8)";
+    }
+    var settingsThemeBtn = document.getElementById("btn-settings-theme");
+    if (settingsThemeBtn) {
+      settingsThemeBtn.textContent = themeName === "dark" ? "종이 모드로 전환" : "다크 모드로 전환";
     }
   }
 

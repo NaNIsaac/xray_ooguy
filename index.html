@@ -1438,7 +1438,31 @@
 
           <div class="flex-row">
 
-            <!-- 1. Calculation History -->
+            <!-- 1. Theme Configuration Card -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">화면 테마 모드 설정 (Display Theme Mode)</span>
+                  <button class="btn btn-sm btn-primary" id="btn-settings-theme" onclick="toggleTheme()">테마 전환 (Toggle)</button>
+                </div>
+                <div class="card-body">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                    <div>
+                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 모드: 종이 모드 (Paper Light #fdfcf8)</div>
+                      <div style="font-size:11px; color:var(--ink-secondary);">
+                        학술 인쇄물 종이색(#fdfcf8)과 흑백 반전 다크 잉크 모드(#121417)를 상호 전환합니다.
+                      </div>
+                    </div>
+                    <div style="margin-top:6px;">
+                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="margin-right:6px;">종이 모드 (Light)</button>
+                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')">흑백 반전 (Dark)</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Calculation History -->
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
