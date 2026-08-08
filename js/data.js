@@ -8,13 +8,13 @@
 var CONSTANTS = {
   h: 6.62607015e-34,         // Planck constant (J·s)
   hbar: 1.054571817e-34,     // Reduced Planck constant (J·s)
-  c: 299792458,              // Speed of light in vacuum (m/s)
+  c: 299792458,              // Speed of light in vacuum (m·s⁻¹ / m/s)
   e: 1.602176634e-19,        // Elementary charge (C)
-  hc_eV_A: 12398.41984,      // hc product in eV·Å (E[eV] * λ[Å] = 12398.41984)
+  hc_eV_A: 12398.41984,      // hc product in eV·Å (E[eV] · λ[Å] = 12398.41984 eV·Å)
   hc_keV_nm: 1.239841984,    // hc product in keV·nm
   r_e: 2.8179403262e-15,     // Classical electron radius (m)
-  N_A: 6.02214076e23,        // Avogadro constant (mol^-1)
-  k_B: 1.380649e-23          // Boltzmann constant (J/K)
+  N_A: 6.02214076e23,        // Avogadro constant (mol⁻¹)
+  k_B: 1.380649e-23          // Boltzmann constant (J·K⁻¹)
 };
 
 // Common X-ray Emission Lines (in eV and Å)

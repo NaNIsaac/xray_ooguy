@@ -243,7 +243,7 @@
     var totalFrames = Math.round(fps * runTime_s);
     var totalData_GB = (dataRate_MB_s * runTime_s) / 1024;
 
-    document.getElementById("daq-res-rate").textContent = dataRate_MB_s.toFixed(2) + " MB/s (" + (dataRate_MB_s * 8).toFixed(1) + " Mbps)";
+    document.getElementById("daq-res-rate").textContent = dataRate_MB_s.toFixed(2) + " MB/s (" + (dataRate_MB_s * 8).toFixed(1) + " Mbit/s)";
     document.getElementById("daq-res-frames").textContent = totalFrames.toLocaleString() + " frames";
     document.getElementById("daq-res-size").textContent = totalData_GB.toFixed(2) + " GB (" + (totalData_GB / 1024).toFixed(3) + " TB)";
 

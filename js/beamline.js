@@ -66,11 +66,11 @@
     var totalEff = monoEff * mirrorEff * windowTrans;
     var deliveredFlux = ringCurrent_mA * baseFlux_per_mA * totalEff;
 
-    document.getElementById("flux-res-total").textContent = deliveredFlux.toExponential(3) + " ph/s";
+    document.getElementById("flux-res-total").textContent = deliveredFlux.toExponential(3) + " ph·s⁻¹ (ph/s)";
     document.getElementById("flux-res-eff").textContent = (totalEff * 100).toFixed(2) + "% 전송 효율";
 
     if (window.recordCalculation) {
-      window.recordCalculation("Beam Flux", ringCurrent_mA + " mA, η=" + (totalEff * 100).toFixed(1) + "%", deliveredFlux.toExponential(2) + " photons/sec");
+      window.recordCalculation("Beam Flux", ringCurrent_mA + " mA, η=" + (totalEff * 100).toFixed(1) + "%", deliveredFlux.toExponential(2) + " ph·s⁻¹");
     }
   }
 

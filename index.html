@@ -275,7 +275,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">파장 <span class="unit">(Å - 옹스트롬)</span></label>
+                        <label class="form-label">파장 <span class="unit">(Å)</span></label>
                         <input type="number" id="optics-conv-ang" class="form-control mono" value="1.23984" step="any" oninput="calcEnergyConverter('ang')">
                       </div>
                     </div>
@@ -335,7 +335,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">브래그 각도 θ 입력 <span class="unit">(deg)</span></label>
+                        <label class="form-label">브래그 각도 θ 입력 <span class="unit">(°)</span></label>
                         <input type="number" id="bragg-theta-input" class="form-control mono" value="11.403" step="any" oninput="calcBragg()">
                       </div>
                     </div>
@@ -374,7 +374,7 @@
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">격자선 밀도 <span class="unit">(lines/mm)</span></label>
+                        <label class="form-label">격자선 밀도 <span class="unit">(선/mm, mm⁻¹)</span></label>
                         <input type="number" id="grating-lines" class="form-control mono" value="1200" step="any" oninput="calcGrating()">
                       </div>
                     </div>
@@ -386,13 +386,13 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">입사각 α <span class="unit">(deg)</span></label>
+                        <label class="form-label">입사각 α <span class="unit">(°)</span></label>
                         <input type="number" id="grating-alpha" class="form-control mono" value="2.0" step="any" oninput="calcGrating()">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">회절 차수 m <span class="unit">(order)</span></label>
+                        <label class="form-label">회절 차수 m <span class="unit">(차수)</span></label>
                         <input type="number" id="grating-order" class="form-control mono" value="1" step="1" oninput="calcGrating()">
                       </div>
                     </div>
@@ -487,7 +487,7 @@
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">기준 각도 θ₁ <span class="unit">(deg)</span></label>
+                        <label class="form-label">기준 각도 θ₁ <span class="unit">(°)</span></label>
                         <input type="number" id="ea-th1" class="form-control mono" value="11.403" step="any" oninput="calcEnergyAngle()">
                       </div>
                     </div>
@@ -526,13 +526,13 @@
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">브래그 각도 θ <span class="unit">(deg)</span></label>
+                        <label class="form-label">브래그 각도 θ <span class="unit">(°)</span></label>
                         <input type="number" id="chiphi-theta" class="form-control mono" value="15.0" step="any" oninput="calcChiPhi()">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">Chi 틸트 변화량 Δχ <span class="unit">(deg)</span></label>
+                        <label class="form-label">Chi 틸트 변화량 Δχ <span class="unit">(°)</span></label>
                         <input type="number" id="chiphi-chi" class="form-control mono" value="5.0" step="any" oninput="calcChiPhi()">
                       </div>
                     </div>
@@ -561,7 +561,7 @@
                   <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">밀도 ρ <span class="unit">(g/cm³)</span></label>
+                        <label class="form-label">밀도 ρ <span class="unit">(g·cm⁻³ / g/cm³)</span></label>
                         <input type="number" id="crit-density" class="form-control mono" value="19.32" step="any" oninput="calcCriticalAngle()">
                       </div>
                     </div>
@@ -618,13 +618,13 @@
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">각도 θ <span class="unit">(deg)</span></label>
+                        <label class="form-label">각도 θ <span class="unit">(°)</span></label>
                         <input type="number" id="q-theta" class="form-control mono" value="10.0" step="any" oninput="calcQSpace('theta')">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">회절각 2θ <span class="unit">(deg)</span></label>
+                        <label class="form-label">회절각 2θ <span class="unit">(°)</span></label>
                         <input type="number" id="q-twotheta" class="form-control mono" value="20.0" step="any" oninput="calcQSpace('twotheta')">
                       </div>
                     </div>
@@ -685,7 +685,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">입사각 θ <span class="unit">(deg)</span></label>
+                        <label class="form-label">입사각 θ <span class="unit">(°)</span></label>
                         <input type="number" id="fp-inc-angle" class="form-control mono" value="0.5" step="any" oninput="calcFootprint()">
                       </div>
                     </div>
@@ -733,7 +733,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">소스 기준 플럭스 <span class="unit">(ph/s/mA)</span></label>
+                        <label class="form-label">소스 기준 플럭스 <span class="unit">(ph·s⁻¹·mA⁻¹)</span></label>
                         <input type="number" id="flux-source-base" class="form-control mono" value="1.0e11" step="any" oninput="calcBeamFlux()">
                       </div>
                     </div>
@@ -856,7 +856,7 @@
                         <div id="ang-res-mrad" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">각도 분해능 (deg / arcsec)</div>
+                        <div class="result-label">각도 분해능 (° / ")</div>
                         <div id="ang-res-deg" class="result-value">-</div>
                       </div>
                     </div>
@@ -987,15 +987,15 @@
                       <div class="form-group">
                         <label class="form-label">모노크로메이터 재질</label>
                         <select id="therm-mat" class="form-control" onchange="calcThermalShift()">
-                          <option value="si">Silicon (α = 2.6 × 10⁻⁶ / K)</option>
-                          <option value="diamond">Diamond (α = 1.0 × 10⁻⁶ / K)</option>
-                          <option value="ge">Germanium (α = 5.9 × 10⁻⁶ / K)</option>
+                          <option value="si">Silicon (α = 2.6 × 10⁻⁶ K⁻¹)</option>
+                          <option value="diamond">Diamond (α = 1.0 × 10⁻⁶ K⁻¹)</option>
+                          <option value="ge">Germanium (α = 5.9 × 10⁻⁶ K⁻¹)</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">온도 변화 ΔT <span class="unit">(°C 또는 K)</span></label>
+                        <label class="form-label">온도 변화 ΔT <span class="unit">(K 또는 °C)</span></label>
                         <input type="number" id="therm-temp" class="form-control mono" value="0.5" step="any" oninput="calcThermalShift()">
                       </div>
                     </div>
@@ -1211,9 +1211,9 @@
                       <div class="form-group">
                         <label class="form-label">비트 심도 (Bit Depth)</label>
                         <select id="daq-bitdepth" class="form-control" onchange="calcDAQ()">
-                          <option value="16">16-bit (2 Bytes/px)</option>
-                          <option value="32">32-bit (4 Bytes/px)</option>
-                          <option value="8">8-bit (1 Byte/px)</option>
+                          <option value="16">16-bit (2 B/px)</option>
+                          <option value="32">32-bit (4 B/px)</option>
+                          <option value="8">8-bit (1 B/px)</option>
                         </select>
                       </div>
                     </div>
@@ -1225,7 +1225,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label">측정 시간 <span class="unit">(초)</span></label>
+                        <label class="form-label">측정 시간 <span class="unit">(s)</span></label>
                         <input type="number" id="daq-runtime" class="form-control mono" value="60" step="any" oninput="calcDAQ()">
                       </div>
                     </div>
@@ -1326,19 +1326,19 @@
                     <div class="col-4">
                       <div style="font-weight:700; font-size:12px; margin-bottom:8px;">길이 / 파장 (Length)</div>
                       <div class="form-group">
-                        <label class="form-label">Å (옹스트롬)</label>
+                        <label class="form-label">Å (Angstrom)</label>
                         <input type="number" id="unit-len-ang" class="form-control mono" value="1.0" step="any" oninput="convertUnits('length', 'ang')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">nm (나노미터)</label>
+                        <label class="form-label">nm</label>
                         <input type="number" id="unit-len-nm" class="form-control mono" value="0.1" step="any" oninput="convertUnits('length', 'nm')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">μm (마이크로미터)</label>
+                        <label class="form-label">μm</label>
                         <input type="number" id="unit-len-um" class="form-control mono" value="0.0001" step="any" oninput="convertUnits('length', 'um')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">mm (밀리미터)</label>
+                        <label class="form-label">mm</label>
                         <input type="number" id="unit-len-mm" class="form-control mono" value="0.0000001" step="any" oninput="convertUnits('length', 'mm')">
                       </div>
                     </div>
@@ -1351,11 +1351,11 @@
                         <input type="number" id="unit-press-mbar" class="form-control mono" value="1.0e-7" step="any" oninput="convertUnits('pressure', 'mbar')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Torr (mmHg)</label>
+                        <label class="form-label">Torr</label>
                         <input type="number" id="unit-press-torr" class="form-control mono" value="7.5006e-8" step="any" oninput="convertUnits('pressure', 'torr')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Pa (파스칼)</label>
+                        <label class="form-label">Pa (SI)</label>
                         <input type="number" id="unit-press-pa" class="form-control mono" value="1.0e-5" step="any" oninput="convertUnits('pressure', 'pa')">
                       </div>
                     </div>
@@ -1364,19 +1364,19 @@
                     <div class="col-4">
                       <div style="font-weight:700; font-size:12px; margin-bottom:8px;">각도 (Angle)</div>
                       <div class="form-group">
-                        <label class="form-label">deg (도 °)</label>
+                        <label class="form-label">deg (°)</label>
                         <input type="number" id="unit-ang-deg" class="form-control mono" value="1.0" step="any" oninput="convertUnits('angle', 'deg')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">rad (라디안)</label>
+                        <label class="form-label">rad (SI)</label>
                         <input type="number" id="unit-ang-rad" class="form-control mono" value="0.017453" step="any" oninput="convertUnits('angle', 'rad')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">mrad (밀리라디안)</label>
+                        <label class="form-label">mrad</label>
                         <input type="number" id="unit-ang-mrad" class="form-control mono" value="17.453" step="any" oninput="convertUnits('angle', 'mrad')">
                       </div>
                       <div class="form-group">
-                        <label class="form-label">arcsec (초 ")</label>
+                        <label class="form-label">arcsec (")</label>
                         <input type="number" id="unit-ang-arcsec" class="form-control mono" value="3600" step="any" oninput="convertUnits('angle', 'arcsec')">
                       </div>
                     </div>
