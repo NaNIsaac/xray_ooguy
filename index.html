@@ -64,25 +64,14 @@
     <!-- Main View Wrapper -->
     <div id="main-wrapper">
 
-      <!-- Top Header with Horizontal Tab Bar -->
+      <!-- Top Masthead Header -->
       <header id="top-header">
-        <div class="header-left">
+        <div class="header-brand-area">
           <div class="page-breadcrumb">
-            <span style="color:var(--ink-muted);">BEAMLINE</span>
+            <span style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
             <span class="breadcrumb-sep">/</span>
             <span id="breadcrumb-current">DASHBOARD</span>
           </div>
-
-          <!-- Top Navigation Tab Bar -->
-          <nav class="top-nav-tabs">
-            <a class="tab-btn active" data-route="dashboard" href="#dashboard">DASHBOARD</a>
-            <a class="tab-btn" data-route="optics" href="#optics">OPTICS</a>
-            <a class="tab-btn" data-route="beamline" href="#beamline">BEAMLINE</a>
-            <a class="tab-btn" data-route="logbook" href="#logbook">LOGBOOK</a>
-            <a class="tab-btn" data-route="experiment" href="#experiment">EXPERIMENT</a>
-            <a class="tab-btn" data-route="reference" href="#reference">REFERENCE</a>
-            <a class="tab-btn" data-route="settings" href="#settings">SETTINGS</a>
-          </nav>
         </div>
 
         <div class="header-right">
@@ -92,6 +81,19 @@
           </button>
         </div>
       </header>
+
+      <!-- Dedicated Horizontal Tab Strip (Horizontally Scrollable) -->
+      <nav id="top-tab-strip">
+        <div class="tab-strip-scroll">
+          <button class="tab-pill active" data-route="dashboard">0. DASHBOARD</button>
+          <button class="tab-pill" data-route="optics">1. OPTICS (8 Tools)</button>
+          <button class="tab-pill" data-route="beamline">2. BEAMLINE (7 Tools)</button>
+          <button class="tab-pill" data-route="logbook">3. LOGBOOK</button>
+          <button class="tab-pill" data-route="experiment">4. EXPERIMENT</button>
+          <button class="tab-pill" data-route="reference">5. REFERENCE</button>
+          <button class="tab-pill" data-route="settings">6. SETTINGS</button>
+        </div>
+      </nav>
 
       <!-- Scrollable Content View -->
       <main id="content-area">

@@ -265,11 +265,11 @@ sub {
   background-color: var(--bg-paper);
 }
 
-/* Top Running Header (Masthead & Horizontally Scrollable Tab Bar) */
+/* Top Running Header (Academic Masthead) */
 #top-header {
   height: var(--header-height);
   min-height: var(--header-height);
-  border-bottom: var(--rule-main);
+  border-bottom: var(--rule-light);
   background-color: var(--bg-paper);
   display: flex;
   align-items: center;
@@ -277,32 +277,26 @@ sub {
   padding: 0 16px;
   position: sticky;
   top: 0;
-  z-index: 90;
-  flex-wrap: nowrap;
+  z-index: 95;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
-.header-left {
+.header-brand-area {
   display: flex;
   align-items: center;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
 }
 
 .page-breadcrumb {
   font-family: var(--font-serif);
   font-size: 13px;
   font-weight: 700;
-  color: var(--ink-primary);
+  color: var(--accent-ink);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 6px 0;
+  padding: 4px 0;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .breadcrumb-sep {
@@ -311,62 +305,102 @@ sub {
   font-weight: 400;
 }
 
-/* Horizontal Top Navigation Tabs: ONLY THIS AREA HORIZONTALLY SCROLLS! */
-.top-nav-tabs {
+.header-right {
   display: flex;
   align-items: center;
-  margin-left: 12px;
-  border-left: var(--rule-light);
-  padding-left: 8px;
-  padding-right: 8px;
+}
+
+#header-live-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-right: 14px;
+  white-space: nowrap;
+}
+
+.header-btn {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  border: var(--rule-main);
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.header-btn:hover {
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+}
+
+/* ==========================================================================
+   Dedicated Horizontal Tab Strip (Horizontally Scrollable, Highly Visible)
+   ========================================================================== */
+#top-tab-strip {
+  width: 100%;
+  max-width: 100%;
+  background-color: var(--bg-paper-subtle);
+  border-bottom: var(--rule-heavy);
+  position: sticky;
+  top: var(--header-height);
+  z-index: 90;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.tab-strip-scroll {
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  scrollbar-color: var(--ink-muted) var(--bg-paper-subtle);
 }
 
-.top-nav-tabs::-webkit-scrollbar {
-  height: 3px;
+.tab-strip-scroll::-webkit-scrollbar {
+  height: 4px;
 }
-.top-nav-tabs::-webkit-scrollbar-thumb {
-  background: var(--ink-muted);
+.tab-strip-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--ink-muted);
 }
-.top-nav-tabs::-webkit-scrollbar-track {
-  background: var(--bg-paper-subtle);
+.tab-strip-scroll::-webkit-scrollbar-track {
+  background-color: var(--bg-paper-subtle);
 }
 
-.tab-btn {
+.tab-pill {
   font-family: var(--font-serif);
   font-size: 12px;
   font-weight: 600;
-  color: var(--ink-secondary);
-  padding: 5px 10px;
-  border: 1px solid transparent;
-  border-bottom: 2px solid transparent;
-  text-decoration: none;
-  cursor: pointer;
-  margin-right: 2px;
-  background: transparent;
-  display: inline-block;
-  line-height: 1.2;
-  flex-shrink: 0;
-}
-
-.tab-btn:hover {
-  background-color: var(--bg-paper-hover);
-  color: var(--ink-primary);
-  border-color: var(--rule-light);
-}
-
-.tab-btn.active {
-  background-color: var(--bg-paper);
-  color: var(--accent-ink);
-  font-weight: 700;
+  padding: 5px 14px;
+  margin-right: 6px;
   border: var(--rule-main);
-  border-bottom: 2px solid var(--accent-ink);
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+.tab-pill:hover {
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+}
+
+.tab-pill.active {
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+  font-weight: 700;
+  border: 1.5px solid var(--ink-primary);
 }
 
 /* Sub-navigation Jump Bar inside Views */

@@ -129,13 +129,17 @@
       }
     }
 
-    // Update Top Navigation Tabs active status
-    var tabBtns = document.querySelectorAll(".tab-btn");
-    for (var k = 0; k < tabBtns.length; k++) {
-      var tBtn = tabBtns[k];
+    // Update Top Navigation Tabs active status (Tab Pills & Tab Buttons)
+    var tabPills = document.querySelectorAll(".tab-pill, .tab-btn");
+    for (var k = 0; k < tabPills.length; k++) {
+      var tBtn = tabPills[k];
       var tabTarget = tBtn.getAttribute("data-route");
       if (tabTarget === route) {
         tBtn.classList.add("active");
+        // Scroll the active tab into view smoothly within the horizontal strip
+        try {
+          tBtn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        } catch (err) {}
       } else {
         tBtn.classList.remove("active");
       }
@@ -255,8 +259,8 @@
     window.addEventListener("hashchange", handleHashChange);
     handleHashChange();
 
-    // Setup Navigation click handlers (Sidebar & Top Tabs)
-    var navItems = document.querySelectorAll(".nav-item[data-route], .tab-btn[data-route]");
+    // Setup Navigation click handlers (Sidebar, Top Tab Strip & Tab Buttons)
+    var navItems = document.querySelectorAll(".nav-item[data-route], .tab-pill[data-route], .tab-btn[data-route]");
     for (var i = 0; i < navItems.length; i++) {
       (function (item) {
         item.addEventListener("click", function (e) {
