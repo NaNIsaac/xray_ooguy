@@ -129,6 +129,18 @@
       }
     }
 
+    // Update Top Navigation Tabs active status
+    var tabBtns = document.querySelectorAll(".tab-btn");
+    for (var k = 0; k < tabBtns.length; k++) {
+      var tBtn = tabBtns[k];
+      var tabTarget = tBtn.getAttribute("data-route");
+      if (tabTarget === route) {
+        tBtn.classList.add("active");
+      } else {
+        tBtn.classList.remove("active");
+      }
+    }
+
     // Update Header Breadcrumb
     var breadcrumbTitle = document.getElementById("breadcrumb-current");
     if (breadcrumbTitle) {
@@ -243,8 +255,8 @@
     window.addEventListener("hashchange", handleHashChange);
     handleHashChange();
 
-    // Setup Navigation click handlers
-    var navItems = document.querySelectorAll(".nav-item[data-route]");
+    // Setup Navigation click handlers (Sidebar & Top Tabs)
+    var navItems = document.querySelectorAll(".nav-item[data-route], .tab-btn[data-route]");
     for (var i = 0; i < navItems.length; i++) {
       (function (item) {
         item.addEventListener("click", function (e) {

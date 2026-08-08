@@ -258,23 +258,25 @@ sub {
   background-color: var(--bg-paper);
 }
 
-/* Top Running Header (Academic Masthead) */
+/* Top Running Header (Academic Masthead & Tab Bar) */
 #top-header {
-  height: var(--header-height);
+  min-height: var(--header-height);
   border-bottom: var(--rule-main);
   background-color: var(--bg-paper);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 16px;
   position: sticky;
   top: 0;
   z-index: 90;
+  flex-wrap: wrap;
 }
 
 .header-left {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .page-breadcrumb {
@@ -284,6 +286,7 @@ sub {
   color: var(--ink-primary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  padding: 6px 0;
 }
 
 .breadcrumb-sep {
@@ -292,9 +295,80 @@ sub {
   font-weight: 400;
 }
 
+/* Horizontal Top Navigation Tabs */
+.top-nav-tabs {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  border-left: var(--rule-light);
+  padding-left: 12px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.tab-btn {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 2px;
+  background: transparent;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.tab-btn:hover {
+  background-color: var(--bg-paper-hover);
+  color: var(--ink-primary);
+  border-color: var(--rule-light);
+}
+
+.tab-btn.active {
+  background-color: var(--bg-paper);
+  color: var(--accent-ink);
+  font-weight: 700;
+  border: var(--rule-main);
+  border-bottom: 2px solid var(--accent-ink);
+}
+
+/* Sub-navigation Jump Bar inside Views */
+.sub-nav-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: var(--rule-light);
+}
+
+.sub-tab-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border: var(--rule-main);
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  padding: 2px 7px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.sub-tab-btn:hover {
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+  border-color: var(--ink-primary);
+}
+
 .header-right {
   display: flex;
   align-items: center;
+  padding: 6px 0;
 }
 
 #header-live-time {
