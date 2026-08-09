@@ -218,42 +218,41 @@
                 <div class="card-body">
                   <div class="preset-row" id="lattice-presets"></div>
 
+                  <!-- Crystal System Selector -->
+                  <div class="form-group">
+                    <label class="form-label" data-i18n="lat_system">결정계 (Crystal System)</label>
+                    <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
+                      <option value="cubic">Cubic (a = b = c, 90°)</option>
+                      <option value="tetragonal">Tetragonal (a = b ≠ c, 90°)</option>
+                      <option value="orthorhombic">Orthorhombic (a ≠ b ≠ c, 90°)</option>
+                      <option value="hexagonal">Hexagonal / Trigonal (γ = 120°)</option>
+                      <option value="rhombohedral">Rhombohedral (a = b = c, α = β = γ)</option>
+                      <option value="monoclinic">Monoclinic (β ≠ 90°)</option>
+                      <option value="triclinic">Triclinic (general)</option>
+                    </select>
+                  </div>
+
+                  <!-- 3x3 Lattice Parameters & Miller Indices Grid -->
                   <div class="flex-row">
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-label" data-i18n="lat_system">결정계 (Crystal System)</label>
-                        <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
-                          <option value="cubic">Cubic (a = b = c, 90°)</option>
-                          <option value="tetragonal">Tetragonal (a = b ≠ c, 90°)</option>
-                          <option value="orthorhombic">Orthorhombic (a ≠ b ≠ c, 90°)</option>
-                          <option value="hexagonal">Hexagonal / Trigonal (γ = 120°)</option>
-                          <option value="rhombohedral">Rhombohedral (a = b = c, α = β = γ)</option>
-                          <option value="monoclinic">Monoclinic (β ≠ 90°)</option>
-                          <option value="triclinic">Triclinic (general)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-2">
+                    <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">h</label>
                         <input type="number" id="lat-h" class="form-control mono" value="1" step="1" oninput="calcLattice()">
                       </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">k</label>
                         <input type="number" id="lat-k" class="form-control mono" value="1" step="1" oninput="calcLattice()">
                       </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">l</label>
                         <input type="number" id="lat-l" class="form-control mono" value="1" step="1" oninput="calcLattice()">
                       </div>
                     </div>
-                  </div>
 
-                  <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">a <span class="unit">(Å)</span></label>
@@ -272,6 +271,7 @@
                         <input type="number" id="lat-c" class="form-control mono" value="5.43102" step="any" oninput="calcLattice()">
                       </div>
                     </div>
+
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">α <span class="unit">(°)</span></label>
@@ -1353,32 +1353,25 @@
                 <div class="toc-sec-header" onclick="jumpToSection('record')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION III.</span>
-                    <span data-i18n="toc_sec3_title">실험 세션 기록 (Record)</span>
+                    <span data-i18n="toc_sec3_title">로그북 &amp; 실시간 기록 (Record)</span>
                   </div>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec3_desc">
-                  세션 컨텍스트, 원클릭 퀵 로그, 외부 로그북용 세션 템플릿
+                  연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫
                 </div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-quicklog')">
+                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-headers')">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_1">세션 컨텍스트 (Session)</span>
-                      <span class="toc-item-formula">Beamline, Sample, Energy, Reflection — all optional</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_1">빔타임 로그북 서식 프리셋 (Logbook Headers)</span>
+                      <span class="toc-item-formula">Standard / Shift Handover / Run Table Matrix</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-quicklog')">
+                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-snippets')">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">퀵 로그 & 타임라인 (Quick Log)</span>
-                      <span class="toc-item-formula">One-click Event / Issue / Result logging</span>
-                    </div>
-                  </a>
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-template')">
-                    <span class="toc-item-num">§ 3.</span>
-                    <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_3">세션 템플릿 (Session Template)</span>
-                      <span class="toc-item-formula">Compact / Standard / Beamtime header export</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">실시간 빔타임 이벤트 스니펫 (In-Situ Snippets)</span>
+                      <span class="toc-item-formula">Beam dump, Restored, Mount, Alignment, Scan start/finish</span>
                     </div>
                   </a>
                 </div>
@@ -1454,44 +1447,118 @@
 
 
         <!-- =================================================================
-             4. RECORD VIEW — session context, quick log, session template
+             3. RECORD VIEW — Logbook Presets & In-Situ Beamtime Snippets
              ================================================================= -->
         <section id="view-record" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2 data-i18n="b_rec_title">RECORD — 실험 세션 기록</h2>
-              <p data-i18n="b_rec_desc">한 번의 클릭으로 남기는 로그. 모든 항목은 선택 사항입니다.</p>
+              <h2 data-i18n="b_rec_title">RECORD — 방사광 빔타임 로그북 &amp; 실시간 기록</h2>
+              <p data-i18n="b_rec_desc">연구 노트(ELN/Notion/Paper)용 표준 템플릿과 빔타임 이벤트 1클릭 복사 스니펫</p>
             </div>
             <div class="banner-actions">
-              <button class="btn btn-sm btn-secondary" onclick="copySessionLog()" data-i18n="rec_btn_copy_log">세션 로그 복사</button>
+              <button class="btn btn-sm btn-secondary" onclick="clearTimelineLogs()" data-i18n="rec_btn_clear_log">타임라인 비우기</button>
+              <button class="btn btn-sm btn-primary" onclick="copyFullTimeline()" data-i18n="rec_btn_copy_all" style="margin-left:6px; font-weight:700;">전체 타임라인 복사</button>
             </div>
           </div>
 
-          <!-- Session context: one compact line, expanded only on demand -->
-          <div id="rec-session-bar" class="rec-session-bar"></div>
-
-          <!-- 1. QUICK LOG — the first thing on screen -->
-          <div class="card" id="card-record-quicklog">
-            <div class="card-header">
-              <span class="card-title" data-i18n="rec_card_quick">QUICK LOG</span>
-              <span class="badge" id="rec-log-count">0 logs</span>
+          <div class="flex-row">
+            <!-- § 1. 빔타임 로그북 서식 프리셋 (Logbook Header Templates) -->
+            <div class="col-12">
+              <div class="card" id="card-record-headers">
+                <div class="card-header">
+                  <span class="card-title">§ 1. 빔타임 로그북 서식 프리셋 (Beamtime Logbook Header Presets)</span>
+                  <span class="card-tag">Markdown / Lab Notebook</span>
+                </div>
+                <div class="card-body">
+                  <div class="rec-tpl-tabs">
+                    <button class="btn btn-sm btn-primary active" id="tab-tpl-standard" onclick="selectLogbookTab('standard')">표준 빔타임 서식 (Standard)</button>
+                    <button class="btn btn-sm btn-secondary" id="tab-tpl-shift" onclick="selectLogbookTab('shift')">교대/핸드오버 서식 (Shift Handover)</button>
+                    <button class="btn btn-sm btn-secondary" id="tab-tpl-matrix" onclick="selectLogbookTab('matrix')">측정 시료 매트릭스 표 (Run Table)</button>
+                  </div>
+                  
+                  <div class="rec-tpl-box">
+                    <pre class="rec-tpl-preview mono" id="logbook-tpl-preview"></pre>
+                    <div class="rec-tpl-copy-bar">
+                      <button class="btn btn-sm btn-primary" onclick="copyActiveTemplate()" style="font-weight:700;">📋 서식 클립보드 복사 (Copy Template)</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="card-body">
-              <div id="rec-quick-buttons" class="rec-quick-row"></div>
-              <div id="rec-custom-box" class="rec-custom-box" style="display:none;"></div>
-              <div class="rec-log-list-title" data-i18n="rec_recent_title">RECENT LOGS</div>
-              <div id="rec-log-list"></div>
-            </div>
-          </div>
 
-          <!-- 2. SESSION TEMPLATE — footer weight, collapsed until asked for -->
-          <div class="rec-tpl" id="card-record-template">
-            <button type="button" class="rec-tpl-toggle" onclick="toggleTemplate()">
-              <span class="rec-tpl-caret" id="rec-tpl-caret">&#9656;</span>
-              <span class="rec-tpl-label" data-i18n="rec_card_tpl">SESSION TEMPLATE</span>
-              <span class="rec-tpl-hint" data-i18n="rec_tpl_hint">외부 로그북용 서식 헤더 생성</span>
-            </button>
-            <div class="rec-tpl-panel" id="rec-tpl-panel" style="display:none;"></div>
+            <!-- § 2. 실시간 빔타임 이벤트 스니펫 (In-Situ Quick Log Snippets) -->
+            <div class="col-12">
+              <div class="card" id="card-record-snippets">
+                <div class="card-header">
+                  <span class="card-title">§ 2. 실시간 빔타임 이벤트 스니펫 (In-Situ Quick Log Snippets)</span>
+                  <span class="card-tag">1-Click Timestamped Copy</span>
+                </div>
+                <div class="card-body">
+                  <p style="font-size:11.5px; color:var(--ink-secondary); margin-bottom:10px;">
+                    버튼 클릭 시 현재 시간(<span class="mono" id="rec-live-timestamp-preview">-</span>)이 자동 삽입되어 <strong>클립보드에 즉시 복사</strong>되고 하단 타임라인에 누적됩니다.
+                  </p>
+
+                  <div class="rec-snippet-grid">
+                    <button class="rec-snip-btn alert" onclick="triggerSnippet('beam_dump')">
+                      <span class="snip-icon">⚠</span>
+                      <span class="snip-title">빔 덤프 (Beam Dump)</span>
+                      <span class="snip-sub">Current 0 mA 발생 / 정지</span>
+                    </button>
+                    <button class="rec-snip-btn success" onclick="triggerSnippet('beam_restored')">
+                      <span class="snip-icon">✔</span>
+                      <span class="snip-title">빔 복구 / 탑업 (Beam Restored)</span>
+                      <span class="snip-sub">Current 정상 복구 / 셔터 오픈</span>
+                    </button>
+                    <button class="rec-snip-btn primary" onclick="triggerSnippet('sample_mount')">
+                      <span class="snip-icon">📦</span>
+                      <span class="snip-title">시료 마운트 (Sample Mount)</span>
+                      <span class="snip-sub">신규 시료 스테이지 거치 / 센터링</span>
+                    </button>
+                    <button class="rec-snip-btn primary" onclick="triggerSnippet('beam_align')">
+                      <span class="snip-icon">🎯</span>
+                      <span class="snip-title">빔 얼라인먼트 (Alignment)</span>
+                      <span class="snip-sub">슬릿/핀홀/디텍터 센터 정렬</span>
+                    </button>
+                    <button class="rec-snip-btn info" onclick="triggerSnippet('calibration')">
+                      <span class="snip-icon">📐</span>
+                      <span class="snip-title">표준시료 캘리브레이션</span>
+                      <span class="snip-sub">LaB6 / AgBh / CeO2 Q-보정</span>
+                    </button>
+                    <button class="rec-snip-btn info" onclick="triggerSnippet('scan_start')">
+                      <span class="snip-icon">▶</span>
+                      <span class="snip-title">측정 시작 (Scan Start)</span>
+                      <span class="snip-sub">데이터 수집 Run / Scan 개시</span>
+                    </button>
+                    <button class="rec-snip-btn success" onclick="triggerSnippet('scan_finish')">
+                      <span class="snip-icon">⏹</span>
+                      <span class="snip-title">측정 완료 (Scan Complete)</span>
+                      <span class="snip-sub">2D 회절/산란 프레임 저장 완료</span>
+                    </button>
+                    <button class="rec-snip-btn alert" onclick="triggerSnippet('interlock')">
+                      <span class="snip-icon">🛑</span>
+                      <span class="snip-title">인터락 / 에러 (Interlock/Error)</span>
+                      <span class="snip-sub">허치 서치 / 모터 스톨 / 경보</span>
+                    </button>
+                  </div>
+
+                  <!-- Custom Memo Input -->
+                  <div class="rec-custom-row">
+                    <input type="text" id="rec-custom-input" class="form-control mono" placeholder="실험 중 특이사항 / 메모 입력 (Enter 입력 시 타임스탬프와 함께 복사 &amp; 누적)" onkeydown="if(event.key==='Enter') addCustomNote()">
+                    <button class="btn btn-sm btn-primary" onclick="addCustomNote()" style="flex-shrink:0; font-weight:700;">+ 메모 복사 &amp; 추가</button>
+                  </div>
+
+                  <!-- Timeline Stream Area -->
+                  <div class="rec-timeline-area">
+                    <div class="rec-timeline-head">
+                      <span class="rec-timeline-title">LIVE EXPERIMENT TIMELINE (누적 타임라인 스트림)</span>
+                      <span class="badge" id="rec-timeline-count">0 logs</span>
+                    </div>
+                    <div id="rec-timeline-list" class="rec-timeline-list"></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
