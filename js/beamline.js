@@ -27,8 +27,8 @@
 
     var badgeClass = isSpill ? "fp-diagram-badge spill" : "fp-diagram-badge ok";
     var badgeText = isSpill
-      ? "⚠ SPILLOVER (" + spilloverPct.toFixed(1) + "% LOSS)"
-      : (hasSample ? "✔ 100% IN SAMPLE (" + coveragePct + "%)" : "CALCULATED");
+      ? "SPILLOVER (" + spilloverPct.toFixed(1) + "% LOSS)"
+      : (hasSample ? "100% IN SAMPLE (" + coveragePct + "%)" : "CALCULATED");
 
     // Geometric mapping coordinates
     var svgW = 380, svgH = 115;

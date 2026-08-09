@@ -409,9 +409,9 @@
       seoDesc: "Calculate the Bragg diffraction angle, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance and Eulerian cradle corrections."
     },
     record: {
-      title: "III. RECORD", subtitle: "실험 세션 기록",
-      seoTitle: "Beamtime Session Log & Logbook Header | X-Ray Beamline Toolkit",
-      seoDesc: "Log beamtime events in one click and generate a formatted session header to paste into your own logbook. Everything stays in your browser."
+      title: "III. RECORD", subtitle: "빔타임 로그북 서식 & 실시간 이벤트 스니펫",
+      seoTitle: "Beamtime Logbook Headers & Quick Event Snippets | X-Ray Beamline Toolkit",
+      seoDesc: "Plain-text beamtime logbook headers and one-click in-situ event snippets with real-time timestamps for lab notebooks."
     },
     dashboard: {
       title: "0. CONTENTS", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",

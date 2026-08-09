@@ -201,9 +201,9 @@
       mp_y_fwhm: "FWHM (mm)",
       mp_sample: "시료",
 
-      // Themes (4 palettes)
+      // Themes (7 palettes)
       theme_current_prefix: "현재 테마:",
-      theme_desc: "여섯 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.",
+      theme_desc: "일곱 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.",
       theme_paper_name: "학술 논문 (Academic Paper)",
       theme_paper_desc: "미색 종이 + 잉크 블랙 + 옥스퍼드 네이비 — 기본 인쇄 규격",
       theme_paper_short: "논문",
@@ -410,7 +410,7 @@
       th_email: "이메일 (Email)",
       th_github: "깃허브 (GitHub)",
       th_repo: "프로젝트 저장소",
-      btn_sponsor_gh: "☕ GitHub Sponsors 후원하기 ➔"
+      btn_sponsor_gh: "GitHub Sponsors 후원하기 ➔"
     },
     en: {
       // Navigation & Sidebar
@@ -599,9 +599,9 @@
       mp_y_fwhm: "FWHM (mm)",
       mp_sample: "Sample",
 
-      // Themes (4 palettes)
+      // Themes (7 palettes)
       theme_current_prefix: "Current theme:",
-      theme_desc: "Pick one of four palettes. Layout and print specification stay identical across all themes.",
+      theme_desc: "Pick one of seven themes. Layout and print specification stay identical across all themes.",
       theme_paper_name: "Academic Paper",
       theme_paper_desc: "Off-white paper, ink black, Oxford navy — the default print specification",
       theme_paper_short: "Paper",
@@ -828,7 +828,7 @@
       th_email: "Email",
       th_github: "GitHub",
       th_repo: "Project Repository",
-      btn_sponsor_gh: "☕ Sponsor on GitHub Sponsors ➔"
+      btn_sponsor_gh: "Sponsor on GitHub Sponsors ➔"
     }
   };
 
