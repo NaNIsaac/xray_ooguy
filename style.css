@@ -815,6 +815,7 @@ sub {
 .col-6  { width: 50%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
 .col-4  { width: 33.3333%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
 .col-3  { width: 25%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
+.col-2  { width: 16.6667%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
 
 /* Fine-Rule Section Box (Replacing Cards with Academic Borders) */
 .card {
@@ -926,6 +927,7 @@ sub {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  margin-bottom: 0;
 }
 
 .form-group {
@@ -1486,6 +1488,13 @@ select.form-control {
   .card-body .flex-row > .col-3 {
     width: 50% !important;
     max-width: 50% !important;
+    padding: 0 5px !important;
+    margin-bottom: 6px !important;
+    box-sizing: border-box !important;
+  }
+  .card-body .flex-row > .col-2 {
+    width: 33.3333% !important;
+    max-width: 33.3333% !important;
     padding: 0 5px !important;
     margin-bottom: 6px !important;
     box-sizing: border-box !important;

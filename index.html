@@ -219,7 +219,7 @@
                   <div class="preset-row" id="lattice-presets"></div>
 
                   <div class="flex-row">
-                    <div class="col-4">
+                    <div class="col-6">
                       <div class="form-group">
                         <label class="form-label" data-i18n="lat_system">결정계 (Crystal System)</label>
                         <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
@@ -233,26 +233,22 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-8">
-                      <div class="flex-row">
-                        <div class="col-4">
-                          <div class="form-group">
-                            <label class="form-label">h</label>
-                            <input type="number" id="lat-h" class="form-control mono" value="1" step="1" oninput="calcLattice()">
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div class="form-group">
-                            <label class="form-label">k</label>
-                            <input type="number" id="lat-k" class="form-control mono" value="1" step="1" oninput="calcLattice()">
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div class="form-group">
-                            <label class="form-label">l</label>
-                            <input type="number" id="lat-l" class="form-control mono" value="1" step="1" oninput="calcLattice()">
-                          </div>
-                        </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label class="form-label">h</label>
+                        <input type="number" id="lat-h" class="form-control mono" value="1" step="1" oninput="calcLattice()">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label class="form-label">k</label>
+                        <input type="number" id="lat-k" class="form-control mono" value="1" step="1" oninput="calcLattice()">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label class="form-label">l</label>
+                        <input type="number" id="lat-l" class="form-control mono" value="1" step="1" oninput="calcLattice()">
                       </div>
                     </div>
                   </div>
