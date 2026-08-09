@@ -7,6 +7,13 @@
 (function () {
   "use strict";
 
+  function t(key) {
+    if (window.i18n && window.i18n.t) {
+      return window.i18n.t(key);
+    }
+    return key;
+  }
+
   function renderSettingsHistory() {
     var tbody = document.getElementById("settings-history-body");
     var countEl = document.getElementById("history-total-count");
@@ -18,7 +25,7 @@
     tbody.innerHTML = "";
 
     if (history.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:16px;">저장된 계산 히스토리가 없습니다.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:16px;">' + t("history_empty") + '</td></tr>';
       return;
     }
 
@@ -35,11 +42,11 @@
   }
 
   function clearCalculationHistory() {
-    if (!confirm("모든 계산 히스토리를 영구 삭제하시겠습니까?")) return;
+    if (!confirm(t("history_clear_confirm"))) return;
     Storage.set("calc_history", []);
     renderSettingsHistory();
     if (window.renderDashboardHistory) window.renderDashboardHistory();
-    if (window.showToast) window.showToast("계산 히스토리가 삭제되었습니다.", "info");
+    if (window.showToast) window.showToast(t("history_cleared_toast"), "info");
   }
 
   function backupAllData() {
@@ -63,7 +70,7 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("전체 데이터 백업 파일이 저장되었습니다.", "info");
+    if (window.showToast) window.showToast(t("toast_backup_downloaded"), "info");
   }
 
   function restoreAllData(event) {
@@ -81,12 +88,12 @@
         if (parsed.samples) Storage.set("sample_list", parsed.samples);
         if (parsed.kanban) Storage.set("kanban_tasks", parsed.kanban);
 
-        if (window.showToast) window.showToast("백업 데이터 복원이 완료되었습니다.", "info");
+        if (window.showToast) window.showToast(t("toast_backup_restored"), "info");
         setTimeout(function () {
           window.location.reload();
         }, 800);
       } catch (err) {
-        alert("백업 파일 읽기 실패: 올바른 JSON 규격이 아닙니다.");
+        alert(t("alert_backup_invalid"));
       }
     };
     reader.readAsText(file);

@@ -59,21 +59,21 @@
       </nav>
 
       <div class="sidebar-footer">
-        <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;">Client Offline-Ready</div>
+        <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;" data-i18n="sidebar_offline">Client Offline-Ready</div>
         <div style="margin-bottom:6px;">CentOS 7 / Chrome / Firefox</div>
         <div style="display:flex; margin-bottom:4px;">
-          <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; margin-right:3px; white-space:nowrap;">
+          <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; margin-right:3px; white-space:nowrap;" data-i18n="btn_light">
             라이트
           </button>
-          <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; white-space:nowrap;">
+          <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; white-space:nowrap;" data-i18n="btn_dark">
             다크
           </button>
         </div>
         <div style="display:flex;">
-          <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('ko')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; margin-right:3px; white-space:nowrap;">
+          <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('ko')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; margin-right:3px; white-space:nowrap;" data-i18n="btn_ko">
             한국어
           </button>
-          <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; white-space:nowrap;">
+          <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="text-align:center; padding:3px 2px; font-size:10px; flex:1; white-space:nowrap;" data-i18n="btn_en">
             English
           </button>
         </div>
@@ -121,11 +121,11 @@
         <section id="view-dashboard" class="view-section active">
           <div class="section-banner">
             <div class="banner-info">
-              <h2 id="banner-dash-title">빔라인 래피드 대시보드 (Quick Dashboard)</h2>
-              <p id="banner-dash-desc">자주 사용하는 광학 계산기, 물리량 분석기 및 최근 계산 히스토리 바로가기</p>
+              <h2 id="banner-dash-title" data-i18n="b_dash_title">빔라인 래피드 대시보드 (Quick Dashboard)</h2>
+              <p id="banner-dash-desc" data-i18n="b_dash_desc">자주 사용하는 광학 계산기, 물리량 분석기 및 최근 계산 히스토리 바로가기</p>
             </div>
             <div class="banner-actions">
-              <button class="btn btn-sm btn-primary" onclick="window.location.hash='#optics'">광학 계산기 열기</button>
+              <button class="btn btn-sm btn-primary" onclick="window.location.hash='#optics'" data-i18n="btn_open_optics">광학 계산기 열기</button>
             </div>
           </div>
 
@@ -137,8 +137,8 @@
                   <span class="badge">OPTICS</span>
                   <span class="mono" style="font-size:10px; color:var(--accent-ink);">E = hc/λ</span>
                 </div>
-                <div class="tile-title">에너지 - 파장 변환</div>
-                <div class="tile-desc">eV, keV, nm, Å, Hz 단위 상호 즉시 변환 (<i class="formula">hc = 12398.42 eV·Å</i>)</div>
+                <div class="tile-title" data-i18n="tile1_title">에너지 - 파장 변환</div>
+                <div class="tile-desc" data-i18n="tile1_desc">eV, keV, nm, Å, Hz 단위 상호 즉시 변환 (<i class="formula">hc = 12398.42 eV·Å</i>)</div>
               </div>
             </div>
 
@@ -149,8 +149,8 @@
                   <span class="badge">OPTICS</span>
                   <span class="mono" style="font-size:10px; color:var(--accent-ink);">λ = 2d sin θ</span>
                 </div>
-                <div class="tile-title">브래그 법칙 (Bragg's Law)</div>
-                <div class="tile-desc">결정 격자 d-spacing과 에너지에 따른 <i class="formula">θ / 2θ</i> 각도 및 Q-space 계산</div>
+                <div class="tile-title" data-i18n="tile2_title">브래그 법칙 (Bragg's Law)</div>
+                <div class="tile-desc" data-i18n="tile2_desc">결정 격자 d-spacing과 에너지에 따른 <i class="formula">θ / 2θ</i> 각도 및 Q-space 계산</div>
               </div>
             </div>
 
@@ -161,8 +161,8 @@
                   <span class="badge">BEAMLINE</span>
                   <span class="mono" style="font-size:10px; color:var(--accent-ink);">L = V / sin θ</span>
                 </div>
-                <div class="tile-title">시료 빔 풋프린트 (Footprint)</div>
-                <div class="tile-desc">입사각 및 빔 크기에 따른 시료 상 풋프린트 길이 및 스필오버 검증</div>
+                <div class="tile-title" data-i18n="tile3_title">시료 빔 풋프린트 (Footprint)</div>
+                <div class="tile-desc" data-i18n="tile3_desc">입사각 및 빔 크기에 따른 시료 상 풋프린트 길이 및 스필오버 검증</div>
               </div>
             </div>
 
@@ -173,8 +173,8 @@
                   <span class="badge">BEAMLINE</span>
                   <span class="mono" style="font-size:10px; color:var(--accent-ink);">σ ≥ 2</span>
                 </div>
-                <div class="tile-title">CDI / BCDI 오버샘플링</div>
-                <div class="tile-desc">나이퀴스트-섀넌 기준에 따른 스펙클 크기 및 <i class="formula">σ ≥ 2</i> 충족 판정</div>
+                <div class="tile-title" data-i18n="tile4_title">CDI / BCDI 오버샘플링</div>
+                <div class="tile-desc" data-i18n="tile4_desc">나이퀴스트-섀넌 기준에 따른 스펙클 크기 및 <i class="formula">σ ≥ 2</i> 충족 판정</div>
               </div>
             </div>
 
@@ -185,8 +185,8 @@
                   <span class="badge">LOGBOOK</span>
                   <span class="mono" style="font-size:10px; color:var(--accent-ink);">CSV / Markdown</span>
                 </div>
-                <div class="tile-title">실험 전자 로그북</div>
-                <div class="tile-desc">시료별 빔 조건 수동 기록, 태그 검색 및 CSV/JSON 데이터 내보내기</div>
+                <div class="tile-title" data-i18n="tile5_title">실험 전자 로그북</div>
+                <div class="tile-desc" data-i18n="tile5_desc">시료별 빔 조건 수동 기록, 태그 검색 및 CSV/JSON 데이터 내보내기</div>
               </div>
             </div>
 
@@ -197,8 +197,8 @@
                   <span class="badge">EXPERIMENT</span>
                   <span class="mono" style="font-size:10px; color:var(--accent-ink);">Auto-Save</span>
                 </div>
-                <div class="tile-title">실험 노트 & 칸반 보드</div>
-                <div class="tile-desc">자동 저장 메모장, 시료 리스트 관리 및 단계별 작업 보드</div>
+                <div class="tile-title" data-i18n="tile6_title">실험 노트 & 칸반 보드</div>
+                <div class="tile-desc" data-i18n="tile6_desc">자동 저장 메모장, 시료 리스트 관리 및 단계별 작업 보드</div>
               </div>
             </div>
           </div>
@@ -208,18 +208,18 @@
             <div class="col-8">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">최근 계산 기록 (Recent History)</span>
-                  <button class="btn btn-sm btn-secondary" onclick="window.location.hash='#settings'">전체 보기</button>
+                  <span class="card-title" data-i18n="dash_history_title">최근 계산 기록 (Recent History)</span>
+                  <button class="btn btn-sm btn-secondary" onclick="window.location.hash='#settings'" data-i18n="btn_view_all">전체 보기</button>
                 </div>
                 <div class="card-body" style="padding:0;">
                   <div class="table-responsive">
                     <table class="lab-table">
                       <thead>
                         <tr>
-                          <th>시간</th>
-                          <th>도구</th>
-                          <th>입력 조건</th>
-                          <th>계산 결과</th>
+                          <th data-i18n="th_time">시간</th>
+                          <th data-i18n="th_tool">도구</th>
+                          <th data-i18n="th_inputs">입력 조건</th>
+                          <th data-i18n="th_result">계산 결과</th>
                         </tr>
                       </thead>
                       <tbody id="dashboard-history-body">
@@ -234,7 +234,7 @@
             <div class="col-4">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">주요 물리 상수 (CODATA)</span>
+                  <span class="card-title" data-i18n="dash_constants_title">주요 물리 상수 (CODATA)</span>
                 </div>
                 <div class="card-body">
                   <div style="font-size:12px; line-height:1.75;">
@@ -314,70 +314,104 @@
               </div>
             </div>
 
-            <!-- 2. Bragg's Law -->
+            <!-- 2. Bragg's Law 3-Way Multi-Directional Suite -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">2. 브래그 법칙 (Bragg's Law)</span>
-                  <span class="card-tag"><i class="formula">λ = 2d sin θ</i></span>
+                  <span class="card-title" data-i18n="opt_t2_title">2. 브래그 법칙 (Bragg's Law 3-Way Suite)</span>
+                  <span class="card-tag"><i class="formula">λ = 2d sin θ ⇔ E = hc / (2d sin(tth/2))</i></span>
                 </div>
                 <div class="card-body">
-                  <div class="flex-row">
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-label">계산 모드</label>
-                        <select id="bragg-mode" class="form-control" onchange="calcBragg()">
-                          <option value="find_theta">에너지 → θ / 2θ 각도 계산</option>
-                          <option value="find_energy">θ 각도 → 에너지 계산</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-label">격자면 간격 <i class="formula">d</i> <span class="unit">(Å)</span></label>
-                        <input type="number" id="bragg-d" class="form-control mono" value="3.1356" step="any" oninput="calcBragg()">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label">자주 쓰는 결정면 프리셋</label>
+                  <!-- Preset Buttons Bar -->
+                  <div class="form-group" style="margin-bottom:10px;">
+                    <label class="form-label" data-i18n="lbl_presets">자주 쓰는 결정면 프리셋</label>
                     <div id="bragg-presets" class="preset-bar"></div>
                   </div>
 
-                  <div class="flex-row">
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-label">입사 에너지 <span class="unit">(keV)</span></label>
-                        <input type="number" id="bragg-energy" class="form-control mono" value="10.000" step="any" oninput="calcBragg()">
-                      </div>
+                  <!-- Row 1: d + tth -> Energy -->
+                  <div class="bragg-calc-row">
+                    <div style="font-weight:700; font-size:11px; margin-bottom:5px; color:var(--ink-primary);">
+                      <span class="badge" style="margin-right:4px;">1</span> <span data-i18n="bragg_row1_title">d + 2θ(tth) ➔ 에너지 (Energy)</span>
                     </div>
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-label">브래그 각도 <i class="formula">θ</i> 입력 <span class="unit">(°)</span></label>
-                        <input type="number" id="bragg-theta-input" class="form-control mono" value="11.403" step="any" oninput="calcBragg()">
+                    <div class="flex-row">
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_dspacing">격자면 간격 d</span> <span class="unit">(Å)</span></label>
+                          <input type="number" id="bragg-r1-d" class="form-control mono" value="3.1356" step="any" oninput="calcBraggRow1()">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ (tth)</span> <span class="unit">(°)</span></label>
+                          <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" step="any" oninput="calcBraggRow1()">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_energy" style="font-size:10px;">계산된 에너지 (E)</div>
+                          <div id="bragg-r1-res-e" class="result-value primary" style="font-size:13px; line-height:1.2;">10.000 keV</div>
+                          <div id="bragg-r1-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | λ = 1.2398 Å</div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="result-box">
-                    <div class="result-grid">
-                      <div class="result-item">
-                        <div class="result-label">브래그 각도 <i class="formula">θ</i></div>
-                        <div id="bragg-res-theta" class="result-value primary">11.403°</div>
+                  <!-- Row 2: tth + Energy -> d -->
+                  <div class="bragg-calc-row">
+                    <div style="font-weight:700; font-size:11px; margin-bottom:5px; color:var(--ink-primary);">
+                      <span class="badge" style="margin-right:4px;">2</span> <span data-i18n="bragg_row2_title">2θ(tth) + 에너지 ➔ d-spacing (d)</span>
+                    </div>
+                    <div class="flex-row">
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ (tth)</span> <span class="unit">(°)</span></label>
+                          <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" step="any" oninput="calcBraggRow2()">
+                        </div>
                       </div>
-                      <div class="result-item">
-                        <div class="result-label">회절각 <i class="formula">2θ</i></div>
-                        <div id="bragg-res-twotheta" class="result-value">22.806°</div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_inc_energy">입사 에너지 E</span> <span class="unit">(keV)</span></label>
+                          <input type="number" id="bragg-r2-e" class="form-control mono" value="10.000" step="any" oninput="calcBraggRow2()">
+                        </div>
                       </div>
-                      <div class="result-item">
-                        <div class="result-label">산란 벡터 <i class="formula">Q</i></div>
-                        <div id="bragg-res-q" class="result-value">2.0038 Å<sup>-1</sup></div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_d" style="font-size:10px;">계산된 격자면 간격 (d)</div>
+                          <div id="bragg-r2-res-d" class="result-value primary" style="font-size:13px; line-height:1.2;">3.1356 Å</div>
+                          <div id="bragg-r2-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
+                        </div>
                       </div>
                     </div>
-                    <div id="bragg-res-energy" style="display:none;"></div>
-                    <div id="bragg-res-lambda" style="display:none;"></div>
                   </div>
+
+                  <!-- Row 3: d + Energy -> tth -->
+                  <div class="bragg-calc-row" style="margin-bottom:0;">
+                    <div style="font-weight:700; font-size:11px; margin-bottom:5px; color:var(--ink-primary);">
+                      <span class="badge" style="margin-right:4px;">3</span> <span data-i18n="bragg_row3_title">d + 에너지 ➔ 2θ(tth) & θ(th)</span>
+                    </div>
+                    <div class="flex-row">
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_dspacing">격자면 간격 d</span> <span class="unit">(Å)</span></label>
+                          <input type="number" id="bragg-r3-d" class="form-control mono" value="3.1356" step="any" oninput="calcBraggRow3()">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_inc_energy">입사 에너지 E</span> <span class="unit">(keV)</span></label>
+                          <input type="number" id="bragg-r3-e" class="form-control mono" value="10.000" step="any" oninput="calcBraggRow3()">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_tth" style="font-size:10px;">계산된 회절각 (2θ / θ)</div>
+                          <div id="bragg-r3-res-tth" class="result-value primary" style="font-size:13px; line-height:1.2;">2θ = 22.806°</div>
+                          <div id="bragg-r3-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -489,45 +523,82 @@
               </div>
             </div>
 
-            <!-- 5. Energy-Angle Converter -->
+            <!-- 5. Energy Scaling Calculation -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">5. 에너지-각도 보정 (Energy-Angle Shift)</span>
-                  <span class="card-tag"><i class="formula">E<sub>1</sub> sin θ<sub>1</sub> = E<sub>2</sub> sin θ<sub>2</sub></i></span>
+                  <span class="card-title" data-i18n="opt_t5_title">5. 에너지 스케일링 & 각도 계산기 (Energy Scaling)</span>
+                  <span class="card-tag"><i class="formula">E<sub>ref</sub> sin θ<sub>ref</sub> = E<sub>target</sub> sin θ<sub>target</sub> ⇔ Q = const</i></span>
                 </div>
                 <div class="card-body">
+                  <!-- Reference Beam & Angle Input -->
+                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; color:var(--ink-primary);" data-i18n="sec_ref_condition">기준 빔 조건 (Reference Beam & Angle)</div>
                   <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">기준 에너지 <i class="formula">E</i><sub>1</sub> <span class="unit">(keV)</span></label>
-                        <input type="number" id="ea-e1" class="form-control mono" value="10.000" step="any" oninput="calcEnergyAngle()">
+                        <label class="form-label"><span data-i18n="lbl_ref_energy">기준 에너지 E<sub>ref</sub></span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="ea-e1" class="form-control mono" value="10.000" step="any" oninput="calcEnergyScaling()">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">기준 각도 <i class="formula">θ</i><sub>1</sub> <span class="unit">(°)</span></label>
-                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" step="any" oninput="calcEnergyAngle()">
+                        <label class="form-label"><span data-i18n="lbl_ref_theta">기준 각도 θ (th)</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" step="any" oninput="syncRefAngle('th')">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label">목표 에너지 <i class="formula">E</i><sub>2</sub> <span class="unit">(keV)</span></label>
-                        <input type="number" id="ea-e2" class="form-control mono" value="12.000" step="any" oninput="calcEnergyAngle()">
+                        <label class="form-label"><span data-i18n="lbl_ref_twotheta">기준 각도 2θ (tth)</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="ea-tth1" class="form-control mono" value="22.806" step="any" oninput="syncRefAngle('tth')">
                       </div>
                     </div>
                   </div>
 
+                  <!-- Target Beam Input & Quick Presets -->
+                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; margin-top:2px; color:var(--ink-primary);" data-i18n="sec_target_condition">목표 에너지 선택 (Target Beam Energy)</div>
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_target_energy">목표 에너지 E<sub>target</sub></span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="ea-e2" class="form-control mono" value="12.000" step="any" oninput="calcEnergyScaling()">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label" data-i18n="lbl_target_presets">빠른 에너지 프리셋</label>
+                        <div class="preset-bar" style="margin-top:2px;">
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(8.046)">8.05k (Cu)</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(10.0)">10.0k</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(12.4)">12.4k (Se)</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(15.0)">15.0k</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(17.48)">17.5k (Mo)</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(20.0)">20.0k</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Results Box: 2theta, theta, Q, delta theta, and extra info -->
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label">목표 각도 <i class="formula">θ</i><sub>2</sub></div>
-                        <div id="ea-res-th2" class="result-value primary">-</div>
+                        <div class="result-label" data-i18n="res_target_twotheta">목표 회절각 2θ (tth)</div>
+                        <div id="ea-res-tth2" class="result-value primary">18.962°</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label">모터 이동량 <i class="formula">Δθ</i></div>
-                        <div id="ea-res-delta" class="result-value">-</div>
+                        <div class="result-label" data-i18n="res_target_theta">목표 브래그각 θ (th)</div>
+                        <div id="ea-res-th2" class="result-value">9.481°</div>
                       </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_scatt_q">산란 벡터 Q</div>
+                        <div id="ea-res-q" class="result-value">2.0038 Å<sup>-1</sup></div>
+                      </div>
+                    </div>
+                    <div class="result-formula" id="ea-res-delta" style="margin-top:8px;">
+                      Δθ = -1.922° | Δ(2θ) = -3.844° (-6919.2")
+                    </div>
+                    <div class="result-formula" id="ea-res-extra" style="color:var(--ink-secondary); font-size:11px; margin-top:3px;">
+                      d = 3.1356 Å | λ<sub>ref</sub>: 1.2398 Å ➔ λ<sub>target</sub>: 1.0332 Å
                     </div>
                   </div>
                 </div>
@@ -1448,8 +1519,8 @@
         <section id="view-settings" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2 id="banner-set-title">설정 및 히스토리 관리 (Settings & History)</h2>
-              <p id="banner-set-desc">테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
+              <h2 id="banner-set-title" data-i18n="b_set_title">설정 및 히스토리 관리 (Settings & History)</h2>
+              <p id="banner-set-desc" data-i18n="b_set_desc">언어 설정, 테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
             </div>
           </div>
 
@@ -1459,19 +1530,19 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">0. 언어 설정 (Language Selection)</span>
+                  <span class="card-title" data-i18n="set_card_lang_title">0. 언어 설정 (Language Selection)</span>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
                       <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current">현재 언어: 한국어 (Korean)</div>
-                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc">
+                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc" data-i18n="lang_desc">
                         한국어와 영어(English) 인터페이스를 즉시 전환합니다. 모든 물리량 및 계산기가 실시간으로 갱신됩니다.
                       </div>
                     </div>
                     <div style="margin-top:6px;">
-                      <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('ko')" style="margin-right:6px; font-weight:700;">한국어 (Korean)</button>
-                      <button class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="font-weight:700;">English (영어)</button>
+                      <button id="btn-lang-ko" class="btn btn-sm btn-primary" onclick="window.setLanguage('ko')" style="margin-right:6px; font-weight:700;" data-i18n="btn_lang_ko">한국어 (Korean)</button>
+                      <button id="btn-lang-en" class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="font-weight:700;" data-i18n="btn_lang_en">English (영어)</button>
                     </div>
                   </div>
                 </div>
@@ -1482,19 +1553,19 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">1. 화면 테마 모드 설정 (Display Theme Mode)</span>
+                  <span class="card-title" data-i18n="set_card_theme_title">1. 화면 테마 모드 설정 (Display Theme Mode)</span>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
                       <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 모드: 라이트 모드 (Light Mode #fdfcf8)</div>
-                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-theme-desc">
+                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-theme-desc" data-i18n="theme_desc">
                         라이트 모드(#fdfcf8)와 고대비 흑백 반전 다크 모드(#121417)를 전환합니다.
                       </div>
                     </div>
                     <div style="margin-top:6px;">
-                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('light')" style="margin-right:6px; font-weight:700;">라이트 모드 (Light)</button>
-                      <button class="btn btn-sm btn-secondary" onclick="applyTheme('dark')" style="font-weight:700;">다크 모드 (Dark)</button>
+                      <button id="btn-theme-light" class="btn btn-sm btn-primary" onclick="applyTheme('light')" style="margin-right:6px; font-weight:700;" data-i18n="btn_theme_light">라이트 모드 (Light)</button>
+                      <button id="btn-theme-dark" class="btn btn-sm btn-secondary" onclick="applyTheme('dark')" style="font-weight:700;" data-i18n="btn_theme_dark">다크 모드 (Dark)</button>
                     </div>
                   </div>
                 </div>
@@ -1505,18 +1576,18 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">전체 계산 히스토리 (<span id="history-total-count">0 runs</span>)</span>
-                  <button class="btn btn-sm btn-danger" onclick="clearCalculationHistory()">히스토리 전체 삭제</button>
+                  <span class="card-title"><span data-i18n="set_card_history_title">전체 계산 히스토리</span> (<span id="history-total-count">0 runs</span>)</span>
+                  <button class="btn btn-sm btn-danger" onclick="clearCalculationHistory()" data-i18n="btn_history_clear">히스토리 전체 삭제</button>
                 </div>
                 <div class="card-body" style="padding:0;">
                   <div class="table-responsive">
                     <table class="lab-table">
                       <thead>
                         <tr>
-                          <th>시간</th>
-                          <th>도구명</th>
-                          <th>입력 파라미터</th>
-                          <th>계산 결과</th>
+                          <th data-i18n="th_time">시간</th>
+                          <th data-i18n="th_tool">도구명</th>
+                          <th data-i18n="th_inputs">입력 파라미터</th>
+                          <th data-i18n="th_result">계산 결과</th>
                         </tr>
                       </thead>
                       <tbody id="settings-history-body">
@@ -1528,21 +1599,21 @@
               </div>
             </div>
 
-            <!-- 2. Data Backup and Restore -->
+            <!-- 3. Data Backup and Restore -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">로컬스토리지 데이터 백업 및 복원</span>
+                  <span class="card-title" data-i18n="set_card_backup_title">로컬스토리지 데이터 백업 및 복원</span>
                 </div>
                 <div class="card-body">
-                  <p style="font-size:12px; color:var(--ink-secondary); margin-bottom:12px;">
+                  <p style="font-size:12px; color:var(--ink-secondary); margin-bottom:12px;" data-i18n-html="set_backup_desc">
                     모든 로그북, 실험 노트, 시료 목록, 체크리스트 및 계산 히스토리는 브라우저의 <code>localStorage</code>에 안전하게 저장됩니다.
                     다른 PC나 브라우저로 이동할 때 JSON 파일로 내보내거나 가져올 수 있습니다.
                   </p>
                   <div style="display:flex; align-items:center;">
-                    <button class="btn btn-primary" onclick="backupAllData()" style="margin-right:10px;">전체 백업 다운로드</button>
+                    <button class="btn btn-primary" onclick="backupAllData()" style="margin-right:10px;" data-i18n="btn_backup_download">전체 백업 다운로드</button>
                     <label class="btn btn-secondary" style="margin:0; cursor:pointer;">
-                      백업 파일 복원
+                      <span data-i18n="btn_backup_restore">백업 파일 복원</span>
                       <input type="file" accept=".json" style="display:none;" onchange="restoreAllData(event)">
                     </label>
                   </div>
@@ -1550,46 +1621,46 @@
               </div>
             </div>
 
-            <!-- 3. Keyboard Shortcuts -->
+            <!-- 4. Keyboard Shortcuts -->
             <div class="col-6">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">키보드 단축키 안내 (Keyboard Shortcuts)</span>
+                  <span class="card-title" data-i18n="set_card_shortcuts_title">키보드 단축키 안내 (Keyboard Shortcuts)</span>
                 </div>
                 <div class="card-body">
                   <table class="lab-table">
                     <tbody>
                       <tr>
                         <td><code class="mono">[Alt + 1]</code></td>
-                        <td>DASHBOARD 탭 바로가기</td>
+                        <td data-i18n="sc_dash">DASHBOARD 탭 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 2]</code></td>
-                        <td>OPTICS 광학 계산기 바로가기</td>
+                        <td data-i18n="sc_opt">OPTICS 광학 계산기 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 3]</code></td>
-                        <td>BEAMLINE 빔라인 계산기 바로가기</td>
+                        <td data-i18n="sc_beam">BEAMLINE 빔라인 계산기 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 4]</code></td>
-                        <td>LOGBOOK 실험 로그북 바로가기</td>
+                        <td data-i18n="sc_log">LOGBOOK 실험 로그북 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 5]</code></td>
-                        <td>EXPERIMENT 실험 노트 & 칸반 바로가기</td>
+                        <td data-i18n="sc_exp">EXPERIMENT 실험 노트 & 칸반 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 6]</code></td>
-                        <td>REFERENCE 참고 자료 바로가기</td>
+                        <td data-i18n="sc_ref">REFERENCE 참고 자료 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 7]</code></td>
-                        <td>SETTINGS 설정 바로가기</td>
+                        <td data-i18n="sc_set">SETTINGS 설정 바로가기</td>
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 8]</code></td>
-                        <td>ABOUT 제작자 소개 바로가기</td>
+                        <td data-i18n="sc_about">ABOUT 제작자 소개 바로가기</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1859,7 +1930,8 @@
       var history = window.Storage ? window.Storage.get("calc_history", []) : [];
       tbody.innerHTML = "";
       if (history.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:16px;">최근 계산 기록이 없습니다.</td></tr>';
+        var emptyMsg = (window.i18n && window.i18n.t) ? window.i18n.t("dash_history_empty") : "최근 계산 기록이 없습니다.";
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--ink-muted); padding:16px;">' + emptyMsg + '</td></tr>';
         return;
       }
       var slice = history.slice(0, 6);

@@ -73,6 +73,7 @@
     tbody.innerHTML = "";
 
     var matchCount = 0;
+    var btnText = (window.i18n && window.i18n.t) ? window.i18n.t("btn_apply_bragg") : "브래그 적용";
     for (var i = 0; i < CRYSTAL_D_SPACINGS.length; i++) {
       var item = CRYSTAL_D_SPACINGS[i];
       var matches = !filterText ||
@@ -90,7 +91,7 @@
           '<td class="mono">' + (item.lattice_a ? 'a = ' + item.lattice_a.toFixed(4) + ' Å' : '-') + '</td>' +
           '<td>' + item.system + '</td>' +
           '<td>' +
-            '<button class="btn btn-sm btn-secondary" style="padding:1px 6px;" onclick="sendDSpacingToBragg(' + item.d_spacing_A + ')">브래그 적용</button>' +
+            '<button class="btn btn-sm btn-secondary" style="padding:1px 6px;" onclick="sendDSpacingToBragg(' + item.d_spacing_A + ')">' + btnText + '</button>' +
           '</td>';
         tbody.appendChild(tr);
       }
@@ -103,9 +104,13 @@
   function sendDSpacingToBragg(dVal) {
     window.location.hash = "#optics";
     setTimeout(function () {
-      var braggD = document.getElementById("bragg-d");
-      if (braggD) {
-        braggD.value = dVal;
+      if (window.applyBraggPreset) {
+        window.applyBraggPreset(dVal, "DB Reflection");
+      } else {
+        var r1D = document.getElementById("bragg-r1-d");
+        var r3D = document.getElementById("bragg-r3-d");
+        if (r1D) r1D.value = dVal;
+        if (r3D) r3D.value = dVal;
         if (window.calcBragg) window.calcBragg();
       }
     }, 100);

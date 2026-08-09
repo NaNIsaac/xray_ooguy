@@ -61,74 +61,139 @@
     }
   }
 
-  // --- 2. Bragg's Law Calculator (λ = 2d sin θ) ---
-  function calcBragg() {
+  // --- 2. Bragg's Law 3-Way Multi-Directional Calculator ---
+  // Row 1: d + 2theta (tth) -> Energy E
+  function calcBraggRow1() {
     var hc_eV_A = CONSTANTS.hc_eV_A;
-    var dVal = parseFloat(document.getElementById("bragg-d").value);
-    var energy_keV = parseFloat(document.getElementById("bragg-energy").value);
-    var thetaDegInput = parseFloat(document.getElementById("bragg-theta-input").value);
-    var calcMode = document.getElementById("bragg-mode").value; // 'find_theta' or 'find_energy'
+    var dInput = document.getElementById("bragg-r1-d");
+    var tthInput = document.getElementById("bragg-r1-tth");
+    if (!dInput || !tthInput) return;
 
-    var resThetaDeg = document.getElementById("bragg-res-theta");
-    var resTwoThetaDeg = document.getElementById("bragg-res-twotheta");
-    var resEnergy = document.getElementById("bragg-res-energy");
-    var resLambda = document.getElementById("bragg-res-lambda");
-    var resQ = document.getElementById("bragg-res-q");
+    var dVal = parseFloat(dInput.value);
+    var tthDeg = parseFloat(tthInput.value);
+    var resE = document.getElementById("bragg-r1-res-e");
+    var resSub = document.getElementById("bragg-r1-res-sub");
 
-    if (calcMode === "find_theta") {
-      if (isNaN(dVal) || dVal <= 0 || isNaN(energy_keV) || energy_keV <= 0) return;
-      var lambda_A = hc_eV_A / (energy_keV * 1000);
-      var sinTheta = lambda_A / (2 * dVal);
+    if (isNaN(dVal) || dVal <= 0 || isNaN(tthDeg) || tthDeg <= 0 || tthDeg >= 180) {
+      if (resE) resE.innerHTML = "-";
+      if (resSub) resSub.innerHTML = "-";
+      return;
+    }
 
-      if (sinTheta > 1) {
-        resThetaDeg.innerHTML = "회절 불가 (λ > 2d)";
-        resTwoThetaDeg.innerHTML = "N/A";
-        resLambda.innerHTML = lambda_A.toFixed(5) + " Å";
-        resQ.innerHTML = "N/A";
-        return;
-      }
+    var thDeg = tthDeg / 2;
+    var thRad = (thDeg * Math.PI) / 180;
+    var lambda_A = 2 * dVal * Math.sin(thRad);
+    var e_eV = hc_eV_A / lambda_A;
+    var e_keV = e_eV / 1000;
+    var qVal = (4 * Math.PI / lambda_A) * Math.sin(thRad);
 
-      var thetaRad = Math.asin(sinTheta);
-      var thetaDeg = (thetaRad * 180) / Math.PI;
-      var twoThetaDeg = thetaDeg * 2;
-      var qVal = (4 * Math.PI / lambda_A) * sinTheta;
+    if (resE) {
+      resE.innerHTML = e_keV.toFixed(4) + " keV <span style=\"font-size:12px; font-weight:normal; color:var(--ink-secondary);\">(" + e_eV.toFixed(1) + " eV)</span>";
+    }
+    if (resSub) {
+      resSub.innerHTML = "θ = " + thDeg.toFixed(4) + "° | λ = " + lambda_A.toFixed(4) + " Å | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
+    }
 
-      resThetaDeg.innerHTML = thetaDeg.toFixed(4) + "° (" + (thetaRad * 1000).toFixed(3) + " mrad)";
-      resTwoThetaDeg.innerHTML = twoThetaDeg.toFixed(4) + "°";
-      resLambda.innerHTML = lambda_A.toFixed(5) + " Å";
-      resQ.innerHTML = qVal.toFixed(4) + " Å<sup>-1</sup> (" + (qVal * 10).toFixed(3) + " nm<sup>-1</sup>)";
-
-      if (window.recordCalculation) {
-        window.recordCalculation("1.2 Bragg θ Calc", "E=" + energy_keV + " keV, d=" + dVal + " Å", "θ=" + thetaDeg.toFixed(4) + "°, 2θ=" + twoThetaDeg.toFixed(4) + "°");
-      }
-    } else {
-      // Find Energy from Theta
-      if (isNaN(dVal) || dVal <= 0 || isNaN(thetaDegInput) || thetaDegInput <= 0 || thetaDegInput >= 90) return;
-      var thetaRad2 = (thetaDegInput * Math.PI) / 180;
-      var lambda_A2 = 2 * dVal * Math.sin(thetaRad2);
-      var energy_eV2 = hc_eV_A / lambda_A2;
-      var energy_keV2 = energy_eV2 / 1000;
-      var qVal2 = (4 * Math.PI / lambda_A2) * Math.sin(thetaRad2);
-
-      resThetaDeg.innerHTML = thetaDegInput.toFixed(4) + "°";
-      resTwoThetaDeg.innerHTML = (thetaDegInput * 2).toFixed(4) + "°";
-      resEnergy.innerHTML = energy_keV2.toFixed(4) + " keV (" + energy_eV2.toFixed(1) + " eV)";
-      resLambda.innerHTML = lambda_A2.toFixed(5) + " Å";
-      resQ.innerHTML = qVal2.toFixed(4) + " Å<sup>-1</sup>";
-
-      if (window.recordCalculation) {
-        window.recordCalculation("1.2 Bragg E Calc", "θ=" + thetaDegInput + "°, d=" + dVal + " Å", "E=" + energy_keV2.toFixed(4) + " keV");
-      }
+    if (window.recordCalculation) {
+      window.recordCalculation("1.2 Bragg (d,tth➔E)", "d=" + dVal + " Å, 2θ=" + tthDeg + "°", "E = " + e_keV.toFixed(4) + " keV (θ=" + thDeg.toFixed(4) + "°)");
     }
   }
 
-  // Preset picker for Bragg d-spacing (Silent & instantaneous update)
-  function applyBraggPreset(dVal, name) {
-    var input = document.getElementById("bragg-d");
-    if (input) {
-      input.value = dVal;
-      calcBragg();
+  // Row 2: 2theta (tth) + Energy E -> d-spacing
+  function calcBraggRow2() {
+    var hc_eV_A = CONSTANTS.hc_eV_A;
+    var tthInput = document.getElementById("bragg-r2-tth");
+    var eInput = document.getElementById("bragg-r2-e");
+    if (!tthInput || !eInput) return;
+
+    var tthDeg = parseFloat(tthInput.value);
+    var e_keV = parseFloat(eInput.value);
+    var resD = document.getElementById("bragg-r2-res-d");
+    var resSub = document.getElementById("bragg-r2-res-sub");
+
+    if (isNaN(tthDeg) || tthDeg <= 0 || tthDeg >= 180 || isNaN(e_keV) || e_keV <= 0) {
+      if (resD) resD.innerHTML = "-";
+      if (resSub) resSub.innerHTML = "-";
+      return;
     }
+
+    var thDeg = tthDeg / 2;
+    var thRad = (thDeg * Math.PI) / 180;
+    var lambda_A = hc_eV_A / (e_keV * 1000);
+    var dVal = lambda_A / (2 * Math.sin(thRad));
+    var qVal = (4 * Math.PI / lambda_A) * Math.sin(thRad);
+
+    if (resD) {
+      resD.innerHTML = dVal.toFixed(5) + " Å <span style=\"font-size:12px; font-weight:normal; color:var(--ink-secondary);\">(" + (dVal / 10).toFixed(6) + " nm)</span>";
+    }
+    if (resSub) {
+      resSub.innerHTML = "θ = " + thDeg.toFixed(4) + "° | λ = " + lambda_A.toFixed(4) + " Å | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("1.2 Bragg (tth,E➔d)", "2θ=" + tthDeg + "°, E=" + e_keV + " keV", "d = " + dVal.toFixed(5) + " Å (Q=" + qVal.toFixed(4) + " Å⁻¹)");
+    }
+  }
+
+  // Row 3: d + Energy E -> 2theta (tth) & theta
+  function calcBraggRow3() {
+    var hc_eV_A = CONSTANTS.hc_eV_A;
+    var dInput = document.getElementById("bragg-r3-d");
+    var eInput = document.getElementById("bragg-r3-e");
+    if (!dInput || !eInput) return;
+
+    var dVal = parseFloat(dInput.value);
+    var e_keV = parseFloat(eInput.value);
+    var resTth = document.getElementById("bragg-r3-res-tth");
+    var resSub = document.getElementById("bragg-r3-res-sub");
+
+    if (isNaN(dVal) || dVal <= 0 || isNaN(e_keV) || e_keV <= 0) {
+      if (resTth) resTth.innerHTML = "-";
+      if (resSub) resSub.innerHTML = "-";
+      return;
+    }
+
+    var lambda_A = hc_eV_A / (e_keV * 1000);
+    var sinTh = lambda_A / (2 * dVal);
+
+    if (sinTh > 1) {
+      var unreach = (window.i18n ? window.i18n.t("res_bragg_unreachable") : "회절 불가 (λ > 2d)");
+      if (resTth) resTth.innerHTML = '<span style="color:var(--danger); font-size:13px;">' + unreach + '</span>';
+      if (resSub) resSub.innerHTML = "λ = " + lambda_A.toFixed(4) + " Å &gt; 2d (" + (2 * dVal).toFixed(4) + " Å), E<sub>min</sub> = " + (hc_eV_A / (2 * dVal * 1000)).toFixed(3) + " keV";
+      return;
+    }
+
+    var thRad = Math.asin(sinTh);
+    var thDeg = (thRad * 180) / Math.PI;
+    var tthDeg = thDeg * 2;
+    var qVal = (4 * Math.PI / lambda_A) * sinTh;
+
+    if (resTth) {
+      resTth.innerHTML = "2θ = " + tthDeg.toFixed(4) + "° <span style=\"font-size:13px; font-weight:normal; color:var(--ink-secondary);\">(θ = " + thDeg.toFixed(4) + "°)</span>";
+    }
+    if (resSub) {
+      resSub.innerHTML = "2θ = " + ((tthDeg * Math.PI / 180) * 1000).toFixed(2) + " mrad | λ = " + lambda_A.toFixed(4) + " Å | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("1.2 Bragg (d,E➔tth)", "d=" + dVal + " Å, E=" + e_keV + " keV", "2θ = " + tthDeg.toFixed(4) + "°, θ = " + thDeg.toFixed(4) + "°");
+    }
+  }
+
+  function calcBragg() {
+    calcBraggRow1();
+    calcBraggRow2();
+    calcBraggRow3();
+  }
+
+  // Preset picker for Bragg d-spacing (updates Row 1 & Row 3)
+  function applyBraggPreset(dVal, name) {
+    var r1D = document.getElementById("bragg-r1-d");
+    var r3D = document.getElementById("bragg-r3-d");
+    if (r1D) r1D.value = dVal;
+    if (r3D) r3D.value = dVal;
+    calcBraggRow1();
+    calcBraggRow3();
   }
 
   // --- 3. Grating Diffraction Calculator (mλ = d(sin α + sin β)) ---
@@ -207,37 +272,104 @@
     }
   }
 
-  // --- 5. Energy-Angle Converter (Calibrated E1, theta1 -> E2, theta2) ---
-  function calcEnergyAngle() {
+  // --- 5. Energy Scaling Calculation (Reference E_ref, th_ref -> Target E_target -> 2th, th, Q) ---
+  function syncRefAngle(source) {
+    var th1Input = document.getElementById("ea-th1");
+    var tth1Input = document.getElementById("ea-tth1");
+    if (!th1Input || !tth1Input) return;
+
+    if (source === "th") {
+      var thVal = parseFloat(th1Input.value);
+      if (!isNaN(thVal)) {
+        tth1Input.value = (thVal * 2).toFixed(4);
+      }
+    } else if (source === "tth") {
+      var tthVal = parseFloat(tth1Input.value);
+      if (!isNaN(tthVal)) {
+        th1Input.value = (tthVal / 2).toFixed(4);
+      }
+    }
+    calcEnergyScaling();
+  }
+
+  function setTargetEnergy(energyVal) {
+    var e2Input = document.getElementById("ea-e2");
+    if (e2Input) {
+      e2Input.value = energyVal;
+      calcEnergyScaling();
+    }
+  }
+
+  function calcEnergyScaling() {
+    var hc_keV_A = CONSTANTS.hc_eV_A / 1000;
     var e1_keV = parseFloat(document.getElementById("ea-e1").value);
     var th1_deg = parseFloat(document.getElementById("ea-th1").value);
     var e2_keV = parseFloat(document.getElementById("ea-e2").value);
 
+    var resTth2 = document.getElementById("ea-res-tth2");
+    var resTh2 = document.getElementById("ea-res-th2");
+    var resQ = document.getElementById("ea-res-q");
+    var resDelta = document.getElementById("ea-res-delta");
+    var resExtra = document.getElementById("ea-res-extra");
+
     if (isNaN(e1_keV) || isNaN(th1_deg) || isNaN(e2_keV) || e1_keV <= 0 || th1_deg <= 0 || e2_keV <= 0) return;
 
     var th1_rad = (th1_deg * Math.PI) / 180;
-    var sinTh2 = (e1_keV * Math.sin(th1_rad)) / e2_keV;
+    var sinTh1 = Math.sin(th1_rad);
+    
+    // Wavelength and Q vector (invariant under scaling)
+    var lambda1_A = hc_keV_A / e1_keV;
+    var lambda2_A = hc_keV_A / e2_keV;
+    var qVal = (4 * Math.PI / lambda1_A) * sinTh1;
+    var dSpacing_A = (2 * Math.PI) / qVal;
 
-    var resTh2 = document.getElementById("ea-res-th2");
-    var resDelta = document.getElementById("ea-res-delta");
+    // sin(theta2) = (E1 * sin(theta1)) / E2
+    var sinTh2 = (e1_keV * sinTh1) / e2_keV;
 
     if (Math.abs(sinTh2) > 1) {
-      resTh2.innerHTML = "도달 불가 (sin θ<sub>2</sub> > 1)";
-      resDelta.innerHTML = "N/A";
+      var minE2 = (e1_keV * sinTh1).toFixed(3);
+      if (resTth2) resTth2.innerHTML = '<span style="color:var(--danger); font-size:12px;">' + (window.i18n ? window.i18n.t("res_unreachable") : "회절 불가 (sin θ₂ > 1)") + '</span>';
+      if (resTh2) resTh2.innerHTML = '<span style="color:var(--danger);">N/A (E<sub>target</sub> &lt; ' + minE2 + ' keV)</span>';
+      if (resQ) resQ.innerHTML = qVal.toFixed(4) + ' Å<sup>-1</sup>';
+      if (resDelta) resDelta.innerHTML = '모터 이동 불가 (타겟 에너지가 너무 낮습니다)';
+      if (resExtra) resExtra.innerHTML = 'd = ' + dSpacing_A.toFixed(4) + ' Å | λ<sub>ref</sub> = ' + lambda1_A.toFixed(4) + ' Å, λ<sub>target</sub> = ' + lambda2_A.toFixed(4) + ' Å';
       return;
     }
 
     var th2_rad = Math.asin(sinTh2);
     var th2_deg = (th2_rad * 180) / Math.PI;
-    var deltaDeg = th2_deg - th1_deg;
+    var tth2_deg = th2_deg * 2;
+    var deltaThDeg = th2_deg - th1_deg;
+    var deltaTthDeg = tth2_deg - (th1_deg * 2);
 
-    resTh2.innerHTML = th2_deg.toFixed(5) + "° (2θ = " + (th2_deg * 2).toFixed(5) + "°)";
-    resDelta.innerHTML = (deltaDeg >= 0 ? "+" : "") + deltaDeg.toFixed(5) + "° (" + (deltaDeg * 3600).toFixed(1) + " arcsec)";
+    if (resTth2) {
+      resTth2.innerHTML = tth2_deg.toFixed(4) + '° (' + ((tth2_deg * Math.PI / 180) * 1000).toFixed(2) + ' mrad)';
+    }
+    if (resTh2) {
+      resTh2.innerHTML = th2_deg.toFixed(4) + '° (' + (th2_rad * 1000).toFixed(2) + ' mrad)';
+    }
+    if (resQ) {
+      resQ.innerHTML = qVal.toFixed(4) + ' Å<sup>-1</sup> (' + (qVal * 10).toFixed(3) + ' nm<sup>-1</sup>)';
+    }
+    if (resDelta) {
+      var signTh = deltaThDeg >= 0 ? "+" : "";
+      var signTth = deltaTthDeg >= 0 ? "+" : "";
+      resDelta.innerHTML = 'Δθ = ' + signTh + deltaThDeg.toFixed(4) + '° | Δ(2θ) = ' + signTth + deltaTthDeg.toFixed(4) + '° (' + (deltaThDeg * 3600).toFixed(1) + '")';
+    }
+    if (resExtra) {
+      resExtra.innerHTML = 'd = ' + dSpacing_A.toFixed(4) + ' Å | λ<sub>ref</sub>: ' + lambda1_A.toFixed(4) + ' Å ➔ λ<sub>target</sub>: ' + lambda2_A.toFixed(4) + ' Å';
+    }
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.5 Energy-Angle Shift", e1_keV + " keV (" + th1_deg + "°) → " + e2_keV + " keV", "θ2 = " + th2_deg.toFixed(4) + "° (Δ = " + deltaDeg.toFixed(4) + "°)");
+      window.recordCalculation(
+        "1.5 Energy Scaling",
+        "E_ref=" + e1_keV + " keV, θ=" + th1_deg + "° ➔ E_target=" + e2_keV + " keV",
+        "2θ=" + tth2_deg.toFixed(4) + "°, θ=" + th2_deg.toFixed(4) + "°, Q=" + qVal.toFixed(4) + " Å⁻¹"
+      );
     }
   }
+
+  var calcEnergyAngle = calcEnergyScaling;
 
   // --- 6. Chi-Phi Diffractometer Tilt Correction ---
   function calcChiPhi() {
@@ -346,10 +478,16 @@
   // Export functions to global scope
   window.calcEnergyConverter = calcEnergyConverter;
   window.calcBragg = calcBragg;
+  window.calcBraggRow1 = calcBraggRow1;
+  window.calcBraggRow2 = calcBraggRow2;
+  window.calcBraggRow3 = calcBraggRow3;
   window.applyBraggPreset = applyBraggPreset;
   window.calcGrating = calcGrating;
   window.calcRefractive = calcRefractive;
+  window.calcEnergyScaling = calcEnergyScaling;
   window.calcEnergyAngle = calcEnergyAngle;
+  window.syncRefAngle = syncRefAngle;
+  window.setTargetEnergy = setTargetEnergy;
   window.calcChiPhi = calcChiPhi;
   window.calcCriticalAngle = calcCriticalAngle;
   window.calcQSpace = calcQSpace;

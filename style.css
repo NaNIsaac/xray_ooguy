@@ -777,6 +777,15 @@ select.form-control {
   color: var(--bg-paper);
 }
 
+/* Bragg 3-Row Calculator Container */
+.bragg-calc-row {
+  border: 1px solid var(--rule-light);
+  background-color: var(--bg-paper-subtle);
+  border-radius: 4px;
+  padding: 10px 10px 4px 10px;
+  margin-bottom: 12px;
+}
+
 /* Calculated Results Box */
 .result-box {
   margin-top: 12px;

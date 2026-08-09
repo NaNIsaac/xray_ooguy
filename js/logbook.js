@@ -7,6 +7,13 @@
 (function () {
   "use strict";
 
+  function t(key) {
+    if (window.i18n && window.i18n.t) {
+      return window.i18n.t(key);
+    }
+    return key;
+  }
+
   var currentTagFilter = "";
 
   function getLogs() {
@@ -48,7 +55,7 @@
     var memo = document.getElementById("log-input-memo").value.trim();
 
     if (!memo) {
-      alert("로그 메모 내용을 입력하십시오.");
+      alert(t("log_alert_memo"));
       return;
     }
 
@@ -91,12 +98,12 @@
     document.getElementById("log-input-tags").value = "";
 
     if (window.showToast) {
-      window.showToast("새 로그 항목이 저장되었습니다.", "info");
+      window.showToast(t("log_saved_toast"), "info");
     }
   }
 
   function deleteLogEntry(id) {
-    if (!confirm("선택한 로그 항목을 삭제하시겠습니까?")) return;
+    if (!confirm(t("log_del_confirm"))) return;
     var logs = getLogs();
     var filtered = [];
     for (var i = 0; i < logs.length; i++) {
@@ -106,7 +113,7 @@
     }
     saveLogs(filtered);
     if (window.showToast) {
-      window.showToast("로그 항목이 삭제되었습니다.", "info");
+      window.showToast(t("log_deleted_toast"), "info");
     }
   }
 
@@ -132,7 +139,7 @@
 
     if (activeFilterBadge) {
       if (currentTagFilter) {
-        activeFilterBadge.innerHTML = '태그 필터: <strong>' + currentTagFilter + '</strong> <button class="btn btn-sm btn-secondary" onclick="clearTagFilter()" style="padding:1px 5px; margin-left:4px;">해제</button>';
+        activeFilterBadge.innerHTML = t("tag_filter_prefix") + ' <strong>' + currentTagFilter + '</strong> <button class="btn btn-sm btn-secondary" onclick="clearTagFilter()" style="padding:1px 5px; margin-left:4px;">' + t("tag_filter_clear") + '</button>';
         activeFilterBadge.style.display = "inline-block";
       } else {
         activeFilterBadge.style.display = "none";
@@ -159,7 +166,7 @@
     container.innerHTML = "";
 
     if (displayLogs.length === 0) {
-      container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--ink-muted); font-size: 12px;">일치하는 로그 기록이 없습니다.</div>';
+      container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--ink-muted); font-size: 12px;">' + t("log_empty") + '</div>';
       return;
     }
 
@@ -184,7 +191,7 @@
           '</div>' +
           '<div>' +
             '<span class="mono" style="margin-right:8px; color:var(--ink-muted);">' + entry.timestamp + '</span>' +
-            '<button class="btn btn-sm btn-danger" style="padding:1px 6px;" onclick="deleteLogEntry(' + entry.id + ')">삭제</button>' +
+            '<button class="btn btn-sm btn-danger" style="padding:1px 6px;" onclick="deleteLogEntry(' + entry.id + ')">' + t("btn_delete") + '</button>' +
           '</div>' +
         '</div>' +
         '<div class="log-entry-memo">' + escapeHtml(entry.memo) + '</div>' +
@@ -217,7 +224,7 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("CSV 파일이 다운로드되었습니다.", "info");
+    if (window.showToast) window.showToast(t("log_csv_toast"), "info");
   }
 
   function exportLogsJSON() {
@@ -230,7 +237,7 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (window.showToast) window.showToast("JSON 파일이 다운로드되었습니다.", "info");
+    if (window.showToast) window.showToast(t("log_json_toast"), "info");
   }
 
   function copyLogsMarkdown() {
@@ -247,7 +254,7 @@
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(md).then(function () {
-        if (window.showToast) window.showToast("클립보드에 마크다운 표가 복사되었습니다.", "info");
+        if (window.showToast) window.showToast(t("log_md_toast"), "info");
       });
     } else {
       var temp = document.createElement("textarea");
@@ -256,7 +263,7 @@
       temp.select();
       document.execCommand("copy");
       document.body.removeChild(temp);
-      if (window.showToast) window.showToast("클립보드에 마크다운 표가 복사되었습니다.", "info");
+      if (window.showToast) window.showToast(t("log_md_toast"), "info");
     }
   }
 
