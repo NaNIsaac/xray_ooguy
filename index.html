@@ -50,7 +50,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="style.css?v=1.3">
 </head>
 <body>
 
@@ -83,7 +83,7 @@
     <aside id="sidebar">
       <div class="sidebar-header">
         <span class="brand-title">BEAMLINE TOOLKIT</span>
-        <span class="brand-badge">v1.1</span>
+        <span class="brand-badge">v1.3</span>
       </div>
 
       <nav class="sidebar-nav">
@@ -122,7 +122,7 @@
       <header id="top-header">
         <div class="header-brand-area">
           <div class="page-breadcrumb">
-            <span style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
+            <span class="breadcrumb-brand" style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
             <span class="breadcrumb-sep">/</span>
             <span id="breadcrumb-current">0. DASHBOARD</span>
           </div>
@@ -631,6 +631,72 @@
                       <div class="result-item">
                         <div class="result-label">유효 에너지 시프트 (<i class="formula">ΔE</i>)</div>
                         <div id="therm-res-de" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-12">
+              <!-- § 9. 기본 물리 상수 및 결정 격자 레퍼런스 (CODATA Fundamental Constants & Reference Data) -->
+              <div class="card" id="card-physical-constants">
+                <div class="card-header">
+                  <span class="card-title">§ 9. 기본 물리 상수 및 결정 격자 레퍼런스 (Fundamental Physical Constants &amp; Crystal Data)</span>
+                  <span class="card-tag">CODATA 2022 Reference</span>
+                </div>
+                <div class="card-body">
+                  <div class="result-box" style="margin-top:0;">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">hc</i> (광자 에너지-파장 적)</div>
+                        <div class="result-value primary">12398.41984 eV·Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(1.239842 keV·nm)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">h</i> (플랑크 상수)</div>
+                        <div class="result-value">6.626070 × 10<sup>-34</sup> J·s</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">ħ</i> (디랙 상수)</div>
+                        <div class="result-value">1.054572 × 10<sup>-34</sup> J·s</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">c</i> (진공 중 광속)</div>
+                        <div class="result-value">299,792,458 m/s</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">r</i><sub>e</sub> (고전 전자 반경)</div>
+                        <div class="result-value">2.817940 × 10<sup>-15</sup> m</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">e</i> (기본 전하)</div>
+                        <div class="result-value">1.602177 × 10<sup>-19</sup> C</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">m</i><sub>e</sub> (전자 정지 질량)</div>
+                        <div class="result-value">9.109384 × 10<sup>-31</sup> kg <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(0.5110 MeV/<i class="formula">c</i>²)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">α</i> (미세구조 상수)</div>
+                        <div class="result-value">1 / 137.035999</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">N</i><sub>A</sub> (아보가드로 수)</div>
+                        <div class="result-value">6.022141 × 10<sup>23</sup> mol<sup>-1</sup></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">k</i><sub>B</sub> (볼츠만 상수)</div>
+                        <div class="result-value">1.380649 × 10<sup>-23</sup> J/K</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label">Si(111) 격자면 간격 <i class="formula">d</i></div>
+                        <div class="result-value primary">3.13560 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label">Ge(111) 격자면 간격 <i class="formula">d</i></div>
+                        <div class="result-value">3.26636 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label">C*(Diamond 111) 격자 간격</div>
+                        <div class="result-value">2.05930 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
                       </div>
                     </div>
                   </div>
@@ -1221,6 +1287,15 @@
                     <span class="toc-item-dots"></span>
                     <span class="toc-item-jump">[&sect; 8] &#10132;</span>
                   </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-physical-constants')">
+                    <span class="toc-item-num">&sect; 9.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name">기본 물리 상수 &amp; 결정 격자 레퍼런스</span>
+                      <span class="toc-item-formula">CODATA 2022: c, h, ħ, hc, re, NA, kB, Si/Ge d</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[&sect; 9] &#10132;</span>
+                  </a>
                 </div>
               </div>
 
@@ -1425,24 +1500,6 @@
             </div>
 
           </div>
-
-          <!-- Quick Constants -->
-          <div class="flex-row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div style="font-size:12px; line-height:1.75;">
-                    <div><strong><i class="formula">hc</i></strong>: <span class="mono">12398.41984 eV·Å</span></div>
-                    <div><strong><i class="formula">hc</i></strong>: <span class="mono">1.239842 keV·nm</span></div>
-                    <div><strong><i class="formula">r</i><sub>e</sub> (전자반경)</strong>: <span class="mono">2.8179 × 10<sup>-15</sup> m</span></div>
-                    <div><strong><i class="formula">c</i> (광속)</strong>: <span class="mono">299,792,458 m/s</span></div>
-                    <div><strong>Si(111) <i class="formula">d</i></strong>: <span class="mono">3.13560 Å</span></div>
-                    <div><strong>Ge(111) <i class="formula">d</i></strong>: <span class="mono">3.26636 Å</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
 
@@ -1562,13 +1619,22 @@
                       </span>
                     </button>
 
+                    <button id="btn-theme-datasheet" class="theme-swatch" onclick="applyTheme('datasheet')">
+                      <span class="theme-chip theme-chip-datasheet"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_datasheet_name">공학 데이터시트 (Technical Datasheet)</strong>
+                        <em data-i18n="theme_datasheet_desc">쿨 화이트 종이 + 제도용 네이비 잉크 + 밀리미터 방안 그리드 스펙시트</em>
+                      </span>
+                    </button>
+
                     <button id="btn-theme-blueprint" class="theme-swatch" onclick="applyTheme('blueprint')">
                       <span class="theme-chip theme-chip-blueprint"></span>
                       <span class="theme-swatch-text">
-                        <strong data-i18n="theme_blueprint_name">청사진 그리드 (Engineering Blueprint)</strong>
-                        <em data-i18n="theme_blueprint_desc">밀리미터 모눈종이와 엔지니어링 도면 감성의 청색 그리드</em>
+                        <strong data-i18n="theme_blueprint_name">사이아노타입 청사진 (Cyanotype Blueprint)</strong>
+                        <em data-i18n="theme_blueprint_desc">딥 프러시안 블루 도면 + 초크 화이트/시안 선화 엔지니어링 청사진</em>
                       </span>
                     </button>
+
                     <button id="btn-theme-crt" class="theme-swatch" onclick="applyTheme('crt')">
                       <span class="theme-chip theme-chip-crt"></span>
                       <span class="theme-swatch-text">
@@ -1584,6 +1650,7 @@
                         <em data-i18n="theme_tokyo_desc">모던 네온 블루/퍼플 다크, 고가독성</em>
                       </span>
                     </button>
+
                     <button id="btn-theme-console" class="theme-swatch" onclick="applyTheme('console')">
                       <span class="theme-chip theme-chip-console"></span>
                       <span class="theme-swatch-text">
@@ -1670,7 +1737,7 @@
             <p class="about-tagline" data-i18n="about_tagline">
               방사광 X선 실험을 위한 가벼운 계산·기록 툴킷.
             </p>
-            <p class="about-version mono">Version 1.1 &middot; Offline-ready &middot; No account, no server</p>
+            <p class="about-version mono">Version 1.3 &middot; Offline-ready &middot; No account, no server</p>
           </div>
 
           <div class="about-links">
@@ -1743,7 +1810,7 @@
           </div>
 
           <div class="about-footer">
-            <div class="about-footer-line mono">X-Ray Beamline Toolkit &middot; v1.1 &middot; MIT License</div>
+            <div class="about-footer-line mono">X-Ray Beamline Toolkit &middot; v1.3 &middot; MIT License</div>
             <div class="about-footer-meta">
               <span data-i18n="about_developed_by">Developed by</span>
               <a href="mailto:isaacyong@naver.com">Isaac Yong</a>
@@ -1753,103 +1820,6 @@
             </div>
           </div>
         </section>
-
-        <!-- =================================================================
-             ACADEMIC REFERENCE FOOTER (CODATA Fundamental Physical Constants)
-             ================================================================= -->
-        <footer id="academic-footer">
-          <div class="footer-title">CODATA FUNDAMENTAL PHYSICAL CONSTANTS & BEAMLINE SPECIFICATIONS</div>
-          <table class="footer-constants-table">
-            <thead>
-              <tr>
-                <th>물리량 (Quantity)</th>
-                <th>기호 (Symbol)</th>
-                <th>정밀 수치 (Value)</th>
-                <th>단위 (SI / Conventional)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>진공 중 광속 (Speed of Light in Vacuum)</td>
-                <td><i class="formula">c</i></td>
-                <td>299,792,458</td>
-                <td>m·s<sup>-1</sup> (Exact)</td>
-              </tr>
-              <tr>
-                <td>플랑크 상수 (Planck Constant)</td>
-                <td><i class="formula">h</i></td>
-                <td>6.62607015 × 10<sup>-34</sup></td>
-                <td>J·s (Exact)</td>
-              </tr>
-              <tr>
-                <td>디랙 상수 (Reduced Planck Constant)</td>
-                <td><i class="formula">ħ</i></td>
-                <td>1.054571817 × 10<sup>-34</sup></td>
-                <td>J·s</td>
-              </tr>
-              <tr>
-                <td>광자 에너지-파장 적 (hc Product)</td>
-                <td><i class="formula">hc</i></td>
-                <td>12398.41984</td>
-                <td>eV·Å (1.239841984 keV·nm)</td>
-              </tr>
-              <tr>
-                <td>기본 전하 (Elementary Charge)</td>
-                <td><i class="formula">e</i></td>
-                <td>1.602176634 × 10<sup>-19</sup></td>
-                <td>C (Exact)</td>
-              </tr>
-              <tr>
-                <td>고전 전자 반경 (Classical Electron Radius)</td>
-                <td><i class="formula">r</i><sub>e</sub></td>
-                <td>2.8179403262 × 10<sup>-15</sup></td>
-                <td>m</td>
-              </tr>
-              <tr>
-                <td>아보가드로 상수 (Avogadro Constant)</td>
-                <td><i class="formula">N</i><sub>A</sub></td>
-                <td>6.02214076 × 10<sup>23</sup></td>
-                <td>mol<sup>-1</sup> (Exact)</td>
-              </tr>
-              <tr>
-                <td>볼츠만 상수 (Boltzmann Constant)</td>
-                <td><i class="formula">k</i><sub>B</sub></td>
-                <td>1.380649 × 10<sup>-23</sup></td>
-                <td>J·K<sup>-1</sup> (Exact)</td>
-              </tr>
-              <tr>
-                <td>전자 정지 질량 (Electron Rest Mass)</td>
-                <td><i class="formula">m</i><sub>e</sub></td>
-                <td>9.1093837015 × 10<sup>-31</sup></td>
-                <td>kg (0.510998950 MeV/<i class="formula">c</i><sup>2</sup>)</td>
-              </tr>
-              <tr>
-                <td>미세구조 상수 (Fine-structure Constant)</td>
-                <td><i class="formula">α</i></td>
-                <td>7.2973525693 × 10<sup>-3</sup></td>
-                <td>1 / 137.035999084</td>
-              </tr>
-              <tr>
-                <td>실리콘 Si(111) 격자면 간격</td>
-                <td><i class="formula">d</i><sub>Si(111)</sub></td>
-                <td>3.13560</td>
-                <td>Å (<i class="formula">a</i> = 5.43102 Å, 298.15 K)</td>
-              </tr>
-              <tr>
-                <td>게르마늄 Ge(111) 격자면 간격</td>
-                <td><i class="formula">d</i><sub>Ge(111)</sub></td>
-                <td>3.26636</td>
-                <td>Å (<i class="formula">a</i> = 5.65750 Å, 298.15 K)</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="footer-meta">
-            <span>BEAMLINE TOOLKIT — TECHNICAL COMPUTATION AND LOGBOOK SYSTEM</span>
-            <span>PUBLICATION FORMAT: MONOGRAPH / DATASHEET</span>
-            <span>PRINT READY: CTRL + P</span>
-          </div>
-        </footer>
 
       </main>
 
@@ -1861,16 +1831,16 @@
   <div id="toast-container"></div>
 
   <!-- Load Scripts in Dependency Order (CentOS 7 Offline-Safe) -->
-  <script src="js/data.js?v=1.1"></script>
-  <script src="js/i18n.js?v=1.1"></script>
-  <script src="js/app.js?v=1.1"></script>
-  <script src="js/optics.js?v=1.1"></script>
-  <script src="js/beamline.js?v=1.1"></script>
-  <script src="js/lattice.js?v=1.1"></script>
-  <script src="js/validity.js?v=1.1"></script>
-  <script src="js/miniplot.js?v=1.1"></script>
-  <script src="js/record.js?v=1.1"></script>
-  <script src="js/settings.js?v=1.1"></script>
+  <script src="js/data.js?v=1.3"></script>
+  <script src="js/i18n.js?v=1.3"></script>
+  <script src="js/app.js?v=1.3"></script>
+  <script src="js/optics.js?v=1.3"></script>
+  <script src="js/beamline.js?v=1.3"></script>
+  <script src="js/lattice.js?v=1.3"></script>
+  <script src="js/validity.js?v=1.3"></script>
+  <script src="js/miniplot.js?v=1.3"></script>
+  <script src="js/record.js?v=1.3"></script>
+  <script src="js/settings.js?v=1.3"></script>
 
   <script>
     // The CONTENTS view is static markup; nothing to render.

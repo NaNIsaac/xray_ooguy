@@ -75,6 +75,8 @@
       rec_note_saved: "노트가 저장되었습니다.",
       rec_note_ph: "한두 문장의 추가 설명...",
       rec_copied: "클립보드에 복사되었습니다.",
+      btn_copy_results: "결과값 전체 복사",
+      copy_val_copied: "값이 복사되었습니다.",
       rec_d_type: "Type",
       rec_d_severity: "Severity",
       rec_d_note: "Note",
@@ -220,8 +222,11 @@
       theme_parchment_name: "빈티지 양피지 (Vintage Parchment)",
       theme_parchment_desc: "누렇게 바랜 연구 노트 + 짙은 밤색 잉크 — 눈이 편안한 휴식용",
       theme_parchment_short: "양피지",
-      theme_blueprint_name: "청사진 그리드 (Engineering Blueprint)",
-      theme_blueprint_desc: "밀리미터 모눈종이와 엔지니어링 도면 감성의 청색 그리드",
+      theme_datasheet_name: "공학 데이터시트 (Technical Datasheet)",
+      theme_datasheet_desc: "쿨 화이트 종이 + 제도용 네이비 잉크 + 밀리미터 방안 그리드 스펙시트",
+      theme_datasheet_short: "데이터시트",
+      theme_blueprint_name: "사이아노타입 청사진 (Cyanotype Blueprint)",
+      theme_blueprint_desc: "딥 프러시안 블루 도면 + 초크 화이트/시안 선화 엔지니어링 청사진",
       theme_blueprint_short: "청사진",
       theme_console_name: "제어실 콘솔 (Beamline Control Room)",
       theme_console_desc: "실제 가속기 제어실(EPICS) 스타일의 초고대비 산업용 다크 모드",
@@ -490,6 +495,8 @@
       rec_note_saved: "Note saved.",
       rec_note_ph: "A sentence or two of extra detail...",
       rec_copied: "Copied to clipboard.",
+      btn_copy_results: "Copy all results",
+      copy_val_copied: "Value copied to clipboard.",
       rec_d_type: "Type",
       rec_d_severity: "Severity",
       rec_d_note: "Note",
@@ -615,8 +622,11 @@
       theme_parchment_name: "Vintage Parchment",
       theme_parchment_desc: "Aged notebook stock with deep sepia ink — warm and easy on the eyes",
       theme_parchment_short: "Vintage",
-      theme_blueprint_name: "Engineering Blueprint",
-      theme_blueprint_desc: "Millimetre graph paper and drafting-blue grid, straight off a drawing board",
+      theme_datasheet_name: "Technical Datasheet",
+      theme_datasheet_desc: "Cool white paper, drafting navy ink & millimetre graph spec sheet",
+      theme_datasheet_short: "Datasheet",
+      theme_blueprint_name: "Cyanotype Blueprint",
+      theme_blueprint_desc: "Deep Prussian blue drafting board with chalk white & cyan lines",
       theme_blueprint_short: "Blueprint",
       theme_console_name: "Beamline Control Room",
       theme_console_desc: "Very high contrast industrial dark mode, styled after an EPICS console",
@@ -934,7 +944,7 @@
       }
 
       // 6. Theme picker: current-theme label, swatch state, sidebar buttons
-      var themeList = window.THEMES || ["paper", "parchment", "blueprint", "crt", "tokyo", "console"];
+      var themeList = window.THEMES || ["paper", "parchment", "datasheet", "blueprint", "crt", "tokyo", "console"];
       var activeTheme = document.documentElement.getAttribute("data-theme") || "paper";
 
       var themeCur = document.getElementById("settings-theme-current");
@@ -967,6 +977,11 @@
             breadcrumb.textContent = t[rKey].replace(/^[0-9]\.\s*/, "").split("(")[0].trim();
           }
         }
+      }
+
+      // 11. Refresh copy buttons and tooltips
+      if (window.initResultBoxCopy) {
+        window.initResultBoxCopy();
       }
     }
   };
