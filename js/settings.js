@@ -17,7 +17,7 @@
   // Single backup path for the whole app — Record data included.
   function backupAllData() {
     var data = {
-      version: "1.3",
+      version: "1.4",
       exportDate: new Date().toISOString(),
       theme: Storage.get("theme", "paper"),
       lang: localStorage.getItem("bl_toolkit_lang") || "ko",
