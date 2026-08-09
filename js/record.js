@@ -1,7 +1,7 @@
 /**
  * BEAMLINE TOOLKIT — RECORD
  *
- * Plain-text logbook headers and one-click in-situ timestamped event snippets.
+ * Plain-text logbook headers and WYSIWYG memo-style in-situ timestamped event snippets.
  * Zero emojis, plain text formatting, English snippets.
  *
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70) — ES5 syntax only.
@@ -124,7 +124,7 @@
     copyToClipboard(text, "Logbook header copied to clipboard.");
   }
 
-  // --- 2. In-Situ Quick Snippets ---
+  // --- 2. In-Situ Quick Snippets (WYSIWYG Memo Cards) ---
   var SNIPPET_TEMPLATES = {
     beam_dump: function (ts) {
       return "[" + ts + "] BEAM DUMP: Storage ring beam lost (0 mA). Beamline standby.";
@@ -133,30 +133,38 @@
       return "[" + ts + "] BEAM RESTORED: Top-up injection nominal (300 mA). Hutch shutter opened.";
     },
     sample_mount: function (ts) {
-      return "[" + ts + "] SAMPLE MOUNT: Sample mounted and centered on stage.";
+      return "[" + ts + "] SAMPLE MOUNT: Sample [            ] mounted on stage.";
     },
     beam_align: function (ts) {
-      return "[" + ts + "] ALIGNMENT: Direct beam, pinhole, and slits centered.";
+      return "[" + ts + "] ALIGNMENT: Direct beam, pinhole, and slits centered. Counts: [      ] ph/s.";
     },
     calibration: function (ts) {
       return "[" + ts + "] CALIBRATION: Standard (LaB6 / AgBh / CeO2) calibration measured.";
     },
     scan_start: function (ts) {
-      return "[" + ts + "] SCAN START: Data acquisition run initiated.";
+      return "[" + ts + "] SCAN START: Run #[    ] started (Exp: [  ] s, Attn: [  ] dB).";
     },
     scan_finish: function (ts) {
-      return "[" + ts + "] SCAN FINISH: Data acquisition run completed. 2D frames saved.";
+      return "[" + ts + "] SCAN FINISH: Run #[    ] completed. 2D frames saved.";
     },
     interlock: function (ts) {
       return "[" + ts + "] INTERLOCK: Hutch search / Interlock / Motor error / Alarm triggered.";
     }
   };
 
-  function triggerSnippet(key) {
+  function triggerSnippet(key, cardEl) {
     var ts = getFormattedTimestamp();
     var fn = SNIPPET_TEMPLATES[key];
     if (!fn) return;
     var line = fn(ts);
+
+    if (cardEl) {
+      cardEl.classList.add("copied");
+      setTimeout(function () {
+        cardEl.classList.remove("copied");
+      }, 700);
+    }
+
     copyToClipboard(line, "Copied: " + line);
   }
 
@@ -170,6 +178,14 @@
     input.value = "";
   }
 
+  function updateLiveTimestamps() {
+    var ts = getFormattedTimestamp();
+    var nodes = document.querySelectorAll(".snip-live-time");
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].textContent = ts;
+    }
+  }
+
   // Global Exposure
   window.selectLogbookTab = selectLogbookTab;
   window.copyActiveTemplate = copyActiveTemplate;
@@ -178,6 +194,8 @@
 
   function init() {
     selectLogbookTab("standard");
+    updateLiveTimestamps();
+    setInterval(updateLiveTimestamps, 1000);
   }
 
   if (document.readyState === "loading") {

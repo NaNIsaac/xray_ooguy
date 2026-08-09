@@ -1490,46 +1490,93 @@
                   <span class="card-tag">One-Click Timestamped Copy</span>
                 </div>
                 <div class="card-body">
-                  <div class="rec-snippet-list">
-                    <div class="rec-snip-row" onclick="triggerSnippet('beam_dump')">
-                      <span class="snip-tag alert mono">[BEAM DUMP]</span>
-                      <span class="snip-sentence mono">Storage ring beam lost (0 mA). Beamline standby.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                  <div class="rec-memo-grid">
+                    <!-- Memo Card 1 -->
+                    <div class="rec-memo-card alert" onclick="triggerSnippet('beam_dump', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">BEAM DUMP</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> BEAM DUMP: Storage ring beam lost (0 mA). Beamline standby.
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('beam_restored')">
-                      <span class="snip-tag success mono">[BEAM RESTORED]</span>
-                      <span class="snip-sentence mono">Top-up injection nominal (300 mA). Hutch shutter opened.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 2 -->
+                    <div class="rec-memo-card success" onclick="triggerSnippet('beam_restored', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">BEAM RESTORED</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> BEAM RESTORED: Top-up injection nominal (300 mA). Hutch shutter opened.
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('sample_mount')">
-                      <span class="snip-tag mono">[SAMPLE MOUNT]</span>
-                      <span class="snip-sentence mono">Sample mounted and centered on stage.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 3 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('sample_mount', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SAMPLE MOUNT</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SAMPLE MOUNT: Sample <span class="snip-ph">[            ]</span> mounted on stage.
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('beam_align')">
-                      <span class="snip-tag mono">[ALIGNMENT]</span>
-                      <span class="snip-sentence mono">Direct beam, pinhole, and slits centered.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 4 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('beam_align', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">ALIGNMENT</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> ALIGNMENT: Direct beam, pinhole, and slits centered. Counts: <span class="snip-ph">[      ]</span> ph/s.
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('calibration')">
-                      <span class="snip-tag mono">[CALIBRATION]</span>
-                      <span class="snip-sentence mono">Standard (LaB6 / AgBh / CeO2) calibration measured.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 5 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('calibration', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">CALIBRATION</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> CALIBRATION: Standard (LaB6 / AgBh / CeO2) calibration measured.
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('scan_start')">
-                      <span class="snip-tag mono">[SCAN START]</span>
-                      <span class="snip-sentence mono">Data acquisition run initiated.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 6 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('scan_start', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SCAN START</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SCAN START: Run #<span class="snip-ph">[    ]</span> started (Exp: <span class="snip-ph">[  ]</span> s, Attn: <span class="snip-ph">[  ]</span> dB).
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('scan_finish')">
-                      <span class="snip-tag success mono">[SCAN FINISH]</span>
-                      <span class="snip-sentence mono">Data acquisition run completed. 2D frames saved.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 7 -->
+                    <div class="rec-memo-card success" onclick="triggerSnippet('scan_finish', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SCAN FINISH</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SCAN FINISH: Run #<span class="snip-ph">[    ]</span> completed. 2D frames saved.
+                      </div>
                     </div>
-                    <div class="rec-snip-row" onclick="triggerSnippet('interlock')">
-                      <span class="snip-tag alert mono">[INTERLOCK]</span>
-                      <span class="snip-sentence mono">Hutch search / Interlock / Motor error / Alarm triggered.</span>
-                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+
+                    <!-- Memo Card 8 -->
+                    <div class="rec-memo-card alert" onclick="triggerSnippet('interlock', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">INTERLOCK</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> INTERLOCK: Hutch search / Interlock / Motor error / Alarm triggered.
+                      </div>
                     </div>
                   </div>
 
