@@ -805,15 +805,16 @@ sub {
 .flex-row {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   margin-left: -10px;
   margin-right: -10px;
 }
 
-.col-12 { width: 100%; padding: 0 10px; margin-bottom: 18px; }
-.col-8  { width: 66.6667%; padding: 0 10px; margin-bottom: 18px; }
-.col-6  { width: 50%; padding: 0 10px; margin-bottom: 18px; }
-.col-4  { width: 33.3333%; padding: 0 10px; margin-bottom: 18px; }
-.col-3  { width: 25%; padding: 0 10px; margin-bottom: 18px; }
+.col-12 { width: 100%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
+.col-8  { width: 66.6667%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
+.col-6  { width: 50%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
+.col-4  { width: 33.3333%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
+.col-3  { width: 25%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
 
 /* Fine-Rule Section Box (Replacing Cards with Academic Borders) */
 .card {
@@ -824,7 +825,7 @@ sub {
   flex-direction: column;
   box-sizing: border-box;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 .card-header {
@@ -861,7 +862,6 @@ sub {
 
 .card-body {
   padding: 0.95rem 0.95rem;
-  flex: 1 1 auto;
   background-color: var(--bg-paper);
   box-sizing: border-box;
 }
