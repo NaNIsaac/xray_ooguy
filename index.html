@@ -1447,113 +1447,96 @@
 
 
         <!-- =================================================================
-             3. RECORD VIEW — Logbook Presets & In-Situ Beamtime Snippets
+             3. RECORD VIEW — Plain-Text Logbook Presets & In-Situ Event Snippets
              ================================================================= -->
         <section id="view-record" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2 data-i18n="b_rec_title">RECORD — 방사광 빔타임 로그북 &amp; 실시간 기록</h2>
-              <p data-i18n="b_rec_desc">연구 노트(ELN/Notion/Paper)용 표준 템플릿과 빔타임 이벤트 1클릭 복사 스니펫</p>
-            </div>
-            <div class="banner-actions">
-              <button class="btn btn-sm btn-secondary" onclick="clearTimelineLogs()" data-i18n="rec_btn_clear_log">타임라인 비우기</button>
-              <button class="btn btn-sm btn-primary" onclick="copyFullTimeline()" data-i18n="rec_btn_copy_all" style="margin-left:6px; font-weight:700;">전체 타임라인 복사</button>
+              <h2 data-i18n="b_rec_title">RECORD — 빔타임 로그북 서식 &amp; 실시간 이벤트 스니펫</h2>
+              <p data-i18n="b_rec_desc">연구 노트(ELN / Notion / Paper)용 표준 플레인 텍스트 서식 및 원클릭 타임스탬프 스니펫</p>
             </div>
           </div>
 
           <div class="flex-row">
-            <!-- § 1. 빔타임 로그북 서식 프리셋 (Logbook Header Templates) -->
+            <!-- § 1. Logbook Header Presets -->
             <div class="col-12">
               <div class="card" id="card-record-headers">
                 <div class="card-header">
-                  <span class="card-title">§ 1. 빔타임 로그북 서식 프리셋 (Beamtime Logbook Header Presets)</span>
-                  <span class="card-tag">Markdown / Lab Notebook</span>
+                  <span class="card-title">§ 1. BEAMTIME LOGBOOK HEADER PRESETS</span>
+                  <span class="card-tag">Plain Text Format</span>
                 </div>
                 <div class="card-body">
                   <div class="rec-tpl-tabs">
-                    <button class="btn btn-sm btn-primary active" id="tab-tpl-standard" onclick="selectLogbookTab('standard')">표준 빔타임 서식 (Standard)</button>
-                    <button class="btn btn-sm btn-secondary" id="tab-tpl-shift" onclick="selectLogbookTab('shift')">교대/핸드오버 서식 (Shift Handover)</button>
-                    <button class="btn btn-sm btn-secondary" id="tab-tpl-matrix" onclick="selectLogbookTab('matrix')">측정 시료 매트릭스 표 (Run Table)</button>
+                    <button class="btn btn-sm btn-primary active" id="tab-tpl-standard" onclick="selectLogbookTab('standard')">Standard Beamtime</button>
+                    <button class="btn btn-sm btn-secondary" id="tab-tpl-shift" onclick="selectLogbookTab('shift')">Shift Handover</button>
+                    <button class="btn btn-sm btn-secondary" id="tab-tpl-runs" onclick="selectLogbookTab('runs')">Run Sequence Matrix</button>
                   </div>
                   
                   <div class="rec-tpl-box">
                     <pre class="rec-tpl-preview mono" id="logbook-tpl-preview"></pre>
                     <div class="rec-tpl-copy-bar">
-                      <button class="btn btn-sm btn-primary" onclick="copyActiveTemplate()" style="font-weight:700;">📋 서식 클립보드 복사 (Copy Template)</button>
+                      <button class="btn btn-sm btn-primary" onclick="copyActiveTemplate()" style="font-weight:700;">Copy Header to Clipboard</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- § 2. 실시간 빔타임 이벤트 스니펫 (In-Situ Quick Log Snippets) -->
+            <!-- § 2. In-Situ Quick Snippets -->
             <div class="col-12">
               <div class="card" id="card-record-snippets">
                 <div class="card-header">
-                  <span class="card-title">§ 2. 실시간 빔타임 이벤트 스니펫 (In-Situ Quick Log Snippets)</span>
-                  <span class="card-tag">1-Click Timestamped Copy</span>
+                  <span class="card-title">§ 2. IN-SITU BEAMTIME EVENT SNIPPETS</span>
+                  <span class="card-tag">One-Click Timestamped Copy</span>
                 </div>
                 <div class="card-body">
-                  <p style="font-size:11.5px; color:var(--ink-secondary); margin-bottom:10px;">
-                    버튼 클릭 시 현재 시간(<span class="mono" id="rec-live-timestamp-preview">-</span>)이 자동 삽입되어 <strong>클립보드에 즉시 복사</strong>되고 하단 타임라인에 누적됩니다.
-                  </p>
-
-                  <div class="rec-snippet-grid">
-                    <button class="rec-snip-btn alert" onclick="triggerSnippet('beam_dump')">
-                      <span class="snip-icon">⚠</span>
-                      <span class="snip-title">빔 덤프 (Beam Dump)</span>
-                      <span class="snip-sub">Current 0 mA 발생 / 정지</span>
-                    </button>
-                    <button class="rec-snip-btn success" onclick="triggerSnippet('beam_restored')">
-                      <span class="snip-icon">✔</span>
-                      <span class="snip-title">빔 복구 / 탑업 (Beam Restored)</span>
-                      <span class="snip-sub">Current 정상 복구 / 셔터 오픈</span>
-                    </button>
-                    <button class="rec-snip-btn primary" onclick="triggerSnippet('sample_mount')">
-                      <span class="snip-icon">📦</span>
-                      <span class="snip-title">시료 마운트 (Sample Mount)</span>
-                      <span class="snip-sub">신규 시료 스테이지 거치 / 센터링</span>
-                    </button>
-                    <button class="rec-snip-btn primary" onclick="triggerSnippet('beam_align')">
-                      <span class="snip-icon">🎯</span>
-                      <span class="snip-title">빔 얼라인먼트 (Alignment)</span>
-                      <span class="snip-sub">슬릿/핀홀/디텍터 센터 정렬</span>
-                    </button>
-                    <button class="rec-snip-btn info" onclick="triggerSnippet('calibration')">
-                      <span class="snip-icon">📐</span>
-                      <span class="snip-title">표준시료 캘리브레이션</span>
-                      <span class="snip-sub">LaB6 / AgBh / CeO2 Q-보정</span>
-                    </button>
-                    <button class="rec-snip-btn info" onclick="triggerSnippet('scan_start')">
-                      <span class="snip-icon">▶</span>
-                      <span class="snip-title">측정 시작 (Scan Start)</span>
-                      <span class="snip-sub">데이터 수집 Run / Scan 개시</span>
-                    </button>
-                    <button class="rec-snip-btn success" onclick="triggerSnippet('scan_finish')">
-                      <span class="snip-icon">⏹</span>
-                      <span class="snip-title">측정 완료 (Scan Complete)</span>
-                      <span class="snip-sub">2D 회절/산란 프레임 저장 완료</span>
-                    </button>
-                    <button class="rec-snip-btn alert" onclick="triggerSnippet('interlock')">
-                      <span class="snip-icon">🛑</span>
-                      <span class="snip-title">인터락 / 에러 (Interlock/Error)</span>
-                      <span class="snip-sub">허치 서치 / 모터 스톨 / 경보</span>
-                    </button>
+                  <div class="rec-snippet-list">
+                    <div class="rec-snip-row" onclick="triggerSnippet('beam_dump')">
+                      <span class="snip-tag alert mono">[BEAM DUMP]</span>
+                      <span class="snip-sentence mono">Storage ring beam lost (0 mA). Beamline standby.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('beam_restored')">
+                      <span class="snip-tag success mono">[BEAM RESTORED]</span>
+                      <span class="snip-sentence mono">Top-up injection nominal (300 mA). Hutch shutter opened.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('sample_mount')">
+                      <span class="snip-tag mono">[SAMPLE MOUNT]</span>
+                      <span class="snip-sentence mono">Sample mounted and centered on stage.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('beam_align')">
+                      <span class="snip-tag mono">[ALIGNMENT]</span>
+                      <span class="snip-sentence mono">Direct beam, pinhole, and slits centered.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('calibration')">
+                      <span class="snip-tag mono">[CALIBRATION]</span>
+                      <span class="snip-sentence mono">Standard (LaB6 / AgBh / CeO2) calibration measured.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('scan_start')">
+                      <span class="snip-tag mono">[SCAN START]</span>
+                      <span class="snip-sentence mono">Data acquisition run initiated.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('scan_finish')">
+                      <span class="snip-tag success mono">[SCAN FINISH]</span>
+                      <span class="snip-sentence mono">Data acquisition run completed. 2D frames saved.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
+                    <div class="rec-snip-row" onclick="triggerSnippet('interlock')">
+                      <span class="snip-tag alert mono">[INTERLOCK]</span>
+                      <span class="snip-sentence mono">Hutch search / Interlock / Motor error / Alarm triggered.</span>
+                      <button class="btn btn-sm btn-secondary snip-btn" type="button">Copy</button>
+                    </div>
                   </div>
 
                   <!-- Custom Memo Input -->
                   <div class="rec-custom-row">
-                    <input type="text" id="rec-custom-input" class="form-control mono" placeholder="실험 중 특이사항 / 메모 입력 (Enter 입력 시 타임스탬프와 함께 복사 &amp; 누적)" onkeydown="if(event.key==='Enter') addCustomNote()">
-                    <button class="btn btn-sm btn-primary" onclick="addCustomNote()" style="flex-shrink:0; font-weight:700;">+ 메모 복사 &amp; 추가</button>
-                  </div>
-
-                  <!-- Timeline Stream Area -->
-                  <div class="rec-timeline-area">
-                    <div class="rec-timeline-head">
-                      <span class="rec-timeline-title">LIVE EXPERIMENT TIMELINE (누적 타임라인 스트림)</span>
-                      <span class="badge" id="rec-timeline-count">0 logs</span>
-                    </div>
-                    <div id="rec-timeline-list" class="rec-timeline-list"></div>
+                    <input type="text" id="rec-custom-input" class="form-control mono" placeholder="Custom note to copy with timestamp..." onkeydown="if(event.key==='Enter') addCustomNote()">
+                    <button class="btn btn-sm btn-primary" onclick="addCustomNote()" style="flex-shrink:0; font-weight:700;">Copy Custom Note</button>
                   </div>
 
                 </div>
