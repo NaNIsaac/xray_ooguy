@@ -118,7 +118,7 @@
 
   // --- 5.3 Render Useful Links ---
   function renderLinks() {
-    var container = document.getElementById("useful-links-container");
+    var container = document.getElementById("useful-links-container") || document.getElementById("card-ref-links");
     if (!container) return;
 
     container.innerHTML = "";
@@ -142,8 +142,9 @@
           '</div>';
       }
 
+      var prefix = i === 0 ? "§ 3. " : "";
       catDiv.innerHTML =
-        '<div class="card-header"><span class="card-title">' + cat.category + '</span></div>' +
+        '<div class="card-header"><span class="card-title">' + prefix + cat.category + '</span></div>' +
         '<div class="card-body">' + linkItems + '</div>';
 
       container.appendChild(catDiv);

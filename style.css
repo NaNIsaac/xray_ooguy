@@ -152,7 +152,7 @@ html, body {
   width: 100%;
   max-width: 100%;
   height: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll on window/body */
+  overflow-x: hidden !important; /* Prevent any horizontal scroll on window/body */
   background-color: var(--bg-paper);
   color: var(--ink-primary);
   font-family: var(--font-serif);
@@ -209,7 +209,7 @@ sub {
   width: 100%;
   max-width: 100%;
   min-height: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   background-color: var(--bg-paper);
 }
 
@@ -327,8 +327,8 @@ sub {
   flex-direction: column;
   min-width: 0;
   width: calc(100% - var(--sidebar-width));
-  max-width: 100%;
-  overflow-x: hidden; /* 가로 스크롤 절대 방지 */
+  max-width: calc(100% - var(--sidebar-width));
+  overflow-x: hidden !important; /* 가로 스크롤 절대 방지 */
   background-color: var(--bg-paper);
 }
 
@@ -540,7 +540,7 @@ sub {
   flex: 1;
   padding: 20px 24px 48px 24px;
   overflow-y: auto;
-  overflow-x: hidden; /* 컨텐츠 영역은 가로 스크롤 완전 방지 고정 */
+  overflow-x: hidden !important; /* 컨텐츠 영역은 가로 스크롤 완전 방지 고정 */
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -551,7 +551,7 @@ sub {
   display: none;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* 가로 스크롤 방지 */
+  overflow-x: hidden !important; /* 가로 스크롤 방지 */
   box-sizing: border-box;
 }
 
@@ -1171,6 +1171,261 @@ select.form-control {
   #content-area {
     padding: 16px 14px 40px 14px;
   }
+}
+
+/* ==========================================================================
+   Academic Table of Contents (논문 목차 디자인 시스템)
+   ========================================================================== */
+
+.toc-wrapper {
+  margin-bottom: 24px;
+}
+
+/* TOC Frontmatter Masthead */
+.toc-masthead {
+  border-top: 2px solid var(--ink-primary);
+  border-bottom: 1.5px solid var(--ink-primary);
+  padding: 16px 14px 14px 14px;
+  background-color: var(--bg-paper);
+  margin-bottom: 20px;
+}
+
+.toc-pretitle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+.toc-maintitle {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ink-primary);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.toc-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.toc-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: var(--rule-light);
+  padding-top: 8px;
+  font-size: 11px;
+  color: var(--ink-secondary);
+  font-family: var(--font-mono);
+}
+
+.toc-meta-item {
+  margin-right: 18px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.toc-meta-item strong {
+  color: var(--ink-primary);
+  margin-right: 4px;
+}
+
+/* TOC Section Cards (Roman Numerals I ~ VII) */
+.toc-section-card {
+  border: var(--rule-main);
+  background-color: var(--bg-paper);
+  margin-bottom: 18px;
+  transition: border-color 0.15s ease;
+}
+
+.toc-section-card:hover {
+  border-color: var(--accent-ink);
+}
+
+.toc-sec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background-color: var(--bg-paper-subtle);
+  border-bottom: var(--rule-main);
+}
+
+.toc-sec-title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+}
+
+.toc-roman-badge {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent-ink);
+  margin-right: 8px;
+  letter-spacing: 0.5px;
+}
+
+.toc-sec-desc {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  padding: 6px 14px;
+  border-bottom: var(--rule-faint);
+  background-color: var(--bg-paper);
+  line-height: 1.4;
+}
+
+/* TOC Item Links (Section § Items) */
+.toc-items-container {
+  padding: 4px 0;
+}
+
+.toc-item-link {
+  display: flex;
+  align-items: baseline;
+  padding: 7px 14px;
+  text-decoration: none;
+  color: var(--ink-primary);
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.toc-item-link:hover {
+  background-color: var(--bg-paper-hover);
+  color: var(--ink-primary);
+}
+
+.toc-item-link:last-child {
+  border-bottom: none;
+}
+
+.toc-item-num {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--accent-ink);
+  min-width: 32px;
+  flex-shrink: 0;
+}
+
+.toc-item-body {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  max-width: 70%;
+}
+
+.toc-item-name {
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-primary);
+  line-height: 1.3;
+}
+
+.toc-item-formula {
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.3;
+  margin-top: 1px;
+}
+
+.toc-item-dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--ink-faint);
+  margin: 0 10px 4px 10px;
+  min-width: 16px;
+  height: 1px;
+}
+
+.toc-item-jump {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  background-color: var(--bg-paper-subtle);
+  border: var(--rule-light);
+  padding: 1px 6px;
+  flex-shrink: 0;
+  transition: all 0.12s ease;
+}
+
+.toc-item-link:hover .toc-item-jump {
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+  border-color: var(--ink-primary);
+}
+
+/* Card Target Pulse Highlight Animation */
+@keyframes cardPulseAnim {
+  0% {
+    outline: 2px solid var(--accent-ink);
+    background-color: var(--accent-ink-subtle);
+  }
+  40% {
+    outline: 2px solid var(--accent-ink);
+    background-color: var(--bg-paper-hover);
+  }
+  100% {
+    outline: 0 solid transparent;
+    background-color: var(--bg-paper);
+  }
+}
+
+.card-highlight-pulse {
+  animation: cardPulseAnim 2.2s ease-out;
+  position: relative;
+}
+
+/* Dark mode overrides for TOC */
+html[data-theme="dark"] .toc-masthead {
+  border-color: #fdfcf8 !important;
+  background-color: #1c2128 !important;
+}
+
+html[data-theme="dark"] .toc-sec-header {
+  background-color: #262c36 !important;
+  border-color: #424956 !important;
+}
+
+html[data-theme="dark"] .toc-sec-desc {
+  background-color: #121417 !important;
+  border-color: #2d333f !important;
+}
+
+html[data-theme="dark"] .toc-item-link:hover {
+  background-color: #262c36 !important;
+}
+
+html[data-theme="dark"] .toc-item-dots {
+  border-bottom-color: #424956 !important;
+}
+
+html[data-theme="dark"] .toc-item-jump {
+  background-color: #1c2128 !important;
+  border-color: #424956 !important;
+  color: #d5d3cc !important;
+}
+
+html[data-theme="dark"] .toc-item-link:hover .toc-item-jump {
+  background-color: #fdfcf8 !important;
+  color: #121417 !important;
+  border-color: #fdfcf8 !important;
 }
 
 /* ==========================================================================

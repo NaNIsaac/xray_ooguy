@@ -87,25 +87,32 @@
 
   // Router logic
   var routes = {
-    dashboard: { title: "DASHBOARD", subtitle: "빠른 도구 바로가기 및 계산 현황" },
-    optics: { title: "OPTICS", subtitle: "X선 광학 및 회절/투과율 정밀 계산기" },
-    beamline: { title: "BEAMLINE", subtitle: "빔라인 물리량 및 기하학적 파라미터 계산기" },
-    logbook: { title: "LOGBOOK", subtitle: "실험 조건 수동 기록 및 히스토리 스냅샷" },
-    experiment: { title: "EXPERIMENT", subtitle: "실험 노트, 체크리스트, 샘플 관리, DAQ & 칸반" },
-    reference: { title: "REFERENCE", subtitle: "단위 변환기, 결정 d-spacing DB, 유용한 연구 링크" },
-    settings: { title: "SETTINGS", subtitle: "테마 설정, 계산 히스토리 및 단축키 안내" },
-    about: { title: "ABOUT", subtitle: "제작자 소개, 연구 포트폴리오 및 프로젝트 후원" }
+    dashboard: { title: "0. DASHBOARD (목차)", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인" },
+    optics: { title: "I. OPTICS", subtitle: "X선 광학 및 회절/투과율 정밀 계산기" },
+    beamline: { title: "II. BEAMLINE", subtitle: "빔라인 물리량 및 기하학적 파라미터 계산기" },
+    logbook: { title: "III. LOGBOOK", subtitle: "실험 조건 수동 기록 및 히스토리 스냅샷" },
+    experiment: { title: "IV. EXPERIMENT", subtitle: "실험 노트, 체크리스트, 샘플 관리, DAQ & 칸반" },
+    reference: { title: "V. REFERENCE", subtitle: "단위 변환기, 결정 d-spacing DB, 유용한 연구 링크" },
+    settings: { title: "VI. SETTINGS", subtitle: "테마 설정, 계산 히스토리 및 단축키 안내" },
+    about: { title: "VII. ABOUT", subtitle: "제작자 소개, 연구 포트폴리오 및 프로젝트 후원" }
   };
 
-  function navigateTo(route) {
+  function navigateTo(route, targetCardId) {
     if (!routes[route]) {
       route = "dashboard";
     }
     App.currentRoute = route;
 
     // Update URL hash without breaking
-    if (window.location.hash !== "#" + route) {
+    var targetHash = "#" + route + (targetCardId ? "/" + targetCardId : "");
+    if (window.location.hash !== targetHash && !targetCardId) {
       window.location.hash = "#" + route;
+    } else if (targetCardId && window.location.hash !== targetHash) {
+      try {
+        history.replaceState ? history.replaceState(null, "", targetHash) : (window.location.hash = targetHash);
+      } catch (e) {
+        window.location.hash = targetHash;
+      }
     }
 
     // Update Views
@@ -137,14 +144,32 @@
       var tabTarget = tBtn.getAttribute("data-route");
       if (tabTarget === route) {
         tBtn.classList.add("active");
-        // Scroll the active tab into view smoothly within the horizontal strip
-        try {
-          tBtn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        } catch (err) {}
+        // Safe container-scoped scroll without ever shifting the parent window/body
+        var tabStrip = document.querySelector(".tab-strip-scroll");
+        if (tabStrip && tBtn) {
+          try {
+            var scrollPos = tBtn.offsetLeft - (tabStrip.clientWidth / 2) + (tBtn.clientWidth / 2);
+            if (typeof tabStrip.scrollTo === "function") {
+              tabStrip.scrollTo({ left: scrollPos, behavior: "smooth" });
+            } else {
+              tabStrip.scrollLeft = scrollPos;
+            }
+          } catch (e) {
+            tabStrip.scrollLeft = tBtn.offsetLeft - 20;
+          }
+        }
       } else {
         tBtn.classList.remove("active");
       }
     }
+
+    // Always reset any accidental window/body horizontal displacement
+    if (document.documentElement) document.documentElement.scrollLeft = 0;
+    if (document.body) document.body.scrollLeft = 0;
+    var mainWrapper = document.getElementById("main-wrapper");
+    if (mainWrapper) mainWrapper.scrollLeft = 0;
+    var appLayout = document.getElementById("app-layout");
+    if (appLayout) appLayout.scrollLeft = 0;
 
     // Update Header Breadcrumb
     var breadcrumbTitle = document.getElementById("breadcrumb-current");
@@ -152,12 +177,36 @@
       breadcrumbTitle.textContent = routes[route].title;
     }
 
-    // Scroll main view and window to top
+    // Scroll handling: either scroll to specific card or top
     var contentArea = document.getElementById("content-area");
-    if (contentArea) {
-      contentArea.scrollTop = 0;
+    if (targetCardId) {
+      setTimeout(function () {
+        var cardEl = document.getElementById(targetCardId);
+        if (cardEl) {
+          try {
+            cardEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          } catch (e) {
+            if (contentArea) contentArea.scrollTop = cardEl.offsetTop - 10;
+          }
+          // Add pulse highlight animation
+          cardEl.classList.remove("card-highlight-pulse");
+          void cardEl.offsetWidth; // trigger reflow
+          cardEl.classList.add("card-highlight-pulse");
+          setTimeout(function () {
+            cardEl.classList.remove("card-highlight-pulse");
+          }, 2200);
+        } else if (contentArea) {
+          contentArea.scrollTop = 0;
+        }
+      }, 60);
+    } else {
+      if (contentArea) {
+        contentArea.scrollTop = 0;
+      }
+      if (window.scrollTo) {
+        window.scrollTo(0, 0);
+      }
     }
-    window.scrollTo(0, 0);
 
     // Trigger tab specific on-show handlers
     if (route === "dashboard" && window.renderDashboard) {
@@ -173,10 +222,20 @@
     }
   }
 
+  function jumpToSection(route, targetCardId) {
+    if (targetCardId) {
+      window.location.hash = "#" + route + "/" + targetCardId;
+    } else {
+      window.location.hash = "#" + route;
+    }
+  }
+
   function handleHashChange() {
     var rawHash = window.location.hash.replace(/^#\/?/, "");
-    var route = rawHash.split("/")[0] || "dashboard";
-    navigateTo(route);
+    var parts = rawHash.split("/");
+    var route = parts[0] || "dashboard";
+    var targetCardId = parts[1] || "";
+    navigateTo(route, targetCardId);
   }
 
   // Theme Management (Robust CSS Variables & ClassList Toggle)
@@ -256,6 +315,7 @@
   window.showToast = showToast;
   window.recordCalculation = recordCalculation;
   window.navigateTo = navigateTo;
+  window.jumpToSection = jumpToSection;
   window.applyTheme = applyTheme;
   window.toggleTheme = toggleTheme;
 

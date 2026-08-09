@@ -27,34 +27,34 @@
       <nav class="sidebar-nav">
         <div class="nav-section-title">메인 메뉴</div>
         <a class="nav-item active" data-route="dashboard" href="#dashboard">
-          <span>DASHBOARD</span>
+          <span>0. DASHBOARD (목차)</span>
         </a>
         <a class="nav-item" data-route="optics" href="#optics">
-          <span>OPTICS</span>
+          <span>I. OPTICS</span>
           <span class="nav-badge">8 Tools</span>
         </a>
         <a class="nav-item" data-route="beamline" href="#beamline">
-          <span>BEAMLINE</span>
+          <span>II. BEAMLINE</span>
           <span class="nav-badge">7 Tools</span>
         </a>
 
         <div class="nav-section-title">실험 및 기록</div>
         <a class="nav-item" data-route="logbook" href="#logbook">
-          <span>LOGBOOK</span>
+          <span>III. LOGBOOK</span>
         </a>
         <a class="nav-item" data-route="experiment" href="#experiment">
-          <span>EXPERIMENT</span>
+          <span>IV. EXPERIMENT</span>
         </a>
 
         <div class="nav-section-title">데이터 & 도구</div>
         <a class="nav-item" data-route="reference" href="#reference">
-          <span>REFERENCE</span>
+          <span>V. REFERENCE</span>
         </a>
         <a class="nav-item" data-route="settings" href="#settings">
-          <span>SETTINGS</span>
+          <span>VI. SETTINGS</span>
         </a>
         <a class="nav-item" data-route="about" href="#about">
-          <span>ABOUT</span>
+          <span>VII. ABOUT</span>
         </a>
       </nav>
 
@@ -89,7 +89,7 @@
           <div class="page-breadcrumb">
             <span style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="breadcrumb-current">DASHBOARD</span>
+            <span id="breadcrumb-current">0. DASHBOARD</span>
           </div>
         </div>
 
@@ -101,14 +101,14 @@
       <!-- Dedicated Horizontal Tab Strip (Horizontally Scrollable) -->
       <nav id="top-tab-strip">
         <div class="tab-strip-scroll">
-          <button class="tab-pill active" data-route="dashboard">0. DASHBOARD</button>
-          <button class="tab-pill" data-route="optics">1. OPTICS (8 Tools)</button>
-          <button class="tab-pill" data-route="beamline">2. BEAMLINE (7 Tools)</button>
-          <button class="tab-pill" data-route="logbook">3. LOGBOOK</button>
-          <button class="tab-pill" data-route="experiment">4. EXPERIMENT</button>
-          <button class="tab-pill" data-route="reference">5. REFERENCE</button>
-          <button class="tab-pill" data-route="settings">6. SETTINGS</button>
-          <button class="tab-pill" data-route="about">7. ABOUT (제작자)</button>
+          <button class="tab-pill active" data-route="dashboard">0. DASHBOARD (목차)</button>
+          <button class="tab-pill" data-route="optics">I. OPTICS (8 Tools)</button>
+          <button class="tab-pill" data-route="beamline">II. BEAMLINE (7 Tools)</button>
+          <button class="tab-pill" data-route="logbook">III. LOGBOOK</button>
+          <button class="tab-pill" data-route="experiment">IV. EXPERIMENT</button>
+          <button class="tab-pill" data-route="reference">V. REFERENCE</button>
+          <button class="tab-pill" data-route="settings">VI. SETTINGS</button>
+          <button class="tab-pill" data-route="about">VII. ABOUT (제작자)</button>
         </div>
       </nav>
 
@@ -119,88 +119,445 @@
              1. DASHBOARD VIEW
              ================================================================= -->
         <section id="view-dashboard" class="view-section active">
-          <div class="section-banner">
-            <div class="banner-info">
-              <h2 id="banner-dash-title" data-i18n="b_dash_title">빔라인 래피드 대시보드 (Quick Dashboard)</h2>
-              <p id="banner-dash-desc" data-i18n="b_dash_desc">자주 사용하는 광학 계산기, 물리량 분석기 및 최근 계산 히스토리 바로가기</p>
-            </div>
-            <div class="banner-actions">
-              <button class="btn btn-sm btn-primary" onclick="window.location.hash='#optics'" data-i18n="btn_open_optics">광학 계산기 열기</button>
+
+          <!-- Academic Table of Contents Frontmatter Masthead -->
+          <div class="toc-masthead">
+            <div class="toc-pretitle" data-i18n="toc_pretitle">SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH</div>
+            <h1 class="toc-maintitle" data-i18n="toc_maintitle">TABLE OF CONTENTS (목차)</h1>
+            <p class="toc-subtitle" data-i18n="toc_subtitle">
+              방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인
+            </p>
+            <div class="toc-meta-bar">
+              <span class="toc-meta-item"><strong>DOC NO:</strong> BL-TK-2026</span>
+              <span class="toc-meta-item"><strong>TOTAL SUITES:</strong> VII (7개 대분류)</span>
+              <span class="toc-meta-item"><strong>MODULES:</strong> 30 Calculators & Tools</span>
+              <span class="toc-meta-item"><strong>CALIBRATION:</strong> CODATA 2022</span>
+              <span class="toc-meta-item"><strong>STATUS:</strong> Client Offline-Native</span>
             </div>
           </div>
 
-          <div class="flex-row">
-            <!-- Quick Tile 1 -->
-            <div class="col-4">
-              <div class="tool-tile" onclick="window.location.hash='#optics'">
-                <div class="tile-top">
-                  <span class="badge">OPTICS</span>
-                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">E = hc/λ</span>
+          <!-- TOC 2-Column Academic Layout -->
+          <div class="flex-row toc-wrapper">
+
+            <!-- Left Column: Suites I, II, III -->
+            <div class="col-6">
+
+              <!-- SECTION I. X-RAY OPTICS SUITE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION I.</span>
+                    <span data-i18n="toc_sec1_title">X선 광학 및 회절/투과율 정밀 계산기</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('optics')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
-                <div class="tile-title" data-i18n="tile1_title">에너지 - 파장 변환</div>
-                <div class="tile-desc" data-i18n="tile1_desc">eV, keV, nm, Å, Hz 단위 상호 즉시 변환 (<i class="formula">hc = 12398.42 eV·Å</i>)</div>
+                <div class="toc-sec-desc" data-i18n="toc_sec1_desc">
+                  파장-에너지 상호 변환, 브래그 법칙, 격자 분산, 복소 굴절률 감쇠 및 상호공간 Q 벡터
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-energy')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_1">에너지 - 파장 - 주파수 변환</span>
+                      <span class="toc-item-formula"><i class="formula">E = hc/λ = hν</i> (12398.42 eV·Å)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-bragg')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_2">브래그 법칙 3방향 계산 수트</span>
+                      <span class="toc-item-formula"><i class="formula">λ = 2d sin θ ⇔ E = hc / (2d sin(tth/2))</i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-grating')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_3">회절격자 분산 및 분해능</span>
+                      <span class="toc-item-formula"><i class="formula">mλ = d(sin α + sin β)</i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-refraction')">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_4">복소 굴절률 및 X선 투과율</span>
+                      <span class="toc-item-formula"><i class="formula">n = 1 - δ + iβ</i> (Beer-Lambert)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 4] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-scaling')">
+                    <span class="toc-item-num">§ 5.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_5">에너지 스케일링 & 각도 보정</span>
+                      <span class="toc-item-formula"><i class="formula">E<sub>1</sub> sin θ<sub>1</sub> = E<sub>2</sub> sin θ<sub>2</sub></i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 5] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-euler')">
+                    <span class="toc-item-num">§ 6.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_6">Chi-Phi 오일러 크래들 보정</span>
+                      <span class="toc-item-formula"><i class="formula">Δφ = Δχ / (2 sin θ)</i> (4-Circle)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 6] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-reflection')">
+                    <span class="toc-item-num">§ 7.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_7">전반사 임계각 (Total Reflection)</span>
+                      <span class="toc-item-formula"><i class="formula">θ<sub>c</sub> = √(2δ)</i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 7] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('optics', 'card-optics-qspace')">
+                    <span class="toc-item-num">§ 8.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_8">상호공간 Q-Space 및 주기 변환</span>
+                      <span class="toc-item-formula"><i class="formula">Q = (4π/λ) sin θ = 2π/d</i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 8] ➔</span>
+                  </a>
+                </div>
               </div>
+
+              <!-- SECTION II. BEAMLINE PHYSICS SUITE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION II.</span>
+                    <span data-i18n="toc_sec2_title">빔라인 물리 및 기하학적 파라미터</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('beamline')" data-i18n="btn_view_suite">열기 ➔</button>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec2_desc">
+                  빔 풋프린트, 광자 플럭스, 분해능, 결맞음 CDI/BCDI 샘플링 및 슬릿 지오메트리
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-footprint')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_1">시료 상 빔 풋프린트 & 스필오버</span>
+                      <span class="toc-item-formula"><i class="formula">L = V / sin θ</i> (Spillover Check)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-flux')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_2">빔라인 광자 플럭스 (Photon Flux)</span>
+                      <span class="toc-item-formula">Source Current & Delivered Flux</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-resolution')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_3">에너지 분해능 (ΔE/E) 계산</span>
+                      <span class="toc-item-formula">Si(111) / Si(311) Intrinsic Width</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-detector')">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_4">디텍터 각도 분해능 (Angular Res)</span>
+                      <span class="toc-item-formula"><i class="formula">Δθ = Pixel / Distance</i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 4] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-cdi')">
+                    <span class="toc-item-num">§ 5.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_5">CDI / BCDI 결맞음 오버샘플링</span>
+                      <span class="toc-item-formula"><i class="formula">σ = (λ·D) / (p·S) ≥ 2</i></span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 5] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-slit')">
+                    <span class="toc-item-num">§ 6.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_6">슬릿 간격 및 빔 수용각</span>
+                      <span class="toc-item-formula">Source Size & Beam Acceptance</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 6] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('beamline', 'card-beamline-drift')">
+                    <span class="toc-item-num">§ 7.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_7">결정 열팽창 각도·에너지 시프트</span>
+                      <span class="toc-item-formula"><i class="formula">Δθ = -α ΔT tan θ</i> (Thermal Drift)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 7] ➔</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SECTION III. EXPERIMENTAL LOGBOOK -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION III.</span>
+                    <span data-i18n="toc_sec3_title">전자 빔라인 로그북 (Electronic Logbook)</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('logbook')" data-i18n="btn_view_suite">열기 ➔</button>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec3_desc">
+                  실험 조건 수동 기록, 빠른 태그 검색, 브라우저 저장 및 CSV/JSON 내보내기
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('logbook', 'card-logbook-entry')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_log_1">새 실험 로그 작성 (New Log Entry)</span>
+                      <span class="toc-item-formula">Sample ID, Energy, Distance, Exposure, Tags</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('logbook', 'card-logbook-records')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_log_2">기록된 실험 로그 검색 & 내보내기</span>
+                      <span class="toc-item-formula">Instant Filter, Markdown, CSV & JSON Export</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Quick Tile 2 -->
-            <div class="col-4">
-              <div class="tool-tile" onclick="window.location.hash='#optics'">
-                <div class="tile-top">
-                  <span class="badge">OPTICS</span>
-                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">λ = 2d sin θ</span>
+            <!-- Right Column: Suites IV, V, VI, VII -->
+            <div class="col-6">
+
+              <!-- SECTION IV. EXPERIMENT SUITE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION IV.</span>
+                    <span data-i18n="toc_sec4_title">실험 종합 관리 (Experiment Suite)</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('experiment')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
-                <div class="tile-title" data-i18n="tile2_title">브래그 법칙 (Bragg's Law)</div>
-                <div class="tile-desc" data-i18n="tile2_desc">결정 격자 d-spacing과 에너지에 따른 <i class="formula">θ / 2θ</i> 각도 및 Q-space 계산</div>
+                <div class="toc-sec-desc" data-i18n="toc_sec4_desc">
+                  실시간 자동 저장 실험 노트, 빔라인 체크리스트, 시료 목록, DAQ 산출 및 칸반 보드
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('experiment', 'card-exp-notes')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_exp_1">실시간 자동 저장 실험 노트 (Lab Notes)</span>
+                      <span class="toc-item-formula">Auto-Save Textarea & TXT Download</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('experiment', 'card-exp-checklist')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_exp_2">빔라인 점검 체크리스트 (Checklist)</span>
+                      <span class="toc-item-formula">Safety, Vacuum, Shutter, Detector Checks</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('experiment', 'card-exp-samples')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_exp_3">시료 관리 목록 (Sample Inventory)</span>
+                      <span class="toc-item-formula">Material, Thickness, Motor Pos (X,Y,Z,Th)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('experiment', 'card-exp-daq')">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_exp_4">DAQ 데이터 수집 용량 계산기</span>
+                      <span class="toc-item-formula">Eiger / Pilatus Rate & Storage Estimator</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 4] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('experiment', 'card-exp-kanban')">
+                    <span class="toc-item-num">§ 5.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_exp_5">빔타임 작업 칸반 보드 (Kanban)</span>
+                      <span class="toc-item-formula">To Do, In Progress, Done Workflow</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 5] ➔</span>
+                  </a>
+                </div>
               </div>
+
+              <!-- SECTION V. REFERENCE DATA -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION V.</span>
+                    <span data-i18n="toc_sec5_title">결정 격자 DB & 연구자 레퍼런스</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('reference')" data-i18n="btn_view_suite">열기 ➔</button>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec5_desc">
+                  단위 변환기, 주요 결정 격자 d-spacing 검색 및 국제 공인 방사광 시설 링크
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('reference', 'card-ref-converter')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_ref_1">다단위 변환기 (Multi-Unit Converter)</span>
+                      <span class="toc-item-formula">Length (Å, nm, μm), Pressure (Torr, mbar), Angle</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('reference', 'card-ref-crystaldb')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_ref_2">결정 격자 d-spacing 데이터베이스</span>
+                      <span class="toc-item-formula">Si, Ge, Diamond, C, Au, Cu, Pt (hkl) Search</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('reference', 'card-ref-links')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_ref_3">공인 국제 방사광 시설 링크</span>
+                      <span class="toc-item-formula">PLS-II, PAL-XFEL, SPring-8, ESRF, APS, PETRA III</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SECTION VI. SETTINGS & ARCHIVE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION VI.</span>
+                    <span data-i18n="toc_sec6_title">환경설정 및 아카이브 (Settings)</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('settings')" data-i18n="btn_view_suite">열기 ➔</button>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec6_desc">
+                  언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-lang')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_1">언어 설정 (Language Selection)</span>
+                      <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드 (Theme Mode)</span>
+                      <span class="toc-item-formula">Light Paper (#fdfcf8) / Dark Ink (#121417)</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-history')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_3">전체 계산 히스토리 관리</span>
+                      <span class="toc-item-formula">All Calculation Runs Log & Clear</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-backup')">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_4">로컬스토리지 백업 및 복원</span>
+                      <span class="toc-item-formula">JSON Export & Import Data Preserver</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 4] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
+                    <span class="toc-item-num">§ 5.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내 (Shortcuts)</span>
+                      <span class="toc-item-formula">Alt + 1 ~ 8 Quick Tab Switcher</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 5] ➔</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SECTION VII. ABOUT & PORTFOLIO -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION VII.</span>
+                    <span data-i18n="toc_sec7_title">연구자 프로필 및 후원 (About)</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('about')" data-i18n="btn_view_suite">열기 ➔</button>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec7_desc">
+                  연구자 약력, X선 광학·BCDI 연구 분야, 연락처 및 프로젝트 후원
+                </div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('about', 'card-about-profile')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_about_1">연구자 프로필 (Profile & Biography)</span>
+                      <span class="toc-item-formula">Isaac Yong / 서강대 CUPT 연구실</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 1] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('about', 'card-about-portfolio')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_about_2">핵심 연구 분야 & 기술 스택</span>
+                      <span class="toc-item-formula">Coherent X-ray Optics, BCDI, Wave Optics</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 2] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('about', 'card-about-support')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_about_3">프로젝트 후원 & GitHub Sponsors</span>
+                      <span class="toc-item-formula">Open Source Research Support & Coffee</span>
+                    </div>
+                    <span class="toc-item-dots"></span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
+                  </a>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Quick Tile 3 -->
-            <div class="col-4">
-              <div class="tool-tile" onclick="window.location.hash='#beamline'">
-                <div class="tile-top">
-                  <span class="badge">BEAMLINE</span>
-                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">L = V / sin θ</span>
-                </div>
-                <div class="tile-title" data-i18n="tile3_title">시료 빔 풋프린트 (Footprint)</div>
-                <div class="tile-desc" data-i18n="tile3_desc">입사각 및 빔 크기에 따른 시료 상 풋프린트 길이 및 스필오버 검증</div>
-              </div>
-            </div>
-
-            <!-- Quick Tile 4 -->
-            <div class="col-4">
-              <div class="tool-tile" onclick="window.location.hash='#beamline'">
-                <div class="tile-top">
-                  <span class="badge">BEAMLINE</span>
-                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">σ ≥ 2</span>
-                </div>
-                <div class="tile-title" data-i18n="tile4_title">CDI / BCDI 오버샘플링</div>
-                <div class="tile-desc" data-i18n="tile4_desc">나이퀴스트-섀넌 기준에 따른 스펙클 크기 및 <i class="formula">σ ≥ 2</i> 충족 판정</div>
-              </div>
-            </div>
-
-            <!-- Quick Tile 5 -->
-            <div class="col-4">
-              <div class="tool-tile" onclick="window.location.hash='#logbook'">
-                <div class="tile-top">
-                  <span class="badge">LOGBOOK</span>
-                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">CSV / Markdown</span>
-                </div>
-                <div class="tile-title" data-i18n="tile5_title">실험 전자 로그북</div>
-                <div class="tile-desc" data-i18n="tile5_desc">시료별 빔 조건 수동 기록, 태그 검색 및 CSV/JSON 데이터 내보내기</div>
-              </div>
-            </div>
-
-            <!-- Quick Tile 6 -->
-            <div class="col-4">
-              <div class="tool-tile" onclick="window.location.hash='#experiment'">
-                <div class="tile-top">
-                  <span class="badge">EXPERIMENT</span>
-                  <span class="mono" style="font-size:10px; color:var(--accent-ink);">Auto-Save</span>
-                </div>
-                <div class="tile-title" data-i18n="tile6_title">실험 노트 & 칸반 보드</div>
-                <div class="tile-desc" data-i18n="tile6_desc">자동 저장 메모장, 시료 리스트 관리 및 단계별 작업 보드</div>
-              </div>
-            </div>
           </div>
 
           <!-- Dashboard Recent Activity & Quick Constants -->
@@ -209,7 +566,7 @@
               <div class="card">
                 <div class="card-header">
                   <span class="card-title" data-i18n="dash_history_title">최근 계산 기록 (Recent History)</span>
-                  <button class="btn btn-sm btn-secondary" onclick="window.location.hash='#settings'" data-i18n="btn_view_all">전체 보기</button>
+                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('settings', 'card-set-history')" data-i18n="btn_view_all">전체 보기</button>
                 </div>
                 <div class="card-body" style="padding:0;">
                   <div class="table-responsive">
@@ -267,9 +624,9 @@
 
             <!-- 1. Energy - Wavelength - Frequency -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-energy">
                 <div class="card-header">
-                  <span class="card-title">1. 에너지 - 파장 - 주파수 변환</span>
+                  <span class="card-title">§ 1. 에너지 - 파장 - 주파수 변환 (Energy-Wavelength-Frequency)</span>
                   <span class="card-tag"><i class="formula">E = hc/λ = hν</i></span>
                 </div>
                 <div class="card-body">
@@ -316,9 +673,9 @@
 
             <!-- 2. Bragg's Law 3-Way Multi-Directional Suite -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-bragg">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t2_title">2. 브래그 법칙 (Bragg's Law 3-Way Suite)</span>
+                  <span class="card-title" data-i18n="opt_t2_title">§ 2. 브래그 법칙 (Bragg's Law 3-Way Suite)</span>
                   <span class="card-tag"><i class="formula">λ = 2d sin θ ⇔ E = hc / (2d sin(tth/2))</i></span>
                 </div>
                 <div class="card-body">
@@ -418,9 +775,9 @@
 
             <!-- 3. Grating Diffraction -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-grating">
                 <div class="card-header">
-                  <span class="card-title">3. 회절격자 (Diffraction Grating)</span>
+                  <span class="card-title">§ 3. 회절격자 (Diffraction Grating)</span>
                   <span class="card-tag"><i class="formula">mλ = d(sin α + sin β)</i></span>
                 </div>
                 <div class="card-body">
@@ -473,9 +830,9 @@
 
             <!-- 4. Refractive Index & Transmittance -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-refraction">
                 <div class="card-header">
-                  <span class="card-title">4. 굴절률 및 투과율 (<i class="formula">n = 1 - δ + iβ</i>)</span>
+                  <span class="card-title">§ 4. 굴절률 및 X선 투과율 (<i class="formula">n = 1 - δ + iβ</i>)</span>
                   <span class="card-tag">Beer-Lambert Attenuation</span>
                 </div>
                 <div class="card-body">
@@ -525,9 +882,9 @@
 
             <!-- 5. Energy Scaling Calculation -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-scaling">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t5_title">5. 에너지 스케일링 & 각도 계산기 (Energy Scaling)</span>
+                  <span class="card-title" data-i18n="opt_t5_title">§ 5. 에너지 스케일링 & 각도 계산기 (Energy Scaling)</span>
                   <span class="card-tag"><i class="formula">E<sub>ref</sub> sin θ<sub>ref</sub> = E<sub>target</sub> sin θ<sub>target</sub> ⇔ Q = const</i></span>
                 </div>
                 <div class="card-body">
@@ -607,9 +964,9 @@
 
             <!-- 6. Chi-Phi Tilt -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-euler">
                 <div class="card-header">
-                  <span class="card-title">6. Chi-Phi 오일러 크래들 보정</span>
+                  <span class="card-title">§ 6. Chi-Phi 오일러 크래들 보정 (Eulerian Cradle)</span>
                   <span class="card-tag">4-Circle Diffractometer</span>
                 </div>
                 <div class="card-body">
@@ -642,9 +999,9 @@
 
             <!-- 7. Critical Angle Total External Reflection -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-reflection">
                 <div class="card-header">
-                  <span class="card-title">7. 전반사 임계각 (Total External Reflection)</span>
+                  <span class="card-title">§ 7. 전반사 임계각 (Total External Reflection)</span>
                   <span class="card-tag"><i class="formula">θ<sub>c</sub> = √(2δ)</i></span>
                 </div>
                 <div class="card-body">
@@ -694,9 +1051,9 @@
 
             <!-- 8. Q-Space Converter -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-optics-qspace">
                 <div class="card-header">
-                  <span class="card-title">8. 상호공간 Q-Space 변환</span>
+                  <span class="card-title">§ 8. 상호공간 Q-Space 변환 (Reciprocal Space)</span>
                   <span class="card-tag"><i class="formula">Q = (4π/λ) sin θ = 2π/d</i></span>
                 </div>
                 <div class="card-body">
@@ -754,9 +1111,9 @@
 
             <!-- 1. Footprint -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-beamline-footprint">
                 <div class="card-header">
-                  <span class="card-title">1. 시료 상 빔 풋프린트 (Beam Footprint)</span>
+                  <span class="card-title">§ 1. 시료 상 빔 풋프린트 (Beam Footprint)</span>
                   <span class="card-tag"><i class="formula">L = V / sin θ</i></span>
                 </div>
                 <div class="card-body">
@@ -808,9 +1165,9 @@
 
             <!-- 2. Beam Flux -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-beamline-flux">
                 <div class="card-header">
-                  <span class="card-title">2. 빔라인 광자 플럭스 (Photon Flux)</span>
+                  <span class="card-title">§ 2. 빔라인 광자 플럭스 (Photon Flux)</span>
                   <span class="card-tag">Delivered Flux</span>
                 </div>
                 <div class="card-body">
@@ -865,9 +1222,9 @@
 
             <!-- 3. Energy Resolution -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-beamline-resolution">
                 <div class="card-header">
-                  <span class="card-title">3. 에너지 분해능 (Energy Resolution ΔE/E)</span>
+                  <span class="card-title">§ 3. 에너지 분해능 (Energy Resolution ΔE/E)</span>
                   <span class="card-tag">Monochromator Intrinsic</span>
                 </div>
                 <div class="card-body">
@@ -918,9 +1275,9 @@
 
             <!-- 4. Angular Resolution -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-beamline-detector">
                 <div class="card-header">
-                  <span class="card-title">4. 디텍터 각도 분해능 (Angular Resolution)</span>
+                  <span class="card-title">§ 4. 디텍터 각도 분해능 (Angular Resolution)</span>
                   <span class="card-tag"><i class="formula">Δθ = Pixel / Distance</i></span>
                 </div>
                 <div class="card-body">
@@ -957,9 +1314,9 @@
 
             <!-- 5. CDI / BCDI Oversampling -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-beamline-cdi">
                 <div class="card-header">
-                  <span class="card-title">5. CDI / BCDI 결맞음 오버샘플링</span>
+                  <span class="card-title">§ 5. CDI / BCDI 결맞음 오버샘플링 (Oversampling)</span>
                   <span class="card-tag"><i class="formula">σ = (λ·D) / (p·S) ≥ 2</i></span>
                 </div>
                 <div class="card-body">
@@ -1011,9 +1368,9 @@
 
             <!-- 6. Slit Size -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-beamline-slit">
                 <div class="card-header">
-                  <span class="card-title">6. 슬릿 간격 및 수용각 (Slit Opening)</span>
+                  <span class="card-title">§ 6. 슬릿 간격 및 수용각 (Slit Opening)</span>
                   <span class="card-tag">Beam Acceptance</span>
                 </div>
                 <div class="card-body">
@@ -1066,9 +1423,9 @@
 
             <!-- 7. Thermal Expansion -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-beamline-drift">
                 <div class="card-header">
-                  <span class="card-title">7. 결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)</span>
+                  <span class="card-title">§ 7. 결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)</span>
                   <span class="card-tag"><i class="formula">Δθ = -α ΔT tan θ</i></span>
                 </div>
                 <div class="card-body">
@@ -1136,9 +1493,9 @@
           <div class="flex-row">
             <!-- Add Log Form -->
             <div class="col-4">
-              <div class="card">
+              <div class="card" id="card-logbook-entry">
                 <div class="card-header">
-                  <span class="card-title">새 로그 항목 작성</span>
+                  <span class="card-title">§ 1. 새 로그 항목 작성 (New Log Entry)</span>
                 </div>
                 <div class="card-body">
                   <div class="form-group">
@@ -1180,9 +1537,9 @@
 
             <!-- Log Entries List -->
             <div class="col-8">
-              <div class="card">
+              <div class="card" id="card-logbook-records">
                 <div class="card-header">
-                  <span class="card-title">기록된 실험 로그 (<span id="logbook-total-count">0 entries</span>)</span>
+                  <span class="card-title">§ 2. 기록된 실험 로그 (<span id="logbook-total-count">0 entries</span>)</span>
                   <div style="display:flex; align-items:center;">
                     <span id="logbook-active-filter" style="font-size:11px; margin-right:8px; display:none;"></span>
                     <input type="text" id="log-search-query" class="form-control form-control-sm" placeholder="검색어 입력..." style="width:140px;" oninput="renderLogbook()">
@@ -1212,9 +1569,9 @@
 
             <!-- 1. Live Lab Notes -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-exp-notes">
                 <div class="card-header">
-                  <span class="card-title">실시간 실험 노트 (Auto-Saving Lab Notes)</span>
+                  <span class="card-title">§ 1. 실시간 실험 노트 (Auto-Saving Lab Notes)</span>
                   <div>
                     <span id="exp-notes-status" style="font-size:11px; color:var(--ink-muted); margin-right:8px;">자동 저장됨</span>
                     <button class="btn btn-sm btn-secondary" onclick="exportNotesTxt()">다운로드</button>
@@ -1228,9 +1585,9 @@
 
             <!-- 2. Checklist -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-exp-checklist">
                 <div class="card-header">
-                  <span class="card-title">빔라인 점검 체크리스트 (Beamline Checklist)</span>
+                  <span class="card-title">§ 2. 빔라인 점검 체크리스트 (Beamline Checklist)</span>
                   <button class="btn btn-sm btn-secondary" onclick="resetChecklists()">기본값 리셋</button>
                 </div>
                 <div class="card-body" id="exp-checklist-container">
@@ -1241,9 +1598,9 @@
 
             <!-- 3. Sample List Manager -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-exp-samples">
                 <div class="card-header">
-                  <span class="card-title">시료 관리 목록 (Sample List - <span id="sample-total-count">0 samples</span>)</span>
+                  <span class="card-title">§ 3. 시료 관리 목록 (Sample List - <span id="sample-total-count">0 samples</span>)</span>
                   <div>
                     <input type="text" id="sample-add-name" class="form-control form-control-sm" placeholder="시료명" style="display:inline-block; width:110px; margin-right:4px;">
                     <input type="text" id="sample-add-mat" class="form-control form-control-sm" placeholder="재료" style="display:inline-block; width:90px; margin-right:4px;">
@@ -1277,9 +1634,9 @@
 
             <!-- 4. DAQ Settings Calculator -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-exp-daq">
                 <div class="card-header">
-                  <span class="card-title">DAQ 데이터 수집 용량 계산기</span>
+                  <span class="card-title">§ 4. DAQ 데이터 수집 용량 계산기 (DAQ Estimator)</span>
                   <span class="card-tag">Storage Estimator</span>
                 </div>
                 <div class="card-body">
@@ -1343,9 +1700,9 @@
 
             <!-- 5. Kanban Board -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-exp-kanban">
                 <div class="card-header">
-                  <span class="card-title">빔타임 작업 칸반 보드 (Kanban)</span>
+                  <span class="card-title">§ 5. 빔타임 작업 칸반 보드 (Kanban Board)</span>
                   <button class="btn btn-sm btn-primary" onclick="addKanbanTask()">+ 새 작업</button>
                 </div>
                 <div class="card-body">
@@ -1406,9 +1763,9 @@
 
             <!-- 1. Multi Unit Converter -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-ref-converter">
                 <div class="card-header">
-                  <span class="card-title">단위 변환기 (Multi-Unit Converter)</span>
+                  <span class="card-title">§ 1. 단위 변환기 (Multi-Unit Converter)</span>
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
@@ -1477,9 +1834,9 @@
 
             <!-- 2. Crystal DB -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-ref-crystaldb">
                 <div class="card-header">
-                  <span class="card-title">주요 결정 격자 d-spacing 데이터베이스 (<span id="crystal-db-count">0 reflections</span>)</span>
+                  <span class="card-title">§ 2. 주요 결정 격자 d-spacing 데이터베이스 (<span id="crystal-db-count">0 reflections</span>)</span>
                   <input type="text" id="crystal-search-input" class="form-control form-control-sm" placeholder="결정 또는 hkl 검색..." style="width:180px;" oninput="renderCrystalDB()">
                 </div>
                 <div class="card-body" style="padding:0;">
@@ -1505,8 +1862,10 @@
             </div>
 
             <!-- 3. Useful Links -->
-            <div class="col-12" id="useful-links-container">
-              <!-- Populated by JS -->
+            <div class="col-12" id="card-ref-links">
+              <div id="useful-links-container">
+                <!-- Populated by JS -->
+              </div>
             </div>
 
           </div>
@@ -1528,9 +1887,9 @@
 
             <!-- 0. Language Selection Card -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-set-lang">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_lang_title">0. 언어 설정 (Language Selection)</span>
+                  <span class="card-title" data-i18n="set_card_lang_title">§ 1. 언어 설정 (Language Selection)</span>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
@@ -1551,9 +1910,9 @@
 
             <!-- 1. Theme Configuration Card -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-set-theme">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_theme_title">1. 화면 테마 모드 설정 (Display Theme Mode)</span>
+                  <span class="card-title" data-i18n="set_card_theme_title">§ 2. 화면 테마 모드 설정 (Display Theme Mode)</span>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
@@ -1574,9 +1933,9 @@
 
             <!-- 2. Calculation History -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" id="card-set-history">
                 <div class="card-header">
-                  <span class="card-title"><span data-i18n="set_card_history_title">전체 계산 히스토리</span> (<span id="history-total-count">0 runs</span>)</span>
+                  <span class="card-title"><span data-i18n="set_card_history_title">§ 3. 전체 계산 히스토리</span> (<span id="history-total-count">0 runs</span>)</span>
                   <button class="btn btn-sm btn-danger" onclick="clearCalculationHistory()" data-i18n="btn_history_clear">히스토리 전체 삭제</button>
                 </div>
                 <div class="card-body" style="padding:0;">
@@ -1601,9 +1960,9 @@
 
             <!-- 3. Data Backup and Restore -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-set-backup">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_backup_title">로컬스토리지 데이터 백업 및 복원</span>
+                  <span class="card-title" data-i18n="set_card_backup_title">§ 4. 로컬스토리지 데이터 백업 및 복원</span>
                 </div>
                 <div class="card-body">
                   <p style="font-size:12px; color:var(--ink-secondary); margin-bottom:12px;" data-i18n-html="set_backup_desc">
@@ -1623,9 +1982,9 @@
 
             <!-- 4. Keyboard Shortcuts -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-set-shortcuts">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_shortcuts_title">키보드 단축키 안내 (Keyboard Shortcuts)</span>
+                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 5. 키보드 단축키 안내 (Keyboard Shortcuts)</span>
                 </div>
                 <div class="card-body">
                   <table class="lab-table">
@@ -1687,9 +2046,9 @@
 
             <!-- 1. Profile & Academic Background -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-about-profile">
                 <div class="card-header">
-                  <span class="card-title">1. 연구자 프로필 (Profile & Biography)</span>
+                  <span class="card-title">§ 1. 연구자 프로필 (Profile & Biography)</span>
                 </div>
                 <div class="card-body">
                   <div style="margin-bottom:12px;">
@@ -1738,9 +2097,9 @@
 
             <!-- 2. Research Fields & Portfolio -->
             <div class="col-6">
-              <div class="card">
+              <div class="card" id="card-about-portfolio">
                 <div class="card-header">
-                  <span class="card-title">2. 핵심 연구 분야 & 기술 스택 (Portfolio)</span>
+                  <span class="card-title">§ 2. 핵심 연구 분야 & 기술 스택 (Portfolio)</span>
                 </div>
                 <div class="card-body">
                   <div style="margin-bottom:10px;">
@@ -1766,9 +2125,9 @@
 
             <!-- 3. Coffee Donation & Support (GitHub Sponsors Embed) -->
             <div class="col-12">
-              <div class="card" style="border:var(--rule-heavy); background-color:var(--bg-paper-subtle);">
+              <div class="card" id="card-about-support" style="border:var(--rule-heavy); background-color:var(--bg-paper-subtle);">
                 <div class="card-header" style="background-color:var(--bg-paper);">
-                  <span class="card-title">3. 프로젝트 후원 및 커피 한 잔 (Buy Me a Coffee / GitHub Sponsors)</span>
+                  <span class="card-title">§ 3. 프로젝트 후원 및 커피 한 잔 (Buy Me a Coffee / GitHub Sponsors)</span>
                   <span class="card-tag">Community & Research Support</span>
                 </div>
                 <div class="card-body">
