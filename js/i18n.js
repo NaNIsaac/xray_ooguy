@@ -103,7 +103,7 @@
       toast_backup_downloaded: "전체 데이터 백업 파일이 저장되었습니다.",
       toast_backup_restored: "백업 데이터가 복원되었습니다.",
       alert_backup_invalid: "백업 파일을 읽지 못했습니다: JSON 형식이 올바르지 않습니다.",
-      set_card_shortcuts_title: "§ 4. 키보드 단축키 안내",
+      set_card_shortcuts_title: "§ 3. 키보드 단축키 안내",
 
 
       // ABOUT view — project information first, funding demoted to the footer
@@ -708,7 +708,7 @@
       toast_backup_downloaded: "Full data backup file saved.",
       toast_backup_restored: "Backup data restored successfully.",
       alert_backup_invalid: "Failed to read backup file: Invalid JSON format.",
-      set_card_shortcuts_title: "§ 4. Keyboard Shortcuts",
+      set_card_shortcuts_title: "§ 3. Keyboard Shortcuts",
 
       // Dashboard Old Fallbacks
       btn_open_optics: "Open Optics Suite",

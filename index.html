@@ -102,10 +102,10 @@
         </a>
 
         <a class="nav-item" data-route="settings" href="#settings">
-          <span data-i18n="nav_settings">V. SETTINGS</span>
+          <span data-i18n="nav_settings">IV. SETTINGS</span>
         </a>
         <a class="nav-item" data-route="about" href="#about">
-          <span data-i18n="nav_about">VI. ABOUT</span>
+          <span data-i18n="nav_about">V. ABOUT</span>
         </a>
       </nav>
 
@@ -140,8 +140,8 @@
           <button class="tab-pill tab-pill-primary active" data-route="spectroscopy" data-i18n="nav_spectroscopy">I. SPECTROSCOPY</button>
           <button class="tab-pill tab-pill-primary" data-route="goniometry" data-i18n="nav_goniometry">II. GONIOMETRY</button>
           <button class="tab-pill tab-pill-primary" data-route="record" data-i18n="nav_record">III. RECORD</button>
-          <button class="tab-pill" data-route="settings" data-i18n="nav_settings">V. SETTINGS</button>
-          <button class="tab-pill" data-route="about" data-i18n="nav_about">VI. ABOUT</button>
+          <button class="tab-pill" data-route="settings" data-i18n="nav_settings">IV. SETTINGS</button>
+          <button class="tab-pill" data-route="about" data-i18n="nav_about">V. ABOUT</button>
         </div>
       </nav>
 
@@ -1457,28 +1457,19 @@
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드 (Theme Mode)</span>
-                      <span class="toc-item-formula">Light Paper (#fdfcf8) / Dark Ink (#121417)</span>
+                      <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
                     </div>
                     <span class="toc-item-dots"></span>
                     <span class="toc-item-jump">[§ 2] ➔</span>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-backup')">
-                    <span class="toc-item-num">§ 4.</span>
-                    <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_set_4">로컬스토리지 백업 및 복원</span>
-                      <span class="toc-item-formula">JSON Export & Import Data Preserver</span>
-                    </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 4] ➔</span>
-                  </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
-                    <span class="toc-item-num">§ 5.</span>
+                    <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내 (Shortcuts)</span>
                       <span class="toc-item-formula">Alt + 1 ~ 6 Quick Tab Switcher</span>
                     </div>
                     <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 5] ➔</span>
+                    <span class="toc-item-jump">[§ 3] ➔</span>
                   </a>
                 </div>
               </div>
@@ -1663,33 +1654,11 @@
               </div>
             </div>
 
-            <!-- 2. Data Backup and Restore -->
-            <div class="col-6">
-              <div class="card" id="card-set-backup">
-                <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_backup_title">§ 3. 로컬스토리지 데이터 백업 및 복원</span>
-                </div>
-                <div class="card-body">
-                  <p style="font-size:12px; color:var(--ink-secondary); margin-bottom:12px;" data-i18n-html="set_backup_desc">
-                    모든 로그북, 실험 노트, 시료 목록, 체크리스트 및 계산 히스토리는 브라우저의 <code>localStorage</code>에 안전하게 저장됩니다.
-                    다른 PC나 브라우저로 이동할 때 JSON 파일로 내보내거나 가져올 수 있습니다.
-                  </p>
-                  <div style="display:flex; align-items:center;">
-                    <button class="btn btn-primary" onclick="backupAllData()" style="margin-right:10px;" data-i18n="btn_backup_download">전체 백업 다운로드</button>
-                    <label class="btn btn-secondary" style="margin:0; cursor:pointer;">
-                      <span data-i18n="btn_backup_restore">백업 파일 복원</span>
-                      <input type="file" accept=".json" style="display:none;" onchange="restoreAllData(event)">
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 3. Keyboard Shortcuts -->
-            <div class="col-6">
+            <!-- 2. Keyboard Shortcuts -->
+            <div class="col-12">
               <div class="card" id="card-set-shortcuts">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 4. 키보드 단축키 안내 (Keyboard Shortcuts)</span>
+                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 3. 키보드 단축키 안내 (Keyboard Shortcuts)</span>
                 </div>
                 <div class="card-body">
                   <table class="lab-table">
