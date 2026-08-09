@@ -17,20 +17,6 @@ var CONSTANTS = {
   k_B: 1.380649e-23          // Boltzmann constant (J·K⁻¹)
 };
 
-// Common X-ray Emission Lines (in eV and Å)
-var EMISSION_LINES = [
-  { name: "Cu Kα1", energy_eV: 8046.3, lambda_A: 1.54056, desc: "Copper characteristic line 1" },
-  { name: "Cu Kα2", energy_eV: 8027.8, lambda_A: 1.54439, desc: "Copper characteristic line 2" },
-  { name: "Cu Kβ",  energy_eV: 8905.3, lambda_A: 1.39222, desc: "Copper Kβ line" },
-  { name: "Mo Kα1", energy_eV: 17479.3, lambda_A: 0.70930, desc: "Molybdenum characteristic line 1" },
-  { name: "Mo Kα2", energy_eV: 17374.3, lambda_A: 0.71359, desc: "Molybdenum characteristic line 2" },
-  { name: "Mo Kβ",  energy_eV: 19608.3, lambda_A: 0.63229, desc: "Molybdenum Kβ line" },
-  { name: "Ag Kα1", energy_eV: 22162.9, lambda_A: 0.55941, desc: "Silver characteristic line 1" },
-  { name: "Cr Kα1", energy_eV: 5414.7,  lambda_A: 2.28970, desc: "Chromium characteristic line 1" },
-  { name: "Co Kα1", energy_eV: 6930.3,  lambda_A: 1.78897, desc: "Cobalt characteristic line 1" },
-  { name: "Fe Kα1", energy_eV: 6403.8,  lambda_A: 1.93604, desc: "Iron characteristic line 1" }
-];
-
 // Standard Crystal Lattice Parameters and d-spacings (in Angstroms Å)
 // d = a / sqrt(h^2 + k^2 + l^2) for cubic
 var CRYSTAL_D_SPACINGS = [
@@ -110,28 +96,3 @@ var USEFUL_LINKS = [
 ];
 
 // Pre-defined Checklist Templates
-var DEFAULT_CHECKLISTS = [
-  {
-    title: "빔라인 세팅 및 광학계 점검",
-    items: [
-      { text: "저장링 빔 전류(Current) 및 충전 모드 확인", done: true },
-      { text: "프론트엔드(FE) 셔터 인터록 및 진공 레벨 정상 확인", done: true },
-      { text: "모노크로메이터(Monochromator) 냉각수 유량 및 온도 체크", done: false },
-      { text: "모노크로메이터 Energy Calibration (Cu or Fe Foil 흡수단 스캔)", done: false },
-      { text: "슬릿(Slits) 칼리브레이션 및 빔 센터링 확인", done: false },
-      { text: "미러(Mirror) 각도 및 포커싱 빔 프로파일 측정", done: false },
-      { text: "Ion Chamber / Diode 신호 감도 및 오프셋 조정", done: false }
-    ]
-  },
-  {
-    title: "실험 전 샘플 및 디텍터 준비",
-    items: [
-      { text: "샘플 스테이지 모터 리미트(Limit) 및 홈 포지션(Home) 확인", done: false },
-      { text: "디텍터(Pilatus/Eiger/CCD) 펠티에 냉각 온도 도달 확인", done: false },
-      { text: "표준 시료(CeO2 / LaB6 / Si) 이용 디텍터 캘리브레이션(Calibrant)", done: false },
-      { text: "Dark frame(암전류) 및 Flat field 보정 데이터 측정", done: false },
-      { text: "진공 챔버 / 헬륨 플라이트 튜브(Flight Tube) 윈도우 점검", done: false },
-      { text: "데이터 스토리지 용량 및 자동 백업 스크립트 실행 확인", done: false }
-    ]
-  }
-];
