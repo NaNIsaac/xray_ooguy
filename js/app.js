@@ -9,9 +9,7 @@
 
   // Global State
   var App = {
-    currentRoute: "dashboard",
-    history: [],
-    favorites: ["optics_energy", "optics_bragg", "beamline_footprint", "ref_units"],
+    currentRoute: "spectroscopy",
     theme: "light"
   };
 
@@ -35,6 +33,100 @@
       }
     }
   };
+
+  // ------------------------------------------------------------------
+  // Calculator input persistence
+  // ------------------------------------------------------------------
+  // Every calculator ships with working defaults in the markup, so a card
+  // always shows a real result the first time it is opened. Once the user
+  // edits a field the value is remembered, and the next visit restores it and
+  // recalculates, so the tool reopens exactly where they left it.
+  var CALC_INPUT_KEY = "calc_inputs";
+
+  // Search boxes filter a list rather than feed a calculation; restoring them
+  // would hide rows for no reason.
+  var CALC_INPUT_SKIP = { "crystal-search-input": true, "log-search-query": true };
+
+  var calcSaveTimer = null;
+
+  function calcInputElements() {
+    var out = [];
+    var scopes = document.querySelectorAll("#view-spectroscopy, #view-goniometry");
+
+    for (var i = 0; i < scopes.length; i++) {
+      var els = scopes[i].querySelectorAll("input, select");
+      for (var j = 0; j < els.length; j++) {
+        var el = els[j];
+        var type = (el.type || "").toLowerCase();
+        if (!el.id || CALC_INPUT_SKIP[el.id]) continue;
+        if (type === "checkbox" || type === "radio" || type === "file") continue;
+        out.push(el);
+      }
+    }
+    return out;
+  }
+
+  function saveCalcInputs() {
+    var store = {};
+    var els = calcInputElements();
+    for (var i = 0; i < els.length; i++) {
+      store[els[i].id] = els[i].value;
+    }
+    Storage.set(CALC_INPUT_KEY, store);
+  }
+
+  function scheduleCalcInputSave() {
+    clearTimeout(calcSaveTimer);
+    calcSaveTimer = setTimeout(saveCalcInputs, 400);
+  }
+
+  function restoreCalcInputs() {
+    var saved = Storage.get(CALC_INPUT_KEY, {});
+    var els = calcInputElements();
+    var restored = 0;
+
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+
+      if (!el.getAttribute("data-calc-bound")) {
+        el.setAttribute("data-calc-bound", "1");
+        el.addEventListener("input", scheduleCalcInputSave);
+        el.addEventListener("change", scheduleCalcInputSave);
+      }
+
+      var val = saved[el.id];
+      if (val === undefined || val === null || val === "") continue;
+
+      // A <select> whose options are built at runtime can only take the value
+      // once those options exist; skip silently rather than blanking it.
+      if (el.tagName === "SELECT") {
+        var match = false;
+        for (var o = 0; o < el.options.length; o++) {
+          if (el.options[o].value === val) { match = true; break; }
+        }
+        if (!match) continue;
+      }
+
+      el.value = val;
+      restored++;
+    }
+
+    return restored;
+  }
+
+  // Re-run every calculator so restored values are reflected in the results.
+  function recalcAll() {
+    var fns = ["initOpticsView", "initBeamlineView", "initLattice", "renderValidity", "renderMiniPlots"];
+    for (var i = 0; i < fns.length; i++) {
+      if (window[fns[i]]) {
+        try {
+          window[fns[i]]();
+        } catch (e) {
+          console.warn("Recalculation failed for " + fns[i] + ":", e);
+        }
+      }
+    }
+  }
 
   // Toast Notification System
   function showToast(message, type) {
@@ -73,35 +165,87 @@
       }
       Storage.set("calc_history", list);
 
-      // Refresh settings history table if view is active
-      if (window.renderSettingsHistory) {
-        window.renderSettingsHistory();
-      }
-      if (window.renderDashboardHistory) {
-        window.renderDashboardHistory();
-      }
     } catch (e) {
       console.error("Failed to record calculation:", e);
     }
   }
 
-  // Router logic
+  // Router logic — one route per view section, no aliases.
   var routes = {
-    dashboard: { title: "0. DASHBOARD (목차)", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인" },
-    optics: { title: "I. OPTICS", subtitle: "X선 광학 및 회절/투과율 정밀 계산기" },
-    beamline: { title: "II. BEAMLINE", subtitle: "빔라인 물리량 및 기하학적 파라미터 계산기" },
-    logbook: { title: "III. LOGBOOK", subtitle: "실험 조건 수동 기록 및 히스토리 스냅샷" },
-    experiment: { title: "IV. EXPERIMENT", subtitle: "실험 노트, 체크리스트, 샘플 관리, DAQ & 칸반" },
-    reference: { title: "V. REFERENCE", subtitle: "단위 변환기, 결정 d-spacing DB, 유용한 연구 링크" },
-    settings: { title: "VI. SETTINGS", subtitle: "테마 설정, 계산 히스토리 및 단축키 안내" },
-    about: { title: "VII. ABOUT", subtitle: "제작자 소개, 연구 포트폴리오 및 프로젝트 후원" }
+    spectroscopy: {
+      title: "I. SPECTROSCOPY", subtitle: "에너지·파장·물질 상호작용 계산",
+      seoTitle: "Energy, Wavelength & d-spacing Calculators | X-Ray Beamline Toolkit",
+      seoDesc: "Convert photon energy to wavelength, find lattice d-spacing from Miller indices, and compute X-ray transmittance, critical angle, energy resolution and photon flux."
+    },
+    goniometry: {
+      title: "II. GONIOMETRY", subtitle: "각도 및 기하 배치 계산",
+      seoTitle: "Bragg Angle & Scattering Vector Q Calculators | X-Ray Beamline Toolkit",
+      seoDesc: "Calculate the Bragg diffraction angle, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance and Eulerian cradle corrections."
+    },
+    record: {
+      title: "III. RECORD", subtitle: "실험 세션 기록",
+      seoTitle: "Beamtime Session Log & Logbook Header | X-Ray Beamline Toolkit",
+      seoDesc: "Log beamtime events in one click and generate a formatted session header to paste into your own logbook. Everything stays in your browser."
+    },
+    dashboard: {
+      title: "0. CONTENTS", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",
+      seoTitle: "All Calculators — Contents | X-Ray Beamline Toolkit",
+      seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
+    },
+    settings: {
+      title: "IV. SETTINGS", subtitle: "언어, 테마, 데이터 백업 및 단축키",
+      seoTitle: "Settings | X-Ray Beamline Toolkit",
+      seoDesc: "Language, display theme, local data backup and keyboard shortcuts for the X-Ray Beamline Toolkit."
+    },
+    about: {
+      title: "V. ABOUT", subtitle: "프로젝트 정보 및 제작자",
+      seoTitle: "About | X-Ray Beamline Toolkit",
+      seoDesc: "A lightweight, offline-first toolkit of synchrotron X-ray calculators and session logging, built for beamline researchers."
+    }
   };
+
+  // ------------------------------------------------------------------
+  // Document metadata per route
+  // ------------------------------------------------------------------
+  // Hash fragments are not indexed as separate URLs, so this exists for the
+  // browser tab, bookmarks, shared links and social unfurls rather than for
+  // ranking. Pure DOM, no ES6, so it behaves the same on Firefox 60 ESR.
+  function setPageMeta(titleText, descText) {
+    document.title = titleText;
+
+    var head = document.getElementsByTagName("head")[0];
+    if (!head) return;
+
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta");
+      metaDesc.setAttribute("name", "description");
+      head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute("content", descText);
+
+    // Keep the social preview in step with the tab.
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", titleText);
+
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute("content", descText);
+  }
+
+  function applyRouteMeta(route) {
+    var meta = routes[route];
+    if (!meta || !meta.seoTitle) return;
+    setPageMeta(meta.seoTitle, meta.seoDesc);
+  }
 
   function navigateTo(route, targetCardId) {
     if (!routes[route]) {
-      route = "dashboard";
+      route = "spectroscopy";
+      targetCardId = "";
     }
     App.currentRoute = route;
+
+    var sectionId = route;
 
     // Update URL hash without breaking
     var targetHash = "#" + route + (targetCardId ? "/" + targetCardId : "");
@@ -120,7 +264,7 @@
     for (var i = 0; i < sections.length; i++) {
       sections[i].classList.remove("active");
     }
-    var targetSection = document.getElementById("view-" + route);
+    var targetSection = document.getElementById("view-" + sectionId);
     if (targetSection) {
       targetSection.classList.add("active");
     }
@@ -138,7 +282,7 @@
     }
 
     // Update Top Navigation Tabs active status (Tab Pills & Tab Buttons)
-    var tabPills = document.querySelectorAll(".tab-pill, .tab-btn");
+    var tabPills = document.querySelectorAll(".tab-pill");
     for (var k = 0; k < tabPills.length; k++) {
       var tBtn = tabPills[k];
       var tabTarget = tBtn.getAttribute("data-route");
@@ -171,13 +315,15 @@
     var appLayout = document.getElementById("app-layout");
     if (appLayout) appLayout.scrollLeft = 0;
 
+    applyRouteMeta(route);
+
     // Update Header Breadcrumb
     var breadcrumbTitle = document.getElementById("breadcrumb-current");
     if (breadcrumbTitle) {
       breadcrumbTitle.textContent = routes[route].title;
     }
 
-    // Scroll handling: either scroll to specific card or top
+    // Scroll handling: either open the requested card or go to the top
     var contentArea = document.getElementById("content-area");
     if (targetCardId) {
       setTimeout(function () {
@@ -209,12 +355,10 @@
     }
 
     // Trigger tab specific on-show handlers
-    if (route === "dashboard" && window.renderDashboard) {
+    if (route === "record" && window.renderRecord) {
+      window.renderRecord();
+    } else if (route === "dashboard" && window.renderDashboard) {
       window.renderDashboard();
-    } else if (route === "logbook" && window.renderLogbook) {
-      window.renderLogbook();
-    } else if (route === "experiment" && window.renderExperiment) {
-      window.renderExperiment();
     } else if (route === "reference" && window.renderReference) {
       window.renderReference();
     } else if (route === "settings" && window.renderSettings) {
@@ -233,33 +377,71 @@
   function handleHashChange() {
     var rawHash = window.location.hash.replace(/^#\/?/, "");
     var parts = rawHash.split("/");
-    var route = parts[0] || "dashboard";
+    var route = parts[0] || "spectroscopy";
     var targetCardId = parts[1] || "";
     navigateTo(route, targetCardId);
   }
 
-  // Theme Management (Robust CSS Variables & ClassList Toggle)
+  // Theme Management — four palettes sharing one variable contract
+  var THEMES = ["paper", "parchment", "blueprint", "crt", "tokyo", "console"];
+  var DARK_THEMES = ["crt", "tokyo", "console"];
+
+  function normalizeTheme(themeName) {
+    // Migrate the pre-refactor light/dark pair onto the named palettes
+    if (themeName === "light") return "paper";
+    if (themeName === "dark") return "tokyo";
+    for (var i = 0; i < THEMES.length; i++) {
+      if (THEMES[i] === themeName) return themeName;
+    }
+    // Falling back silently here once hid a stale-cache bug: fresh markup
+    // offered a palette this (cached) script had never heard of, so the click
+    // quietly produced the default theme instead.
+    if (themeName) {
+      console.warn('Unknown theme "' + themeName + '" — falling back to paper. ' +
+        'If this palette exists in the picker, the cached script is out of date.');
+    }
+    return "paper";
+  }
+
+  function isDarkTheme(themeName) {
+    for (var i = 0; i < DARK_THEMES.length; i++) {
+      if (DARK_THEMES[i] === themeName) return true;
+    }
+    return false;
+  }
+
   function applyTheme(themeName) {
+    themeName = normalizeTheme(themeName);
     App.theme = themeName;
+
     document.documentElement.setAttribute("data-theme", themeName);
     document.body.setAttribute("data-theme", themeName);
-    if (themeName === "dark") {
+
+    // Legacy hook kept for any rule still scoped to .theme-dark
+    if (isDarkTheme(themeName)) {
       document.documentElement.classList.add("theme-dark");
       document.body.classList.add("theme-dark");
     } else {
       document.documentElement.classList.remove("theme-dark");
       document.body.classList.remove("theme-dark");
     }
+
     Storage.set("theme", themeName);
-    
+
     if (window.i18n && window.i18n.applyTranslations) {
       window.i18n.applyTranslations();
     }
   }
 
   function toggleTheme() {
-    var nextTheme = App.theme === "dark" ? "light" : "dark";
-    applyTheme(nextTheme);
+    var idx = 0;
+    for (var i = 0; i < THEMES.length; i++) {
+      if (THEMES[i] === App.theme) {
+        idx = i;
+        break;
+      }
+    }
+    applyTheme(THEMES[(idx + 1) % THEMES.length]);
   }
 
   // Live Real-time Clock
@@ -289,17 +471,15 @@
   // Keyboard Shortcuts Setup
   function setupShortcuts() {
     document.addEventListener("keydown", function (e) {
-      // Alt + 1 ~ 8 for tab switching
+      // Alt + 1 ~ 6 for tab switching
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         var keyMap = {
-          "1": "dashboard",
-          "2": "optics",
-          "3": "beamline",
-          "4": "logbook",
-          "5": "experiment",
-          "6": "reference",
-          "7": "settings",
-          "8": "about"
+          "1": "spectroscopy",
+          "2": "goniometry",
+          "3": "record",
+          "4": "settings",
+          "5": "about",
+          "6": "dashboard"
         };
         if (keyMap[e.key]) {
           e.preventDefault();
@@ -316,8 +496,11 @@
   window.recordCalculation = recordCalculation;
   window.navigateTo = navigateTo;
   window.jumpToSection = jumpToSection;
+  window.setPageMeta = setPageMeta;
   window.applyTheme = applyTheme;
   window.toggleTheme = toggleTheme;
+  window.THEMES = THEMES;
+  window.isDarkTheme = isDarkTheme;
 
   // Initialize application
   function init() {
@@ -326,8 +509,8 @@
       window.i18n.init();
     }
 
-    // Load theme
-    var savedTheme = Storage.get("theme", "light");
+    // Load theme (migrates old "light"/"dark" values on the way in)
+    var savedTheme = Storage.get("theme", "paper");
     applyTheme(savedTheme);
 
     // Setup routes & listeners
@@ -335,7 +518,7 @@
     handleHashChange();
 
     // Setup Navigation click handlers (Sidebar, Top Tab Strip & Tab Buttons)
-    var navItems = document.querySelectorAll(".nav-item[data-route], .tab-pill[data-route], .tab-btn[data-route]");
+    var navItems = document.querySelectorAll(".nav-item[data-route], .tab-pill[data-route]");
     for (var i = 0; i < navItems.length; i++) {
       (function (item) {
         item.addEventListener("click", function (e) {
@@ -354,6 +537,12 @@
 
     startClock();
     setupShortcuts();
+
+    // Deferred by a tick so the calculator modules have registered their
+    // runtime-built <select> options before saved values are written back.
+    setTimeout(function () {
+      if (restoreCalcInputs() > 0) recalcAll();
+    }, 0);
   }
 
   // Run when DOM is ready

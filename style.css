@@ -47,94 +47,267 @@
   --header-height: 48px;
 }
 
-/* Inverted Dark Mode Variables (Pure Academic Inverted Ink) */
+/* --------------------------------------------------------------------------
+   THEME PALETTES
+   Four themes share one variable contract. Only the values change; every
+   component rule below reads the variables, so no theme needs its own layout.
+     paper      — Academic monograph print (default, unchanged)
+     parchment  — Aged laboratory notebook, warm and low-glare
+     crt        — 1980s phosphor terminal, green on black with amber accent
+     tokyo      — Modern neon dark (Tokyo Night palette)
+   --line-strong / --line-soft are colour-only companions to the --rule-*
+   shorthands, needed wherever a rule sets border-color on its own.
+   -------------------------------------------------------------------------- */
+
+:root, [data-theme="light"], html[data-theme="light"],
+[data-theme="paper"], html[data-theme="paper"] {
+  --line-strong: #1a1a1a;
+  --line-soft: #d5d3cc;
+}
+
+/* Vintage Lab Parchment — aged paper, sepia ink, burnt sienna accent */
+:root[data-theme="parchment"],
+html[data-theme="parchment"],
+body[data-theme="parchment"],
+[data-theme="parchment"] {
+  --bg-paper: #f4ecd8;
+  --bg-paper-subtle: #ebe0c6;
+  --bg-paper-hover: #e0d2b0;
+  --bg-paper-active: #d5c49b;
+
+  --ink-primary: #3b2f21;
+  --ink-secondary: #5c4a33;
+  --ink-muted: #877253;
+  --ink-faint: #a89a7d;
+  --ink-inverse: #f4ecd8;
+
+  --accent-ink: #7b3f00;
+  --accent-ink-hover: #5c2f00;
+  --accent-ink-subtle: #e8d9b8;
+
+  --rule-heavy: 1.5px solid #3b2f21;
+  --rule-main: 1px solid #3b2f21;
+  --rule-light: 1px solid #c8b48d;
+  --rule-faint: 1px solid #ddceac;
+
+  --line-strong: #3b2f21;
+  --line-soft: #c8b48d;
+}
+
+/* CRT Green/Amber Terminal — phosphor on black, monospace throughout */
+:root[data-theme="crt"],
+html[data-theme="crt"],
+body[data-theme="crt"],
+[data-theme="crt"] {
+  --bg-paper: #000000;
+  --bg-paper-subtle: #071009;
+  --bg-paper-hover: #0d1c10;
+  --bg-paper-active: #143018;
+
+  --ink-primary: #33ff66;
+  --ink-secondary: #22cc4d;
+  --ink-muted: #179a35;
+  --ink-faint: #0f6b25;
+  --ink-inverse: #000000;
+
+  --accent-ink: #ffb000;
+  --accent-ink-hover: #ffcc44;
+  --accent-ink-subtle: #1a1200;
+
+  --rule-heavy: 1.5px solid #33ff66;
+  --rule-main: 1px solid #33ff66;
+  --rule-light: 1px solid #17652c;
+  --rule-faint: 1px solid #0d3d1b;
+
+  --line-strong: #33ff66;
+  --line-soft: #17652c;
+
+  /* Terminal authenticity: one monospace face for the whole interface */
+  --font-serif: Consolas, "Liberation Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
+}
+
+/* Tokyo Night — modern neon dark, classic monograph structure kept intact */
 :root[data-theme="dark"],
 html[data-theme="dark"],
 body[data-theme="dark"],
-body.theme-dark,
-[data-theme="dark"] {
-  --bg-paper: #121417;
-  --bg-paper-subtle: #1c2128;
-  --bg-paper-hover: #262c36;
-  --bg-paper-active: #343c49;
-  
-  --ink-primary: #fdfcf8;
-  --ink-secondary: #d5d3cc;
-  --ink-muted: #9c9a93;
-  --ink-faint: #6c6a63;
-  --ink-inverse: #121417;
+[data-theme="dark"],
+:root[data-theme="tokyo"],
+html[data-theme="tokyo"],
+body[data-theme="tokyo"],
+[data-theme="tokyo"] {
+  --bg-paper: #1a1b26;
+  --bg-paper-subtle: #24283b;
+  --bg-paper-hover: #2f334d;
+  --bg-paper-active: #414868;
 
-  --accent-ink: #66b2ff;
-  --accent-ink-hover: #99ccff;
-  --accent-ink-subtle: #0d2847;
+  --ink-primary: #c0caf5;
+  --ink-secondary: #a9b1d6;
+  --ink-muted: #7f88ad;
+  --ink-faint: #565f89;
+  --ink-inverse: #1a1b26;
 
-  --rule-heavy: 1.5px solid #fdfcf8;
-  --rule-main: 1px solid #fdfcf8;
-  --rule-light: 1px solid #424956;
-  --rule-faint: 1px solid #2d333f;
+  --accent-ink: #7aa2f7;
+  --accent-ink-hover: #bb9af7;
+  --accent-ink-subtle: #283457;
+
+  --rule-heavy: 1.5px solid #c0caf5;
+  --rule-main: 1px solid #c0caf5;
+  --rule-light: 1px solid #414868;
+  --rule-faint: 1px solid #2f334d;
+
+  --line-strong: #c0caf5;
+  --line-soft: #414868;
 }
 
-/* Explicit Full-Element Dark Mode Overrides (CentOS 7 Guaranteed) */
-html[data-theme="dark"] body,
-html[data-theme="dark"] #app-layout,
-html[data-theme="dark"] #main-wrapper,
-html[data-theme="dark"] #content-area,
-html[data-theme="dark"] .view-section {
-  background-color: #121417 !important;
-  color: #fdfcf8 !important;
+/* Engineering Blueprint — millimetre graph paper, drafting blue on cold white */
+:root[data-theme="blueprint"],
+html[data-theme="blueprint"],
+body[data-theme="blueprint"],
+[data-theme="blueprint"] {
+  --bg-paper: #f2f6fb;
+  --bg-paper-subtle: #e4ecf7;
+  --bg-paper-hover: #d3e0f2;
+  --bg-paper-active: #bed2ea;
+
+  --ink-primary: #14375e;
+  --ink-secondary: #2d5a86;
+  --ink-muted: #4a6b91;
+  --ink-faint: #7794b4;
+  --ink-inverse: #f2f6fb;
+
+  --accent-ink: #0b5fa5;
+  --accent-ink-hover: #084a80;
+  --accent-ink-subtle: #d8e7f7;
+
+  --rule-heavy: 1.5px solid #14375e;
+  --rule-main: 1px solid #14375e;
+  --rule-light: 1px solid #a8c2de;
+  --rule-faint: 1px solid #c9dcf0;
+
+  --line-strong: #14375e;
+  --line-soft: #a8c2de;
 }
 
-html[data-theme="dark"] #sidebar,
-html[data-theme="dark"] #top-header,
-html[data-theme="dark"] #top-tab-strip,
-html[data-theme="dark"] .sidebar-header,
-html[data-theme="dark"] .sidebar-footer,
-html[data-theme="dark"] .card-header,
-html[data-theme="dark"] .result-box,
-html[data-theme="dark"] #academic-footer {
-  background-color: #1c2128 !important;
-  color: #fdfcf8 !important;
-  border-color: #424956 !important;
+/* Beamline Control Room — EPICS console, very high contrast on near-black */
+:root[data-theme="console"],
+html[data-theme="console"],
+body[data-theme="console"],
+[data-theme="console"] {
+  --bg-paper: #0b0e11;
+  --bg-paper-subtle: #151a20;
+  --bg-paper-hover: #1f262e;
+  --bg-paper-active: #2b343e;
+
+  --ink-primary: #e8eef4;
+  --ink-secondary: #b6c4d2;
+  --ink-muted: #7d8fa1;
+  --ink-faint: #556d82;
+  --ink-inverse: #0b0e11;
+
+  --accent-ink: #00d4a0;
+  --accent-ink-hover: #4dffcf;
+  --accent-ink-subtle: #06241d;
+
+  --rule-heavy: 1.5px solid #e8eef4;
+  --rule-main: 1px solid #8fa2b5;
+  --rule-light: 1px solid #303a45;
+  --rule-faint: 1px solid #222a33;
+
+  --line-strong: #8fa2b5;
+  --line-soft: #303a45;
+
+  /* Console readability: one monospace face, as on a real control screen */
+  --font-serif: Consolas, "Liberation Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
 }
 
-html[data-theme="dark"] .card,
-html[data-theme="dark"] .card-body,
-html[data-theme="dark"] .tool-tile,
-html[data-theme="dark"] .tab-pill,
-html[data-theme="dark"] .sub-tab-btn,
-html[data-theme="dark"] input,
-html[data-theme="dark"] select,
-html[data-theme="dark"] textarea,
-html[data-theme="dark"] table,
-html[data-theme="dark"] th,
-html[data-theme="dark"] td,
-html[data-theme="dark"] .lab-table tr,
-html[data-theme="dark"] .nav-item {
-  background-color: #121417 !important;
-  color: #fdfcf8 !important;
-  border-color: #424956 !important;
+/* --------------------------------------------------------------------------
+   EXPLICIT SURFACE OVERRIDES (CentOS 7 / Firefox 60 ESR guarantee)
+   These repeat the base component colours through variables so that a theme
+   switch always repaints every surface, whichever palette is active. Values
+   match the light design exactly, so the default look is unchanged.
+   -------------------------------------------------------------------------- */
+
+html[data-theme] body,
+html[data-theme] #app-layout,
+html[data-theme] #main-wrapper,
+html[data-theme] #content-area,
+html[data-theme] .view-section,
+html[data-theme] #top-header {
+  background-color: var(--bg-paper) !important;
+  color: var(--ink-primary) !important;
 }
 
-html[data-theme="dark"] .tab-pill.active,
-html[data-theme="dark"] .nav-item.active {
-  background-color: #fdfcf8 !important;
-  color: #121417 !important;
-  border-color: #fdfcf8 !important;
+html[data-theme] #sidebar,
+html[data-theme] #top-tab-strip,
+html[data-theme] .sidebar-header,
+html[data-theme] .sidebar-footer,
+html[data-theme] .card-header,
+html[data-theme] .result-box {
+  background-color: var(--bg-paper-subtle) !important;
+  color: var(--ink-primary) !important;
 }
 
-html[data-theme="dark"] .btn-secondary,
-html[data-theme="dark"] .btn,
-html[data-theme="dark"] .preset-chip {
-  background-color: #1c2128 !important;
-  color: #fdfcf8 !important;
-  border-color: #555e6d !important;
+html[data-theme] .card,
+html[data-theme] .card-body,
+html[data-theme] .tool-tile,
+html[data-theme] .tab-pill,
+html[data-theme] .sub-tab-btn,
+html[data-theme] input,
+html[data-theme] select,
+html[data-theme] textarea,
+html[data-theme] table,
+html[data-theme] th,
+html[data-theme] td,
+html[data-theme] .lab-table tr,
+html[data-theme] .nav-item,
+html[data-theme] .btn,
+html[data-theme] .btn-secondary,
+html[data-theme] .preset-chip,
+html[data-theme] .rec-quick-btn {
+  background-color: var(--bg-paper) !important;
+  color: var(--ink-primary) !important;
+  border-color: var(--line-strong);
 }
 
-html[data-theme="dark"] .btn-secondary:hover,
-html[data-theme="dark"] .btn:hover,
-html[data-theme="dark"] .preset-chip:hover {
-  background-color: #fdfcf8 !important;
-  color: #121417 !important;
+html[data-theme] .result-box.highlight {
+  background-color: var(--accent-ink-subtle) !important;
+}
+
+html[data-theme] .tab-pill:hover,
+html[data-theme] .tab-pill.active,
+html[data-theme] .btn:hover,
+html[data-theme] .btn-secondary:hover,
+html[data-theme] .preset-chip:hover,
+html[data-theme] .rec-quick-btn:hover {
+  background-color: var(--ink-primary) !important;
+  color: var(--ink-inverse) !important;
+}
+
+html[data-theme] .btn-primary {
+  background-color: var(--accent-ink) !important;
+  color: var(--bg-paper) !important;
+  border-color: var(--accent-ink);
+}
+
+html[data-theme] .btn-primary:hover {
+  background-color: var(--accent-ink-hover) !important;
+  color: var(--bg-paper) !important;
+  border-color: var(--accent-ink-hover);
+}
+
+html[data-theme] .nav-item.active {
+  background-color: var(--bg-paper) !important;
+  color: var(--accent-ink) !important;
+  border-left-color: var(--accent-ink);
+}
+
+html[data-theme] .nav-item:hover {
+  background-color: var(--bg-paper-hover) !important;
+}
+
+html[data-theme] .exp-row-current {
+  background-color: var(--bg-paper-subtle) !important;
+  border-left-color: var(--accent-ink);
 }
 
 /* Base Reset (Zero Radius, Zero Shadows, Zero Gradients) */
@@ -221,10 +394,15 @@ sub {
   border-right: var(--rule-main);
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  position: sticky;
+  /* Fixed rather than sticky: #app-layout sets overflow-x:hidden, which makes
+     it a scroll container and stops position:sticky from ever engaging. */
+  position: fixed;
   top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
   z-index: 100;
+  box-sizing: border-box;
 }
 
 .sidebar-header {
@@ -326,6 +504,8 @@ sub {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  /* The sidebar is out of flow, so reserve its column here. */
+  margin-left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
   max-width: calc(100% - var(--sidebar-width));
   overflow-x: hidden !important; /* 가로 스크롤 절대 방지 */
@@ -971,111 +1151,6 @@ select.form-control {
   background-color: var(--bg-paper-hover);
 }
 
-/* Logbook Item Styling */
-.log-entry-item {
-  border: var(--rule-main);
-  background-color: var(--bg-paper);
-  margin-bottom: 10px;
-  padding: 10px 12px;
-}
-
-.log-entry-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: var(--rule-light);
-  padding-bottom: 4px;
-  margin-bottom: 6px;
-  font-size: 11px;
-}
-
-.log-entry-title {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--ink-primary);
-}
-
-.log-entry-params {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent-ink);
-  margin-bottom: 6px;
-}
-
-.log-entry-memo {
-  font-family: var(--font-serif);
-  font-size: 12px;
-  color: var(--ink-secondary);
-  line-height: 1.4;
-}
-
-.log-entry-tags {
-  margin-top: 6px;
-}
-
-.log-tag-chip {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  border: var(--rule-light);
-  padding: 1px 4px;
-  margin-right: 4px;
-  color: var(--ink-muted);
-  cursor: pointer;
-}
-
-.log-tag-chip:hover {
-  background-color: var(--ink-primary);
-  color: var(--bg-paper);
-  border-color: var(--ink-primary);
-}
-
-/* Kanban Board Academic Style */
-.kanban-board {
-  display: flex;
-  margin-left: -6px;
-  margin-right: -6px;
-}
-
-.kanban-col {
-  flex: 1;
-  padding: 0 6px;
-  min-width: 140px;
-}
-
-.kanban-col-inner {
-  border: var(--rule-main);
-  background-color: var(--bg-paper-subtle);
-  min-height: 240px;
-  padding: 8px;
-}
-
-.kanban-col-title {
-  font-family: var(--font-serif);
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 6px;
-  border-bottom: var(--rule-main);
-  margin-bottom: 8px;
-}
-
-.kanban-task-card {
-  border: var(--rule-main);
-  background-color: var(--bg-paper);
-  padding: 6px 8px;
-  margin-bottom: 6px;
-  font-size: 11px;
-}
-
-.kanban-task-title {
-  font-weight: 700;
-  font-family: var(--font-serif);
-  margin-bottom: 4px;
-}
-
 /* Toast Notifications */
 #toast-container {
   position: fixed;
@@ -1164,6 +1239,7 @@ select.form-control {
     border: none !important;
   }
   #main-wrapper {
+    margin-left: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -1516,41 +1592,8 @@ select.form-control {
   position: relative;
 }
 
-/* Dark mode overrides for TOC */
-html[data-theme="dark"] .toc-masthead {
-  border-color: #fdfcf8 !important;
-  background-color: #1c2128 !important;
-}
-
-html[data-theme="dark"] .toc-sec-header {
-  background-color: #262c36 !important;
-  border-color: #424956 !important;
-}
-
-html[data-theme="dark"] .toc-sec-desc {
-  background-color: #121417 !important;
-  border-color: #2d333f !important;
-}
-
-html[data-theme="dark"] .toc-item-link:hover {
-  background-color: #262c36 !important;
-}
-
-html[data-theme="dark"] .toc-item-dots {
-  border-bottom-color: #424956 !important;
-}
-
-html[data-theme="dark"] .toc-item-jump {
-  background-color: #1c2128 !important;
-  border-color: #424956 !important;
-  color: #d5d3cc !important;
-}
-
-html[data-theme="dark"] .toc-item-link:hover .toc-item-jump {
-  background-color: #fdfcf8 !important;
-  color: #121417 !important;
-  border-color: #fdfcf8 !important;
-}
+/* TOC needs no per-theme overrides: every rule above already reads the
+   palette variables, so it repaints itself when the theme changes. */
 
 /* ==========================================================================
    @media print — Physical Monograph & Datasheet Printing
@@ -1613,7 +1656,7 @@ html[data-theme="dark"] .toc-item-link:hover .toc-item-jump {
     color: #000000 !important;
   }
 
-  .card, .tool-tile, .result-box, .kanban-col-inner {
+  .card, .tool-tile, .result-box {
     border: 0.75pt solid #000000 !important;
     background-color: #ffffff !important;
     break-inside: avoid;
@@ -1660,4 +1703,903 @@ html[data-theme="dark"] .toc-item-link:hover .toc-item-jump {
     break-inside: avoid;
     page-break-inside: avoid;
   }
+}
+
+/* ==========================================================================
+   EXPERIMENT-CENTERED WORKSPACE
+
+/* ==========================================================================
+   THEME PICKER (Settings)
+   Swatch colours are literal on purpose: each chip must preview its own
+   palette regardless of which theme is currently active.
+   ========================================================================== */
+
+.theme-picker {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -8px;
+}
+
+.theme-swatch {
+  display: flex;
+  align-items: center;
+  flex: 1 1 240px;
+  margin: 0 0 8px 8px;
+  padding: 8px 10px;
+  border: var(--rule-light);
+  border-radius: 0 !important;
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  font-family: var(--font-serif);
+  text-align: left;
+  cursor: pointer;
+}
+
+.theme-swatch:hover {
+  border: var(--rule-main);
+  background-color: var(--bg-paper-hover);
+}
+
+.theme-swatch.active {
+  border: var(--rule-heavy);
+  background-color: var(--bg-paper-subtle);
+}
+
+.theme-swatch-text {
+  display: block;
+  padding-left: 10px;
+  min-width: 0;
+}
+
+.theme-swatch-text strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.theme-swatch-text em {
+  display: block;
+  font-style: normal;
+  font-size: 10px;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+
+.theme-chip {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-style: solid;
+  border-width: 2px 7px 2px 2px;
+}
+
+.theme-chip-paper {
+  background-color: #fdfcf8;
+  border-color: #1a1a1a;
+  border-right-color: #003366;
+}
+
+.theme-chip-parchment {
+  background-color: #f4ecd8;
+  border-color: #3b2f21;
+  border-right-color: #7b3f00;
+}
+
+.theme-chip-crt {
+  background-color: #000000;
+  border-color: #33ff66;
+  border-right-color: #ffb000;
+}
+
+.theme-chip-tokyo {
+  background-color: #1a1b26;
+  border-color: #c0caf5;
+  border-right-color: #7aa2f7;
+}
+
+/* Sidebar quick theme buttons: mark the active palette */
+.btn-theme-current {
+  background-color: var(--ink-primary) !important;
+  color: var(--ink-inverse) !important;
+}
+
+/* ==========================================================================
+   RECORD
+   ========================================================================== */
+
+.rec-session-none,
+.rec-meta-empty,
+.rec-empty {
+  font-size: 12px;
+  color: var(--ink-muted);
+  padding: 6px 0;
+}
+
+.rec-session-start,
+.rec-session-picker {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.rec-session-start .form-control,
+.rec-session-picker .form-control {
+  margin-right: 6px;
+  max-width: 280px;
+}
+
+.rec-session-name {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.rec-session-date {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+
+.rec-meta {
+  border-top: var(--rule-light);
+  padding-top: 6px;
+  margin-bottom: 8px;
+}
+
+.rec-meta-row {
+  display: flex;
+  font-size: 12px;
+  padding: 2px 0;
+}
+
+.rec-meta-key {
+  flex: 0 0 150px;
+  color: var(--ink-secondary);
+}
+
+.rec-meta-val {
+  flex: 1 1 auto;
+}
+
+.rec-ctx-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+}
+
+.rec-ctx-field {
+  flex: 1 1 220px;
+  margin: 0 0 8px 10px;
+}
+
+.rec-ctx-actions,
+.rec-session-actions {
+  padding-top: 4px;
+}
+
+/* --- Quick log --- */
+.rec-quick-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -6px;
+  margin-bottom: 8px;
+}
+
+.rec-quick-btn {
+  margin: 0 0 6px 6px;
+  padding: 6px 12px;
+  border: var(--rule-main);
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.rec-quick-btn:hover {
+  background-color: var(--ink-primary);
+  color: var(--ink-inverse);
+}
+
+.rec-quick-other {
+  color: var(--ink-secondary);
+  border-style: dashed;
+}
+
+.rec-custom-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rec-custom-box .form-control {
+  margin-right: 6px;
+}
+
+.rec-log-list-title {
+  font-family: var(--font-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: var(--ink-secondary);
+  border-bottom: var(--rule-main);
+  padding-bottom: 4px;
+  margin: 14px 0 8px 0;
+}
+
+.rec-log-item {
+  border-bottom: var(--rule-light);
+  padding: 6px 0 6px 8px;
+  border-left: 3px solid transparent;
+}
+
+.rec-sev-important {
+  border-left-color: var(--ink-secondary);
+}
+
+.rec-sev-critical {
+  border-left-color: var(--accent-ink);
+}
+
+.rec-log-head {
+  display: flex;
+  align-items: baseline;
+  cursor: pointer;
+}
+
+.rec-log-time {
+  flex: 0 0 44px;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.rec-log-type {
+  flex: 0 0 96px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent-ink);
+}
+
+.rec-log-text {
+  flex: 1 1 auto;
+  font-size: 12px;
+}
+
+.rec-log-toggle {
+  flex: 0 0 auto;
+  color: var(--ink-muted);
+  font-size: 12px;
+  padding-left: 8px;
+}
+
+.rec-log-note,
+.rec-log-ctx {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  padding-left: 140px;
+}
+
+.rec-log-ctx {
+  color: var(--ink-muted);
+}
+
+.rec-log-detail {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 8px 0 4px 140px;
+  padding: 8px;
+  border: var(--rule-light);
+  background-color: var(--bg-paper-subtle);
+}
+
+.rec-detail-row {
+  flex: 1 1 150px;
+  margin-right: 10px;
+}
+
+.rec-detail-wide {
+  flex-basis: 100%;
+  margin-right: 0;
+}
+
+.rec-detail-actions {
+  flex-basis: 100%;
+  padding-top: 8px;
+}
+
+/* --- Session template --- */
+.card-secondary .card-header {
+  opacity: 0.85;
+}
+
+.rec-tpl-note {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  margin-bottom: 8px;
+}
+
+.rec-tpl-formats,
+.rec-tpl-includes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.rec-tpl-check {
+  font-size: 11px;
+  margin-right: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.rec-tpl-preview {
+  border: var(--rule-light);
+  background-color: var(--bg-paper-subtle);
+  padding: 10px;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+  .rec-log-head {
+    flex-wrap: wrap;
+  }
+
+  .rec-log-note,
+  .rec-log-ctx,
+  .rec-log-detail {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .rec-meta-key {
+    flex-basis: 110px;
+  }
+}
+
+/* ==========================================================================
+   ABOUT
+   Project identity leads; funding sits at footer weight so it never competes
+   with what the toolkit actually is.
+   ========================================================================== */
+
+.about-head {
+  padding: 4px 0 16px 0;
+  border-bottom: var(--rule-heavy);
+  margin-bottom: 16px;
+}
+
+.about-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0 0 6px 0;
+  color: var(--ink-primary);
+}
+
+.about-tagline {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  margin: 0 0 8px 0;
+}
+
+.about-version {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.about-link {
+  font-size: 12px;
+  color: var(--accent-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  margin-right: 18px;
+}
+
+.about-link:hover {
+  border-bottom-color: var(--accent-ink);
+}
+
+.about-body p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink-secondary);
+  max-width: 70ch;
+  margin: 0 0 24px 0;
+}
+
+.about-footer {
+  border-top: var(--rule-light);
+  padding-top: 10px;
+}
+
+.about-footer-line {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-bottom: 3px;
+}
+
+.about-footer-meta {
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.about-footer-meta a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.about-footer-meta a:hover {
+  color: var(--accent-ink);
+  border-bottom-color: var(--accent-ink);
+}
+
+.about-footer-sep {
+  padding: 0 6px;
+}
+
+.about-sub {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  border-bottom: var(--rule-light);
+  padding-bottom: 4px;
+  margin: 24px 0 10px 0;
+}
+
+.about-list {
+  margin: 0 0 8px 0;
+  max-width: 70ch;
+}
+
+.about-list dt {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent-ink);
+  margin-top: 8px;
+}
+
+.about-list dd {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+}
+
+.about-bullets {
+  padding-left: 18px;
+  margin: 0 0 8px 0;
+  max-width: 70ch;
+}
+
+.about-bullets li {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink-secondary);
+  margin-bottom: 4px;
+}
+
+.about-footer-note {
+  display: block;
+  padding: 2px 0 4px 0;
+}
+
+/* --- Record: session context as one compact bar --- */
+.rec-session-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border: var(--rule-light);
+  background-color: var(--bg-paper-subtle);
+  padding: 7px 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.rec-session-label {
+  flex: 1 1 240px;
+  padding-right: 10px;
+}
+
+.rec-session-meta {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  padding-top: 2px;
+}
+
+.rec-session-controls {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.rec-session-controls .form-control {
+  margin-right: 6px;
+  width: 200px;
+}
+
+.rec-session-controls .btn {
+  margin-left: 4px;
+}
+
+.rec-ctx-editor {
+  flex: 1 1 100%;
+}
+
+.rec-ctx-note {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+
+/* --- Record: session template, footer weight --- */
+.rec-tpl {
+  border-top: var(--rule-light);
+  margin-top: 18px;
+  padding-top: 10px;
+}
+
+.rec-tpl-toggle {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 4px 0;
+  cursor: pointer;
+  color: var(--ink-secondary);
+}
+
+.rec-tpl-toggle:hover .rec-tpl-label {
+  color: var(--accent-ink);
+}
+
+.rec-tpl-caret {
+  font-size: 10px;
+  color: var(--ink-muted);
+}
+
+.rec-tpl-label {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: var(--ink-secondary);
+  padding-left: 4px;
+}
+
+.rec-tpl-hint {
+  font-size: 11px;
+  color: var(--ink-muted);
+  padding-left: 10px;
+}
+
+.rec-tpl-panel {
+  padding: 10px 0 4px 14px;
+}
+
+.rec-tpl-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.rec-tpl-row-label {
+  flex: 0 0 70px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-secondary);
+}
+
+.rec-tpl-row-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .rec-session-controls {
+    padding-top: 6px;
+  }
+
+  .rec-session-controls .form-control {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .rec-tpl-row-label {
+    flex-basis: 100%;
+  }
+}
+
+.about-side {
+  border-left: var(--rule-light);
+  padding-left: 18px;
+}
+
+.about-person-name {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.about-person-ko {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.about-person-role {
+  font-size: 11px;
+  color: var(--accent-ink);
+  line-height: 1.6;
+  padding-top: 2px;
+}
+
+.about-person-note {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--ink-secondary);
+  margin: 8px 0 0 0;
+}
+
+.about-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-tags li {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  padding: 3px 0;
+  border-bottom: var(--rule-faint);
+}
+
+.about-tags li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 860px) {
+  .about-side {
+    border-left: none;
+    border-top: var(--rule-light);
+    padding-left: 0;
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+}
+
+/* Sponsor link: GitHub's own button is a cross-origin iframe, so its heart
+   cannot be removed and it fails offline. This is the same 114x32 footprint
+   drawn in the site's own ink. */
+.sponsor-btn {
+  display: inline-block;
+  min-width: 114px;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 6px 12px;
+  border: var(--rule-light) !important;
+  background-color: var(--bg-paper);
+  color: var(--ink-secondary) !important;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-decoration: none;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.sponsor-btn:hover {
+  border-color: var(--accent-ink) !important;
+  color: var(--accent-ink) !important;
+}
+
+/* ==========================================================================
+   MODEL VALIDITY
+   The assumption line is always present; the warning band only appears when
+   an input has left the model's domain. Advisory, never blocking.
+   ========================================================================== */
+
+.validity {
+  border-top: var(--rule-light);
+  margin-top: 10px;
+  padding-top: 7px;
+  font-size: 10.5px;
+  line-height: 1.7;
+}
+
+.validity-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-muted);
+  margin-right: 8px;
+}
+
+.validity-item {
+  color: var(--ink-muted);
+}
+
+.validity-item:not(:last-child)::after {
+  content: " · ";
+  color: var(--ink-faint);
+}
+
+.validity-warn {
+  margin-top: 5px;
+  padding: 5px 8px;
+  border-left: 3px solid var(--accent-ink);
+  background-color: var(--accent-ink-subtle);
+}
+
+.validity-warn-item {
+  display: block;
+  color: var(--ink-primary);
+}
+
+.validity-alert .validity-tag {
+  color: var(--accent-ink);
+}
+
+/* ==========================================================================
+   MINI VISUALIZERS
+   Small inline SVG plots drawn from the same numbers the card already shows.
+   Colours come from the theme tokens so all four palettes work unchanged.
+   ========================================================================== */
+
+.miniplot {
+  margin-top: 10px;
+  border-top: var(--rule-light);
+  padding-top: 8px;
+}
+
+.miniplot-title {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+.miniplot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.miniplot-axis {
+  stroke: var(--line-soft);
+  stroke-width: 1;
+  fill: none;
+}
+
+.miniplot-grid {
+  stroke: var(--line-soft);
+  stroke-width: 0.5;
+  opacity: 0.5;
+  fill: none;
+}
+
+.miniplot-curve {
+  stroke: var(--accent-ink);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.miniplot-marker {
+  fill: var(--accent-ink);
+  stroke: var(--bg-paper);
+  stroke-width: 1.5;
+}
+
+.miniplot-label {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  fill: var(--ink-muted);
+}
+
+.miniplot-callout {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--accent-ink);
+  font-weight: 700;
+}
+
+/* Blueprint: millimetre grid behind the content, 8 px minor / 40 px major.
+   Written with two-stop colour stops on purpose: the compact `colour 0 1px`
+   form is CSS Images Level 4 and Firefox 60 drops the whole declaration, which
+   left the grid invisible on the browsers this site targets. */
+html[data-theme="blueprint"] #content-area,
+html[data-theme="blueprint"] body {
+  background-color: var(--bg-paper) !important;
+  background-image:
+    repeating-linear-gradient(0deg,
+      rgba(20, 55, 94, 0.22) 0px, rgba(20, 55, 94, 0.22) 1px,
+      transparent 1px, transparent 40px),
+    repeating-linear-gradient(90deg,
+      rgba(20, 55, 94, 0.22) 0px, rgba(20, 55, 94, 0.22) 1px,
+      transparent 1px, transparent 40px),
+    repeating-linear-gradient(0deg,
+      rgba(20, 55, 94, 0.10) 0px, rgba(20, 55, 94, 0.10) 1px,
+      transparent 1px, transparent 8px),
+    repeating-linear-gradient(90deg,
+      rgba(20, 55, 94, 0.10) 0px, rgba(20, 55, 94, 0.10) 1px,
+      transparent 1px, transparent 8px) !important;
+  background-position: 0 0;
+  background-repeat: repeat;
+}
+
+/* The view fills the whole scroll area and the theme layer paints it opaque,
+   which would bury the grid. Let it through here; cards stay opaque so the
+   numbers on them remain legible. */
+html[data-theme="blueprint"] .view-section {
+  background-color: transparent !important;
+}
+
+html[data-theme="blueprint"] .card,
+html[data-theme="blueprint"] .result-box,
+html[data-theme="blueprint"] .toc-section-card {
+  background-color: var(--bg-paper) !important;
+}
+
+/* Console: results carry the emphasis a control screen gives live readings. */
+html[data-theme="console"] .result-value.primary {
+  color: var(--accent-ink) !important;
+  text-shadow: 0 0 6px rgba(0, 212, 160, 0.35);
+}
+
+.theme-chip-blueprint {
+  background-color: #f2f6fb;
+  border-color: #14375e;
+  border-right-color: #0b5fa5;
+}
+
+.theme-chip-console {
+  background-color: #0b0e11;
+  border-color: #e8eef4;
+  border-right-color: #00d4a0;
+}
+
+/* Visually hidden but present for crawlers and screen readers. Clip-based so
+   it stays in the accessibility tree, unlike display:none. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
