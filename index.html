@@ -1190,7 +1190,7 @@
           <!-- Academic Table of Contents Frontmatter Masthead -->
           <div class="toc-masthead">
             <div class="toc-pretitle" data-i18n="toc_pretitle">SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH</div>
-            <h1 class="toc-maintitle" data-i18n="toc_maintitle">CONTENTS (목차)</h1>
+            <h1 class="toc-maintitle" data-i18n="toc_maintitle">CONTENTS</h1>
             <p class="toc-subtitle" data-i18n="toc_subtitle">
               방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인
             </p>
@@ -1211,12 +1211,11 @@
 
               <!-- SECTION X-RAY OPTICS SUITE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('spectroscopy')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION I.</span>
                     <span data-i18n="toc_sec1_title"></span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('spectroscopy')" data-i18n="btn_view_suite">열기 &#10132;</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec1_desc"></div>
                 <div class="toc-items-container">
@@ -1226,8 +1225,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_1"></span>
                       <span class="toc-item-formula">E = hc/&lambda; = h&nu;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 1] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-lattice-dspacing')">
                     <span class="toc-item-num">&sect; 2.</span>
@@ -1235,8 +1232,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_lattice"></span>
                       <span class="toc-item-formula">a, b, c, &alpha;, &beta;, &gamma; + hkl &rarr; d</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 2] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-refraction')">
                     <span class="toc-item-num">&sect; 3.</span>
@@ -1244,8 +1239,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_4"></span>
                       <span class="toc-item-formula">n = 1 &minus; &delta; + i&beta;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 3] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-reflection')">
                     <span class="toc-item-num">&sect; 4.</span>
@@ -1253,8 +1246,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_7"></span>
                       <span class="toc-item-formula">&theta;c = &radic;(2&delta;)</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 4] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-grating')">
                     <span class="toc-item-num">&sect; 5.</span>
@@ -1262,8 +1253,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_3"></span>
                       <span class="toc-item-formula">d(sin&alpha; + sin&beta;) = m&lambda;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 5] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-resolution')">
                     <span class="toc-item-num">&sect; 6.</span>
@@ -1271,8 +1260,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_3"></span>
                       <span class="toc-item-formula">&Delta;E/E</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 6] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-flux')">
                     <span class="toc-item-num">&sect; 7.</span>
@@ -1280,8 +1267,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_2"></span>
                       <span class="toc-item-formula">photons / s</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 7] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-drift')">
                     <span class="toc-item-num">&sect; 8.</span>
@@ -1289,8 +1274,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_7"></span>
                       <span class="toc-item-formula">&Delta;&theta;, &Delta;E from &Delta;T</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 8] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-physical-constants')">
                     <span class="toc-item-num">&sect; 9.</span>
@@ -1298,19 +1281,16 @@
                       <span class="toc-item-name">기본 물리 상수 &amp; 결정 격자 레퍼런스</span>
                       <span class="toc-item-formula">CODATA 2022: c, h, ħ, hc, re, NA, kB, Si/Ge d</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 9] &#10132;</span>
                   </a>
                 </div>
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('goniometry')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION II.</span>
                     <span data-i18n="toc_sec2_title"></span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('goniometry')" data-i18n="btn_view_suite">열기 &#10132;</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec2_desc"></div>
                 <div class="toc-items-container">
@@ -1320,8 +1300,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_2"></span>
                       <span class="toc-item-formula">&lambda; = 2d sin&theta;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 1] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-qspace')">
                     <span class="toc-item-num">&sect; 2.</span>
@@ -1329,8 +1307,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_8"></span>
                       <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 2] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-scaling')">
                     <span class="toc-item-num">&sect; 3.</span>
@@ -1338,8 +1314,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_5"></span>
                       <span class="toc-item-formula">&theta;2 from E1 &rarr; E2</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 3] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-footprint')">
                     <span class="toc-item-num">&sect; 4.</span>
@@ -1347,8 +1321,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_1"></span>
                       <span class="toc-item-formula">L = w / sin&theta;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 4] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-detector')">
                     <span class="toc-item-num">&sect; 5.</span>
@@ -1356,8 +1328,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_4"></span>
                       <span class="toc-item-formula">&Delta;2&theta; = atan(px / D)</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 5] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-slit')">
                     <span class="toc-item-num">&sect; 6.</span>
@@ -1365,8 +1335,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_6"></span>
                       <span class="toc-item-formula">gap / distance</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 6] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-euler')">
                     <span class="toc-item-num">&sect; 7.</span>
@@ -1374,8 +1342,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_6"></span>
                       <span class="toc-item-formula">chi-phi cradle</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 7] &#10132;</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-cdi')">
                     <span class="toc-item-num">&sect; 8.</span>
@@ -1383,19 +1349,16 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_5"></span>
                       <span class="toc-item-formula">oversampling ratio</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[&sect; 8] &#10132;</span>
                   </a>
                 </div>
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('record')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION III.</span>
                     <span data-i18n="toc_sec3_title">실험 세션 기록 (Record)</span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('record')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec3_desc">
                   세션 컨텍스트, 원클릭 퀵 로그, 외부 로그북용 세션 템플릿
@@ -1407,8 +1370,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_rec_1">세션 컨텍스트 (Session)</span>
                       <span class="toc-item-formula">Beamline, Sample, Energy, Reflection — all optional</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 1] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-quicklog')">
                     <span class="toc-item-num">§ 2.</span>
@@ -1416,8 +1377,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_rec_2">퀵 로그 & 타임라인 (Quick Log)</span>
                       <span class="toc-item-formula">One-click Event / Issue / Result logging</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 2] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-template')">
                     <span class="toc-item-num">§ 3.</span>
@@ -1425,8 +1384,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_rec_3">세션 템플릿 (Session Template)</span>
                       <span class="toc-item-formula">Compact / Standard / Beamtime header export</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 3] ➔</span>
                   </a>
                 </div>
               </div>
@@ -1438,12 +1395,11 @@
 
               <!-- SECTION SETTINGS & ARCHIVE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('settings')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION IV.</span>
                     <span data-i18n="toc_sec6_title">환경설정 및 아카이브 (Settings)</span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('settings')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec6_desc">
                   언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드
@@ -1455,8 +1411,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_set_1">언어 설정 (Language Selection)</span>
                       <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 1] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
                     <span class="toc-item-num">§ 2.</span>
@@ -1464,8 +1418,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드 (Theme Mode)</span>
                       <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 2] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
                     <span class="toc-item-num">§ 3.</span>
@@ -1473,20 +1425,17 @@
                       <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내 (Shortcuts)</span>
                       <span class="toc-item-formula">Alt + 1 ~ 6 Quick Tab Switcher</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 3] ➔</span>
                   </a>
                 </div>
               </div>
 
               <!-- SECTION ABOUT & PORTFOLIO -->
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('about')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION V.</span>
                     <span data-i18n="toc_sec7_title">연구자 프로필 및 후원 (About)</span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('about')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec7_desc">
                   연구자 약력, X선 광학·BCDI 연구 분야, 연락처 및 프로젝트 후원

@@ -20,7 +20,7 @@
       b_gonio_title: "GONIOMETRY — 각도·기하 배치",
       b_gonio_desc: "브래그 각도, 상호공간 Q 벡터, 빔 풋프린트와 디텍터 기하 계산",
       nav_record: "III. RECORD",
-      nav_dashboard_index: "0. CONTENTS (목차)",
+      nav_dashboard_index: "0. CONTENTS",
 
 
 
@@ -250,7 +250,7 @@
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
-      toc_maintitle: "CONTENTS (목차)",
+      toc_maintitle: "CONTENTS",
       toc_subtitle: "방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인",
       btn_view_suite: "열기 ➔",
       toc_sec1_title: "분광 — 에너지, 파장, 물질 상호작용",
