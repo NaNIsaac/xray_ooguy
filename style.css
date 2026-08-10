@@ -43,12 +43,12 @@
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Arial, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
 
   /* Dimensions */
-  --sidebar-width: 220px;
+  --sidebar-width: 200px;
   /* Widest the content column ever gets. The fields hold short numbers, so a
      card stops gaining anything past roughly 400px; the rest of a wide window
      is left as margin on the right. */
   --content-max: 1280px;
-  --header-height: 48px;
+  --header-height: 42px;
 }
 
 /* --------------------------------------------------------------------------
@@ -339,6 +339,12 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  /* Everything sized in rem hangs off this. The numbers themselves stay
+     legible; the box around them is trimmed below. */
+  font-size: 93.75%;
+}
+
 html, body {
   width: 100%;
   max-width: 100%;
@@ -457,9 +463,9 @@ sub {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 14px;
+  padding: 6px 12px;
   font-family: var(--font-serif);
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--ink-primary);
   text-decoration: none;
   border-bottom: none;
@@ -546,7 +552,7 @@ sub {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 14px;
   position: sticky;
   top: 0;
   z-index: 95;
@@ -755,7 +761,7 @@ sub {
 /* Main Content Area (Fixed without horizontal scroll) */
 #content-area {
   flex: 1;
-  padding: 20px 24px 48px 24px;
+  padding: 16px 20px 40px 20px;
   overflow-y: auto;
   overflow-x: hidden !important; /* 컨텐츠 영역은 가로 스크롤 완전 방지 고정 */
   width: 100%;
@@ -784,8 +790,8 @@ sub {
 /* Academic Section Header & Divider */
 .section-banner {
   border-bottom: var(--rule-heavy);
-  padding-bottom: 12px;
-  margin-bottom: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -813,8 +819,8 @@ sub {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  margin-left: -10px;
-  margin-right: -10px;
+  margin-left: -8px;
+  margin-right: -8px;
 }
 
 /* Twelve columns. A card declares how many of them it occupies, so a row is
@@ -834,8 +840,8 @@ sub {
 
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
 .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
-  padding: 0 10px;
-  margin-bottom: 18px;
+  padding: 0 8px;
+  margin-bottom: 14px;
   box-sizing: border-box;
 }
 
@@ -871,8 +877,8 @@ sub {
 }
 
 .card-header {
-  padding: 0.55rem 0.85rem;
-  min-height: 2.45rem;
+  padding: 0.45rem 0.7rem;
+  min-height: 2.05rem;
   background-color: var(--bg-paper-subtle);
   border-bottom: var(--rule-main);
   display: flex;
@@ -903,7 +909,7 @@ sub {
 }
 
 .card-body {
-  padding: 0.95rem 0.95rem;
+  padding: 0.75rem;
   background-color: var(--bg-paper);
   box-sizing: border-box;
 }
@@ -953,9 +959,9 @@ sub {
 input.form-control,
 select.form-control {
   width: 100%;
-  height: 2.15rem !important;
-  min-height: 2.15rem !important;
-  max-height: 2.15rem !important;
+  height: 1.95rem !important;
+  min-height: 1.95rem !important;
+  max-height: 1.95rem !important;
   padding: 0.25rem 0.55rem !important;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -1037,9 +1043,9 @@ select.form-control {
 /* Calculated Results Box with Unobtrusive Copy Action */
 .result-box {
   position: relative;
-  margin-top: 0.75rem;
-  padding: 0.65rem 2.25rem 0.65rem 0.75rem;
-  min-height: 3.25rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 2rem 0.5rem 0.6rem;
+  min-height: 2.8rem;
   border: var(--rule-main);
   background-color: var(--bg-paper-subtle);
   box-sizing: border-box;
@@ -1122,7 +1128,7 @@ select.form-control {
 
 .result-value {
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.35;
   min-height: 1.35em;
@@ -1186,10 +1192,10 @@ select.form-control {
   align-items: center;
   justify-content: center;
   font-family: var(--font-serif);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.35;
-  min-height: 2rem;
+  min-height: 1.8rem;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
@@ -1296,6 +1302,93 @@ select.form-control {
 
 .lab-table tbody tr:hover td {
   background-color: var(--bg-paper-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Reference datasheet — the constants table is not a calculator, so it drops
+   the card frame and reads as an appendix table: caption above the rules,
+   figures right-aligned, units and provenance set quietly beside them.
+   -------------------------------------------------------------------------- */
+.datasheet {
+  display: block;
+  padding: 4px 0 0 0;
+}
+
+.datasheet-head {
+  margin-bottom: 8px;
+}
+
+.datasheet-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 3px;
+}
+
+.datasheet-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink-primary);
+  margin: 0 0 3px 0;
+}
+
+.datasheet-note {
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  margin: 0;
+  max-width: 62em;
+}
+
+.datasheet-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.datasheet-table th {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.datasheet-table .dt-sym {
+  width: 12%;
+  white-space: nowrap;
+}
+
+.datasheet-table .dt-val {
+  width: 26%;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.datasheet-table .dt-unit {
+  width: 34%;
+}
+
+.datasheet-table .dt-alt {
+  color: var(--ink-muted);
+  font-size: 10.5px;
+}
+
+/* Group divider inside the table, in place of a second heading */
+.datasheet-table .dt-group td {
+  padding-top: 12px;
+  border-bottom: var(--rule-main);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.datasheet-table .dt-group:hover td {
+  background-color: transparent;
 }
 
 /* Toast Notifications */
@@ -2110,6 +2203,39 @@ select.form-control {
   justify-content: flex-end;
 }
 
+.rec-tpl-copy-bar .btn + .btn {
+  margin-left: 6px;
+}
+
+/* The "+ New Preset" tab sits apart from the presets themselves */
+.rec-tpl-add {
+  border-style: dashed;
+  margin-left: 2px;
+}
+
+/* Editing one of the user's own headers */
+#rec-tpl-name {
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.rec-tpl-editor {
+  width: 100%;
+  min-height: 220px !important;
+  font-size: 11.5px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.rec-tpl-hint {
+  margin: 4px 0 10px 0;
+  font-size: 10.5px;
+  color: var(--ink-muted);
+}
+
 /* In-Situ Snippet Memo Cards */
 .rec-memo-grid {
   display: grid;
@@ -2539,8 +2665,8 @@ select.form-control {
 }
 
 .fp-diagram-badge.spill {
-  color: #d32f2f;
-  border-color: #d32f2f;
+  color: var(--danger);
+  border-color: var(--danger);
   background-color: rgba(211, 47, 47, 0.12);
 }
 
@@ -2554,7 +2680,9 @@ select.form-control {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 125px;
+  /* Matches the 380 x 152 viewBox: capping it lower squashed the label bands
+     that keep the dimensions clear of the beam. */
+  max-height: 165px;
 }
 
 /* ==========================================================================

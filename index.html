@@ -631,72 +631,111 @@
               </div>
             </div>
 
-            <!-- § 9. 기본 물리 상수 및 결정 격자 레퍼런스 (CODATA Fundamental Constants & Reference Data) -->
+            <!-- § 9. Reference data, not a calculator: a plain ruled table in
+                 the style of an appendix, with no card chrome around it. -->
             <div class="col-12">
-              <div class="card" id="card-physical-constants">
-                <div class="card-header">
-                  <span class="card-title">§ 9. 기본 물리 상수 및 결정 격자 레퍼런스 (Fundamental Physical Constants &amp; Crystal Data)</span>
-                  <span class="card-tag">CODATA 2022 Reference</span>
+              <section class="datasheet" id="card-physical-constants">
+                <div class="datasheet-head">
+                  <span class="datasheet-label">§ 9 &middot; <span data-i18n="const_kicker">참조 데이터</span></span>
+                  <h3 class="datasheet-title" data-i18n="const_title">기본 물리 상수 및 결정 격자 데이터</h3>
+                  <p class="datasheet-note" data-i18n="const_note">CODATA 2022 권장값. 격자면 간격은 298.15 K 기준이며, (exact)는 SI 정의에 의해 오차가 없는 값이다.</p>
                 </div>
-                <div class="card-body">
-                  <div class="result-box" style="margin-top:0;">
-                    <div class="result-grid">
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">hc</i> (광자 에너지-파장 적)</div>
-                        <div class="result-value primary">12398.41984 eV·Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(1.239842 keV·nm)</span></div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">h</i> (플랑크 상수)</div>
-                        <div class="result-value">6.626070 × 10<sup>-34</sup> J·s</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">ħ</i> (디랙 상수)</div>
-                        <div class="result-value">1.054572 × 10<sup>-34</sup> J·s</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">c</i> (진공 중 광속)</div>
-                        <div class="result-value">299,792,458 m/s</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">r</i><sub>e</sub> (고전 전자 반경)</div>
-                        <div class="result-value">2.817940 × 10<sup>-15</sup> m</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">e</i> (기본 전하)</div>
-                        <div class="result-value">1.602177 × 10<sup>-19</sup> C</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">m</i><sub>e</sub> (전자 정지 질량)</div>
-                        <div class="result-value">9.109384 × 10<sup>-31</sup> kg <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(0.5110 MeV/<i class="formula">c</i>²)</span></div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">α</i> (미세구조 상수)</div>
-                        <div class="result-value">1 / 137.035999</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">N</i><sub>A</sub> (아보가드로 수)</div>
-                        <div class="result-value">6.022141 × 10<sup>23</sup> mol<sup>-1</sup></div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label"><i class="formula">k</i><sub>B</sub> (볼츠만 상수)</div>
-                        <div class="result-value">1.380649 × 10<sup>-23</sup> J/K</div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label">Si(111) 격자면 간격 <i class="formula">d</i></div>
-                        <div class="result-value primary">3.13560 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label">Ge(111) 격자면 간격 <i class="formula">d</i></div>
-                        <div class="result-value">3.26636 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
-                      </div>
-                      <div class="result-item">
-                        <div class="result-label">C*(Diamond 111) 격자 간격</div>
-                        <div class="result-value">2.05930 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+                <table class="lab-table datasheet-table">
+                  <thead>
+                    <tr>
+                      <th class="dt-sym" data-i18n="const_hdr_symbol">기호</th>
+                      <th data-i18n="const_hdr_quantity">물리량</th>
+                      <th class="dt-val" data-i18n="const_hdr_value">값</th>
+                      <th class="dt-unit" data-i18n="const_hdr_unit">단위</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">hc</i></td>
+                      <td data-i18n="const_hc">광자 에너지-파장 적</td>
+                      <td class="dt-val mono">12398.41984</td>
+                      <td class="dt-unit mono">eV&middot;&Aring; <span class="dt-alt">= 1.239842 keV&middot;nm</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">h</i></td>
+                      <td data-i18n="const_h">플랑크 상수</td>
+                      <td class="dt-val mono">6.626070 &times; 10<sup>-34</sup></td>
+                      <td class="dt-unit mono">J&middot;s <span class="dt-alt">(exact)</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">&#295;</i></td>
+                      <td data-i18n="const_hbar">디랙 상수</td>
+                      <td class="dt-val mono">1.054572 &times; 10<sup>-34</sup></td>
+                      <td class="dt-unit mono">J&middot;s</td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">c</i></td>
+                      <td data-i18n="const_c">진공 중 광속</td>
+                      <td class="dt-val mono">299,792,458</td>
+                      <td class="dt-unit mono">m&middot;s<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">e</i></td>
+                      <td data-i18n="const_e">기본 전하</td>
+                      <td class="dt-val mono">1.602177 &times; 10<sup>-19</sup></td>
+                      <td class="dt-unit mono">C <span class="dt-alt">(exact)</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">r</i><sub>e</sub></td>
+                      <td data-i18n="const_re">고전 전자 반경</td>
+                      <td class="dt-val mono">2.817940 &times; 10<sup>-15</sup></td>
+                      <td class="dt-unit mono">m</td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">m</i><sub>e</sub></td>
+                      <td data-i18n="const_me">전자 정지 질량</td>
+                      <td class="dt-val mono">9.109384 &times; 10<sup>-31</sup></td>
+                      <td class="dt-unit mono">kg <span class="dt-alt">= 0.5110 MeV/<i class="formula">c</i><sup>2</sup></span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">&alpha;</i></td>
+                      <td data-i18n="const_alpha">미세구조 상수</td>
+                      <td class="dt-val mono">1 / 137.035999</td>
+                      <td class="dt-unit mono"><span class="dt-alt" data-i18n="const_dimensionless">무차원</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">N</i><sub>A</sub></td>
+                      <td data-i18n="const_na">아보가드로 상수</td>
+                      <td class="dt-val mono">6.022141 &times; 10<sup>23</sup></td>
+                      <td class="dt-unit mono">mol<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">k</i><sub>B</sub></td>
+                      <td data-i18n="const_kb">볼츠만 상수</td>
+                      <td class="dt-val mono">1.380649 &times; 10<sup>-23</sup></td>
+                      <td class="dt-unit mono">J&middot;K<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                    </tr>
+
+                    <tr class="dt-group">
+                      <td colspan="4" data-i18n="const_group_d">결정 격자면 간격 d (298.15 K)</td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">d</i><sub>Si(111)</sub></td>
+                      <td data-i18n="const_d_si">실리콘 Si(111)</td>
+                      <td class="dt-val mono">3.13560</td>
+                      <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.43102 &Aring;</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">d</i><sub>Ge(111)</sub></td>
+                      <td data-i18n="const_d_ge">게르마늄 Ge(111)</td>
+                      <td class="dt-val mono">3.26636</td>
+                      <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.65750 &Aring;</span></td>
+                    </tr>
+                    <tr>
+                      <td class="dt-sym"><i class="formula">d</i><sub>C(111)</sub></td>
+                      <td data-i18n="const_d_c">다이아몬드 C(111)</td>
+                      <td class="dt-val mono">2.05930</td>
+                      <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 3.56683 &Aring;</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
             </div>
 
           </div>
@@ -1463,15 +1502,22 @@
                   <span class="card-tag">Plain Text Format</span>
                 </div>
                 <div class="card-body">
-                  <div class="rec-tpl-tabs">
-                    <button class="btn btn-sm btn-primary active" id="tab-tpl-standard" onclick="selectLogbookTab('standard')">Standard Beamtime</button>
-                    <button class="btn btn-sm btn-secondary" id="tab-tpl-shift" onclick="selectLogbookTab('shift')">Shift Handover</button>
-                    <button class="btn btn-sm btn-secondary" id="tab-tpl-runs" onclick="selectLogbookTab('runs')">Run Sequence Matrix</button>
-                  </div>
-                  
+                  <!-- Built-in presets and the user's own are rendered together -->
+                  <div class="rec-tpl-tabs" id="rec-tpl-tabs"></div>
+
                   <div class="rec-tpl-box">
+                    <!-- Built-in preset: read-only preview -->
                     <pre class="rec-tpl-preview mono" id="logbook-tpl-preview"></pre>
+
+                    <!-- Own preset: name and body are edited in place and saved locally -->
+                    <div id="rec-tpl-edit" style="display:none;">
+                      <input type="text" id="rec-tpl-name" class="form-control" maxlength="40" placeholder="Preset name" oninput="renamePreset()">
+                      <textarea id="rec-tpl-body" class="form-control mono rec-tpl-editor" rows="14" spellcheck="false" oninput="editPresetBody()"></textarea>
+                      <div class="rec-tpl-hint mono">{date} {time} {datetime} are filled in when the header is copied.</div>
+                    </div>
+
                     <div class="rec-tpl-copy-bar">
+                      <button class="btn btn-sm btn-secondary" id="rec-tpl-delete" onclick="deletePreset()" style="display:none;">Delete Preset</button>
                       <button class="btn btn-sm btn-primary" onclick="copyActiveTemplate()" style="font-weight:700;">Copy Header to Clipboard</button>
                     </div>
                   </div>

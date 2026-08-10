@@ -18,6 +18,34 @@
   }
 
   // --- 2.1 Beam Footprint Calculator & Geometric Diagram ---
+  //
+  // Two things the schematic has to get right, and they pull against each other:
+  //
+  //   * A grazing beam must look grazing. Drawing the true angle is useless
+  //     below ~2° (the beam collapses onto the surface), but inflating every
+  //     small angle to a fixed floor made 0.1° and 5° look identical. The
+  //     mapping below is monotonic and compresses rather than clamps, so the
+  //     picture keeps its ordering: shallower input always draws shallower.
+  //   * Nothing may sit on top of anything else. The beam owns the space above
+  //     the sample, so every dimension label lives below it, and the incidence
+  //     label sits on the far side of the impact point, which the beam never
+  //     crosses (it always arrives from the left).
+  //
+  function visualAngle(deg) {
+    // 1:1 from 20° up; below that, a 0.6 power curve — 0.5° draws as 2.2°,
+    // 5° as 8.7°, 15° as 17°. Shallow still reads shallow, and two different
+    // grazing angles never draw the same.
+    if (deg >= 20) return deg;
+    return 20 * Math.pow(deg / 20, 0.6);
+  }
+
+  function svgText(x, y, anchor, size, fill, weight, text) {
+    return '<text x="' + x + '" y="' + y + '" text-anchor="' + anchor +
+      '" font-family="var(--font-mono)" font-size="' + size + '" fill="' + fill +
+      '" font-weight="' + weight + '" stroke="var(--bg-paper)" stroke-width="2.6"' +
+      ' paint-order="stroke" stroke-linejoin="round">' + text + '</text>';
+  }
+
   function renderFootprintDiagram(beamV_um, beamH_um, incAngleDeg, sampleL_mm, footprint_mm, spilloverPct) {
     var container = document.getElementById("fp-diagram-box");
     if (!container) return;
@@ -40,117 +68,122 @@
       ? "SPILLOVER (" + spilloverPct.toFixed(1) + "% LOSS)"
       : (hasSample ? "100% IN SAMPLE (" + coveragePct + "%)" : "CALCULATED");
 
-    // Geometric mapping coordinates
-    var svgW = 380, svgH = 115;
-    var sampleX1 = 70, sampleX2 = 330, sampleW = 260;
-    var sampleY = 72, sampleH = 8;
-    var sampleCenter = 200;
+    // Bands: beam caption / beam / sample / footprint dimension / sample length
+    var svgW = 380, svgH = 152;
+    var sampleX1 = 60, sampleX2 = 340, sampleW = 280, sampleCenter = 200;
+    var sampleY = 86, sampleH = 8;
+    var beamBandTop = 26;
 
-    // Footprint width mapping
+    // Footprint bar width on the surface, relative to the sample
     var ratio = footprint_mm / sampleLengthVal;
     var fpW_px;
     if (ratio <= 1) {
       fpW_px = Math.max(8, ratio * sampleW);
     } else {
-      fpW_px = Math.min(360, sampleW + Math.min(100, (ratio - 1) * 70));
+      fpW_px = Math.min(370, sampleW + Math.min(110, (ratio - 1) * 70));
     }
+    var fpX1 = Math.max(6, sampleCenter - fpW_px / 2);
+    var fpX2 = Math.min(374, sampleCenter + fpW_px / 2);
 
-    var fpX1 = Math.max(10, sampleCenter - fpW_px / 2);
-    var fpX2 = Math.min(370, sampleCenter + fpW_px / 2);
+    var visRad = (isVertical ? 90 : visualAngle(clAngle)) * Math.PI / 180;
 
-    // Visual angle mapping: exactly 90 deg when 90, exact 1:1 above 15 deg, smooth grazing scale below 15 deg
-    var visAngleDeg;
+    // The beam is drawn as a band of fixed drawn height arriving at the
+    // footprint. Its horizontal run follows from the angle, and at grazing
+    // incidence that run leaves the canvas — which is exactly how a grazing
+    // beam should read. The viewport clips it.
+    // The run is bounded so the coordinates stay sane, but the rise is then
+    // derived back from it: capping the run alone would have drawn every angle
+    // below ~1° with the same slope, which is the flattening this replaces.
+    var bandH = sampleY - beamBandTop;
+    var RUN_MAX = 2400;
+    var dy, runX;
     if (isVertical) {
-      visAngleDeg = 90;
-    } else if (clAngle >= 15) {
-      visAngleDeg = clAngle;
+      dy = bandH;
+      runX = 0;
     } else {
-      visAngleDeg = 6 + clAngle * 0.6;
+      var tanVis = Math.tan(visRad);
+      dy = Math.min(bandH, RUN_MAX * tanVis);
+      if (dy < 3) dy = 3;               // keep a hairline visible at the extreme
+      runX = dy / tanVis;
     }
-    var visAngleRad = (visAngleDeg * Math.PI) / 180;
 
-    // Beam rays
-    var beamH_px = 46;
-    var beamTopY = sampleY - beamH_px;
-    var srcX1, srcX2;
-    if (isVertical) {
-      srcX1 = fpX1;
-      srcX2 = fpX2;
-    } else {
-      var beamShiftX = beamH_px / Math.tan(visAngleRad);
-      srcX1 = Math.max(5, fpX1 - beamShiftX);
-      srcX2 = Math.max(15, fpX2 - beamShiftX);
-    }
+    var beamTopY = sampleY - dy;
+    var topX1 = fpX1 - runX;
+    var topX2 = fpX2 - runX;
 
     var svg = [];
     svg.push('<svg class="fp-diagram-svg" viewBox="0 0 ' + svgW + ' ' + svgH + '" preserveAspectRatio="xMidYMid meet">');
-    
-    // Grid reference line
-    svg.push('<line x1="10" y1="' + sampleY + '" x2="370" y2="' + sampleY + '" stroke="var(--line-soft)" stroke-width="0.5" stroke-dasharray="2,2"/>');
 
-    // Incident Beam Cone Polygon
-    svg.push('<polygon points="' + srcX1 + ',' + beamTopY + ' ' + srcX2 + ',' + beamTopY + ' ' + fpX2 + ',' + sampleY + ' ' + fpX1 + ',' + sampleY + '" fill="var(--accent-ink)" fill-opacity="0.16" stroke="var(--accent-ink)" stroke-width="1" stroke-dasharray="3,2"/>');
+    // Surface reference line
+    svg.push('<line x1="6" y1="' + sampleY + '" x2="374" y2="' + sampleY + '" stroke="var(--line-soft)" stroke-width="0.5" stroke-dasharray="2,2"/>');
 
-    // Center beam ray with direction
-    var srcMidX = (srcX1 + srcX2) / 2;
-    svg.push('<line x1="' + srcMidX + '" y1="' + beamTopY + '" x2="' + sampleCenter + '" y2="' + sampleY + '" stroke="var(--accent-ink)" stroke-width="1.5"/>');
+    // Incident beam band + central ray
+    svg.push('<polygon points="' + topX1 + ',' + beamTopY + ' ' + topX2 + ',' + beamTopY + ' ' +
+      fpX2 + ',' + sampleY + ' ' + fpX1 + ',' + sampleY +
+      '" fill="var(--accent-ink)" fill-opacity="0.16" stroke="var(--accent-ink)" stroke-width="1" stroke-dasharray="3,2"/>');
+    svg.push('<line x1="' + ((topX1 + topX2) / 2) + '" y1="' + beamTopY + '" x2="' + sampleCenter + '" y2="' + sampleY +
+      '" stroke="var(--accent-ink)" stroke-width="1.5"/>');
 
-    // Incidence Angle indicator arc & text
+    // Incidence marker, always on the side the beam does not occupy
     if (isVertical) {
-      // Right angle square indicator
-      var sqSize = 10;
-      svg.push('<path d="M ' + (sampleCenter - sqSize) + ' ' + sampleY + ' L ' + (sampleCenter - sqSize) + ' ' + (sampleY - sqSize) + ' L ' + sampleCenter + ' ' + (sampleY - sqSize) + '" fill="none" stroke="var(--ink-secondary)" stroke-width="1.2"/>');
-      svg.push('<text x="' + (sampleCenter - sqSize - 4) + '" y="' + (sampleY - 14) + '" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--ink-primary)" font-weight="700">θ=90° (수직 입사)</text>');
+      var sq = 10;
+      svg.push('<path d="M ' + (sampleCenter + sq) + ' ' + sampleY + ' L ' + (sampleCenter + sq) + ' ' + (sampleY - sq) +
+        ' L ' + sampleCenter + ' ' + (sampleY - sq) + '" fill="none" stroke="var(--ink-secondary)" stroke-width="1.2"/>');
     } else {
-      var arcR = 24;
-      var arcStartX = sampleCenter - arcR;
-      var arcEndX = sampleCenter - arcR * Math.cos(visAngleRad);
-      var arcEndY = sampleY - arcR * Math.sin(visAngleRad);
-      svg.push('<path d="M ' + arcStartX + ' ' + sampleY + ' A ' + arcR + ' ' + arcR + ' 0 0 1 ' + arcEndX + ' ' + arcEndY + '" fill="none" stroke="var(--ink-secondary)" stroke-width="1.2"/>');
-      svg.push('<text x="' + (sampleCenter - arcR - 4) + '" y="' + (sampleY - 8) + '" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--ink-primary)" font-weight="700">θ=' + clAngle.toFixed(2) + '°</text>');
+      var arcR = 30;
+      var arcEndX = sampleCenter - arcR * Math.cos(visRad);
+      var arcEndY = sampleY - arcR * Math.sin(visRad);
+      svg.push('<path d="M ' + (sampleCenter - arcR) + ' ' + sampleY + ' A ' + arcR + ' ' + arcR + ' 0 0 1 ' +
+        arcEndX + ' ' + arcEndY + '" fill="none" stroke="var(--ink-secondary)" stroke-width="1.2"/>');
     }
+    svg.push(svgText(sampleCenter + 16, sampleY - 12, "start", 9.5, "var(--ink-primary)", 700,
+      isVertical ? "&#952; = 90&#176; (normal)" : "&#952; = " + clAngle.toFixed(2) + "&#176;"));
 
-    // Beam thickness callout
-    svg.push('<text x="' + Math.min(360, Math.max(10, srcMidX)) + '" y="' + (beamTopY - 4) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ink-secondary)">X-ray Beam (V=' + beamV_um + 'μm)</text>');
+    // Beam caption, pinned to the top-left so it can never be clipped
+    svg.push(svgText(6, 14, "start", 9, "var(--ink-secondary)", 400,
+      "X-ray beam &#183; V = " + beamV_um + " &#956;m" + (clAngle < 1 ? " &#183; grazing incidence" : "")));
 
-    // Sample Stage Substrate
-    svg.push('<rect x="' + sampleX1 + '" y="' + sampleY + '" width="' + sampleW + '" height="' + sampleH + '" fill="var(--bg-paper-hover)" stroke="var(--ink-primary)" stroke-width="1.2"/>');
-    // Sample Stage mounting ticks
+    // Sample stage
+    svg.push('<rect x="' + sampleX1 + '" y="' + sampleY + '" width="' + sampleW + '" height="' + sampleH +
+      '" fill="var(--bg-paper-hover)" stroke="var(--ink-primary)" stroke-width="1.2"/>');
     for (var tx = sampleX1 + 20; tx < sampleX2; tx += 20) {
-      svg.push('<line x1="' + tx + '" y1="' + (sampleY + sampleH) + '" x2="' + (tx - 5) + '" y2="' + (sampleY + sampleH + 4) + '" stroke="var(--line-soft)" stroke-width="0.8"/>');
+      svg.push('<line x1="' + tx + '" y1="' + (sampleY + sampleH) + '" x2="' + (tx - 5) + '" y2="' + (sampleY + sampleH + 4) +
+        '" stroke="var(--line-soft)" stroke-width="0.8"/>');
     }
 
-    // Footprint Layer on sample surface
+    // Illuminated strip on the surface, with the part that misses the sample
     if (isSpill) {
-      // Left spill
       if (fpX1 < sampleX1) {
-        svg.push('<rect x="' + fpX1 + '" y="' + (sampleY - 3) + '" width="' + (sampleX1 - fpX1) + '" height="4" fill="#d32f2f" fill-opacity="0.35" stroke="#d32f2f" stroke-width="1" stroke-dasharray="2,2"/>');
+        svg.push('<rect x="' + fpX1 + '" y="' + (sampleY - 3) + '" width="' + (sampleX1 - fpX1) +
+          '" height="4" fill="var(--danger)" fill-opacity="0.35" stroke="var(--danger)" stroke-width="1" stroke-dasharray="2,2"/>');
       }
-      // Right spill
       if (fpX2 > sampleX2) {
-        svg.push('<rect x="' + sampleX2 + '" y="' + (sampleY - 3) + '" width="' + (fpX2 - sampleX2) + '" height="4" fill="#d32f2f" fill-opacity="0.35" stroke="#d32f2f" stroke-width="1" stroke-dasharray="2,2"/>');
+        svg.push('<rect x="' + sampleX2 + '" y="' + (sampleY - 3) + '" width="' + (fpX2 - sampleX2) +
+          '" height="4" fill="var(--danger)" fill-opacity="0.35" stroke="var(--danger)" stroke-width="1" stroke-dasharray="2,2"/>');
       }
-      // Inside sample portion
       var inX1 = Math.max(sampleX1, fpX1);
       var inX2 = Math.min(sampleX2, fpX2);
-      svg.push('<rect x="' + inX1 + '" y="' + (sampleY - 3) + '" width="' + (inX2 - inX1) + '" height="4" fill="var(--accent-ink)" stroke="var(--accent-ink)" stroke-width="1.2"/>');
+      svg.push('<rect x="' + inX1 + '" y="' + (sampleY - 3) + '" width="' + (inX2 - inX1) +
+        '" height="4" fill="var(--accent-ink)" stroke="var(--accent-ink)" stroke-width="1.2"/>');
     } else {
-      svg.push('<rect x="' + fpX1 + '" y="' + (sampleY - 3) + '" width="' + (fpX2 - fpX1) + '" height="4" fill="var(--accent-ink)" stroke="var(--accent-ink)" stroke-width="1.2"/>');
+      svg.push('<rect x="' + fpX1 + '" y="' + (sampleY - 3) + '" width="' + (fpX2 - fpX1) +
+        '" height="4" fill="var(--accent-ink)" stroke="var(--accent-ink)" stroke-width="1.2"/>');
     }
 
-    // Footprint Dimension Bracket & Text (above sample)
-    var fpDimY = sampleY - 6;
+    // Both dimensions sit below the stage, where the beam never reaches
+    var fpDimY = sampleY + sampleH + 14;
     svg.push('<line x1="' + fpX1 + '" y1="' + fpDimY + '" x2="' + fpX2 + '" y2="' + fpDimY + '" stroke="var(--ink-primary)" stroke-width="1"/>');
     svg.push('<line x1="' + fpX1 + '" y1="' + (fpDimY - 3) + '" x2="' + fpX1 + '" y2="' + (fpDimY + 3) + '" stroke="var(--ink-primary)" stroke-width="1"/>');
     svg.push('<line x1="' + fpX2 + '" y1="' + (fpDimY - 3) + '" x2="' + fpX2 + '" y2="' + (fpDimY + 3) + '" stroke="var(--ink-primary)" stroke-width="1"/>');
-    svg.push('<text x="' + sampleCenter + '" y="' + (fpDimY - 4) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="700" fill="' + (isSpill ? '#d32f2f' : 'var(--ink-primary)') + '">Footprint L = ' + footprint_mm.toFixed(3) + ' mm</text>');
+    svg.push(svgText(sampleCenter, fpDimY + 12, "middle", 9.5, isSpill ? "var(--danger)" : "var(--ink-primary)", 700,
+      "Footprint L = " + footprint_mm.toFixed(3) + " mm"));
 
-    // Sample Length Dimension Bracket & Text (below sample)
-    var sampleDimY = sampleY + sampleH + 8;
+    var sampleDimY = fpDimY + 22;
     svg.push('<line x1="' + sampleX1 + '" y1="' + sampleDimY + '" x2="' + sampleX2 + '" y2="' + sampleDimY + '" stroke="var(--ink-secondary)" stroke-width="1"/>');
     svg.push('<line x1="' + sampleX1 + '" y1="' + (sampleDimY - 3) + '" x2="' + sampleX1 + '" y2="' + (sampleDimY + 3) + '" stroke="var(--ink-secondary)" stroke-width="1"/>');
     svg.push('<line x1="' + sampleX2 + '" y1="' + (sampleDimY - 3) + '" x2="' + sampleX2 + '" y2="' + (sampleDimY + 3) + '" stroke="var(--ink-secondary)" stroke-width="1"/>');
-    svg.push('<text x="' + sampleCenter + '" y="' + (sampleDimY + 11) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ink-secondary)">Sample Length = ' + (hasSample ? sampleL_mm.toFixed(1) + ' mm' : '15.0 mm (Default)') + '</text>');
+    svg.push(svgText(sampleCenter, sampleDimY + 11, "middle", 9, "var(--ink-secondary)", 400,
+      "Sample length = " + (hasSample ? sampleL_mm.toFixed(1) + " mm" : "15.0 mm (default)")));
 
     svg.push('</svg>');
 
