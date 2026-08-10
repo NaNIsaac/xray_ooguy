@@ -86,6 +86,7 @@
       lat_err_cell: "격자 상수 a, b, c는 0보다 커야 합니다.",
       lat_err_hkl: "밀러 지수 h, k, l 중 하나 이상이 0이 아니어야 합니다.",
       lat_err_angles: "입력한 격자각으로는 단위포를 구성할 수 없습니다.",
+      lat_err_range: "입력값이 허용 범위를 벗어났습니다.",
 
       // Model validity & approximation disclosure
       validity_model: "MODEL",
@@ -394,6 +395,7 @@
       lat_err_cell: "Lattice constants a, b, c must be greater than zero.",
       lat_err_hkl: "At least one of the Miller indices h, k, l must be non-zero.",
       lat_err_angles: "These cell angles cannot form a valid unit cell.",
+      lat_err_range: "An input is outside its allowed range.",
 
       // Model validity & approximation disclosure
       validity_model: "MODEL",

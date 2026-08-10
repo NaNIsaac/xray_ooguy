@@ -44,6 +44,10 @@
 
   /* Dimensions */
   --sidebar-width: 220px;
+  /* Widest the content column ever gets. The fields hold short numbers, so a
+     card stops gaining anything past roughly 400px; the rest of a wide window
+     is left as margin on the right. */
+  --content-max: 1280px;
   --header-height: 48px;
 }
 
@@ -63,6 +67,10 @@
 [data-theme="paper"], html[data-theme="paper"] {
   --line-strong: #1a1a1a;
   --line-soft: #d5d3cc;
+
+  /* Out-of-domain input and unreachable-condition messages. Dark palettes
+     lighten it below; every other theme inherits this one. */
+  --danger: #b3261e;
 }
 
 /* Vintage Lab Parchment — aged paper, sepia ink, burnt sienna accent */
@@ -99,6 +107,8 @@ body[data-theme="parchment"],
 html[data-theme="crt"],
 body[data-theme="crt"],
 [data-theme="crt"] {
+  --danger: #ff5f5f;
+
   --bg-paper: #000000;
   --bg-paper-subtle: #071009;
   --bg-paper-hover: #0d1c10;
@@ -133,6 +143,8 @@ html[data-theme="tokyo"],
 body[data-theme="tokyo"],
 [data-theme="tokyo"] {
   --bg-paper: #1a1b26;
+  --danger: #ff7a93;
+
   --bg-paper-subtle: #24283b;
   --bg-paper-hover: #2f334d;
   --bg-paper-active: #414868;
@@ -221,6 +233,8 @@ body[data-theme="console"],
 [data-theme="console"] {
   --bg-paper: #0b0e11;
   --bg-paper-subtle: #151a20;
+  --danger: #ff6b6b;
+
   --bg-paper-hover: #1f262e;
   --bg-paper-active: #2b343e;
 
@@ -750,10 +764,15 @@ sub {
 }
 
 /* View Sections */
+/* Past --content-max the page stops stretching. The column stays anchored to
+   the left edge next to the sidebar rather than drifting to the middle, so the
+   first field of every card sits at the same x on every screen. */
 .view-section {
   display: none;
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max);
+  margin-left: 0;
+  margin-right: auto;
   overflow-x: hidden !important; /* 가로 스크롤 방지 */
   box-sizing: border-box;
 }
@@ -798,10 +817,46 @@ sub {
   margin-right: -10px;
 }
 
-.col-12 { width: 100%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
-.col-8  { width: 66.6667%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
-.col-6  { width: 50%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
-.col-4  { width: 33.3333%; padding: 0 10px; margin-bottom: 18px; box-sizing: border-box; }
+/* Twelve columns. A card declares how many of them it occupies, so a row is
+   readable as a sum: 4 + 8, 4 + 4 + 4, 6 + 6, 12. */
+.col-1  { width: 8.3333%; }
+.col-2  { width: 16.6667%; }
+.col-3  { width: 25%; }
+.col-4  { width: 33.3333%; }
+.col-5  { width: 41.6667%; }
+.col-6  { width: 50%; }
+.col-7  { width: 58.3333%; }
+.col-8  { width: 66.6667%; }
+.col-9  { width: 75%; }
+.col-10 { width: 83.3333%; }
+.col-11 { width: 91.6667%; }
+.col-12 { width: 100%; }
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+.col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+  padding: 0 10px;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+}
+
+/* The same scale again, applied only once the window is wide enough for the
+   extra column to be worth having (three cards of ~400px). A card carries
+   both, so `col-6 col-lg-4` reads as "half a row normally, a third of one on
+   a wide screen". */
+@media (min-width: 1520px) {
+  .col-lg-1  { width: 8.3333%; }
+  .col-lg-2  { width: 16.6667%; }
+  .col-lg-3  { width: 25%; }
+  .col-lg-4  { width: 33.3333%; }
+  .col-lg-5  { width: 41.6667%; }
+  .col-lg-6  { width: 50%; }
+  .col-lg-7  { width: 58.3333%; }
+  .col-lg-8  { width: 66.6667%; }
+  .col-lg-9  { width: 75%; }
+  .col-lg-10 { width: 83.3333%; }
+  .col-lg-11 { width: 91.6667%; }
+  .col-lg-12 { width: 100%; }
+}
 
 /* Fine-Rule Section Box (Replacing Cards with Academic Borders) */
 .card {
@@ -917,6 +972,15 @@ select.form-control {
 .form-control:focus {
   border-color: var(--accent-ink);
   background-color: var(--bg-paper-hover);
+}
+
+/* Every numeric field declares its physical domain through min/max, so the
+   browser can flag a value the calculator will refuse to use. The result box
+   keeps its last valid number rather than showing a nonsense one. */
+.form-control:invalid,
+.form-control:out-of-range {
+  border-color: var(--danger);
+  box-shadow: inset 0 0 0 1px var(--danger);
 }
 
 textarea.form-control {
@@ -1258,15 +1322,6 @@ select.form-control {
   color: var(--bg-paper);
 }
 
-/* Footnotes & Academic Reference Footer */
-#academic-footer {
-  margin-top: 40px;
-  border-top: var(--rule-heavy);
-  padding-top: 18px;
-  color: var(--ink-secondary);
-  font-size: 11px;
-}
-
 /* Responsive Breakpoint for Mobile / Small Screens (Consolidated & Bulletproof) */
 @media (max-width: 900px) {
   #sidebar {
@@ -1302,7 +1357,7 @@ select.form-control {
     margin-right: 0 !important;
     width: 100% !important;
   }
-  .view-section > .flex-row > .col-12, .view-section > .flex-row > .col-8, .view-section > .flex-row > .col-6, .view-section > .flex-row > .col-4, .toc-wrapper > .col-6, .toc-wrapper > .col-12 {
+  .view-section > .flex-row > [class*="col-"], .toc-wrapper > [class*="col-"] {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 0 12px 0 !important;
@@ -1841,6 +1896,7 @@ select.form-control {
   /* Make view visible in print */
   .view-section {
     display: block !important;
+    max-width: none !important;
     margin-bottom: 24pt;
     page-break-after: auto;
   }
@@ -1893,16 +1949,12 @@ select.form-control {
     padding: 2pt 4pt !important;
   }
 
-  .col-12, .col-8, .col-6, .col-4 {
+  .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+  .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
     padding: 0 6pt !important;
     margin-bottom: 10pt !important;
   }
 
-  #academic-footer {
-    border-top: 1.5pt solid #000000 !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
 }
 
 /* ==========================================================================

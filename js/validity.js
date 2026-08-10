@@ -17,6 +17,11 @@
 (function () {
   "use strict";
 
+  // Reads a field only if it is inside the min/max declared in the markup.
+  function readField(id) {
+    return window.readField ? window.readField(id) : parseFloat((document.getElementById(id) || {}).value);
+  }
+
   function t(key) {
     if (window.i18n && window.i18n.t) return window.i18n.t(key);
     return key;
@@ -25,7 +30,7 @@
   function val(id) {
     var el = document.getElementById(id);
     if (!el) return NaN;
-    return parseFloat(el.value);
+    return readField(el.id);
   }
 
   function fmt(n, digits) {

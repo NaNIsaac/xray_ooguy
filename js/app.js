@@ -45,6 +45,25 @@
   //     so values stored under the old key no longer mean the same thing.
   var CALC_INPUT_KEY = "calc_inputs_v2";
 
+  // A field is only worth reading if it is inside the domain declared on the
+  // element itself. Out-of-range input yields NaN, which every calculator
+  // already treats as "no result" — so a negative thickness or a 400% mirror
+  // reflectivity stops producing a plausible-looking number.
+  function readField(id) {
+    var el = document.getElementById(id);
+    if (!el) return NaN;
+
+    var v = parseFloat(el.value);
+    if (isNaN(v)) return NaN;
+
+    var min = parseFloat(el.getAttribute("min"));
+    var max = parseFloat(el.getAttribute("max"));
+    if (!isNaN(min) && v < min) return NaN;
+    if (!isNaN(max) && v > max) return NaN;
+
+    return v;
+  }
+
   // Search boxes filter a list rather than feed a calculation; restoring them
   // would hide rows for no reason.
   var CALC_INPUT_SKIP = { "crystal-search-input": true, "log-search-query": true };
@@ -706,6 +725,7 @@
   window.applyTheme = applyTheme;
   window.THEMES = THEMES;
   window.isDarkTheme = isDarkTheme;
+  window.readField = readField;
   window.copyTextToClipboard = copyTextToClipboard;
   window.initResultBoxCopy = initResultBoxCopy;
   window.extractResultBoxText = extractResultBoxText;

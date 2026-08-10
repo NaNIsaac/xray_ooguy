@@ -7,6 +7,11 @@
 (function () {
   "use strict";
 
+  // Reads a field only if it is inside the min/max declared in the markup.
+  function readField(id) {
+    return window.readField ? window.readField(id) : parseFloat((document.getElementById(id) || {}).value);
+  }
+
   // --- 1. Energy - Wavelength - Frequency Converter ---
   function calcEnergyConverter(sourceField) {
     var hc_eV_A = CONSTANTS.hc_eV_A;
@@ -189,13 +194,14 @@
 
   // --- 3. Grating Diffraction Calculator (mλ = d(sin α + sin β)) ---
   function calcGrating() {
-    var linesPerMm = parseFloat(document.getElementById("grating-lines").value);
-    var energy_keV = parseFloat(document.getElementById("grating-energy").value);
+    var linesPerMm = readField("grating-lines");
+    var energy_keV = readField("grating-energy");
     var energy_eV = energy_keV * 1000;
-    var alphaDeg = parseFloat(document.getElementById("grating-alpha").value);
-    var order = parseInt(document.getElementById("grating-order").value, 10);
+    var alphaDeg = readField("grating-alpha");
+    var order = readField("grating-order");
 
     if (isNaN(linesPerMm) || linesPerMm <= 0 || isNaN(energy_keV) || energy_keV <= 0) return;
+    if (isNaN(alphaDeg) || isNaN(order)) return;   // α and the order m are both signed
 
     var lambda_nm = (CONSTANTS.hc_keV_nm * 1000) / energy_eV;
     var d_nm = 1e6 / linesPerMm; // d in nm
@@ -235,8 +241,8 @@
     var matIdx = parseInt(matSelect.value, 10);
     var mat = MATERIALS_DB[matIdx] || MATERIALS_DB[0];
 
-    var thickness_um = parseFloat(document.getElementById("refract-thick").value);
-    var energy_keV = parseFloat(document.getElementById("refract-energy").value);
+    var thickness_um = readField("refract-thick");
+    var energy_keV = readField("refract-energy");
 
     if (isNaN(thickness_um) || thickness_um <= 0 || isNaN(energy_keV) || energy_keV <= 0) return;
 
@@ -294,9 +300,9 @@
 
   function calcEnergyScaling() {
     var hc_keV_A = CONSTANTS.hc_eV_A / 1000;
-    var e1_keV = parseFloat(document.getElementById("ea-e1").value);
-    var th1_deg = parseFloat(document.getElementById("ea-th1").value);
-    var e2_keV = parseFloat(document.getElementById("ea-e2").value);
+    var e1_keV = readField("ea-e1");
+    var th1_deg = readField("ea-th1");
+    var e2_keV = readField("ea-e2");
 
     var resTth2 = document.getElementById("ea-res-tth2");
     var resTh2 = document.getElementById("ea-res-th2");
@@ -304,7 +310,8 @@
     var resDelta = document.getElementById("ea-res-delta");
     var resExtra = document.getElementById("ea-res-extra");
 
-    if (isNaN(e1_keV) || isNaN(th1_deg) || isNaN(e2_keV) || e1_keV <= 0 || th1_deg <= 0 || e2_keV <= 0) return;
+    if (isNaN(e1_keV) || e1_keV <= 0 || isNaN(e2_keV) || e2_keV <= 0) return;
+    if (isNaN(th1_deg) || th1_deg <= 0 || th1_deg >= 90) return;
 
     var th1_rad = (th1_deg * Math.PI) / 180;
     var sinTh1 = Math.sin(th1_rad);
@@ -363,10 +370,11 @@
 
   // --- 6. Chi-Phi Diffractometer Tilt Correction ---
   function calcChiPhi() {
-    var braggDeg = parseFloat(document.getElementById("chiphi-theta").value);
-    var deltaChiDeg = parseFloat(document.getElementById("chiphi-chi").value);
+    var braggDeg = readField("chiphi-theta");
+    var deltaChiDeg = readField("chiphi-chi");
 
-    if (isNaN(braggDeg) || isNaN(deltaChiDeg)) return;
+    if (isNaN(braggDeg) || braggDeg <= 0 || braggDeg >= 90) return;
+    if (isNaN(deltaChiDeg)) return;   // Δχ may be negative
 
     var thetaRad = (braggDeg * Math.PI) / 180;
     var chiRad = (deltaChiDeg * Math.PI) / 180;
@@ -382,11 +390,12 @@
 
   // --- 7. Critical Angle & Total External Reflection ---
   function calcCriticalAngle() {
-    var density = parseFloat(document.getElementById("crit-density").value);
-    var energy_keV = parseFloat(document.getElementById("crit-energy").value);
-    var zOverA = parseFloat(document.getElementById("crit-z-over-a").value);
+    var density = readField("crit-density");
+    var energy_keV = readField("crit-energy");
+    var zOverA = readField("crit-z-over-a");
 
-    if (isNaN(density) || isNaN(energy_keV) || isNaN(zOverA) || density <= 0 || energy_keV <= 0) return;
+    if (isNaN(density) || density <= 0 || isNaN(energy_keV) || energy_keV <= 0) return;
+    if (isNaN(zOverA) || zOverA <= 0) return;
 
     var lambda_A = CONSTANTS.hc_keV_nm * 10 / energy_keV;
     var lambda_m = lambda_A * 1e-10;
@@ -407,7 +416,7 @@
 
   // --- 8. Q-Space & Reciprocal Space Converter ---
   function calcQSpace(source) {
-    var energy_keV = parseFloat(document.getElementById("q-energy").value);
+    var energy_keV = readField("q-energy");
     var inputTheta = document.getElementById("q-theta");
     var inputTwoTheta = document.getElementById("q-twotheta");
     var inputQ = document.getElementById("q-val");

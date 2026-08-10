@@ -170,7 +170,7 @@
 
           <div class="flex-row">
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-energy">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t1_title">§ 1. 에너지 - 파장 - 주파수 변환 (Energy-Wavelength-Frequency)</span>
@@ -181,19 +181,19 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_energy">에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="optics-conv-kev" class="form-control mono" value="10.000" step="any" oninput="calcEnergyConverter('kev')">
+                        <input type="number" id="optics-conv-kev" class="form-control mono" value="10.000" oninput="calcEnergyConverter('kev')" min="0.001" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_wavelength">파장</span> <span class="unit">(nm)</span></label>
-                        <input type="number" id="optics-conv-nm" class="form-control mono" value="0.12398" step="any" oninput="calcEnergyConverter('nm')">
+                        <input type="number" id="optics-conv-nm" class="form-control mono" value="0.12398" oninput="calcEnergyConverter('nm')" min="0.0012" max="1250" step="any">
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_frequency">주파수</span> <span class="unit">(Hz)</span></label>
-                        <input type="text" id="optics-conv-hz" class="form-control mono" value="2.4179e+18" oninput="calcEnergyConverter('hz')">
+                        <input type="number" id="optics-conv-hz" class="form-control mono" value="2.4179e+18" oninput="calcEnergyConverter('hz')" min="2.4e14" max="2.5e20" step="any">
                       </div>
                     </div>
                   </div>
@@ -206,7 +206,7 @@
               </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 col-lg-8">
               <div class="card" id="card-lattice-dspacing">
                 <div class="card-header">
                   <span class="card-title" data-i18n="lat_title">§ 2. 격자 상수 &amp; 밀러 지수 → 격자면 간격 (Lattice &amp; Miller Indices)</span>
@@ -234,64 +234,64 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">h</label>
-                        <input type="number" id="lat-h" class="form-control mono" value="1" step="1" oninput="calcLattice()">
+                        <input type="number" id="lat-h" class="form-control mono" value="1" oninput="calcLattice()" min="-99" max="99" step="1">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">k</label>
-                        <input type="number" id="lat-k" class="form-control mono" value="1" step="1" oninput="calcLattice()">
+                        <input type="number" id="lat-k" class="form-control mono" value="1" oninput="calcLattice()" min="-99" max="99" step="1">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">l</label>
-                        <input type="number" id="lat-l" class="form-control mono" value="1" step="1" oninput="calcLattice()">
+                        <input type="number" id="lat-l" class="form-control mono" value="1" oninput="calcLattice()" min="-99" max="99" step="1">
                       </div>
                     </div>
 
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">a <span class="unit">(Å)</span></label>
-                        <input type="number" id="lat-a" class="form-control mono" value="5.43102" step="any" oninput="calcLattice()">
+                        <input type="number" id="lat-a" class="form-control mono" value="5.43102" oninput="calcLattice()" min="0.1" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">b <span class="unit">(Å)</span></label>
-                        <input type="number" id="lat-b" class="form-control mono" value="5.43102" step="any" oninput="calcLattice()">
+                        <input type="number" id="lat-b" class="form-control mono" value="5.43102" oninput="calcLattice()" min="0.1" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">c <span class="unit">(Å)</span></label>
-                        <input type="number" id="lat-c" class="form-control mono" value="5.43102" step="any" oninput="calcLattice()">
+                        <input type="number" id="lat-c" class="form-control mono" value="5.43102" oninput="calcLattice()" min="0.1" max="1000" step="any">
                       </div>
                     </div>
 
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">α <span class="unit">(°)</span></label>
-                        <input type="number" id="lat-alpha" class="form-control mono" value="90" step="any" oninput="calcLattice()">
+                        <input type="number" id="lat-alpha" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">β <span class="unit">(°)</span></label>
-                        <input type="number" id="lat-beta" class="form-control mono" value="90" step="any" oninput="calcLattice()">
+                        <input type="number" id="lat-beta" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">γ <span class="unit">(°)</span></label>
-                        <input type="number" id="lat-gamma" class="form-control mono" value="90" step="any" oninput="calcLattice()">
+                        <input type="number" id="lat-gamma" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="any">
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label class="form-label" data-i18n="lat_energy">브래그 각도 산출용 에너지 <span class="unit">(keV)</span></label>
-                    <input type="number" id="lat-energy" class="form-control mono" value="10" step="any" oninput="calcLattice()">
+                    <input type="number" id="lat-energy" class="form-control mono" value="10" oninput="calcLattice()" min="0.1" max="1000" step="any">
                   </div>
 
                   <div class="result-box">
@@ -319,7 +319,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-refraction">
                 <div class="card-header">
                   <span class="card-title" data-i18n-html="opt_t4_title">§ 3. 굴절률 및 X선 투과율 (<i class="formula">n = 1 - δ + iβ</i>)</span>
@@ -336,13 +336,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_thickness">시료 두께</span> <span class="unit">(μm)</span></label>
-                        <input type="number" id="refract-thick" class="form-control mono" value="50" step="any" oninput="calcRefractive()">
+                        <input type="number" id="refract-thick" class="form-control mono" value="50" oninput="calcRefractive()" min="0.01" max="100000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="refract-energy" class="form-control mono" value="10.0" step="any" oninput="calcRefractive()">
+                        <input type="number" id="refract-energy" class="form-control mono" value="10.0" oninput="calcRefractive()" min="0.1" max="100" step="any">
                       </div>
                     </div>
                   </div>
@@ -370,7 +370,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-reflection">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t7_title">§ 4. 전반사 임계각 (Total External Reflection)</span>
@@ -381,19 +381,19 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_density">밀도 <i class="formula">ρ</i></span> <span class="unit">(g/cm<sup>3</sup>)</span></label>
-                        <input type="number" id="crit-density" class="form-control mono" value="19.32" step="any" oninput="calcCriticalAngle()">
+                        <input type="number" id="crit-density" class="form-control mono" value="19.32" oninput="calcCriticalAngle()" min="0.01" max="30" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_energy">에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="crit-energy" class="form-control mono" value="10.0" step="any" oninput="calcCriticalAngle()">
+                        <input type="number" id="crit-energy" class="form-control mono" value="10.0" oninput="calcCriticalAngle()" min="0.1" max="100" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_z_over_a"><i class="formula">Z/A</i> 비</span></label>
-                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.401" step="any" oninput="calcCriticalAngle()">
+                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.401" oninput="calcCriticalAngle()" min="0.2" max="1" step="any">
                       </div>
                     </div>
                   </div>
@@ -421,7 +421,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-grating">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t3_title">§ 5. 회절격자 (Diffraction Grating)</span>
@@ -432,25 +432,25 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_grating_lines">격자선 밀도</span> <span class="unit">(mm<sup>-1</sup>)</span></label>
-                        <input type="number" id="grating-lines" class="form-control mono" value="1200" step="any" oninput="calcGrating()">
+                        <input type="number" id="grating-lines" class="form-control mono" value="1200" oninput="calcGrating()" min="1" max="20000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="grating-energy" class="form-control mono" value="0.5" step="any" oninput="calcGrating()">
+                        <input type="number" id="grating-energy" class="form-control mono" value="0.5" oninput="calcGrating()" min="0.01" max="100" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_alpha">입사각 <i class="formula">α</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="grating-alpha" class="form-control mono" value="2.0" step="any" oninput="calcGrating()">
+                        <input type="number" id="grating-alpha" class="form-control mono" value="2.0" oninput="calcGrating()" min="-89.9" max="89.9" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_order">회절 차수 <i class="formula">m</i></span></label>
-                        <input type="number" id="grating-order" class="form-control mono" value="1" step="1" oninput="calcGrating()">
+                        <input type="number" id="grating-order" class="form-control mono" value="1" oninput="calcGrating()" min="-10" max="10" step="1">
                       </div>
                     </div>
                   </div>
@@ -475,7 +475,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-resolution">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t3_title">§ 6. 에너지 분해능 (Energy Resolution ΔE/E)</span>
@@ -496,13 +496,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_energy">에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="res-energy" class="form-control mono" value="10.0" step="any" oninput="calcEnergyResolution()">
+                        <input type="number" id="res-energy" class="form-control mono" value="10.0" oninput="calcEnergyResolution()" min="0.1" max="100" step="any">
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_beam_div">빔 수직 발산각 (Divergence)</span> <span class="unit">(μrad)</span></label>
-                        <input type="number" id="res-div" class="form-control mono" value="15" step="any" oninput="calcEnergyResolution()">
+                        <input type="number" id="res-div" class="form-control mono" value="15" oninput="calcEnergyResolution()" min="0" max="10000" step="any">
                       </div>
                     </div>
                   </div>
@@ -527,7 +527,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-flux">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t2_title">§ 7. 빔라인 광자 플럭스 (Photon Flux)</span>
@@ -538,31 +538,31 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_ring_current">저장링 전류</span> <span class="unit">(mA)</span></label>
-                        <input type="number" id="flux-current" class="form-control mono" value="300" step="any" oninput="calcBeamFlux()">
+                        <input type="number" id="flux-current" class="form-control mono" value="300" oninput="calcBeamFlux()" min="0" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_source_flux">소스 기준 플럭스</span> <span class="unit">(ph·s<sup>-1</sup>·mA<sup>-1</sup>)</span></label>
-                        <input type="number" id="flux-source-base" class="form-control mono" value="1.0e11" step="any" oninput="calcBeamFlux()">
+                        <input type="number" id="flux-source-base" class="form-control mono" value="1.0e11" oninput="calcBeamFlux()" min="0" max="100000000000000000000" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_mono_eff">모노크로메이터 효율</span> <span class="unit">(%)</span></label>
-                        <input type="number" id="flux-mono-eff" class="form-control mono" value="65" step="any" oninput="calcBeamFlux()">
+                        <input type="number" id="flux-mono-eff" class="form-control mono" value="65" oninput="calcBeamFlux()" min="0" max="100" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_mirror_eff">미러 반사율</span> <span class="unit">(%)</span></label>
-                        <input type="number" id="flux-mirror-eff" class="form-control mono" value="80" step="any" oninput="calcBeamFlux()">
+                        <input type="number" id="flux-mirror-eff" class="form-control mono" value="80" oninput="calcBeamFlux()" min="0" max="100" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_win_trans">윈도우 투과율</span> <span class="unit">(%)</span></label>
-                        <input type="number" id="flux-window-trans" class="form-control mono" value="90" step="any" oninput="calcBeamFlux()">
+                        <input type="number" id="flux-window-trans" class="form-control mono" value="90" oninput="calcBeamFlux()" min="0" max="100" step="any">
                       </div>
                     </div>
                   </div>
@@ -583,7 +583,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-drift">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t7_title">§ 8. 결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)</span>
@@ -604,13 +604,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_temp_change">온도 변화 <i class="formula">ΔT</i></span> <span class="unit">(K / °C)</span></label>
-                        <input type="number" id="therm-temp" class="form-control mono" value="0.5" step="any" oninput="calcThermalShift()">
+                        <input type="number" id="therm-temp" class="form-control mono" value="0.5" oninput="calcThermalShift()" min="-300" max="300" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_op_energy">동작 에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="therm-energy" class="form-control mono" value="10.0" step="any" oninput="calcThermalShift()">
+                        <input type="number" id="therm-energy" class="form-control mono" value="10.0" oninput="calcThermalShift()" min="0.1" max="100" step="any">
                       </div>
                     </div>
                   </div>
@@ -713,7 +713,7 @@
 
           <div class="flex-row">
 
-            <div class="col-6">
+            <div class="col-6 col-lg-8">
               <div class="card" id="card-optics-bragg">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t2_title">§ 1. 브래그 법칙 (Bragg's Law 3-Way Suite)</span>
@@ -735,13 +735,13 @@
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_dspacing">격자면 간격 d</span> <span class="unit">(Å)</span></label>
-                          <input type="number" id="bragg-r1-d" class="form-control mono" value="3.1356" step="any" oninput="calcBraggRow1()">
+                          <input type="number" id="bragg-r1-d" class="form-control mono" value="3.1356" oninput="calcBraggRow1()" min="0.01" max="1000" step="any">
                         </div>
                       </div>
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ (tth)</span> <span class="unit">(°)</span></label>
-                          <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" step="any" oninput="calcBraggRow1()">
+                          <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" oninput="calcBraggRow1()" min="0.01" max="179.99" step="any">
                         </div>
                       </div>
                       <div class="col-4">
@@ -763,13 +763,13 @@
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ (tth)</span> <span class="unit">(°)</span></label>
-                          <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" step="any" oninput="calcBraggRow2()">
+                          <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" oninput="calcBraggRow2()" min="0.01" max="179.99" step="any">
                         </div>
                       </div>
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_inc_energy">입사 에너지 E</span> <span class="unit">(keV)</span></label>
-                          <input type="number" id="bragg-r2-e" class="form-control mono" value="10.000" step="any" oninput="calcBraggRow2()">
+                          <input type="number" id="bragg-r2-e" class="form-control mono" value="10.000" oninput="calcBraggRow2()" min="0.1" max="1000" step="any">
                         </div>
                       </div>
                       <div class="col-4">
@@ -791,13 +791,13 @@
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_dspacing">격자면 간격 d</span> <span class="unit">(Å)</span></label>
-                          <input type="number" id="bragg-r3-d" class="form-control mono" value="3.1356" step="any" oninput="calcBraggRow3()">
+                          <input type="number" id="bragg-r3-d" class="form-control mono" value="3.1356" oninput="calcBraggRow3()" min="0.01" max="1000" step="any">
                         </div>
                       </div>
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_inc_energy">입사 에너지 E</span> <span class="unit">(keV)</span></label>
-                          <input type="number" id="bragg-r3-e" class="form-control mono" value="10.000" step="any" oninput="calcBraggRow3()">
+                          <input type="number" id="bragg-r3-e" class="form-control mono" value="10.000" oninput="calcBraggRow3()" min="0.1" max="1000" step="any">
                         </div>
                       </div>
                       <div class="col-4">
@@ -814,7 +814,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-qspace">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t8_title">§ 2. 상호공간 Q-Space 변환 (Reciprocal Space)</span>
@@ -823,32 +823,32 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
-                    <input type="number" id="q-energy" class="form-control mono" value="10.0" step="any" oninput="calcQSpace('theta')">
+                    <input type="number" id="q-energy" class="form-control mono" value="10.0" oninput="calcQSpace('theta')" min="0.1" max="1000" step="any">
                   </div>
 
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_angle_th">각도 <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="q-theta" class="form-control mono" value="10.0" step="any" oninput="calcQSpace('theta')">
+                        <input type="number" id="q-theta" class="form-control mono" value="10.0" oninput="calcQSpace('theta')" min="0.001" max="90" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_angle_2th">회절각 <i class="formula">2θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="q-twotheta" class="form-control mono" value="20.0" step="any" oninput="calcQSpace('twotheta')">
+                        <input type="number" id="q-twotheta" class="form-control mono" value="20.0" oninput="calcQSpace('twotheta')" min="0.002" max="180" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_scatt_q">산란 벡터 <i class="formula">Q</i></span> <span class="unit">(Å<sup>-1</sup>)</span></label>
-                        <input type="number" id="q-val" class="form-control mono" value="1.7607" step="any" oninput="calcQSpace('q')">
+                        <input type="number" id="q-val" class="form-control mono" value="1.7607" oninput="calcQSpace('q')" min="5e-7" max="2000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_real_d">실공간 주기 <i class="formula">d</i></span> <span class="unit">(Å)</span></label>
-                        <input type="number" id="q-d" class="form-control mono" value="3.5684" step="any" oninput="calcQSpace('d')">
+                        <input type="number" id="q-d" class="form-control mono" value="3.5684" oninput="calcQSpace('d')" min="0.001" max="1e7" step="any">
                       </div>
                     </div>
                   </div>
@@ -856,7 +856,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-scaling">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t5_title">§ 3. 에너지 스케일링 &amp; 각도 계산기 (Energy Scaling)</span>
@@ -869,19 +869,19 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_ref_energy">기준 에너지 E<sub>ref</sub></span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="ea-e1" class="form-control mono" value="10.000" step="any" oninput="calcEnergyScaling()">
+                        <input type="number" id="ea-e1" class="form-control mono" value="10.000" oninput="calcEnergyScaling()" min="0.1" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_ref_theta">기준 각도 θ (th)</span> <span class="unit">(°)</span></label>
-                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" step="any" oninput="syncRefAngle('th')">
+                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" oninput="syncRefAngle('th')" min="0.001" max="89.999" step="any">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_ref_twotheta">기준 각도 2θ (tth)</span> <span class="unit">(°)</span></label>
-                        <input type="number" id="ea-tth1" class="form-control mono" value="22.806" step="any" oninput="syncRefAngle('tth')">
+                        <input type="number" id="ea-tth1" class="form-control mono" value="22.806" oninput="syncRefAngle('tth')" min="0.002" max="179.998" step="any">
                       </div>
                     </div>
                   </div>
@@ -892,7 +892,7 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_target_energy">목표 에너지 E<sub>target</sub></span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="ea-e2" class="form-control mono" value="12.000" step="any" oninput="calcEnergyScaling()">
+                        <input type="number" id="ea-e2" class="form-control mono" value="12.000" oninput="calcEnergyScaling()" min="0.1" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
@@ -937,7 +937,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-footprint">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t1_title">§ 4. 시료 상 빔 풋프린트 (Beam Footprint)</span>
@@ -948,25 +948,25 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_beam_v">수직 빔 크기 (V)</span> <span class="unit">(μm)</span></label>
-                        <input type="number" id="fp-beam-v" class="form-control mono" value="100" step="any" oninput="calcFootprint()">
+                        <input type="number" id="fp-beam-v" class="form-control mono" value="100" oninput="calcFootprint()" min="0.01" max="1000000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_beam_h">수평 빔 크기 (H)</span> <span class="unit">(μm)</span></label>
-                        <input type="number" id="fp-beam-h" class="form-control mono" value="200" step="any" oninput="calcFootprint()">
+                        <input type="number" id="fp-beam-h" class="form-control mono" value="200" oninput="calcFootprint()" min="0.01" max="1000000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_inc_ang">입사각 <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="fp-inc-angle" class="form-control mono" value="0.5" step="any" oninput="calcFootprint()">
+                        <input type="number" id="fp-inc-angle" class="form-control mono" value="0.5" oninput="calcFootprint()" min="0.001" max="90" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_sample_len">시료 길이 (길이 방향)</span> <span class="unit">(mm)</span></label>
-                        <input type="number" id="fp-sample-len" class="form-control mono" value="15" step="any" oninput="calcFootprint()">
+                        <input type="number" id="fp-sample-len" class="form-control mono" value="15" oninput="calcFootprint()" min="0" max="100000" step="any">
                       </div>
                     </div>
                   </div>
@@ -993,7 +993,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-detector">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t4_title">§ 5. 디텍터 각도 분해능 (Angular Resolution)</span>
@@ -1004,13 +1004,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_pixel_size">픽셀 크기</span> <span class="unit">(μm)</span></label>
-                        <input type="number" id="ang-pixel" class="form-control mono" value="75" step="any" oninput="calcAngularResolution()">
+                        <input type="number" id="ang-pixel" class="form-control mono" value="75" oninput="calcAngularResolution()" min="0.1" max="10000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_sample_det_dist">시료-디텍터 거리</span> <span class="unit">(mm)</span></label>
-                        <input type="number" id="ang-dist" class="form-control mono" value="500" step="any" oninput="calcAngularResolution()">
+                        <input type="number" id="ang-dist" class="form-control mono" value="500" oninput="calcAngularResolution()" min="1" max="100000" step="any">
                       </div>
                     </div>
                   </div>
@@ -1031,7 +1031,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-slit">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t6_title">§ 6. 슬릿 간격 및 수용각 (Slit Opening)</span>
@@ -1042,19 +1042,19 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_source_size">소스 크기 (FWHM)</span> <span class="unit">(μm)</span></label>
-                        <input type="number" id="slit-source" class="form-control mono" value="40" step="any" oninput="calcSlitAcceptance()">
+                        <input type="number" id="slit-source" class="form-control mono" value="40" oninput="calcSlitAcceptance()" min="0" max="1000000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_source_slit_dist">소스-슬릿 거리</span> <span class="unit">(m)</span></label>
-                        <input type="number" id="slit-dist" class="form-control mono" value="25" step="any" oninput="calcSlitAcceptance()">
+                        <input type="number" id="slit-dist" class="form-control mono" value="25" oninput="calcSlitAcceptance()" min="0.01" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_slit_div">빔 발산각</span> <span class="unit">(μrad)</span></label>
-                        <input type="number" id="slit-div" class="form-control mono" value="20" step="any" oninput="calcSlitAcceptance()">
+                        <input type="number" id="slit-div" class="form-control mono" value="20" oninput="calcSlitAcceptance()" min="0" max="10000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
@@ -1085,7 +1085,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-euler">
                 <div class="card-header">
                   <span class="card-title" data-i18n="opt_t6_title">§ 7. Chi-Phi 오일러 크래들 보정 (Eulerian Cradle)</span>
@@ -1096,13 +1096,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_chiphi_th">브래그 각도 <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="chiphi-theta" class="form-control mono" value="15.0" step="any" oninput="calcChiPhi()">
+                        <input type="number" id="chiphi-theta" class="form-control mono" value="15.0" oninput="calcChiPhi()" min="0.001" max="89.999" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_chiphi_chi">Chi 틸트 변화량 <i class="formula">Δχ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="chiphi-chi" class="form-control mono" value="5.0" step="any" oninput="calcChiPhi()">
+                        <input type="number" id="chiphi-chi" class="form-control mono" value="5.0" oninput="calcChiPhi()" min="-90" max="90" step="any">
                       </div>
                     </div>
                   </div>
@@ -1119,7 +1119,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-cdi">
                 <div class="card-header">
                   <span class="card-title" data-i18n="beam_t5_title">§ 8. CDI / BCDI 결맞음 오버샘플링 (Oversampling)</span>
@@ -1130,25 +1130,25 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
-                        <input type="number" id="cdi-energy" class="form-control mono" value="9.0" step="any" oninput="calcCDIOversampling()">
+                        <input type="number" id="cdi-energy" class="form-control mono" value="9.0" oninput="calcCDIOversampling()" min="0.1" max="100" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_det_dist">디텍터 거리</span> <span class="unit">(m)</span></label>
-                        <input type="number" id="cdi-dist" class="form-control mono" value="1.5" step="any" oninput="calcCDIOversampling()">
+                        <input type="number" id="cdi-dist" class="form-control mono" value="1.5" oninput="calcCDIOversampling()" min="0.01" max="1000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_det_pixel">디텍터 픽셀 크기</span> <span class="unit">(μm)</span></label>
-                        <input type="number" id="cdi-pixel" class="form-control mono" value="75" step="any" oninput="calcCDIOversampling()">
+                        <input type="number" id="cdi-pixel" class="form-control mono" value="75" oninput="calcCDIOversampling()" min="0.1" max="10000" step="any">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_sample_size">시료/결정 크기</span> <span class="unit">(nm)</span></label>
-                        <input type="number" id="cdi-sample-size" class="form-control mono" value="300" step="any" oninput="calcCDIOversampling()">
+                        <input type="number" id="cdi-sample-size" class="form-control mono" value="300" oninput="calcCDIOversampling()" min="0.1" max="10000000" step="any">
                       </div>
                     </div>
                   </div>
@@ -1626,7 +1626,7 @@
             </div>
 
             <!-- 1. Theme Configuration Card -->
-            <div class="col-12">
+            <div class="col-12 col-lg-8">
               <div class="card" id="card-set-theme">
                 <div class="card-header">
                   <span class="card-title" data-i18n="set_card_theme_title">§ 2. 화면 테마 모드 설정 (Display Theme Mode)</span>
@@ -1699,7 +1699,7 @@
             </div>
 
             <!-- 2. Keyboard Shortcuts -->
-            <div class="col-12">
+            <div class="col-12 col-lg-4">
               <div class="card" id="card-set-shortcuts">
                 <div class="card-header">
                   <span class="card-title" data-i18n="set_card_shortcuts_title">§ 3. 키보드 단축키 안내 (Keyboard Shortcuts)</span>

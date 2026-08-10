@@ -7,6 +7,11 @@
 (function () {
   "use strict";
 
+  // Reads a field only if it is inside the min/max declared in the markup.
+  function readField(id) {
+    return window.readField ? window.readField(id) : parseFloat((document.getElementById(id) || {}).value);
+  }
+
   // Result strings are built here, so they have to go through i18n like the markup does.
   function TXT(key) {
     return (window.i18n && window.i18n.t) ? window.i18n.t(key) : key;
@@ -159,12 +164,13 @@
   }
 
   function calcFootprint() {
-    var beamH_um = parseFloat(document.getElementById("fp-beam-h").value);
-    var beamV_um = parseFloat(document.getElementById("fp-beam-v").value);
-    var incAngleDeg = parseFloat(document.getElementById("fp-inc-angle").value);
-    var sampleL_mm = parseFloat(document.getElementById("fp-sample-len").value);
+    var beamH_um = readField("fp-beam-h");
+    var beamV_um = readField("fp-beam-v");
+    var incAngleDeg = readField("fp-inc-angle");
+    var sampleL_mm = readField("fp-sample-len");
 
-    if (isNaN(beamV_um) || isNaN(incAngleDeg) || incAngleDeg <= 0) return;
+    if (isNaN(beamV_um) || beamV_um <= 0 || isNaN(beamH_um) || beamH_um <= 0) return;
+    if (isNaN(incAngleDeg) || incAngleDeg <= 0 || incAngleDeg > 90) return;
 
     var clAngle = Math.min(90, Math.max(0.001, incAngleDeg));
     var thetaRad = (clAngle * Math.PI) / 180;
@@ -209,13 +215,15 @@
 
   // --- 2.2 Beam Flux & Attenuation Calculator ---
   function calcBeamFlux() {
-    var ringCurrent_mA = parseFloat(document.getElementById("flux-current").value);
-    var baseFlux_per_mA = parseFloat(document.getElementById("flux-source-base").value);
-    var monoEff = parseFloat(document.getElementById("flux-mono-eff").value) / 100;
-    var mirrorEff = parseFloat(document.getElementById("flux-mirror-eff").value) / 100;
-    var windowTrans = parseFloat(document.getElementById("flux-window-trans").value) / 100;
+    var ringCurrent_mA = readField("flux-current");
+    var baseFlux_per_mA = readField("flux-source-base");
+    var monoEff = readField("flux-mono-eff") / 100;
+    var mirrorEff = readField("flux-mirror-eff") / 100;
+    var windowTrans = readField("flux-window-trans") / 100;
 
-    if (isNaN(ringCurrent_mA) || isNaN(baseFlux_per_mA)) return;
+    if (isNaN(ringCurrent_mA) || ringCurrent_mA < 0) return;
+    if (isNaN(baseFlux_per_mA) || baseFlux_per_mA < 0) return;
+    if (isNaN(monoEff) || isNaN(mirrorEff) || isNaN(windowTrans)) return;
 
     var totalEff = monoEff * mirrorEff * windowTrans;
     var deliveredFlux = ringCurrent_mA * baseFlux_per_mA * totalEff;
@@ -231,10 +239,10 @@
   // --- 2.3 Energy Resolution (ΔE / E) ---
   function calcEnergyResolution() {
     var crystalType = document.getElementById("res-crystal").value;
-    var energy_keV = parseFloat(document.getElementById("res-energy").value);
-    var beamDiv_urad = parseFloat(document.getElementById("res-div").value);
+    var energy_keV = readField("res-energy");
+    var beamDiv_urad = readField("res-div");
 
-    if (isNaN(energy_keV) || energy_keV <= 0) return;
+    if (isNaN(energy_keV) || energy_keV <= 0 || isNaN(beamDiv_urad) || beamDiv_urad < 0) return;
 
     var darwin_de_over_e = 1.33e-4;
     var d_spacing_A = 3.1356;
@@ -273,10 +281,10 @@
 
   // --- 2.4 Angular Resolution (Δθ = Pixel / Distance) ---
   function calcAngularResolution() {
-    var pixelSize_um = parseFloat(document.getElementById("ang-pixel").value);
-    var distance_mm = parseFloat(document.getElementById("ang-dist").value);
+    var pixelSize_um = readField("ang-pixel");
+    var distance_mm = readField("ang-dist");
 
-    if (isNaN(pixelSize_um) || isNaN(distance_mm) || distance_mm <= 0) return;
+    if (isNaN(pixelSize_um) || pixelSize_um <= 0 || isNaN(distance_mm) || distance_mm <= 0) return;
 
     var pixel_mm = pixelSize_um / 1000;
     var deltaTheta_rad = pixel_mm / distance_mm;
@@ -294,12 +302,13 @@
 
   // --- 2.5 CDI / BCDI Oversampling Calculator ---
   function calcCDIOversampling() {
-    var energy_keV = parseFloat(document.getElementById("cdi-energy").value);
-    var dist_m = parseFloat(document.getElementById("cdi-dist").value);
-    var pixel_um = parseFloat(document.getElementById("cdi-pixel").value);
-    var sampleSize_nm = parseFloat(document.getElementById("cdi-sample-size").value);
+    var energy_keV = readField("cdi-energy");
+    var dist_m = readField("cdi-dist");
+    var pixel_um = readField("cdi-pixel");
+    var sampleSize_nm = readField("cdi-sample-size");
 
-    if (isNaN(energy_keV) || isNaN(dist_m) || isNaN(pixel_um) || isNaN(sampleSize_nm) || sampleSize_nm <= 0) return;
+    if (isNaN(energy_keV) || energy_keV <= 0 || isNaN(dist_m) || dist_m <= 0) return;
+    if (isNaN(pixel_um) || pixel_um <= 0 || isNaN(sampleSize_nm) || sampleSize_nm <= 0) return;
 
     var lambda_nm = CONSTANTS.hc_keV_nm / energy_keV;
     var dist_nm = dist_m * 1e9;
@@ -330,12 +339,13 @@
 
   // --- 2.6 Slit Size & Geometric Acceptance ---
   function calcSlitAcceptance() {
-    var sourceSize_um = parseFloat(document.getElementById("slit-source").value);
-    var distSourceToSlit_m = parseFloat(document.getElementById("slit-dist").value);
-    var beamDiv_urad = parseFloat(document.getElementById("slit-div").value);
-    var sigmaMult = parseFloat(document.getElementById("slit-sig-mult").value);
+    var sourceSize_um = readField("slit-source");
+    var distSourceToSlit_m = readField("slit-dist");
+    var beamDiv_urad = readField("slit-div");
+    var sigmaMult = readField("slit-sig-mult");
 
-    if (isNaN(sourceSize_um) || isNaN(distSourceToSlit_m) || isNaN(beamDiv_urad)) return;
+    if (isNaN(sourceSize_um) || sourceSize_um < 0 || isNaN(beamDiv_urad) || beamDiv_urad < 0) return;
+    if (isNaN(distSourceToSlit_m) || distSourceToSlit_m <= 0) return;
 
     var source_mm = sourceSize_um / 1000;
     var expansion_mm = (distSourceToSlit_m * 1000) * (beamDiv_urad * 1e-6);
@@ -354,10 +364,10 @@
   // --- 2.7 Thermal Expansion Correction ---
   function calcThermalShift() {
     var matSelect = document.getElementById("therm-mat").value;
-    var deltaTemp_C = parseFloat(document.getElementById("therm-temp").value);
-    var energy_keV = parseFloat(document.getElementById("therm-energy").value);
+    var deltaTemp_C = readField("therm-temp");
+    var energy_keV = readField("therm-energy");
 
-    if (isNaN(deltaTemp_C) || isNaN(energy_keV) || energy_keV <= 0) return;
+    if (isNaN(deltaTemp_C) || isNaN(energy_keV) || energy_keV <= 0) return;   // ΔT may be negative
 
     var alpha = 2.6e-6; // Silicon at 300K
     var d_spacing_A = 3.1356; // Si(111)

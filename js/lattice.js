@@ -18,6 +18,11 @@
 (function () {
   "use strict";
 
+  // Reads a field only if it is inside the min/max declared in the markup.
+  function readField(id) {
+    return window.readField ? window.readField(id) : parseFloat((document.getElementById(id) || {}).value);
+  }
+
   function t(key) {
     if (window.i18n && window.i18n.t) return window.i18n.t(key);
     return key;
@@ -55,11 +60,14 @@
 
   function el(id) { return document.getElementById("lat-" + id); }
 
+  // An empty field falls back to its neutral default; a field that holds a
+  // value outside the domain declared in the markup returns NaN, so the caller
+  // reports the range error instead of quietly computing with the default.
   function num(id, fallback) {
     var node = el(id);
     if (!node) return fallback;
-    var v = parseFloat(node.value);
-    return isNaN(v) ? fallback : v;
+    if (node.value === "") return fallback;
+    return readField(node.id);
   }
 
   function setVal(id, value) {
@@ -184,6 +192,12 @@
     var k = num("k", 0);
     var l = num("l", 0);
 
+    if (isNaN(a) || isNaN(b) || isNaN(c) ||
+        isNaN(alpha) || isNaN(beta) || isNaN(gamma) ||
+        isNaN(h) || isNaN(k) || isNaN(l)) {
+      clearResults(t("lat_err_range"));
+      return;
+    }
     if (a <= 0 || b <= 0 || c <= 0) {
       clearResults(t("lat_err_cell"));
       return;
@@ -227,7 +241,10 @@
     var note = document.getElementById("lat-res-note");
     var energy = num("energy", 0);
 
-    if (energy > 0) {
+    if (isNaN(energy)) {
+      setText("theta", "-");
+      if (note) note.textContent = t("lat_err_range");
+    } else if (energy > 0) {
       var lambda = CONSTANTS.hc_eV_A / (energy * 1000);   // Å
       var sinTheta = lambda / (2 * d);
 
