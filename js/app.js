@@ -581,17 +581,6 @@
         window.scrollTo(0, 0);
       }
     }
-
-    // Trigger tab specific on-show handlers
-    if (route === "record" && window.renderRecord) {
-      window.renderRecord();
-    } else if (route === "dashboard" && window.renderDashboard) {
-      window.renderDashboard();
-    } else if (route === "reference" && window.renderReference) {
-      window.renderReference();
-    } else if (route === "settings" && window.renderSettings) {
-      window.renderSettings();
-    }
   }
 
   function jumpToSection(route, targetCardId) {
@@ -661,17 +650,6 @@
     }
   }
 
-  function toggleTheme() {
-    var idx = 0;
-    for (var i = 0; i < THEMES.length; i++) {
-      if (THEMES[i] === App.theme) {
-        idx = i;
-        break;
-      }
-    }
-    applyTheme(THEMES[(idx + 1) % THEMES.length]);
-  }
-
   // Live Real-time Clock
   function startClock() {
     var clockEl = document.getElementById("header-live-time");
@@ -726,7 +704,6 @@
   window.jumpToSection = jumpToSection;
   window.setPageMeta = setPageMeta;
   window.applyTheme = applyTheme;
-  window.toggleTheme = toggleTheme;
   window.THEMES = THEMES;
   window.isDarkTheme = isDarkTheme;
   window.copyTextToClipboard = copyTextToClipboard;
@@ -758,12 +735,6 @@
           window.location.hash = "#" + route;
         });
       })(navItems[i]);
-    }
-
-    // Setup Theme Toggle Button
-    var themeToggleBtn = document.getElementById("btn-theme-toggle");
-    if (themeToggleBtn) {
-      themeToggleBtn.addEventListener("click", toggleTheme);
     }
 
     startClock();

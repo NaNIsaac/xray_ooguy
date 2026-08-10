@@ -22,56 +22,11 @@
       nav_record: "III. RECORD",
       nav_dashboard_index: "CONTENTS",
 
-
-
-
-
       // RECORD view
       b_rec_title: "RECORD — 방사광 빔타임 로그북 & 실시간 기록",
       b_rec_desc: "연구 노트(ELN/Notion/Paper)용 표준 템플릿과 빔타임 이벤트 1클릭 복사 스니펫",
-      rec_btn_clear_log: "타임라인 비우기",
-      rec_btn_copy_all: "전체 타임라인 복사",
-      rec_btn_save_note: "노트 저장",
-      rec_btn_copy_log: "세션 로그 복사",
-      rec_session_started: "세션이 시작되었습니다.",
-      rec_session_del_confirm: "이 세션을 삭제하시겠습니까? (로그는 유지됩니다)",
-      rec_context_saved: "세션 정보가 저장되었습니다.",
-      rec_f_name: "세션 이름 (Name)",
-      rec_f_experiment: "실험명 (Experiment)",
-      rec_tpl_hint: "외부 로그북용 서식 헤더 생성",
-      rec_tpl_format: "Format",
-      rec_tpl_include: "Include",
-      rec_btn_copy_tpl: "헤더 복사",
-      rec_f_beamline: "빔라인 (Beamline)",
-      rec_f_sample: "시료 (Sample)",
-      rec_f_energy: "에너지 (keV)",
-      rec_f_reflection: "반사면 (Reflection)",
-      rec_f_detector: "디텍터 (Detector)",
-      rec_f_operator: "작성자 (Operator)",
-      rec_f_environment: "실험 환경 (Environment)",
-      rec_f_notes: "메모 (Notes)",
-      rec_q_mounted: "Sample mounted",
-      rec_q_beamdown: "Beam down",
-      rec_q_scan: "Scan started",
-      rec_q_peak: "Peak found",
-      rec_q_issue: "Issue",
-      rec_q_other: "+ 직접 입력",
-      rec_custom_ph: "짧은 로그를 입력하십시오...",
-      rec_log_added: "로그가 추가되었습니다.",
-      rec_log_empty: "아직 기록된 로그가 없습니다.",
-      rec_log_del_confirm: "이 로그를 삭제하시겠습니까?",
-      rec_note_saved: "노트가 저장되었습니다.",
-      rec_note_ph: "한두 문장의 추가 설명...",
       rec_copied: "클립보드에 복사되었습니다.",
       btn_copy_results: "결과값 전체 복사",
-      copy_val_copied: "값이 복사되었습니다.",
-      rec_d_type: "Type",
-      rec_d_severity: "Severity",
-      rec_d_note: "Note",
-      rec_sev_normal: "Normal",
-      rec_sev_important: "Important",
-      rec_sev_critical: "Critical",
-      rec_tpl_note: "현재 세션 정보로 서식 헤더를 만들어 Google Docs 등 사용 중인 로그북에 그대로 붙여넣습니다.",
 
       // Settings Tab (previously English-only; these are reached through t()
       // at runtime, so Korean users were seeing the raw key names)
@@ -80,19 +35,7 @@
       btn_lang_ko: "한국어 (Korean)",
       btn_lang_en: "English",
       set_card_theme_title: "§ 2. 화면 테마 설정 (Display Theme)",
-      th_time: "일시",
-      th_tool: "도구명",
-      th_inputs: "입력 파라미터",
-      th_result: "계산 결과",
-      set_card_backup_title: "§ 3. localStorage 데이터 백업 및 복원",
-      set_backup_desc: "모든 세션 기록, 퀵 로그, 계산 히스토리는 브라우저의 <code>localStorage</code>에 저장됩니다. JSON 파일로 내보내고 다른 PC에서 불러올 수 있습니다.",
-      btn_backup_download: "전체 백업 다운로드",
-      btn_backup_restore: "JSON에서 복원",
-      toast_backup_downloaded: "전체 데이터 백업 파일이 저장되었습니다.",
-      toast_backup_restored: "백업 데이터가 복원되었습니다.",
-      alert_backup_invalid: "백업 파일을 읽지 못했습니다: JSON 형식이 올바르지 않습니다.",
       set_card_shortcuts_title: "§ 3. 키보드 단축키 안내",
-
 
       // ABOUT view — project information first, funding demoted to the footer
       about_tagline: "방사광 X선 실험을 위한 가벼운 계산\u00b7기록 툴킷.",
@@ -206,31 +149,20 @@
       theme_desc: "일곱 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.",
       theme_paper_name: "학술 논문 (Academic Paper)",
       theme_paper_desc: "미색 종이 + 잉크 블랙 + 옥스퍼드 네이비 — 기본 인쇄 규격",
-      theme_paper_short: "논문",
       theme_parchment_name: "빈티지 양피지 (Vintage Parchment)",
       theme_parchment_desc: "누렇게 바랜 연구 노트 + 짙은 밤색 잉크 — 눈이 편안한 휴식용",
-      theme_parchment_short: "양피지",
       theme_datasheet_name: "공학 데이터시트 (Technical Datasheet)",
       theme_datasheet_desc: "쿨 화이트 종이 + 제도용 네이비 잉크 + 밀리미터 방안 그리드 스펙시트",
-      theme_datasheet_short: "데이터시트",
       theme_blueprint_name: "사이아노타입 청사진 (Cyanotype Blueprint)",
       theme_blueprint_desc: "딥 프러시안 블루 도면 + 초크 화이트/시안 선화 엔지니어링 청사진",
-      theme_blueprint_short: "청사진",
       theme_console_name: "제어실 콘솔 (Beamline Control Room)",
       theme_console_desc: "실제 가속기 제어실(EPICS) 스타일의 초고대비 산업용 다크 모드",
-      theme_console_short: "콘솔",
       theme_crt_name: "CRT 터미널 (Green / Amber)",
       theme_crt_desc: "80년대 실험실 CRT 인광 녹색 + 앰버 강조, 전면 모노스페이스",
-      theme_crt_short: "CRT",
       theme_tokyo_name: "도쿄 나이트 (Neon Dark)",
       theme_tokyo_desc: "모던 네온 블루/퍼플 다크, 고가독성",
-      theme_tokyo_short: "네온",
 
       sidebar_offline: "Client Offline-Ready",
-      btn_light: "라이트",
-      btn_dark: "다크",
-      btn_ko: "한국어",
-      btn_en: "English",
 
       // Banners
       b_set_title: "설정 및 히스토리 관리 (Settings & History)",
@@ -240,7 +172,6 @@
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
       toc_maintitle: "INDEX",
       toc_subtitle: "방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인",
-      btn_view_suite: "열기 ➔",
       toc_sec1_title: "분광 — 에너지, 파장, 물질 상호작용",
       toc_sec1_desc: "에너지-파장 변환, 결정 격자 간격, 복소 굴절률과 투과율, 에너지 분해능 및 플럭스",
       toc_tool_opt_1: "에너지 - 파장 - 주파수 변환",
@@ -269,17 +200,9 @@
       toc_sec6_desc: "언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드",
       toc_tool_set_1: "언어 설정 (Language Selection)",
       toc_tool_set_2: "화면 테마 모드 (Theme Mode)",
-      toc_tool_set_3: "전체 계산 히스토리 관리",
-      toc_tool_set_4: "로컬스토리지 백업 및 복원",
       toc_tool_set_5: "키보드 단축키 안내 (Shortcuts)",
       toc_sec7_title: "연구자 프로필 및 후원 (About)",
       toc_sec7_desc: "연구자 약력, X선 광학·BCDI 연구 분야, 연락처 및 프로젝트 후원",
-      toc_tool_about_1: "연구자 프로필 (Profile & Biography)",
-      toc_tool_about_2: "핵심 연구 분야 & 기술 스택",
-      toc_tool_about_3: "프로젝트 후원 & GitHub Sponsors",
-
-      // Dashboard Old Fallbacks
-      btn_open_optics: "광학 계산기 열기",
 
       // Optics Suite
       opt_t1_title: "§ 1. 에너지 - 파장 - 주파수 변환 (Energy-Wavelength-Frequency)",
@@ -299,9 +222,6 @@
       res_calc_d: "계산된 격자면 간격 (d)",
       res_calc_tth: "계산된 회절각 (2θ / θ)",
       res_bragg_unreachable: "회절 불가 (λ > 2d)",
-      res_bragg_theta: "브래그 각도 θ",
-      res_bragg_2theta: "회절각 2θ",
-      res_bragg_q: "산란 벡터 Q",
       opt_t3_title: "§ 5. 회절격자 (Diffraction Grating)",
       lbl_grating_lines: "격자선 밀도",
       lbl_photon_energy: "광자 에너지",
@@ -326,11 +246,6 @@
       res_target_twotheta: "목표 회절각 2θ (tth)",
       res_target_theta: "목표 브래그각 θ (th)",
       res_unreachable: "회절 불가 (sin θ₂ > 1)",
-      lbl_e1: "기준 에너지 E1",
-      lbl_th1: "기준 각도 θ1",
-      lbl_e2: "목표 에너지 E2",
-      res_th2: "목표 각도 θ2",
-      res_motor_shift: "모터 이동량 Δθ",
       opt_t6_title: "§ 7. Chi-Phi 오일러 크래들 보정 (Eulerian Cradle)",
       lbl_chiphi_th: "브래그 각도 <i class=\"formula\">θ</i>",
       lbl_chiphi_chi: "Chi 틸트 변화량 <i class=\"formula\">Δχ</i>",
@@ -395,8 +310,6 @@
       res_th_shift: "브래그 각도 시프트 (<i class=\"formula\">Δθ</i>)",
       res_e_shift: "유효 에너지 시프트 (<i class=\"formula\">ΔE</i>)",
 
-      qc_electron_radius: "전자 반경",
-      qc_speed_of_light: "광속",
       res_lambda: "파장 <i class=\"formula\">λ</i>",
       res_grating_unreachable: "회절 불가 (|sin β| > 1)",
       res_refract_delta_term: "굴절률 감쇄항",
@@ -408,26 +321,7 @@
       res_out_of_range: "에너지 범위 초과",
       res_cdi_pass: "충족: 나이퀴스트 오버샘플링 성립 (σ ≥ 2.0)",
       res_cdi_marginal: "주의: 한계 오버샘플링 (1.5 ≤ σ < 2.0)",
-      res_cdi_fail: "불가: 언더샘플링 / 앨리어싱 발생 (σ < 1.5)",
-
-      btn_delete: "삭제",
-
-      // Reference
-      ref_card_db: "주요 결정 격자 d-spacing 데이터베이스",
-      th_cryst_mat: "결정 재료 (Material)",
-      th_cryst_hkl: "밀러 지수 (hkl)",
-      th_cryst_d: "격자면 간격 (d-spacing)",
-      th_cryst_a: "격자 상수 (Lattice a)",
-      th_cryst_sys: "결정계 (System)",
-      btn_apply_bragg: "브래그 적용",
-
-      // About
-      th_degree: "학력 (Degree)",
-      th_lab: "연구실 (Lab)",
-      th_email: "이메일 (Email)",
-      th_github: "깃허브 (GitHub)",
-      th_repo: "프로젝트 저장소",
-      btn_sponsor_gh: "GitHub Sponsors 후원하기 ➔"
+      res_cdi_fail: "불가: 언더샘플링 / 앨리어싱 발생 (σ < 1.5)"
     },
     en: {
       // Navigation & Sidebar
@@ -445,69 +339,11 @@
       nav_record: "III. RECORD",
       nav_dashboard_index: "CONTENTS",
 
-
-
-
-
       // RECORD view
       b_rec_title: "RECORD — Experiment Session Log",
       b_rec_desc: "One-click logging. Every field is optional.",
-      rec_card_quick: "§ 1. QUICK LOG",
-      rec_card_tpl: "§ 2. SESSION TEMPLATE",
-      rec_recent_title: "RECENT LOGS",
-      rec_no_session: "No active session \u2014 you can still log without one.",
-      rec_no_context: "Fill in only what you need \u2014 blank fields are left out of the header.",
-      rec_session_name_ph: "Session name (e.g. Si-111 BCDI)",
-      rec_untitled_session: "Untitled Session",
-      rec_btn_start: "Start Session",
-      rec_btn_resume: "Resume",
-      rec_btn_end: "End Session",
-      rec_btn_edit_ctx: "Edit Context",
-      rec_btn_save_ctx: "Save",
-      rec_btn_cancel: "Cancel",
-      rec_btn_save: "Save",
-      rec_btn_save_note: "Save Note",
-      rec_btn_copy_log: "Copy Session Log",
-      rec_session_started: "Session started.",
-      rec_session_del_confirm: "Delete this session? (Its logs are kept.)",
-      rec_context_saved: "Session context saved.",
-      rec_f_name: "Name",
-      rec_f_experiment: "Experiment",
-      rec_tpl_hint: "Generate a formatted header for your logbook",
-      rec_tpl_format: "Format",
-      rec_tpl_include: "Include",
-      rec_btn_copy_tpl: "Copy Header",
-      rec_f_beamline: "Beamline",
-      rec_f_sample: "Sample",
-      rec_f_energy: "Energy (keV)",
-      rec_f_reflection: "Reflection",
-      rec_f_detector: "Detector",
-      rec_f_operator: "Operator",
-      rec_f_environment: "Environment",
-      rec_f_notes: "Notes",
-      rec_q_mounted: "Sample mounted",
-      rec_q_beamdown: "Beam down",
-      rec_q_scan: "Scan started",
-      rec_q_peak: "Peak found",
-      rec_q_issue: "Issue",
-      rec_q_other: "+ Other",
-      rec_custom_ph: "Write a short log...",
-      rec_log_added: "Log added.",
-      rec_log_empty: "No logs yet.",
-      rec_log_del_confirm: "Delete this log?",
-      rec_note_saved: "Note saved.",
-      rec_note_ph: "A sentence or two of extra detail...",
       rec_copied: "Copied to clipboard.",
       btn_copy_results: "Copy all results",
-      copy_val_copied: "Value copied to clipboard.",
-      rec_d_type: "Type",
-      rec_d_severity: "Severity",
-      rec_d_note: "Note",
-      rec_sev_normal: "Normal",
-      rec_sev_important: "Important",
-      rec_sev_critical: "Critical",
-      rec_tpl_note: "Builds a formatted header from the current session, ready to paste into the logbook you already use.",
-
 
       // ABOUT view — project information first, funding demoted to the footer
       about_tagline: "A lightweight toolkit for X-ray experiments.",
@@ -621,32 +457,20 @@
       theme_desc: "Pick one of seven themes. Layout and print specification stay identical across all themes.",
       theme_paper_name: "Academic Paper",
       theme_paper_desc: "Off-white paper, ink black, Oxford navy — the default print specification",
-      theme_paper_short: "Paper",
       theme_parchment_name: "Vintage Parchment",
       theme_parchment_desc: "Aged notebook stock with deep sepia ink — warm and easy on the eyes",
-      theme_parchment_short: "Vintage",
       theme_datasheet_name: "Technical Datasheet",
       theme_datasheet_desc: "Cool white paper, drafting navy ink & millimetre graph spec sheet",
-      theme_datasheet_short: "Datasheet",
       theme_blueprint_name: "Cyanotype Blueprint",
       theme_blueprint_desc: "Deep Prussian blue drafting board with chalk white & cyan lines",
-      theme_blueprint_short: "Blueprint",
       theme_console_name: "Beamline Control Room",
       theme_console_desc: "Very high contrast industrial dark mode, styled after an EPICS console",
-      theme_console_short: "Console",
       theme_crt_name: "CRT Terminal (Green / Amber)",
       theme_crt_desc: "1980s lab phosphor green with amber accent, monospace throughout",
-      theme_crt_short: "CRT",
       theme_tokyo_name: "Tokyo Night (Neon Dark)",
       theme_tokyo_desc: "Modern neon blue/purple dark theme, high legibility",
-      theme_tokyo_short: "Neon",
 
-      // Local data / backup
       sidebar_offline: "Client Offline-Ready",
-      btn_light: "Light",
-      btn_dark: "Dark",
-      btn_ko: "한국어",
-      btn_en: "English",
 
       // Banners
       b_set_title: "Settings & History Management",
@@ -656,7 +480,6 @@
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
       toc_maintitle: "INDEX",
       toc_subtitle: "Comprehensive Index of Synchrotron Optics, Beamline Physics & Experimental Suites",
-      btn_view_suite: "Open Suite ➔",
       toc_sec1_title: "Spectroscopy — Energy, Wavelength & Matter",
       toc_sec1_desc: "Energy-wavelength conversion, lattice spacing, complex refraction and transmittance, resolution and flux",
       toc_tool_opt_1: "Energy - Wavelength - Frequency",
@@ -685,14 +508,9 @@
       toc_sec6_desc: "Language selection, high-contrast theme, calculation run logs, JSON backup & keyboard shortcuts",
       toc_tool_set_1: "Language Selection",
       toc_tool_set_2: "Display Theme Mode",
-      toc_tool_set_3: "Full Calculation History Archive",
-      toc_tool_set_4: "LocalStorage JSON Backup & Restore",
       toc_tool_set_5: "Keyboard Shortcuts Guide",
       toc_sec7_title: "About the Creator & Research",
       toc_sec7_desc: "Researcher profile, Coherent X-ray Optics / BCDI domain expertise, and GitHub Sponsors",
-      toc_tool_about_1: "Researcher Profile & Biography",
-      toc_tool_about_2: "Core Expertise & Research Stack",
-      toc_tool_about_3: "Project Sponsorship & Support",
 
       // Settings Tab
       set_card_lang_title: "§ 1. Language Selection",
@@ -700,21 +518,7 @@
       btn_lang_ko: "한국어 (Korean)",
       btn_lang_en: "English",
       set_card_theme_title: "§ 2. Display Theme Configuration",
-      th_time: "Timestamp",
-      th_tool: "Tool Name",
-      th_inputs: "Input Parameters",
-      th_result: "Calculation Result",
-      set_card_backup_title: "§ 3. localStorage Data Backup & Restore",
-      set_backup_desc: "All sessions, quick logs, and calculation history are stored in your browser's <code>localStorage</code>. Export or import JSON files seamlessly across machines.",
-      btn_backup_download: "Download Full Backup",
-      btn_backup_restore: "Restore from JSON",
-      toast_backup_downloaded: "Full data backup file saved.",
-      toast_backup_restored: "Backup data restored successfully.",
-      alert_backup_invalid: "Failed to read backup file: Invalid JSON format.",
       set_card_shortcuts_title: "§ 3. Keyboard Shortcuts",
-
-      // Dashboard Old Fallbacks
-      btn_open_optics: "Open Optics Suite",
 
       // Optics Suite
       opt_t1_title: "§ 1. Energy - Wavelength - Frequency Conversion",
@@ -734,9 +538,6 @@
       res_calc_d: "Calculated d-spacing (d)",
       res_calc_tth: "Calculated Angle (2θ / θ)",
       res_bragg_unreachable: "Diffraction Impossible (λ > 2d)",
-      res_bragg_theta: "Bragg Angle θ",
-      res_bragg_2theta: "Diffraction Angle 2θ",
-      res_bragg_q: "Scattering Vector Q",
       opt_t3_title: "§ 5. Diffraction Grating",
       lbl_grating_lines: "Groove Density",
       lbl_photon_energy: "Photon Energy",
@@ -761,11 +562,6 @@
       res_target_twotheta: "Target Angle 2θ (tth)",
       res_target_theta: "Target Angle θ (th)",
       res_unreachable: "Unreachable (sin θ₂ > 1)",
-      lbl_e1: "Reference Energy E1",
-      lbl_th1: "Reference Angle θ1",
-      lbl_e2: "Target Energy E2",
-      res_th2: "Target Angle θ2",
-      res_motor_shift: "Motor Angle Shift Δθ",
       opt_t6_title: "§ 7. Chi-Phi Eulerian Cradle Correction",
       lbl_chiphi_th: "Bragg Angle <i class=\"formula\">θ</i>",
       lbl_chiphi_chi: "Chi Tilt <i class=\"formula\">Δχ</i>",
@@ -830,8 +626,6 @@
       res_th_shift: "Bragg Angle Drift (<i class=\"formula\">Δθ</i>)",
       res_e_shift: "Effective Energy Shift (<i class=\"formula\">ΔE</i>)",
 
-      qc_electron_radius: "electron radius",
-      qc_speed_of_light: "speed of light",
       res_lambda: "Wavelength <i class=\"formula\">λ</i>",
       res_grating_unreachable: "No diffraction (|sin β| > 1)",
       res_refract_delta_term: "Refractive decrement",
@@ -843,26 +637,7 @@
       res_out_of_range: "Out of energy range",
       res_cdi_pass: "Pass: Nyquist oversampling satisfied (σ ≥ 2.0)",
       res_cdi_marginal: "Caution: marginal oversampling (1.5 ≤ σ < 2.0)",
-      res_cdi_fail: "Fail: undersampled / aliasing (σ < 1.5)",
-
-      btn_delete: "Delete",
-
-      // Reference
-      ref_card_db: "Precision Crystal d-spacing Database",
-      th_cryst_mat: "Crystal Material",
-      th_cryst_hkl: "Miller Index (hkl)",
-      th_cryst_d: "d-spacing (Å)",
-      th_cryst_a: "Lattice Constant",
-      th_cryst_sys: "Crystal System",
-      btn_apply_bragg: "Apply to Bragg",
-
-      // About
-      th_degree: "Degree",
-      th_lab: "Lab",
-      th_email: "Email",
-      th_github: "GitHub",
-      th_repo: "Project Repository",
-      btn_sponsor_gh: "Sponsor on GitHub Sponsors ➔"
+      res_cdi_fail: "Fail: undersampled / aliasing (σ < 1.5)"
     }
   };
 
@@ -892,8 +667,6 @@
       // Trigger re-rendering of active components. The calculator suites are
       // re-run as well: their result strings are built in JS, so they keep the
       // previous language until the next recalculation otherwise.
-      if (window.renderRecord) window.renderRecord();
-      if (window.renderChecklists) window.renderChecklists();
       if (window.initOpticsView) window.initOpticsView();
       if (window.initBeamlineView) window.initBeamlineView();
       if (window.initLattice) window.initLattice();

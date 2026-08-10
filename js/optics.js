@@ -361,8 +361,6 @@
     }
   }
 
-  var calcEnergyAngle = calcEnergyScaling;
-
   // --- 6. Chi-Phi Diffractometer Tilt Correction ---
   function calcChiPhi() {
     var braggDeg = parseFloat(document.getElementById("chiphi-theta").value);
@@ -477,7 +475,6 @@
   window.calcGrating = calcGrating;
   window.calcRefractive = calcRefractive;
   window.calcEnergyScaling = calcEnergyScaling;
-  window.calcEnergyAngle = calcEnergyAngle;
   window.syncRefAngle = syncRefAngle;
   window.setTargetEnergy = setTargetEnergy;
   window.calcChiPhi = calcChiPhi;
@@ -513,7 +510,7 @@
     calcBragg();
     calcGrating();
     calcRefractive();
-    calcEnergyAngle();
+    calcEnergyScaling();
     calcChiPhi();
     calcCriticalAngle();
     calcQSpace("theta");
