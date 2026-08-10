@@ -82,29 +82,35 @@
     <!-- Fixed Left Sidebar -->
     <aside id="sidebar">
       <div class="sidebar-header">
-        <span class="brand-title">BEAMLINE TOOLKIT</span>
+        <span class="brand-title">X-RAY BEAMLINE TOOLKIT</span>
         <span class="brand-badge">v1.4</span>
       </div>
 
       <nav class="sidebar-nav">
-        <a class="nav-item" data-route="dashboard" href="#dashboard">
-          <span data-i18n="nav_dashboard_index">0. CONTENTS</span>
+        <!-- 0. Table of Contents (Index) -->
+        <a class="nav-item nav-item-contents" data-route="dashboard" href="#dashboard">
+          <span><span class="nav-contents-icon">≡</span> <span data-i18n="nav_dashboard_index">CONTENTS</span></span>
         </a>
 
-        <a class="nav-item active" data-route="spectroscopy" href="#spectroscopy">
+        <!-- 3 Core Major Suites -->
+        <a class="nav-item nav-item-major active" data-route="spectroscopy" href="#spectroscopy">
           <span data-i18n="nav_spectroscopy">I. SPECTROSCOPY</span>
         </a>
-        <a class="nav-item" data-route="goniometry" href="#goniometry">
+        <a class="nav-item nav-item-major" data-route="goniometry" href="#goniometry">
           <span data-i18n="nav_goniometry">II. GONIOMETRY</span>
         </a>
-        <a class="nav-item" data-route="record" href="#record">
+        <a class="nav-item nav-item-major" data-route="record" href="#record">
           <span data-i18n="nav_record">III. RECORD</span>
         </a>
 
-        <a class="nav-item" data-route="settings" href="#settings">
+        <!-- Divider Line between Main and Secondary -->
+        <div class="sidebar-divider"></div>
+
+        <!-- Secondary Utility Suites (De-emphasized) -->
+        <a class="nav-item nav-item-minor" data-route="settings" href="#settings">
           <span data-i18n="nav_settings">IV. SETTINGS</span>
         </a>
-        <a class="nav-item" data-route="about" href="#about">
+        <a class="nav-item nav-item-minor" data-route="about" href="#about">
           <span data-i18n="nav_about">V. ABOUT</span>
         </a>
       </nav>
@@ -122,9 +128,9 @@
       <header id="top-header">
         <div class="header-brand-area">
           <div class="page-breadcrumb">
-            <span class="breadcrumb-brand" style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
+            <span class="breadcrumb-brand" style="color:var(--ink-muted);">X-RAY BEAMLINE TOOLKIT</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="breadcrumb-current">0. DASHBOARD</span>
+            <span id="breadcrumb-current">I. SPECTROSCOPY</span>
           </div>
         </div>
 
@@ -136,12 +142,15 @@
       <!-- Dedicated Horizontal Tab Strip (Horizontally Scrollable) -->
       <nav id="top-tab-strip">
         <div class="tab-strip-scroll">
-          <button class="tab-pill" data-route="dashboard" data-i18n="nav_dashboard_index">0. CONTENTS</button>
-          <button class="tab-pill tab-pill-primary active" data-route="spectroscopy" data-i18n="nav_spectroscopy">I. SPECTROSCOPY</button>
-          <button class="tab-pill tab-pill-primary" data-route="goniometry" data-i18n="nav_goniometry">II. GONIOMETRY</button>
-          <button class="tab-pill tab-pill-primary" data-route="record" data-i18n="nav_record">III. RECORD</button>
-          <button class="tab-pill" data-route="settings" data-i18n="nav_settings">IV. SETTINGS</button>
-          <button class="tab-pill" data-route="about" data-i18n="nav_about">V. ABOUT</button>
+          <button class="tab-pill tab-pill-contents" data-route="dashboard">
+            <span class="tab-contents-icon">≡</span> <span data-i18n="nav_dashboard_index">CONTENTS</span>
+          </button>
+          <button class="tab-pill tab-pill-major active" data-route="spectroscopy" data-i18n="nav_spectroscopy">I. SPECTROSCOPY</button>
+          <button class="tab-pill tab-pill-major" data-route="goniometry" data-i18n="nav_goniometry">II. GONIOMETRY</button>
+          <button class="tab-pill tab-pill-major" data-route="record" data-i18n="nav_record">III. RECORD</button>
+          <span class="tab-divider" aria-hidden="true"></span>
+          <button class="tab-pill tab-pill-minor" data-route="settings" data-i18n="nav_settings">IV. SETTINGS</button>
+          <button class="tab-pill tab-pill-minor" data-route="about" data-i18n="nav_about">V. ABOUT</button>
         </div>
       </nav>
 

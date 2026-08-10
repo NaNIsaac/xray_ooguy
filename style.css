@@ -518,6 +518,37 @@ sub {
   padding: 0 4px;
 }
 
+/* Sidebar Navigation Hierarchy */
+.nav-item-contents {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-secondary);
+  margin-bottom: 4px;
+}
+
+.nav-contents-icon {
+  font-weight: 700;
+  font-size: 13px;
+  margin-right: 4px;
+  line-height: 1;
+}
+
+.nav-item-major {
+  font-weight: 600;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background-color: var(--line-soft);
+  margin: 6px 14px;
+}
+
+.nav-item-minor {
+  font-size: 11.5px;
+  color: var(--ink-secondary);
+  opacity: 0.85;
+}
+
 .sidebar-footer {
   padding: 10px 14px;
   border-top: var(--rule-main);
@@ -657,7 +688,7 @@ sub {
   font-family: var(--font-serif);
   font-size: 12px;
   font-weight: 600;
-  padding: 5px 14px;
+  padding: 5px 13px;
   margin-right: 6px;
   border: var(--rule-main);
   background-color: var(--bg-paper);
@@ -667,6 +698,7 @@ sub {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
+  gap: 4px;
   text-decoration: none;
   line-height: 1.3;
 }
@@ -680,6 +712,63 @@ sub {
   background-color: var(--ink-primary);
   color: var(--bg-paper);
   font-weight: 700;
+  border: 1.5px solid var(--ink-primary);
+}
+
+/* Contents Tab Pill (Table of Contents index) */
+.tab-pill-contents {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-secondary);
+  border-style: dashed;
+  background-color: var(--bg-paper);
+}
+
+.tab-contents-icon {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* 3 Major Feature Suites */
+.tab-pill-major {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Vertical Divider in Top Tab Strip */
+.tab-divider {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background-color: var(--ink-muted);
+  opacity: 0.5;
+  margin: 0 8px 0 2px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* Minor Utility Tabs (Settings & About) */
+.tab-pill-minor {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  background-color: var(--bg-paper);
+  border: var(--rule-light);
+  opacity: 0.85;
+}
+
+.tab-pill-minor:hover {
+  opacity: 1;
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+}
+
+.tab-pill-minor.active {
+  opacity: 1;
+  font-weight: 700;
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
   border: 1.5px solid var(--ink-primary);
 }
 

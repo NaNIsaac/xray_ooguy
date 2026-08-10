@@ -20,7 +20,7 @@
       b_gonio_title: "GONIOMETRY — 각도·기하 배치",
       b_gonio_desc: "브래그 각도, 상호공간 Q 벡터, 빔 풋프린트와 디텍터 기하 계산",
       nav_record: "III. RECORD",
-      nav_dashboard_index: "0. CONTENTS",
+      nav_dashboard_index: "CONTENTS",
 
 
 
@@ -426,7 +426,7 @@
       b_gonio_title: "GONIOMETRY — Angles & Geometry",
       b_gonio_desc: "Bragg angles, reciprocal-space Q, beam footprint and detector geometry",
       nav_record: "III. RECORD",
-      nav_dashboard_index: "0. CONTENTS",
+      nav_dashboard_index: "CONTENTS",
 
 
 
