@@ -234,14 +234,14 @@
       if (sinTheta > 1) {
         setText("theta", t("lat_no_bragg"));
         if (note) {
-          note.textContent = "λ = " + lambda.toFixed(5) + " Å  ·  λ/2d = " +
+          note.textContent = "λ = " + (lambda / 10).toFixed(5) + " nm  ·  λ/2d = " +
             sinTheta.toFixed(4) + " > 1";
         }
       } else {
         var theta = Math.asin(sinTheta) / DEG;
         setText("theta", theta.toFixed(4) + "° (2θ = " + (2 * theta).toFixed(4) + "°)");
         if (note) {
-          note.textContent = "λ = " + lambda.toFixed(5) + " Å  ·  " + hklLabel(h, k, l) +
+          note.textContent = "λ = " + (lambda / 10).toFixed(5) + " nm  ·  " + hklLabel(h, k, l) +
             "  ·  " + key;
         }
 

@@ -15,24 +15,17 @@
     var e = CONSTANTS.e;
     var c = CONSTANTS.c;
 
-    var inputEv = document.getElementById("optics-conv-ev");
     var inputKev = document.getElementById("optics-conv-kev");
     var inputNm = document.getElementById("optics-conv-nm");
-    var inputAng = document.getElementById("optics-conv-ang");
     var inputHz = document.getElementById("optics-conv-hz");
 
     var energy_eV = 0;
 
-    if (sourceField === "ev") {
-      energy_eV = parseFloat(inputEv.value);
-    } else if (sourceField === "kev") {
+    if (sourceField === "kev") {
       energy_eV = parseFloat(inputKev.value) * 1000;
     } else if (sourceField === "nm") {
       var nm = parseFloat(inputNm.value);
       if (nm > 0) energy_eV = (hc_keV_nm / nm) * 1000;
-    } else if (sourceField === "ang") {
-      var ang = parseFloat(inputAng.value);
-      if (ang > 0) energy_eV = hc_eV_A / ang;
     } else if (sourceField === "hz") {
       var hz = parseFloat(inputHz.value);
       if (hz > 0) energy_eV = (h * hz) / e;
@@ -45,19 +38,17 @@
     var lambda_nm = lambda_A / 10;
     var freq_Hz = (energy_eV * e) / h;
 
-    if (sourceField !== "ev") inputEv.value = energy_eV.toFixed(3);
     if (sourceField !== "kev") inputKev.value = energy_keV.toFixed(5);
     if (sourceField !== "nm") inputNm.value = lambda_nm.toFixed(5);
-    if (sourceField !== "ang") inputAng.value = lambda_A.toFixed(5);
     if (sourceField !== "hz") inputHz.value = freq_Hz.toExponential(4);
 
     var resSummary = document.getElementById("optics-conv-summary");
     if (resSummary) {
-      resSummary.innerHTML = energy_keV.toFixed(4) + " keV ⟷ " + lambda_A.toFixed(4) + " Å ⟷ " + freq_Hz.toExponential(3) + " Hz";
+      resSummary.innerHTML = energy_keV.toFixed(4) + " keV ⟷ " + lambda_nm.toFixed(5) + " nm ⟷ " + freq_Hz.toExponential(3) + " Hz";
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.1 Energy/Wavelength", sourceField + " = " + energy_eV.toFixed(2) + " eV", lambda_A.toFixed(4) + " Å (" + energy_keV.toFixed(4) + " keV)");
+      window.recordCalculation("1.1 Energy/Wavelength", sourceField + " = " + energy_keV.toFixed(4) + " keV", lambda_nm.toFixed(5) + " nm (" + energy_keV.toFixed(4) + " keV)");
     }
   }
 
@@ -91,7 +82,7 @@
       resE.innerHTML = e_keV.toFixed(4) + " keV <span style=\"font-size:12px; font-weight:normal; color:var(--ink-secondary);\">(" + e_eV.toFixed(1) + " eV)</span>";
     }
     if (resSub) {
-      resSub.innerHTML = "θ = " + thDeg.toFixed(4) + "° | λ = " + lambda_A.toFixed(4) + " Å | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
+      resSub.innerHTML = "θ = " + thDeg.toFixed(4) + "° | λ = " + (lambda_A / 10).toFixed(5) + " nm | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
     }
 
     if (window.recordCalculation) {
@@ -127,7 +118,7 @@
       resD.innerHTML = dVal.toFixed(5) + " Å <span style=\"font-size:12px; font-weight:normal; color:var(--ink-secondary);\">(" + (dVal / 10).toFixed(6) + " nm)</span>";
     }
     if (resSub) {
-      resSub.innerHTML = "θ = " + thDeg.toFixed(4) + "° | λ = " + lambda_A.toFixed(4) + " Å | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
+      resSub.innerHTML = "θ = " + thDeg.toFixed(4) + "° | λ = " + (lambda_A / 10).toFixed(5) + " nm | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
     }
 
     if (window.recordCalculation) {
@@ -159,7 +150,7 @@
     if (sinTh > 1) {
       var unreach = (window.i18n ? window.i18n.t("res_bragg_unreachable") : "회절 불가 (λ > 2d)");
       if (resTth) resTth.innerHTML = '<span style="color:var(--danger); font-size:13px;">' + unreach + '</span>';
-      if (resSub) resSub.innerHTML = "λ = " + lambda_A.toFixed(4) + " Å &gt; 2d (" + (2 * dVal).toFixed(4) + " Å), E<sub>min</sub> = " + (hc_eV_A / (2 * dVal * 1000)).toFixed(3) + " keV";
+      if (resSub) resSub.innerHTML = "λ = " + (lambda_A / 10).toFixed(5) + " nm &gt; 2d (" + (2 * dVal / 10).toFixed(5) + " nm), E<sub>min</sub> = " + (hc_eV_A / (2 * dVal * 1000)).toFixed(3) + " keV";
       return;
     }
 
@@ -172,7 +163,7 @@
       resTth.innerHTML = "2θ = " + tthDeg.toFixed(4) + "° <span style=\"font-size:13px; font-weight:normal; color:var(--ink-secondary);\">(θ = " + thDeg.toFixed(4) + "°)</span>";
     }
     if (resSub) {
-      resSub.innerHTML = "2θ = " + ((tthDeg * Math.PI / 180) * 1000).toFixed(2) + " mrad | λ = " + lambda_A.toFixed(4) + " Å | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
+      resSub.innerHTML = "2θ = " + ((tthDeg * Math.PI / 180) * 1000).toFixed(2) + " mrad | λ = " + (lambda_A / 10).toFixed(5) + " nm | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";
     }
 
     if (window.recordCalculation) {
@@ -199,11 +190,12 @@
   // --- 3. Grating Diffraction Calculator (mλ = d(sin α + sin β)) ---
   function calcGrating() {
     var linesPerMm = parseFloat(document.getElementById("grating-lines").value);
-    var energy_eV = parseFloat(document.getElementById("grating-energy").value);
+    var energy_keV = parseFloat(document.getElementById("grating-energy").value);
+    var energy_eV = energy_keV * 1000;
     var alphaDeg = parseFloat(document.getElementById("grating-alpha").value);
     var order = parseInt(document.getElementById("grating-order").value, 10);
 
-    if (isNaN(linesPerMm) || linesPerMm <= 0 || isNaN(energy_eV) || energy_eV <= 0) return;
+    if (isNaN(linesPerMm) || linesPerMm <= 0 || isNaN(energy_keV) || energy_keV <= 0) return;
 
     var lambda_nm = (CONSTANTS.hc_keV_nm * 1000) / energy_eV;
     var d_nm = 1e6 / linesPerMm; // d in nm
@@ -216,7 +208,7 @@
     var resLambda = document.getElementById("grating-res-lambda");
 
     if (Math.abs(sinBeta) > 1) {
-      resBeta.innerHTML = "회절 불가 (|sin β| > 1)";
+      resBeta.innerHTML = (window.i18n ? window.i18n.t("res_grating_unreachable") : "회절 불가 (|sin β| > 1)");
       resDispersion.innerHTML = "N/A";
       return;
     }
@@ -228,12 +220,12 @@
     var dispersion_rad_per_nm = cosBeta !== 0 ? Math.abs(order / (d_nm * cosBeta)) : 0;
     var dispersion_mrad_per_eV = (dispersion_rad_per_nm * 1000 * (lambda_nm / energy_eV));
 
-    resLambda.innerHTML = lambda_nm.toFixed(4) + " nm (" + (lambda_nm * 10).toFixed(4) + " Å)";
+    resLambda.innerHTML = lambda_nm.toFixed(5) + " nm";
     resBeta.innerHTML = betaDeg.toFixed(4) + "° (" + (betaRad * 1000).toFixed(3) + " mrad)";
     resDispersion.innerHTML = (dispersion_rad_per_nm * 1000).toFixed(3) + " mrad/nm (" + dispersion_mrad_per_eV.toFixed(4) + " mrad/eV)";
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.3 Grating Calc", linesPerMm + " lines/mm, E=" + energy_eV + " eV, α=" + alphaDeg + "°", "β=" + betaDeg.toFixed(4) + "° (m=" + order + ")");
+      window.recordCalculation("1.3 Grating Calc", linesPerMm + " lines/mm, E=" + energy_keV + " keV, α=" + alphaDeg + "°", "β=" + betaDeg.toFixed(4) + "° (m=" + order + ")");
     }
   }
 
@@ -332,7 +324,7 @@
       if (resTh2) resTh2.innerHTML = '<span style="color:var(--danger);">N/A (E<sub>target</sub> &lt; ' + minE2 + ' keV)</span>';
       if (resQ) resQ.innerHTML = qVal.toFixed(4) + ' Å<sup>-1</sup>';
       if (resDelta) resDelta.innerHTML = '모터 이동 불가 (타겟 에너지가 너무 낮습니다)';
-      if (resExtra) resExtra.innerHTML = 'd = ' + dSpacing_A.toFixed(4) + ' Å | λ<sub>ref</sub> = ' + lambda1_A.toFixed(4) + ' Å, λ<sub>target</sub> = ' + lambda2_A.toFixed(4) + ' Å';
+      if (resExtra) resExtra.innerHTML = 'd = ' + dSpacing_A.toFixed(4) + ' Å | λ<sub>ref</sub> = ' + (lambda1_A / 10).toFixed(5) + ' nm, λ<sub>target</sub> = ' + (lambda2_A / 10).toFixed(5) + ' nm';
       return;
     }
 
@@ -357,7 +349,7 @@
       resDelta.innerHTML = 'Δθ = ' + signTh + deltaThDeg.toFixed(4) + '° | Δ(2θ) = ' + signTth + deltaTthDeg.toFixed(4) + '° (' + (deltaThDeg * 3600).toFixed(1) + '")';
     }
     if (resExtra) {
-      resExtra.innerHTML = 'd = ' + dSpacing_A.toFixed(4) + ' Å | λ<sub>ref</sub>: ' + lambda1_A.toFixed(4) + ' Å ➔ λ<sub>target</sub>: ' + lambda2_A.toFixed(4) + ' Å';
+      resExtra.innerHTML = 'd = ' + dSpacing_A.toFixed(4) + ' Å | λ<sub>ref</sub>: ' + (lambda1_A / 10).toFixed(5) + ' nm ➔ λ<sub>target</sub>: ' + (lambda2_A / 10).toFixed(5) + ' nm';
     }
 
     if (window.recordCalculation) {

@@ -7,6 +7,11 @@
 (function () {
   "use strict";
 
+  // Result strings are built here, so they have to go through i18n like the markup does.
+  function TXT(key) {
+    return (window.i18n && window.i18n.t) ? window.i18n.t(key) : key;
+  }
+
   // --- 2.1 Beam Footprint Calculator ---
   function calcFootprint() {
     var beamH_um = parseFloat(document.getElementById("fp-beam-h").value);
@@ -31,18 +36,18 @@
     var resH = document.getElementById("fp-res-h");
 
     resFp.innerHTML = footprint_mm.toFixed(3) + " mm (" + (footprint_mm * 1000).toFixed(0) + " μm)";
-    resH.innerHTML = beamH_um.toFixed(1) + " μm (수평 폭 유지)";
+    resH.innerHTML = beamH_um.toFixed(1) + " μm";
 
     if (sampleL_mm > 0) {
       if (spilloverPct > 0) {
-        resSpill.innerHTML = "초과: 빔 스필오버 발생 (" + spilloverPct.toFixed(1) + "% 손실)";
+        resSpill.innerHTML = TXT("res_fp_spill") + " (" + spilloverPct.toFixed(1) + "%)";
         resSpill.style.color = "var(--ink-primary)";
       } else {
-        resSpill.innerHTML = "정상: 시료 내 100% 수용 (" + ((footprint_mm / sampleL_mm) * 100).toFixed(1) + "% 차지)";
+        resSpill.innerHTML = TXT("res_fp_ok") + " (" + ((footprint_mm / sampleL_mm) * 100).toFixed(1) + "%)";
         resSpill.style.color = "var(--accent-ink)";
       }
     } else {
-      resSpill.innerHTML = "시료 길이 미지정";
+      resSpill.innerHTML = TXT("res_fp_nolen");
       resSpill.style.color = "var(--ink-muted)";
     }
 
@@ -65,7 +70,7 @@
     var deliveredFlux = ringCurrent_mA * baseFlux_per_mA * totalEff;
 
     document.getElementById("flux-res-total").innerHTML = deliveredFlux.toExponential(3) + " ph·s<sup>-1</sup>";
-    document.getElementById("flux-res-eff").innerHTML = (totalEff * 100).toFixed(2) + "% 전송 효율";
+    document.getElementById("flux-res-eff").innerHTML = (totalEff * 100).toFixed(2) + "%";
 
     if (window.recordCalculation) {
       window.recordCalculation("2.2 Beam Flux", ringCurrent_mA + " mA, η = " + (totalEff * 100).toFixed(1) + "%", deliveredFlux.toExponential(2) + " ph·s<sup>-1</sup>");
@@ -94,7 +99,7 @@
     var lambda_A = CONSTANTS.hc_keV_nm * 10 / energy_keV;
     var sinTheta = lambda_A / (2 * d_spacing_A);
     if (sinTheta > 1) {
-      document.getElementById("res-res-de-over-e").innerHTML = "에너지 범위 초과";
+      document.getElementById("res-res-de-over-e").innerHTML = TXT("res_out_of_range");
       return;
     }
 
@@ -157,14 +162,14 @@
     var resVerdict = document.getElementById("cdi-res-verdict");
 
     resSigma.innerHTML = sigma.toFixed(2) + " (σ)";
-    resSpeckle.innerHTML = speckle_um.toFixed(2) + " μm (스펙클 크기)";
+    resSpeckle.innerHTML = speckle_um.toFixed(2) + " μm";
 
     if (sigma >= 2.0) {
-      resVerdict.innerHTML = "충족: 나이퀴스트 오버샘플링 성립 (σ ≥ 2.0)";
+      resVerdict.innerHTML = TXT("res_cdi_pass");
     } else if (sigma >= 1.5) {
-      resVerdict.innerHTML = "주의: 한계 오버샘플링 (1.5 ≤ σ < 2.0)";
+      resVerdict.innerHTML = TXT("res_cdi_marginal");
     } else {
-      resVerdict.innerHTML = "불가: 언더샘플링 / 앨리어싱 발생 (σ < 1.5)";
+      resVerdict.innerHTML = TXT("res_cdi_fail");
     }
 
     if (window.recordCalculation) {
@@ -227,7 +232,7 @@
     var deltaE_eV = alpha * deltaTemp_C * energy_keV * 1000;
 
     document.getElementById("therm-res-urad").innerHTML = deltaTheta_urad.toFixed(3) + " μrad (" + deltaTheta_arcsec.toFixed(3) + " arcsec)";
-    document.getElementById("therm-res-de").innerHTML = deltaE_eV.toFixed(3) + " eV (에너지 시프트)";
+    document.getElementById("therm-res-de").innerHTML = deltaE_eV.toFixed(3) + " eV";
 
     if (window.recordCalculation) {
       window.recordCalculation("2.7 Thermal Drift", matSelect + ", ΔT=" + deltaTemp_C + "°C", "Δθ = " + deltaTheta_urad.toFixed(2) + " μrad (" + deltaE_eV.toFixed(2) + " eV)");

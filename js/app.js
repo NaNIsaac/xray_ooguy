@@ -41,7 +41,9 @@
   // always shows a real result the first time it is opened. Once the user
   // edits a field the value is remembered, and the next visit restores it and
   // recalculates, so the tool reopens exactly where they left it.
-  var CALC_INPUT_KEY = "calc_inputs";
+  // v2: energy inputs are keV throughout and the eV / Å converter twins are gone,
+  //     so values stored under the old key no longer mean the same thing.
+  var CALC_INPUT_KEY = "calc_inputs_v2";
 
   // Search boxes filter a list rather than feed a calculation; restoring them
   // would hide rows for no reason.
