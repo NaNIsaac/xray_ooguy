@@ -728,12 +728,14 @@ sub {
   box-shadow: none !important;
   padding: 5px 10px;
   margin-right: 4px;
+  text-decoration: none !important;
 }
 
 .tab-pill-index:hover,
 .tab-pill-contents:hover {
   background-color: var(--bg-paper-hover) !important;
   color: var(--ink-primary) !important;
+  text-decoration: none !important;
 }
 
 .tab-pill-index.active,
@@ -742,8 +744,7 @@ sub {
   color: var(--accent-ink) !important;
   font-weight: 700;
   border: none !important;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none !important;
 }
 
 .tab-index-icon,
