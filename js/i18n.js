@@ -127,7 +127,7 @@
       sc_3: "RECORD 이동",
       sc_4: "SETTINGS 이동",
       sc_5: "ABOUT 이동",
-      sc_6: "CONTENTS 이동",
+      sc_6: "INDEX 이동",
 
       res_scatt_q: "산란 벡터 Q",
 
@@ -238,7 +238,7 @@
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
-      toc_maintitle: "CONTENTS",
+      toc_maintitle: "INDEX",
       toc_subtitle: "방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인",
       btn_view_suite: "열기 ➔",
       toc_sec1_title: "분광 — 에너지, 파장, 물질 상호작용",
@@ -525,7 +525,7 @@
       sc_3: "Jump to RECORD",
       sc_4: "Jump to SETTINGS",
       sc_5: "Jump to ABOUT",
-      sc_6: "Jump to CONTENTS",
+      sc_6: "Jump to INDEX",
 
       res_scatt_q: "Scattering Vector Q",
 
@@ -637,7 +637,7 @@
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
-      toc_maintitle: "CONTENTS",
+      toc_maintitle: "INDEX",
       toc_subtitle: "Comprehensive Index of Synchrotron Optics, Beamline Physics & Experimental Suites",
       btn_view_suite: "Open Suite ➔",
       toc_sec1_title: "Spectroscopy — Energy, Wavelength & Matter",

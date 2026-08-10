@@ -414,8 +414,8 @@
       seoDesc: "Plain-text beamtime logbook headers and one-click in-situ event snippets with real-time timestamps for lab notebooks."
     },
     dashboard: {
-      title: "0. CONTENTS", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",
-      seoTitle: "All Calculators — Contents | X-Ray Beamline Toolkit",
+      title: "INDEX", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",
+      seoTitle: "All Calculators — Index | X-Ray Beamline Toolkit",
       seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
     },
     settings: {

@@ -519,13 +519,15 @@ sub {
 }
 
 /* Sidebar Navigation Hierarchy */
+.nav-item-index,
 .nav-item-contents {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--ink-secondary);
   margin-bottom: 4px;
 }
 
+.nav-index-icon,
 .nav-contents-icon {
   font-weight: 700;
   font-size: 13px;
@@ -715,19 +717,41 @@ sub {
   border: 1.5px solid var(--ink-primary);
 }
 
-/* Contents Tab Pill (Table of Contents index) */
+/* Index Tab Pill (Borderless, subtle index trigger) */
+.tab-pill-index,
 .tab-pill-contents {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--ink-secondary);
-  border-style: dashed;
-  background-color: var(--bg-paper);
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 5px 10px;
+  margin-right: 4px;
 }
 
+.tab-pill-index:hover,
+.tab-pill-contents:hover {
+  background-color: var(--bg-paper-hover) !important;
+  color: var(--ink-primary) !important;
+}
+
+.tab-pill-index.active,
+.tab-pill-contents.active {
+  background-color: var(--bg-paper-hover) !important;
+  color: var(--accent-ink) !important;
+  font-weight: 700;
+  border: none !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tab-index-icon,
 .tab-contents-icon {
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1;
+  margin-right: 2px;
 }
 
 /* 3 Major Feature Suites */
