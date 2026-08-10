@@ -50,7 +50,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="style.css?v=1.4">
 </head>
 <body>
 
@@ -82,29 +82,35 @@
     <!-- Fixed Left Sidebar -->
     <aside id="sidebar">
       <div class="sidebar-header">
-        <span class="brand-title">BEAMLINE TOOLKIT</span>
-        <span class="brand-badge">v1.1</span>
+        <span class="brand-title">X-RAY BEAMLINE TOOLKIT</span>
+        <span class="brand-badge">v1.4</span>
       </div>
 
       <nav class="sidebar-nav">
-        <a class="nav-item" data-route="dashboard" href="#dashboard">
-          <span data-i18n="nav_dashboard_index">0. CONTENTS</span>
+        <!-- 0. Table of Contents / Index -->
+        <a class="nav-item nav-item-index" data-route="dashboard" href="#dashboard">
+          <span><span class="nav-index-icon">≡</span> <span data-i18n="nav_dashboard_index">INDEX</span></span>
         </a>
 
-        <a class="nav-item active" data-route="spectroscopy" href="#spectroscopy">
+        <!-- 3 Core Major Suites -->
+        <a class="nav-item nav-item-major active" data-route="spectroscopy" href="#spectroscopy">
           <span data-i18n="nav_spectroscopy">I. SPECTROSCOPY</span>
         </a>
-        <a class="nav-item" data-route="goniometry" href="#goniometry">
+        <a class="nav-item nav-item-major" data-route="goniometry" href="#goniometry">
           <span data-i18n="nav_goniometry">II. GONIOMETRY</span>
         </a>
-        <a class="nav-item" data-route="record" href="#record">
+        <a class="nav-item nav-item-major" data-route="record" href="#record">
           <span data-i18n="nav_record">III. RECORD</span>
         </a>
 
-        <a class="nav-item" data-route="settings" href="#settings">
+        <!-- Divider Line between Main and Secondary -->
+        <div class="sidebar-divider"></div>
+
+        <!-- Secondary Utility Suites (De-emphasized) -->
+        <a class="nav-item nav-item-minor" data-route="settings" href="#settings">
           <span data-i18n="nav_settings">IV. SETTINGS</span>
         </a>
-        <a class="nav-item" data-route="about" href="#about">
+        <a class="nav-item nav-item-minor" data-route="about" href="#about">
           <span data-i18n="nav_about">V. ABOUT</span>
         </a>
       </nav>
@@ -122,9 +128,9 @@
       <header id="top-header">
         <div class="header-brand-area">
           <div class="page-breadcrumb">
-            <span style="color:var(--ink-muted);">BEAMLINE TOOLKIT</span>
+            <span class="breadcrumb-brand" style="color:var(--ink-muted);">X-RAY BEAMLINE TOOLKIT</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="breadcrumb-current">0. DASHBOARD</span>
+            <span id="breadcrumb-current">I. SPECTROSCOPY</span>
           </div>
         </div>
 
@@ -136,12 +142,15 @@
       <!-- Dedicated Horizontal Tab Strip (Horizontally Scrollable) -->
       <nav id="top-tab-strip">
         <div class="tab-strip-scroll">
-          <button class="tab-pill" data-route="dashboard" data-i18n="nav_dashboard_index">0. CONTENTS</button>
-          <button class="tab-pill tab-pill-primary active" data-route="spectroscopy" data-i18n="nav_spectroscopy">I. SPECTROSCOPY</button>
-          <button class="tab-pill tab-pill-primary" data-route="goniometry" data-i18n="nav_goniometry">II. GONIOMETRY</button>
-          <button class="tab-pill tab-pill-primary" data-route="record" data-i18n="nav_record">III. RECORD</button>
-          <button class="tab-pill" data-route="settings" data-i18n="nav_settings">IV. SETTINGS</button>
-          <button class="tab-pill" data-route="about" data-i18n="nav_about">V. ABOUT</button>
+          <button class="tab-pill tab-pill-index" data-route="dashboard">
+            <span class="tab-index-icon">≡</span> <span data-i18n="nav_dashboard_index">INDEX</span>
+          </button>
+          <button class="tab-pill tab-pill-major active" data-route="spectroscopy" data-i18n="nav_spectroscopy">I. SPECTROSCOPY</button>
+          <button class="tab-pill tab-pill-major" data-route="goniometry" data-i18n="nav_goniometry">II. GONIOMETRY</button>
+          <button class="tab-pill tab-pill-major" data-route="record" data-i18n="nav_record">III. RECORD</button>
+          <span class="tab-divider" aria-hidden="true"></span>
+          <button class="tab-pill tab-pill-minor" data-route="settings" data-i18n="nav_settings">IV. SETTINGS</button>
+          <button class="tab-pill tab-pill-minor" data-route="about" data-i18n="nav_about">V. ABOUT</button>
         </div>
       </nav>
 
@@ -206,46 +215,41 @@
                 <div class="card-body">
                   <div class="preset-row" id="lattice-presets"></div>
 
+                  <!-- Crystal System Selector -->
+                  <div class="form-group">
+                    <label class="form-label" data-i18n="lat_system">결정계 (Crystal System)</label>
+                    <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
+                      <option value="cubic">Cubic (a = b = c, 90°)</option>
+                      <option value="tetragonal">Tetragonal (a = b ≠ c, 90°)</option>
+                      <option value="orthorhombic">Orthorhombic (a ≠ b ≠ c, 90°)</option>
+                      <option value="hexagonal">Hexagonal / Trigonal (γ = 120°)</option>
+                      <option value="rhombohedral">Rhombohedral (a = b = c, α = β = γ)</option>
+                      <option value="monoclinic">Monoclinic (β ≠ 90°)</option>
+                      <option value="triclinic">Triclinic (general)</option>
+                    </select>
+                  </div>
+
+                  <!-- 3x3 Lattice Parameters & Miller Indices Grid -->
                   <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
-                        <label class="form-label" data-i18n="lat_system">결정계 (Crystal System)</label>
-                        <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
-                          <option value="cubic">Cubic (a = b = c, 90°)</option>
-                          <option value="tetragonal">Tetragonal (a = b ≠ c, 90°)</option>
-                          <option value="orthorhombic">Orthorhombic (a ≠ b ≠ c, 90°)</option>
-                          <option value="hexagonal">Hexagonal / Trigonal (γ = 120°)</option>
-                          <option value="rhombohedral">Rhombohedral (a = b = c, α = β = γ)</option>
-                          <option value="monoclinic">Monoclinic (β ≠ 90°)</option>
-                          <option value="triclinic">Triclinic (general)</option>
-                        </select>
+                        <label class="form-label">h</label>
+                        <input type="number" id="lat-h" class="form-control mono" value="1" step="1" oninput="calcLattice()">
                       </div>
                     </div>
-                    <div class="col-8">
-                      <div class="flex-row">
-                        <div class="col-4">
-                          <div class="form-group">
-                            <label class="form-label">h</label>
-                            <input type="number" id="lat-h" class="form-control mono" value="1" step="1" oninput="calcLattice()">
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div class="form-group">
-                            <label class="form-label">k</label>
-                            <input type="number" id="lat-k" class="form-control mono" value="1" step="1" oninput="calcLattice()">
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <div class="form-group">
-                            <label class="form-label">l</label>
-                            <input type="number" id="lat-l" class="form-control mono" value="1" step="1" oninput="calcLattice()">
-                          </div>
-                        </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">k</label>
+                        <input type="number" id="lat-k" class="form-control mono" value="1" step="1" oninput="calcLattice()">
                       </div>
                     </div>
-                  </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">l</label>
+                        <input type="number" id="lat-l" class="form-control mono" value="1" step="1" oninput="calcLattice()">
+                      </div>
+                    </div>
 
-                  <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">a <span class="unit">(Å)</span></label>
@@ -264,6 +268,7 @@
                         <input type="number" id="lat-c" class="form-control mono" value="5.43102" step="any" oninput="calcLattice()">
                       </div>
                     </div>
+
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">α <span class="unit">(°)</span></label>
@@ -626,6 +631,74 @@
               </div>
             </div>
 
+            <!-- § 9. 기본 물리 상수 및 결정 격자 레퍼런스 (CODATA Fundamental Constants & Reference Data) -->
+            <div class="col-12">
+              <div class="card" id="card-physical-constants">
+                <div class="card-header">
+                  <span class="card-title">§ 9. 기본 물리 상수 및 결정 격자 레퍼런스 (Fundamental Physical Constants &amp; Crystal Data)</span>
+                  <span class="card-tag">CODATA 2022 Reference</span>
+                </div>
+                <div class="card-body">
+                  <div class="result-box" style="margin-top:0;">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">hc</i> (광자 에너지-파장 적)</div>
+                        <div class="result-value primary">12398.41984 eV·Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(1.239842 keV·nm)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">h</i> (플랑크 상수)</div>
+                        <div class="result-value">6.626070 × 10<sup>-34</sup> J·s</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">ħ</i> (디랙 상수)</div>
+                        <div class="result-value">1.054572 × 10<sup>-34</sup> J·s</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">c</i> (진공 중 광속)</div>
+                        <div class="result-value">299,792,458 m/s</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">r</i><sub>e</sub> (고전 전자 반경)</div>
+                        <div class="result-value">2.817940 × 10<sup>-15</sup> m</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">e</i> (기본 전하)</div>
+                        <div class="result-value">1.602177 × 10<sup>-19</sup> C</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">m</i><sub>e</sub> (전자 정지 질량)</div>
+                        <div class="result-value">9.109384 × 10<sup>-31</sup> kg <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(0.5110 MeV/<i class="formula">c</i>²)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">α</i> (미세구조 상수)</div>
+                        <div class="result-value">1 / 137.035999</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">N</i><sub>A</sub> (아보가드로 수)</div>
+                        <div class="result-value">6.022141 × 10<sup>23</sup> mol<sup>-1</sup></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label"><i class="formula">k</i><sub>B</sub> (볼츠만 상수)</div>
+                        <div class="result-value">1.380649 × 10<sup>-23</sup> J/K</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label">Si(111) 격자면 간격 <i class="formula">d</i></div>
+                        <div class="result-value primary">3.13560 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label">Ge(111) 격자면 간격 <i class="formula">d</i></div>
+                        <div class="result-value">3.26636 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label">C*(Diamond 111) 격자 간격</div>
+                        <div class="result-value">2.05930 Å <span style="font-size:11px; font-weight:normal; color:var(--ink-secondary);">(298.15 K)</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -898,6 +971,9 @@
                     </div>
                   </div>
 
+                  <!-- Geometric Beam Footprint Vector Schematic -->
+                  <div id="fp-diagram-box" class="fp-diagram-box"></div>
+
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
@@ -1107,7 +1183,7 @@
           <!-- Academic Table of Contents Frontmatter Masthead -->
           <div class="toc-masthead">
             <div class="toc-pretitle" data-i18n="toc_pretitle">SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH</div>
-            <h1 class="toc-maintitle" data-i18n="toc_maintitle">CONTENTS (목차)</h1>
+            <h1 class="toc-maintitle" data-i18n="toc_maintitle">INDEX</h1>
             <p class="toc-subtitle" data-i18n="toc_subtitle">
               방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인
             </p>
@@ -1128,12 +1204,11 @@
 
               <!-- SECTION X-RAY OPTICS SUITE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('spectroscopy')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION I.</span>
                     <span data-i18n="toc_sec1_title"></span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('spectroscopy')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec1_desc"></div>
                 <div class="toc-items-container">
@@ -1143,8 +1218,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_1"></span>
                       <span class="toc-item-formula">E = hc/&lambda; = h&nu;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 1] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-lattice-dspacing')">
                     <span class="toc-item-num">§ 2.</span>
@@ -1152,8 +1225,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_lattice"></span>
                       <span class="toc-item-formula">a, b, c, &alpha;, &beta;, &gamma; + hkl &rarr; d</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 2] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-refraction')">
                     <span class="toc-item-num">§ 3.</span>
@@ -1161,8 +1232,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_4"></span>
                       <span class="toc-item-formula">n = 1 &minus; &delta; + i&beta;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 3] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-reflection')">
                     <span class="toc-item-num">§ 4.</span>
@@ -1170,8 +1239,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_7"></span>
                       <span class="toc-item-formula">&theta;c = &radic;(2&delta;)</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 4] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-grating')">
                     <span class="toc-item-num">§ 5.</span>
@@ -1179,8 +1246,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_3"></span>
                       <span class="toc-item-formula">d(sin&alpha; + sin&beta;) = m&lambda;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 5] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-resolution')">
                     <span class="toc-item-num">§ 6.</span>
@@ -1188,8 +1253,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_3"></span>
                       <span class="toc-item-formula">&Delta;E/E</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 6] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-flux')">
                     <span class="toc-item-num">§ 7.</span>
@@ -1197,28 +1260,30 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_2"></span>
                       <span class="toc-item-formula">photons / s</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 7] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-drift')">
                     <span class="toc-item-num">§ 8.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_beam_7"></span>
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_7">결정 열팽창 각도 및 에너지 시프트</span>
                       <span class="toc-item-formula">&Delta;&theta;, &Delta;E from &Delta;T</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 8] ➔</span>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-physical-constants')">
+                    <span class="toc-item-num">&sect; 9.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_constants">기본 물리 상수 &amp; 결정 격자 레퍼런스</span>
+                      <span class="toc-item-formula">CODATA 2022: c, h, ħ, hc, re, NA, kB, Si/Ge d</span>
+                    </div>
                   </a>
                 </div>
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('goniometry')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION II.</span>
                     <span data-i18n="toc_sec2_title"></span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('goniometry')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec2_desc"></div>
                 <div class="toc-items-container">
@@ -1228,8 +1293,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_2"></span>
                       <span class="toc-item-formula">&lambda; = 2d sin&theta;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 1] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-qspace')">
                     <span class="toc-item-num">§ 2.</span>
@@ -1237,8 +1300,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_8"></span>
                       <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 2] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-scaling')">
                     <span class="toc-item-num">§ 3.</span>
@@ -1246,8 +1307,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_5"></span>
                       <span class="toc-item-formula">&theta;2 from E1 &rarr; E2</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 3] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-footprint')">
                     <span class="toc-item-num">§ 4.</span>
@@ -1255,8 +1314,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_1"></span>
                       <span class="toc-item-formula">L = w / sin&theta;</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 4] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-detector')">
                     <span class="toc-item-num">§ 5.</span>
@@ -1264,8 +1321,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_4"></span>
                       <span class="toc-item-formula">&Delta;2&theta; = atan(px / D)</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 5] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-slit')">
                     <span class="toc-item-num">§ 6.</span>
@@ -1273,8 +1328,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_6"></span>
                       <span class="toc-item-formula">gap / distance</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 6] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-euler')">
                     <span class="toc-item-num">§ 7.</span>
@@ -1282,8 +1335,6 @@
                       <span class="toc-item-name" data-i18n="toc_tool_opt_6"></span>
                       <span class="toc-item-formula">chi-phi cradle</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 7] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-cdi')">
                     <span class="toc-item-num">§ 8.</span>
@@ -1291,41 +1342,34 @@
                       <span class="toc-item-name" data-i18n="toc_tool_beam_5"></span>
                       <span class="toc-item-formula">oversampling ratio</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 8] ➔</span>
                   </a>
                 </div>
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('record')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION III.</span>
-                    <span data-i18n="toc_sec3_title">실험 세션 기록 (Record)</span>
+                    <span data-i18n="toc_sec3_title">로그북 &amp; 실시간 기록 (Record)</span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('record')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec3_desc">
-                  세션 컨텍스트, 원클릭 퀵 로그, 외부 로그북용 세션 템플릿
+                  연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫
                 </div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-quicklog')">
+                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-headers')">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">퀵 로그 &amp; 타임라인 (Quick Log)</span>
-                      <span class="toc-item-formula">One-click Event / Issue / Result logging</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_1">빔타임 로그북 서식 프리셋 (Logbook Headers)</span>
+                      <span class="toc-item-formula">Standard / Shift Handover / Run Table Matrix</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 1] ➔</span>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-template')">
+                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-snippets')">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_3">세션 템플릿 (Session Template)</span>
-                      <span class="toc-item-formula">Compact / Standard / Beamtime header export</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">실시간 빔타임 이벤트 스니펫 (In-Situ Snippets)</span>
+                      <span class="toc-item-formula">Beam dump, Restored, Mount, Alignment, Scan start/finish</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 2] ➔</span>
                   </a>
                 </div>
               </div>
@@ -1337,12 +1381,11 @@
 
               <!-- SECTION SETTINGS & ARCHIVE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('settings')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION IV.</span>
                     <span data-i18n="toc_sec6_title">환경설정 및 아카이브 (Settings)</span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('settings')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec6_desc">
                   언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드
@@ -1354,47 +1397,31 @@
                       <span class="toc-item-name" data-i18n="toc_tool_set_1">언어 설정 (Language Selection)</span>
                       <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 1] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드 (Theme Mode)</span>
-                      <span class="toc-item-formula">Light Paper (#fdfcf8) / Dark Ink (#121417)</span>
+                      <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 2] ➔</span>
-                  </a>
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-backup')">
-                    <span class="toc-item-num">§ 3.</span>
-                    <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_set_4">로컬스토리지 백업 및 복원</span>
-                      <span class="toc-item-formula">JSON Export &amp; Import Data Preserver</span>
-                    </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 3] ➔</span>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
-                    <span class="toc-item-num">§ 4.</span>
+                    <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내 (Shortcuts)</span>
                       <span class="toc-item-formula">Alt + 1 ~ 6 Quick Tab Switcher</span>
                     </div>
-                    <span class="toc-item-dots"></span>
-                    <span class="toc-item-jump">[§ 4] ➔</span>
                   </a>
                 </div>
               </div>
 
               <!-- SECTION ABOUT & PORTFOLIO -->
               <div class="toc-section-card">
-                <div class="toc-sec-header">
+                <div class="toc-sec-header" onclick="jumpToSection('about')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION V.</span>
                     <span data-i18n="toc_sec7_title">연구자 프로필 및 후원 (About)</span>
                   </div>
-                  <button class="btn btn-sm btn-secondary" onclick="jumpToSection('about')" data-i18n="btn_view_suite">열기 ➔</button>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec7_desc">
                   연구자 약력, X선 광학·BCDI 연구 분야, 연락처 및 프로젝트 후원
@@ -1403,24 +1430,6 @@
 
             </div>
 
-          </div>
-
-          <!-- Quick Constants -->
-          <div class="flex-row">
-            <div class="col-6">
-              <div class="card">
-                <div class="card-body">
-                  <div style="font-size:12px; line-height:1.75;">
-                    <div><strong><i class="formula">hc</i></strong>: <span class="mono">12398.41984 eV·Å</span></div>
-                    <div><strong><i class="formula">hc</i></strong>: <span class="mono">1.239842 keV·nm</span></div>
-                    <div><strong><i class="formula">r</i><sub>e</sub> (<span data-i18n="qc_electron_radius">전자반경</span>)</strong>: <span class="mono">2.8179 × 10<sup>-15</sup> m</span></div>
-                    <div><strong><i class="formula">c</i> (<span data-i18n="qc_speed_of_light">광속</span>)</strong>: <span class="mono">299,792,458 m/s</span></div>
-                    <div><strong>Si(111) <i class="formula">d</i></strong>: <span class="mono">3.13560 Å</span></div>
-                    <div><strong>Ge(111) <i class="formula">d</i></strong>: <span class="mono">3.26636 Å</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -1435,44 +1444,148 @@
 
 
         <!-- =================================================================
-             4. RECORD VIEW — session context, quick log, session template
+             3. RECORD VIEW — Plain-Text Logbook Presets & In-Situ Event Snippets
              ================================================================= -->
         <section id="view-record" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2 data-i18n="b_rec_title">RECORD — 실험 세션 기록</h2>
-              <p data-i18n="b_rec_desc">한 번의 클릭으로 남기는 로그. 모든 항목은 선택 사항입니다.</p>
-            </div>
-            <div class="banner-actions">
-              <button class="btn btn-sm btn-secondary" onclick="copySessionLog()" data-i18n="rec_btn_copy_log">세션 로그 복사</button>
+              <h2 data-i18n="b_rec_title">RECORD — 빔타임 로그북 서식 &amp; 실시간 이벤트 스니펫</h2>
+              <p data-i18n="b_rec_desc">연구 노트(ELN / Notion / Paper)용 표준 플레인 텍스트 서식 및 원클릭 타임스탬프 스니펫</p>
             </div>
           </div>
 
-          <!-- Session context: one compact line, expanded only on demand -->
-          <div id="rec-session-bar" class="rec-session-bar"></div>
-
-          <!-- 1. QUICK LOG — the first thing on screen -->
-          <div class="card" id="card-record-quicklog">
-            <div class="card-header">
-              <span class="card-title" data-i18n="rec_card_quick">§ 1. QUICK LOG</span>
-              <span class="badge" id="rec-log-count">0 logs</span>
+          <div class="flex-row">
+            <!-- § 1. Logbook Header Presets -->
+            <div class="col-12">
+              <div class="card" id="card-record-headers">
+                <div class="card-header">
+                  <span class="card-title">§ 1. BEAMTIME LOGBOOK HEADER PRESETS</span>
+                  <span class="card-tag">Plain Text Format</span>
+                </div>
+                <div class="card-body">
+                  <div class="rec-tpl-tabs">
+                    <button class="btn btn-sm btn-primary active" id="tab-tpl-standard" onclick="selectLogbookTab('standard')">Standard Beamtime</button>
+                    <button class="btn btn-sm btn-secondary" id="tab-tpl-shift" onclick="selectLogbookTab('shift')">Shift Handover</button>
+                    <button class="btn btn-sm btn-secondary" id="tab-tpl-runs" onclick="selectLogbookTab('runs')">Run Sequence Matrix</button>
+                  </div>
+                  
+                  <div class="rec-tpl-box">
+                    <pre class="rec-tpl-preview mono" id="logbook-tpl-preview"></pre>
+                    <div class="rec-tpl-copy-bar">
+                      <button class="btn btn-sm btn-primary" onclick="copyActiveTemplate()" style="font-weight:700;">Copy Header to Clipboard</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="card-body">
-              <div id="rec-quick-buttons" class="rec-quick-row"></div>
-              <div id="rec-custom-box" class="rec-custom-box" style="display:none;"></div>
-              <div class="rec-log-list-title" data-i18n="rec_recent_title">RECENT LOGS</div>
-              <div id="rec-log-list"></div>
-            </div>
-          </div>
 
-          <!-- 2. SESSION TEMPLATE — footer weight, collapsed until asked for -->
-          <div class="rec-tpl" id="card-record-template">
-            <button type="button" class="rec-tpl-toggle" onclick="toggleTemplate()">
-              <span class="rec-tpl-caret" id="rec-tpl-caret">&#9656;</span>
-              <span class="rec-tpl-label" data-i18n="rec_card_tpl">§ 2. SESSION TEMPLATE</span>
-              <span class="rec-tpl-hint" data-i18n="rec_tpl_hint">외부 로그북용 서식 헤더 생성</span>
-            </button>
-            <div class="rec-tpl-panel" id="rec-tpl-panel" style="display:none;"></div>
+            <!-- § 2. In-Situ Quick Snippets -->
+            <div class="col-12">
+              <div class="card" id="card-record-snippets">
+                <div class="card-header">
+                  <span class="card-title">§ 2. IN-SITU BEAMTIME EVENT SNIPPETS</span>
+                  <span class="card-tag">One-Click Timestamped Copy</span>
+                </div>
+                <div class="card-body">
+                  <div class="rec-memo-grid">
+                    <!-- Memo Card 1 -->
+                    <div class="rec-memo-card alert" onclick="triggerSnippet('beam_dump', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">BEAM DUMP</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> BEAM DUMP: Storage ring beam lost (0 mA). Beamline standby.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 2 -->
+                    <div class="rec-memo-card success" onclick="triggerSnippet('beam_restored', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">BEAM RESTORED</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> BEAM RESTORED: Top-up injection nominal (300 mA). Hutch shutter opened.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 3 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('sample_mount', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SAMPLE MOUNT</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SAMPLE MOUNT: Sample <span class="snip-ph">[            ]</span> mounted on stage.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 4 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('beam_align', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">ALIGNMENT</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> ALIGNMENT: Direct beam, pinhole, and slits centered. Counts: <span class="snip-ph">[      ]</span> ph/s.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 5 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('calibration', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">CALIBRATION</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> CALIBRATION: Standard (LaB6 / AgBh / CeO2) calibration measured.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 6 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('scan_start', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SCAN START</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SCAN START: Run #<span class="snip-ph">[    ]</span> started (Exp: <span class="snip-ph">[  ]</span> s, Attn: <span class="snip-ph">[  ]</span> dB).
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 7 -->
+                    <div class="rec-memo-card success" onclick="triggerSnippet('scan_finish', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SCAN FINISH</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SCAN FINISH: Run #<span class="snip-ph">[    ]</span> completed. 2D frames saved.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 8 -->
+                    <div class="rec-memo-card alert" onclick="triggerSnippet('interlock', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">INTERLOCK</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> INTERLOCK: Hutch search / Interlock / Motor error / Alarm triggered.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Custom Memo Input -->
+                  <div class="rec-custom-row">
+                    <input type="text" id="rec-custom-input" class="form-control mono" placeholder="Custom note to copy with timestamp..." onkeydown="if(event.key==='Enter') addCustomNote()">
+                    <button class="btn btn-sm btn-primary" onclick="addCustomNote()" style="flex-shrink:0; font-weight:700;">Copy Custom Note</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1521,7 +1634,7 @@
                 <div class="card-body">
                   <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 테마: 학술 논문 (Academic Paper)</div>
                   <div style="font-size:11px; color:var(--ink-secondary); margin-bottom:10px;" id="settings-theme-desc" data-i18n="theme_desc">
-                    네 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.
+                    일곱 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.
                   </div>
 
                   <div class="theme-picker">
@@ -1541,13 +1654,22 @@
                       </span>
                     </button>
 
+                    <button id="btn-theme-datasheet" class="theme-swatch" onclick="applyTheme('datasheet')">
+                      <span class="theme-chip theme-chip-datasheet"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_datasheet_name">공학 데이터시트 (Technical Datasheet)</strong>
+                        <em data-i18n="theme_datasheet_desc">쿨 화이트 종이 + 제도용 네이비 잉크 + 밀리미터 방안 그리드 스펙시트</em>
+                      </span>
+                    </button>
+
                     <button id="btn-theme-blueprint" class="theme-swatch" onclick="applyTheme('blueprint')">
                       <span class="theme-chip theme-chip-blueprint"></span>
                       <span class="theme-swatch-text">
-                        <strong data-i18n="theme_blueprint_name">청사진 그리드 (Engineering Blueprint)</strong>
-                        <em data-i18n="theme_blueprint_desc">밀리미터 모눈종이와 엔지니어링 도면 감성의 청색 그리드</em>
+                        <strong data-i18n="theme_blueprint_name">사이아노타입 청사진 (Cyanotype Blueprint)</strong>
+                        <em data-i18n="theme_blueprint_desc">딥 프러시안 블루 도면 + 초크 화이트/시안 선화 엔지니어링 청사진</em>
                       </span>
                     </button>
+
                     <button id="btn-theme-crt" class="theme-swatch" onclick="applyTheme('crt')">
                       <span class="theme-chip theme-chip-crt"></span>
                       <span class="theme-swatch-text">
@@ -1563,6 +1685,7 @@
                         <em data-i18n="theme_tokyo_desc">모던 네온 블루/퍼플 다크, 고가독성</em>
                       </span>
                     </button>
+
                     <button id="btn-theme-console" class="theme-swatch" onclick="applyTheme('console')">
                       <span class="theme-chip theme-chip-console"></span>
                       <span class="theme-swatch-text">
@@ -1575,33 +1698,11 @@
               </div>
             </div>
 
-            <!-- 2. Data Backup and Restore -->
-            <div class="col-6">
-              <div class="card" id="card-set-backup">
-                <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_backup_title">§ 3. 로컬스토리지 데이터 백업 및 복원</span>
-                </div>
-                <div class="card-body">
-                  <p style="font-size:12px; color:var(--ink-secondary); margin-bottom:12px;" data-i18n-html="set_backup_desc">
-                    모든 로그북, 실험 노트, 시료 목록, 체크리스트 및 계산 히스토리는 브라우저의 <code>localStorage</code>에 안전하게 저장됩니다.
-                    다른 PC나 브라우저로 이동할 때 JSON 파일로 내보내거나 가져올 수 있습니다.
-                  </p>
-                  <div style="display:flex; align-items:center;">
-                    <button class="btn btn-primary" onclick="backupAllData()" style="margin-right:10px;" data-i18n="btn_backup_download">전체 백업 다운로드</button>
-                    <label class="btn btn-secondary" style="margin:0; cursor:pointer;">
-                      <span data-i18n="btn_backup_restore">백업 파일 복원</span>
-                      <input type="file" accept=".json" style="display:none;" onchange="restoreAllData(event)">
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 3. Keyboard Shortcuts -->
-            <div class="col-6">
+            <!-- 2. Keyboard Shortcuts -->
+            <div class="col-12">
               <div class="card" id="card-set-shortcuts">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 4. 키보드 단축키 안내 (Keyboard Shortcuts)</span>
+                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 3. 키보드 단축키 안내 (Keyboard Shortcuts)</span>
                 </div>
                 <div class="card-body">
                   <table class="lab-table">
@@ -1628,7 +1729,7 @@
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 6]</code></td>
-                        <td data-i18n="sc_6">CONTENTS 이동</td>
+                        <td data-i18n="sc_6">INDEX 이동</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1649,7 +1750,7 @@
             <p class="about-tagline" data-i18n="about_tagline">
               방사광 X선 실험을 위한 가벼운 계산·기록 툴킷.
             </p>
-            <p class="about-version mono">Version 1.1 &middot; Offline-ready &middot; No account, no server</p>
+            <p class="about-version mono">Version 1.4 &middot; Offline-ready &middot; No account, no server</p>
           </div>
 
           <div class="about-links">
@@ -1722,7 +1823,7 @@
           </div>
 
           <div class="about-footer">
-            <div class="about-footer-line mono">X-Ray Beamline Toolkit &middot; v1.1 &middot; MIT License</div>
+            <div class="about-footer-line mono">X-Ray Beamline Toolkit &middot; v1.4 &middot; MIT License</div>
             <div class="about-footer-meta">
               <span data-i18n="about_developed_by">Developed by</span>
               <a href="mailto:isaacyong@naver.com">Isaac Yong</a>
@@ -1732,103 +1833,6 @@
             </div>
           </div>
         </section>
-
-        <!-- =================================================================
-             ACADEMIC REFERENCE FOOTER (CODATA Fundamental Physical Constants)
-             ================================================================= -->
-        <footer id="academic-footer">
-          <div class="footer-title">CODATA FUNDAMENTAL PHYSICAL CONSTANTS & BEAMLINE SPECIFICATIONS</div>
-          <table class="footer-constants-table">
-            <thead>
-              <tr>
-                <th>물리량 (Quantity)</th>
-                <th>기호 (Symbol)</th>
-                <th>정밀 수치 (Value)</th>
-                <th>단위 (SI / Conventional)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>진공 중 광속 (Speed of Light in Vacuum)</td>
-                <td><i class="formula">c</i></td>
-                <td>299,792,458</td>
-                <td>m·s<sup>-1</sup> (Exact)</td>
-              </tr>
-              <tr>
-                <td>플랑크 상수 (Planck Constant)</td>
-                <td><i class="formula">h</i></td>
-                <td>6.62607015 × 10<sup>-34</sup></td>
-                <td>J·s (Exact)</td>
-              </tr>
-              <tr>
-                <td>디랙 상수 (Reduced Planck Constant)</td>
-                <td><i class="formula">ħ</i></td>
-                <td>1.054571817 × 10<sup>-34</sup></td>
-                <td>J·s</td>
-              </tr>
-              <tr>
-                <td>광자 에너지-파장 적 (hc Product)</td>
-                <td><i class="formula">hc</i></td>
-                <td>12398.41984</td>
-                <td>eV·Å (1.239841984 keV·nm)</td>
-              </tr>
-              <tr>
-                <td>기본 전하 (Elementary Charge)</td>
-                <td><i class="formula">e</i></td>
-                <td>1.602176634 × 10<sup>-19</sup></td>
-                <td>C (Exact)</td>
-              </tr>
-              <tr>
-                <td>고전 전자 반경 (Classical Electron Radius)</td>
-                <td><i class="formula">r</i><sub>e</sub></td>
-                <td>2.8179403262 × 10<sup>-15</sup></td>
-                <td>m</td>
-              </tr>
-              <tr>
-                <td>아보가드로 상수 (Avogadro Constant)</td>
-                <td><i class="formula">N</i><sub>A</sub></td>
-                <td>6.02214076 × 10<sup>23</sup></td>
-                <td>mol<sup>-1</sup> (Exact)</td>
-              </tr>
-              <tr>
-                <td>볼츠만 상수 (Boltzmann Constant)</td>
-                <td><i class="formula">k</i><sub>B</sub></td>
-                <td>1.380649 × 10<sup>-23</sup></td>
-                <td>J·K<sup>-1</sup> (Exact)</td>
-              </tr>
-              <tr>
-                <td>전자 정지 질량 (Electron Rest Mass)</td>
-                <td><i class="formula">m</i><sub>e</sub></td>
-                <td>9.1093837015 × 10<sup>-31</sup></td>
-                <td>kg (0.510998950 MeV/<i class="formula">c</i><sup>2</sup>)</td>
-              </tr>
-              <tr>
-                <td>미세구조 상수 (Fine-structure Constant)</td>
-                <td><i class="formula">α</i></td>
-                <td>7.2973525693 × 10<sup>-3</sup></td>
-                <td>1 / 137.035999084</td>
-              </tr>
-              <tr>
-                <td>실리콘 Si(111) 격자면 간격</td>
-                <td><i class="formula">d</i><sub>Si(111)</sub></td>
-                <td>3.13560</td>
-                <td>Å (<i class="formula">a</i> = 5.43102 Å, 298.15 K)</td>
-              </tr>
-              <tr>
-                <td>게르마늄 Ge(111) 격자면 간격</td>
-                <td><i class="formula">d</i><sub>Ge(111)</sub></td>
-                <td>3.26636</td>
-                <td>Å (<i class="formula">a</i> = 5.65750 Å, 298.15 K)</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="footer-meta">
-            <span>BEAMLINE TOOLKIT — TECHNICAL COMPUTATION AND LOGBOOK SYSTEM</span>
-            <span>PUBLICATION FORMAT: MONOGRAPH / DATASHEET</span>
-            <span>PRINT READY: CTRL + P</span>
-          </div>
-        </footer>
 
       </main>
 
@@ -1840,19 +1844,19 @@
   <div id="toast-container"></div>
 
   <!-- Load Scripts in Dependency Order (CentOS 7 Offline-Safe) -->
-  <script src="js/data.js?v=1.1"></script>
-  <script src="js/i18n.js?v=1.1"></script>
-  <script src="js/app.js?v=1.1"></script>
-  <script src="js/optics.js?v=1.1"></script>
-  <script src="js/beamline.js?v=1.1"></script>
-  <script src="js/lattice.js?v=1.1"></script>
-  <script src="js/validity.js?v=1.1"></script>
-  <script src="js/miniplot.js?v=1.1"></script>
-  <script src="js/record.js?v=1.1"></script>
-  <script src="js/settings.js?v=1.1"></script>
+  <script src="js/data.js?v=1.4"></script>
+  <script src="js/i18n.js?v=1.4"></script>
+  <script src="js/app.js?v=1.4"></script>
+  <script src="js/optics.js?v=1.4"></script>
+  <script src="js/beamline.js?v=1.4"></script>
+  <script src="js/lattice.js?v=1.4"></script>
+  <script src="js/validity.js?v=1.4"></script>
+  <script src="js/miniplot.js?v=1.4"></script>
+  <script src="js/record.js?v=1.4"></script>
+  <script src="js/settings.js?v=1.4"></script>
 
   <script>
-    // The CONTENTS view is static markup; nothing to render.
+    // The INDEX view is static markup; nothing to render.
     window.renderDashboard = function () {};
   </script>
 </body>

@@ -20,29 +20,17 @@
       b_gonio_title: "GONIOMETRY — 각도·기하 배치",
       b_gonio_desc: "브래그 각도, 상호공간 Q 벡터, 빔 풋프린트와 디텍터 기하 계산",
       nav_record: "III. RECORD",
-      nav_dashboard_index: "0. CONTENTS (목차)",
+      nav_dashboard_index: "CONTENTS",
 
 
 
 
 
       // RECORD view
-      b_rec_title: "RECORD — 실험 세션 기록",
-      b_rec_desc: "한 번의 클릭으로 남기는 로그. 모든 항목은 선택 사항입니다.",
-      rec_card_quick: "§ 1. QUICK LOG",
-      rec_card_tpl: "§ 2. SESSION TEMPLATE",
-      rec_recent_title: "RECENT LOGS",
-      rec_no_session: "진행 중인 세션 없음 — 세션 없이도 로그는 남길 수 있습니다.",
-      rec_no_context: "필요한 항목만 채우십시오. 빈 칸은 헤더에서 자동으로 빠집니다.",
-      rec_session_name_ph: "세션 이름 (예: Si-111 BCDI)",
-      rec_untitled_session: "Untitled Session",
-      rec_btn_start: "세션 시작",
-      rec_btn_resume: "이어서",
-      rec_btn_end: "세션 종료",
-      rec_btn_edit_ctx: "세부 정보 편집",
-      rec_btn_save_ctx: "저장",
-      rec_btn_cancel: "취소",
-      rec_btn_save: "저장",
+      b_rec_title: "RECORD — 방사광 빔타임 로그북 & 실시간 기록",
+      b_rec_desc: "연구 노트(ELN/Notion/Paper)용 표준 템플릿과 빔타임 이벤트 1클릭 복사 스니펫",
+      rec_btn_clear_log: "타임라인 비우기",
+      rec_btn_copy_all: "전체 타임라인 복사",
       rec_btn_save_note: "노트 저장",
       rec_btn_copy_log: "세션 로그 복사",
       rec_session_started: "세션이 시작되었습니다.",
@@ -75,6 +63,8 @@
       rec_note_saved: "노트가 저장되었습니다.",
       rec_note_ph: "한두 문장의 추가 설명...",
       rec_copied: "클립보드에 복사되었습니다.",
+      btn_copy_results: "결과값 전체 복사",
+      copy_val_copied: "값이 복사되었습니다.",
       rec_d_type: "Type",
       rec_d_severity: "Severity",
       rec_d_note: "Note",
@@ -101,7 +91,7 @@
       toast_backup_downloaded: "전체 데이터 백업 파일이 저장되었습니다.",
       toast_backup_restored: "백업 데이터가 복원되었습니다.",
       alert_backup_invalid: "백업 파일을 읽지 못했습니다: JSON 형식이 올바르지 않습니다.",
-      set_card_shortcuts_title: "§ 4. 키보드 단축키 안내",
+      set_card_shortcuts_title: "§ 3. 키보드 단축키 안내",
 
 
       // ABOUT view — project information first, funding demoted to the footer
@@ -137,7 +127,7 @@
       sc_3: "RECORD 이동",
       sc_4: "SETTINGS 이동",
       sc_5: "ABOUT 이동",
-      sc_6: "CONTENTS 이동",
+      sc_6: "INDEX 이동",
 
       res_scatt_q: "산란 벡터 Q",
 
@@ -211,17 +201,20 @@
       mp_y_fwhm: "FWHM (mm)",
       mp_sample: "시료",
 
-      // Themes (4 palettes)
+      // Themes (7 palettes)
       theme_current_prefix: "현재 테마:",
-      theme_desc: "여섯 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.",
+      theme_desc: "일곱 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.",
       theme_paper_name: "학술 논문 (Academic Paper)",
       theme_paper_desc: "미색 종이 + 잉크 블랙 + 옥스퍼드 네이비 — 기본 인쇄 규격",
       theme_paper_short: "논문",
       theme_parchment_name: "빈티지 양피지 (Vintage Parchment)",
       theme_parchment_desc: "누렇게 바랜 연구 노트 + 짙은 밤색 잉크 — 눈이 편안한 휴식용",
       theme_parchment_short: "양피지",
-      theme_blueprint_name: "청사진 그리드 (Engineering Blueprint)",
-      theme_blueprint_desc: "밀리미터 모눈종이와 엔지니어링 도면 감성의 청색 그리드",
+      theme_datasheet_name: "공학 데이터시트 (Technical Datasheet)",
+      theme_datasheet_desc: "쿨 화이트 종이 + 제도용 네이비 잉크 + 밀리미터 방안 그리드 스펙시트",
+      theme_datasheet_short: "데이터시트",
+      theme_blueprint_name: "사이아노타입 청사진 (Cyanotype Blueprint)",
+      theme_blueprint_desc: "딥 프러시안 블루 도면 + 초크 화이트/시안 선화 엔지니어링 청사진",
       theme_blueprint_short: "청사진",
       theme_console_name: "제어실 콘솔 (Beamline Control Room)",
       theme_console_desc: "실제 가속기 제어실(EPICS) 스타일의 초고대비 산업용 다크 모드",
@@ -245,7 +238,7 @@
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
-      toc_maintitle: "CONTENTS (목차)",
+      toc_maintitle: "INDEX",
       toc_subtitle: "방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인",
       btn_view_suite: "열기 ➔",
       toc_sec1_title: "분광 — 에너지, 파장, 물질 상호작용",
@@ -266,12 +259,12 @@
       toc_tool_beam_4: "디텍터 각도 분해능 (Angular Res)",
       toc_tool_beam_5: "CDI / BCDI 결맞음 오버샘플링",
       toc_tool_beam_6: "슬릿 간격 및 빔 수용각",
-      toc_tool_beam_7: "결정 열팽창 각도·에너지 시프트",
-      toc_sec3_title: "실험 세션 기록 (Record)",
-      toc_sec3_desc: "세션 컨텍스트, 원클릭 퀵 로그, 외부 로그북용 세션 템플릿",
-      toc_tool_rec_1: "세션 컨텍스트 (Session)",
-      toc_tool_rec_2: "퀵 로그 & 타임라인 (Quick Log)",
-      toc_tool_rec_3: "세션 템플릿 (Session Template)",
+      toc_tool_beam_7: "결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)",
+      toc_tool_constants: "기본 물리 상수 및 결정 격자 레퍼런스",
+      toc_sec3_title: "로그북 & 실시간 기록 (Record)",
+      toc_sec3_desc: "연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫",
+      toc_tool_rec_1: "빔타임 로그북 서식 프리셋 (Logbook Headers)",
+      toc_tool_rec_2: "실시간 빔타임 이벤트 스니펫 (In-Situ Snippets)",
       toc_sec6_title: "환경설정 및 아카이브 (Settings)",
       toc_sec6_desc: "언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드",
       toc_tool_set_1: "언어 설정 (Language Selection)",
@@ -434,7 +427,7 @@
       th_email: "이메일 (Email)",
       th_github: "깃허브 (GitHub)",
       th_repo: "프로젝트 저장소",
-      btn_sponsor_gh: "☕ GitHub Sponsors 후원하기 ➔"
+      btn_sponsor_gh: "GitHub Sponsors 후원하기 ➔"
     },
     en: {
       // Navigation & Sidebar
@@ -450,7 +443,7 @@
       b_gonio_title: "GONIOMETRY — Angles & Geometry",
       b_gonio_desc: "Bragg angles, reciprocal-space Q, beam footprint and detector geometry",
       nav_record: "III. RECORD",
-      nav_dashboard_index: "0. CONTENTS",
+      nav_dashboard_index: "CONTENTS",
 
 
 
@@ -505,6 +498,8 @@
       rec_note_saved: "Note saved.",
       rec_note_ph: "A sentence or two of extra detail...",
       rec_copied: "Copied to clipboard.",
+      btn_copy_results: "Copy all results",
+      copy_val_copied: "Value copied to clipboard.",
       rec_d_type: "Type",
       rec_d_severity: "Severity",
       rec_d_note: "Note",
@@ -547,7 +542,7 @@
       sc_3: "Jump to RECORD",
       sc_4: "Jump to SETTINGS",
       sc_5: "Jump to ABOUT",
-      sc_6: "Jump to CONTENTS",
+      sc_6: "Jump to INDEX",
 
       res_scatt_q: "Scattering Vector Q",
 
@@ -621,17 +616,20 @@
       mp_y_fwhm: "FWHM (mm)",
       mp_sample: "Sample",
 
-      // Themes (4 palettes)
+      // Themes (7 palettes)
       theme_current_prefix: "Current theme:",
-      theme_desc: "Pick one of four palettes. Layout and print specification stay identical across all themes.",
+      theme_desc: "Pick one of seven themes. Layout and print specification stay identical across all themes.",
       theme_paper_name: "Academic Paper",
       theme_paper_desc: "Off-white paper, ink black, Oxford navy — the default print specification",
       theme_paper_short: "Paper",
       theme_parchment_name: "Vintage Parchment",
       theme_parchment_desc: "Aged notebook stock with deep sepia ink — warm and easy on the eyes",
       theme_parchment_short: "Vintage",
-      theme_blueprint_name: "Engineering Blueprint",
-      theme_blueprint_desc: "Millimetre graph paper and drafting-blue grid, straight off a drawing board",
+      theme_datasheet_name: "Technical Datasheet",
+      theme_datasheet_desc: "Cool white paper, drafting navy ink & millimetre graph spec sheet",
+      theme_datasheet_short: "Datasheet",
+      theme_blueprint_name: "Cyanotype Blueprint",
+      theme_blueprint_desc: "Deep Prussian blue drafting board with chalk white & cyan lines",
       theme_blueprint_short: "Blueprint",
       theme_console_name: "Beamline Control Room",
       theme_console_desc: "Very high contrast industrial dark mode, styled after an EPICS console",
@@ -656,7 +654,7 @@
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
-      toc_maintitle: "CONTENTS",
+      toc_maintitle: "INDEX",
       toc_subtitle: "Comprehensive Index of Synchrotron Optics, Beamline Physics & Experimental Suites",
       btn_view_suite: "Open Suite ➔",
       toc_sec1_title: "Spectroscopy — Energy, Wavelength & Matter",
@@ -677,12 +675,12 @@
       toc_tool_beam_4: "Detector Angular Resolution & Geometry",
       toc_tool_beam_5: "CDI / BCDI Coherent Oversampling",
       toc_tool_beam_6: "Slit Aperture Opening & Acceptance",
-      toc_tool_beam_7: "Crystal Thermal Expansion & Drift",
-      toc_sec3_title: "Experiment Session Record",
-      toc_sec3_desc: "Session context, one-click quick logs, and session templates for external logbooks",
-      toc_tool_rec_1: "Session Context",
-      toc_tool_rec_2: "Quick Log & Timeline",
-      toc_tool_rec_3: "Session Template",
+      toc_tool_beam_7: "Crystal Thermal Expansion & Angular Drift",
+      toc_tool_constants: "Fundamental Physical Constants & Reference Data",
+      toc_sec3_title: "Logbook & Live Records",
+      toc_sec3_desc: "Standard logbook templates for lab notebooks and 1-click in-situ beamtime event snippets",
+      toc_tool_rec_1: "Beamtime Logbook Header Presets",
+      toc_tool_rec_2: "In-Situ Quick Log Snippets",
       toc_sec6_title: "System Settings & Archive",
       toc_sec6_desc: "Language selection, high-contrast theme, calculation run logs, JSON backup & keyboard shortcuts",
       toc_tool_set_1: "Language Selection",
@@ -713,7 +711,7 @@
       toast_backup_downloaded: "Full data backup file saved.",
       toast_backup_restored: "Backup data restored successfully.",
       alert_backup_invalid: "Failed to read backup file: Invalid JSON format.",
-      set_card_shortcuts_title: "§ 4. Keyboard Shortcuts",
+      set_card_shortcuts_title: "§ 3. Keyboard Shortcuts",
 
       // Dashboard Old Fallbacks
       btn_open_optics: "Open Optics Suite",
@@ -864,7 +862,7 @@
       th_email: "Email",
       th_github: "GitHub",
       th_repo: "Project Repository",
-      btn_sponsor_gh: "☕ Sponsor on GitHub Sponsors ➔"
+      btn_sponsor_gh: "Sponsor on GitHub Sponsors ➔"
     }
   };
 
@@ -968,7 +966,7 @@
       }
 
       // 6. Theme picker: current-theme label, swatch state, sidebar buttons
-      var themeList = window.THEMES || ["paper", "parchment", "blueprint", "crt", "tokyo", "console"];
+      var themeList = window.THEMES || ["paper", "parchment", "datasheet", "blueprint", "crt", "tokyo", "console"];
       var activeTheme = document.documentElement.getAttribute("data-theme") || "paper";
 
       var themeCur = document.getElementById("settings-theme-current");
@@ -1001,6 +999,11 @@
             breadcrumb.textContent = t[rKey].replace(/^[0-9]\.\s*/, "").split("(")[0].trim();
           }
         }
+      }
+
+      // 11. Refresh copy buttons and tooltips
+      if (window.initResultBoxCopy) {
+        window.initResultBoxCopy();
       }
     }
   };

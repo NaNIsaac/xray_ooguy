@@ -149,6 +149,232 @@
     }, 3200);
   }
 
+  // ------------------------------------------------------------------
+  // Clipboard Copy & Universal Result Box Copy System
+  // ------------------------------------------------------------------
+  function copyTextToClipboard(text, successMsg) {
+    if (!text) return;
+    var trimmed = String(text).trim();
+    if (!trimmed || trimmed === "-") return;
+
+    var msg = successMsg || (window.i18n ? window.i18n.t("rec_copied") : "클립보드에 복사되었습니다.");
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(trimmed).then(function () {
+        if (window.showToast) window.showToast(msg, "info");
+      }).catch(function () {
+        fallbackCopyText(trimmed, msg);
+      });
+      return;
+    }
+    fallbackCopyText(trimmed, msg);
+  }
+
+  function fallbackCopyText(text, msg) {
+    try {
+      var temp = document.createElement("textarea");
+      temp.value = text;
+      temp.style.position = "fixed";
+      temp.style.top = "-9999px";
+      temp.style.left = "-9999px";
+      temp.style.opacity = "0";
+      temp.setAttribute("readonly", "");
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+      if (window.showToast) window.showToast(msg, "info");
+    } catch (e) {
+      console.warn("Fallback copy failed:", e);
+    }
+  }
+
+  function cleanElementText(el) {
+    if (!el) return "";
+    var clone = el.cloneNode(true);
+    var copyBtns = clone.querySelectorAll(".result-box-copy-btn, button, .badge");
+    for (var b = 0; b < copyBtns.length; b++) {
+      if (copyBtns[b].parentNode) {
+        copyBtns[b].parentNode.removeChild(copyBtns[b]);
+      }
+    }
+    var sups = clone.querySelectorAll("sup");
+    for (var s = 0; s < sups.length; s++) {
+      sups[s].textContent = "^" + sups[s].textContent;
+    }
+    var subs = clone.querySelectorAll("sub");
+    for (var u = 0; u < subs.length; u++) {
+      subs[u].textContent = "_" + subs[u].textContent;
+    }
+    return (clone.innerText || clone.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function findClosest(el, selector) {
+    if (!el) return null;
+    if (el.closest) return el.closest(selector);
+    var parent = el.parentElement;
+    while (parent) {
+      if (parent.matches && parent.matches(selector)) return parent;
+      parent = parent.parentElement;
+    }
+    return null;
+  }
+
+  function extractResultBoxText(box) {
+    if (!box) return "";
+    var lines = [];
+
+    // 1. Bragg calc row
+    var braggRow = findClosest(box, ".bragg-calc-row");
+    if (braggRow) {
+      var headerEl = braggRow.querySelector("div");
+      var titleText = headerEl ? cleanElementText(headerEl) : "Bragg Calc";
+      var inLabels = braggRow.querySelectorAll(".form-label");
+      var inInputs = braggRow.querySelectorAll("input.form-control");
+      var rVal = box.querySelector(".result-value");
+      var rSub = box.querySelector("[id*='-res-sub']");
+
+      lines.push("[" + titleText + "]");
+      var inParts = [];
+      for (var i = 0; i < inInputs.length; i++) {
+        var lbl = inLabels[i] ? cleanElementText(inLabels[i]) : ("Input " + (i + 1));
+        inParts.push(lbl + ": " + inInputs[i].value);
+      }
+      if (inParts.length) lines.push("• Inputs: " + inParts.join(", "));
+      if (rVal) lines.push("• Result: " + cleanElementText(rVal));
+      if (rSub) lines.push("• Detail: " + cleanElementText(rSub));
+      return lines.join("\n");
+    }
+
+    // 2. Card title context
+    var card = findClosest(box, ".card");
+    var cardTitle = card ? card.querySelector(".card-title") : null;
+    if (cardTitle) {
+      var tText = cleanElementText(cardTitle);
+      if (tText) lines.push("[" + tText + "]");
+    }
+
+    // 3. Single summary (e.g. optics-conv-summary)
+    var singleSummary = box.querySelector("#optics-conv-summary");
+    if (singleSummary) {
+      lines.push(cleanElementText(singleSummary));
+      return lines.join("\n");
+    }
+
+    // 4. Result grid items
+    var items = box.querySelectorAll(".result-item");
+    if (items.length > 0) {
+      for (var j = 0; j < items.length; j++) {
+        var labelEl = items[j].querySelector(".result-label");
+        var valEl = items[j].querySelector(".result-value");
+        if (valEl) {
+          var label = labelEl ? cleanElementText(labelEl) : "";
+          var val = cleanElementText(valEl);
+          if (val && val !== "-") {
+            lines.push("• " + (label ? label + ": " : "") + val);
+          }
+        }
+      }
+    } else {
+      var rVals = box.querySelectorAll(".result-value");
+      for (var v = 0; v < rVals.length; v++) {
+        var valT = cleanElementText(rVals[v]);
+        if (valT && valT !== "-") lines.push("• " + valT);
+      }
+    }
+
+    // 5. Result formula and notes
+    var formula = box.querySelector(".result-formula");
+    if (formula) {
+      var fText = cleanElementText(formula);
+      if (fText && fText !== "-") lines.push("  " + fText);
+    }
+    var note = box.querySelector(".result-note");
+    if (note) {
+      var nText = cleanElementText(note);
+      if (nText && nText !== "-") lines.push("  " + nText);
+    }
+
+    return lines.join("\n");
+  }
+
+  function initResultBoxCopy() {
+    var boxes = document.querySelectorAll(".result-box");
+    var copyTitle = (window.i18n ? window.i18n.t("btn_copy_results") : "결과값 전체 복사") || "Copy Results";
+
+    for (var i = 0; i < boxes.length; i++) {
+      var box = boxes[i];
+
+      // Insert copy button if not present
+      if (!box.querySelector(".result-box-copy-btn")) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "result-box-copy-btn";
+        btn.setAttribute("title", copyTitle);
+        btn.setAttribute("aria-label", copyTitle);
+        btn.innerHTML =
+          '<svg class="icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">' +
+            '<rect x="9" y="9" width="13" height="13"></rect>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>' +
+          '</svg>' +
+          '<svg class="icon-copied" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">' +
+            '<polyline points="20 6 9 17 4 12"></polyline>' +
+          '</svg>';
+
+        (function (b, targetBox) {
+          b.addEventListener("click", function (e) {
+            e.stopPropagation();
+            var text = extractResultBoxText(targetBox);
+            if (text) {
+              copyTextToClipboard(text);
+              b.classList.add("copied");
+              setTimeout(function () {
+                b.classList.remove("copied");
+              }, 1400);
+            }
+          });
+        })(btn, box);
+
+        box.appendChild(btn);
+      } else {
+        var existingBtn = box.querySelector(".result-box-copy-btn");
+        if (existingBtn) {
+          existingBtn.setAttribute("title", copyTitle);
+          existingBtn.setAttribute("aria-label", copyTitle);
+        }
+      }
+
+      // Add click-to-copy handler on individual result items
+      var items = box.querySelectorAll(".result-item");
+      for (var k = 0; k < items.length; k++) {
+        var item = items[k];
+        if (!item.hasAttribute("data-copy-bound")) {
+          item.setAttribute("data-copy-bound", "true");
+          item.setAttribute("title", "클릭하여 값 복사 / Click to copy");
+          (function (resItem) {
+            resItem.addEventListener("click", function (e) {
+              if (e.target && findClosest(e.target, ".result-box-copy-btn")) return;
+              var valEl = resItem.querySelector(".result-value");
+              var labelEl = resItem.querySelector(".result-label");
+              if (valEl) {
+                var valText = cleanElementText(valEl);
+                if (valText && valText !== "-") {
+                  var lblText = labelEl ? cleanElementText(labelEl) : "";
+                  var toastMsg = (lblText ? lblText + ": " : "") + valText;
+                  copyTextToClipboard(valText, toastMsg);
+                  resItem.classList.add("result-item-flash");
+                  setTimeout(function () {
+                    resItem.classList.remove("result-item-flash");
+                  }, 400);
+                }
+              }
+            });
+          })(item);
+        }
+      }
+    }
+  }
+
   // Record calculation to local history
   function recordCalculation(toolName, inputsStr, resultStr) {
     try {
@@ -185,13 +411,13 @@
       seoDesc: "Calculate the Bragg diffraction angle, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance and Eulerian cradle corrections."
     },
     record: {
-      title: "III. RECORD", subtitle: "실험 세션 기록",
-      seoTitle: "Beamtime Session Log & Logbook Header | X-Ray Beamline Toolkit",
-      seoDesc: "Log beamtime events in one click and generate a formatted session header to paste into your own logbook. Everything stays in your browser."
+      title: "III. RECORD", subtitle: "빔타임 로그북 서식 & 실시간 이벤트 스니펫",
+      seoTitle: "Beamtime Logbook Headers & Quick Event Snippets | X-Ray Beamline Toolkit",
+      seoDesc: "Plain-text beamtime logbook headers and one-click in-situ event snippets with real-time timestamps for lab notebooks."
     },
     dashboard: {
-      title: "0. CONTENTS", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",
-      seoTitle: "All Calculators — Contents | X-Ray Beamline Toolkit",
+      title: "INDEX", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",
+      seoTitle: "All Calculators — Index | X-Ray Beamline Toolkit",
       seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
     },
     settings: {
@@ -384,9 +610,9 @@
     navigateTo(route, targetCardId);
   }
 
-  // Theme Management — four palettes sharing one variable contract
-  var THEMES = ["paper", "parchment", "blueprint", "crt", "tokyo", "console"];
-  var DARK_THEMES = ["crt", "tokyo", "console"];
+  // Theme Management — seven palettes sharing one variable contract
+  var THEMES = ["paper", "parchment", "datasheet", "blueprint", "crt", "tokyo", "console"];
+  var DARK_THEMES = ["blueprint", "crt", "tokyo", "console"];
 
   function normalizeTheme(themeName) {
     // Migrate the pre-refactor light/dark pair onto the named palettes
@@ -503,6 +729,9 @@
   window.toggleTheme = toggleTheme;
   window.THEMES = THEMES;
   window.isDarkTheme = isDarkTheme;
+  window.copyTextToClipboard = copyTextToClipboard;
+  window.initResultBoxCopy = initResultBoxCopy;
+  window.extractResultBoxText = extractResultBoxText;
 
   // Initialize application
   function init() {
@@ -539,11 +768,13 @@
 
     startClock();
     setupShortcuts();
+    initResultBoxCopy();
 
     // Deferred by a tick so the calculator modules have registered their
     // runtime-built <select> options before saved values are written back.
     setTimeout(function () {
       if (restoreCalcInputs() > 0) recalcAll();
+      initResultBoxCopy();
     }, 0);
   }
 

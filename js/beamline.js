@@ -12,7 +12,152 @@
     return (window.i18n && window.i18n.t) ? window.i18n.t(key) : key;
   }
 
-  // --- 2.1 Beam Footprint Calculator ---
+  // --- 2.1 Beam Footprint Calculator & Geometric Diagram ---
+  function renderFootprintDiagram(beamV_um, beamH_um, incAngleDeg, sampleL_mm, footprint_mm, spilloverPct) {
+    var container = document.getElementById("fp-diagram-box");
+    if (!container) return;
+
+    if (isNaN(beamV_um) || beamV_um <= 0 || isNaN(incAngleDeg) || incAngleDeg <= 0) {
+      container.innerHTML = "";
+      return;
+    }
+
+    var clAngle = Math.min(90, Math.max(0.001, incAngleDeg));
+    var isVertical = (clAngle >= 89.99);
+
+    var hasSample = !isNaN(sampleL_mm) && sampleL_mm > 0;
+    var sampleLengthVal = hasSample ? sampleL_mm : 15;
+    var isSpill = hasSample && (footprint_mm > sampleLengthVal);
+    var coveragePct = hasSample ? Math.min(999, ((footprint_mm / sampleLengthVal) * 100)).toFixed(1) : "-";
+
+    var badgeClass = isSpill ? "fp-diagram-badge spill" : "fp-diagram-badge ok";
+    var badgeText = isSpill
+      ? "SPILLOVER (" + spilloverPct.toFixed(1) + "% LOSS)"
+      : (hasSample ? "100% IN SAMPLE (" + coveragePct + "%)" : "CALCULATED");
+
+    // Geometric mapping coordinates
+    var svgW = 380, svgH = 115;
+    var sampleX1 = 70, sampleX2 = 330, sampleW = 260;
+    var sampleY = 72, sampleH = 8;
+    var sampleCenter = 200;
+
+    // Footprint width mapping
+    var ratio = footprint_mm / sampleLengthVal;
+    var fpW_px;
+    if (ratio <= 1) {
+      fpW_px = Math.max(8, ratio * sampleW);
+    } else {
+      fpW_px = Math.min(360, sampleW + Math.min(100, (ratio - 1) * 70));
+    }
+
+    var fpX1 = Math.max(10, sampleCenter - fpW_px / 2);
+    var fpX2 = Math.min(370, sampleCenter + fpW_px / 2);
+
+    // Visual angle mapping: exactly 90 deg when 90, exact 1:1 above 15 deg, smooth grazing scale below 15 deg
+    var visAngleDeg;
+    if (isVertical) {
+      visAngleDeg = 90;
+    } else if (clAngle >= 15) {
+      visAngleDeg = clAngle;
+    } else {
+      visAngleDeg = 6 + clAngle * 0.6;
+    }
+    var visAngleRad = (visAngleDeg * Math.PI) / 180;
+
+    // Beam rays
+    var beamH_px = 46;
+    var beamTopY = sampleY - beamH_px;
+    var srcX1, srcX2;
+    if (isVertical) {
+      srcX1 = fpX1;
+      srcX2 = fpX2;
+    } else {
+      var beamShiftX = beamH_px / Math.tan(visAngleRad);
+      srcX1 = Math.max(5, fpX1 - beamShiftX);
+      srcX2 = Math.max(15, fpX2 - beamShiftX);
+    }
+
+    var svg = [];
+    svg.push('<svg class="fp-diagram-svg" viewBox="0 0 ' + svgW + ' ' + svgH + '" preserveAspectRatio="xMidYMid meet">');
+    
+    // Grid reference line
+    svg.push('<line x1="10" y1="' + sampleY + '" x2="370" y2="' + sampleY + '" stroke="var(--line-soft)" stroke-width="0.5" stroke-dasharray="2,2"/>');
+
+    // Incident Beam Cone Polygon
+    svg.push('<polygon points="' + srcX1 + ',' + beamTopY + ' ' + srcX2 + ',' + beamTopY + ' ' + fpX2 + ',' + sampleY + ' ' + fpX1 + ',' + sampleY + '" fill="var(--accent-ink)" fill-opacity="0.16" stroke="var(--accent-ink)" stroke-width="1" stroke-dasharray="3,2"/>');
+
+    // Center beam ray with direction
+    var srcMidX = (srcX1 + srcX2) / 2;
+    svg.push('<line x1="' + srcMidX + '" y1="' + beamTopY + '" x2="' + sampleCenter + '" y2="' + sampleY + '" stroke="var(--accent-ink)" stroke-width="1.5"/>');
+
+    // Incidence Angle indicator arc & text
+    if (isVertical) {
+      // Right angle square indicator
+      var sqSize = 10;
+      svg.push('<path d="M ' + (sampleCenter - sqSize) + ' ' + sampleY + ' L ' + (sampleCenter - sqSize) + ' ' + (sampleY - sqSize) + ' L ' + sampleCenter + ' ' + (sampleY - sqSize) + '" fill="none" stroke="var(--ink-secondary)" stroke-width="1.2"/>');
+      svg.push('<text x="' + (sampleCenter - sqSize - 4) + '" y="' + (sampleY - 14) + '" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--ink-primary)" font-weight="700">θ=90° (수직 입사)</text>');
+    } else {
+      var arcR = 24;
+      var arcStartX = sampleCenter - arcR;
+      var arcEndX = sampleCenter - arcR * Math.cos(visAngleRad);
+      var arcEndY = sampleY - arcR * Math.sin(visAngleRad);
+      svg.push('<path d="M ' + arcStartX + ' ' + sampleY + ' A ' + arcR + ' ' + arcR + ' 0 0 1 ' + arcEndX + ' ' + arcEndY + '" fill="none" stroke="var(--ink-secondary)" stroke-width="1.2"/>');
+      svg.push('<text x="' + (sampleCenter - arcR - 4) + '" y="' + (sampleY - 8) + '" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--ink-primary)" font-weight="700">θ=' + clAngle.toFixed(2) + '°</text>');
+    }
+
+    // Beam thickness callout
+    svg.push('<text x="' + Math.min(360, Math.max(10, srcMidX)) + '" y="' + (beamTopY - 4) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ink-secondary)">X-ray Beam (V=' + beamV_um + 'μm)</text>');
+
+    // Sample Stage Substrate
+    svg.push('<rect x="' + sampleX1 + '" y="' + sampleY + '" width="' + sampleW + '" height="' + sampleH + '" fill="var(--bg-paper-hover)" stroke="var(--ink-primary)" stroke-width="1.2"/>');
+    // Sample Stage mounting ticks
+    for (var tx = sampleX1 + 20; tx < sampleX2; tx += 20) {
+      svg.push('<line x1="' + tx + '" y1="' + (sampleY + sampleH) + '" x2="' + (tx - 5) + '" y2="' + (sampleY + sampleH + 4) + '" stroke="var(--line-soft)" stroke-width="0.8"/>');
+    }
+
+    // Footprint Layer on sample surface
+    if (isSpill) {
+      // Left spill
+      if (fpX1 < sampleX1) {
+        svg.push('<rect x="' + fpX1 + '" y="' + (sampleY - 3) + '" width="' + (sampleX1 - fpX1) + '" height="4" fill="#d32f2f" fill-opacity="0.35" stroke="#d32f2f" stroke-width="1" stroke-dasharray="2,2"/>');
+      }
+      // Right spill
+      if (fpX2 > sampleX2) {
+        svg.push('<rect x="' + sampleX2 + '" y="' + (sampleY - 3) + '" width="' + (fpX2 - sampleX2) + '" height="4" fill="#d32f2f" fill-opacity="0.35" stroke="#d32f2f" stroke-width="1" stroke-dasharray="2,2"/>');
+      }
+      // Inside sample portion
+      var inX1 = Math.max(sampleX1, fpX1);
+      var inX2 = Math.min(sampleX2, fpX2);
+      svg.push('<rect x="' + inX1 + '" y="' + (sampleY - 3) + '" width="' + (inX2 - inX1) + '" height="4" fill="var(--accent-ink)" stroke="var(--accent-ink)" stroke-width="1.2"/>');
+    } else {
+      svg.push('<rect x="' + fpX1 + '" y="' + (sampleY - 3) + '" width="' + (fpX2 - fpX1) + '" height="4" fill="var(--accent-ink)" stroke="var(--accent-ink)" stroke-width="1.2"/>');
+    }
+
+    // Footprint Dimension Bracket & Text (above sample)
+    var fpDimY = sampleY - 6;
+    svg.push('<line x1="' + fpX1 + '" y1="' + fpDimY + '" x2="' + fpX2 + '" y2="' + fpDimY + '" stroke="var(--ink-primary)" stroke-width="1"/>');
+    svg.push('<line x1="' + fpX1 + '" y1="' + (fpDimY - 3) + '" x2="' + fpX1 + '" y2="' + (fpDimY + 3) + '" stroke="var(--ink-primary)" stroke-width="1"/>');
+    svg.push('<line x1="' + fpX2 + '" y1="' + (fpDimY - 3) + '" x2="' + fpX2 + '" y2="' + (fpDimY + 3) + '" stroke="var(--ink-primary)" stroke-width="1"/>');
+    svg.push('<text x="' + sampleCenter + '" y="' + (fpDimY - 4) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="700" fill="' + (isSpill ? '#d32f2f' : 'var(--ink-primary)') + '">Footprint L = ' + footprint_mm.toFixed(3) + ' mm</text>');
+
+    // Sample Length Dimension Bracket & Text (below sample)
+    var sampleDimY = sampleY + sampleH + 8;
+    svg.push('<line x1="' + sampleX1 + '" y1="' + sampleDimY + '" x2="' + sampleX2 + '" y2="' + sampleDimY + '" stroke="var(--ink-secondary)" stroke-width="1"/>');
+    svg.push('<line x1="' + sampleX1 + '" y1="' + (sampleDimY - 3) + '" x2="' + sampleX1 + '" y2="' + (sampleDimY + 3) + '" stroke="var(--ink-secondary)" stroke-width="1"/>');
+    svg.push('<line x1="' + sampleX2 + '" y1="' + (sampleDimY - 3) + '" x2="' + sampleX2 + '" y2="' + (sampleDimY + 3) + '" stroke="var(--ink-secondary)" stroke-width="1"/>');
+    svg.push('<text x="' + sampleCenter + '" y="' + (sampleDimY + 11) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ink-secondary)">Sample Length = ' + (hasSample ? sampleL_mm.toFixed(1) + ' mm' : '15.0 mm (Default)') + '</text>');
+
+    svg.push('</svg>');
+
+    var html = '<div class="fp-diagram-header">' +
+      '<span class="fp-diagram-title">GEOMETRIC BEAM FOOTPRINT SCHEMATIC</span>' +
+      '<span class="' + badgeClass + '">' + badgeText + '</span>' +
+      '</div>' +
+      svg.join('');
+
+    container.innerHTML = html;
+  }
+
   function calcFootprint() {
     var beamH_um = parseFloat(document.getElementById("fp-beam-h").value);
     var beamV_um = parseFloat(document.getElementById("fp-beam-v").value);
@@ -21,7 +166,8 @@
 
     if (isNaN(beamV_um) || isNaN(incAngleDeg) || incAngleDeg <= 0) return;
 
-    var thetaRad = (incAngleDeg * Math.PI) / 180;
+    var clAngle = Math.min(90, Math.max(0.001, incAngleDeg));
+    var thetaRad = (clAngle * Math.PI) / 180;
     var sinTheta = Math.sin(thetaRad);
 
     var footprint_mm = (beamV_um / 1000) / sinTheta;
@@ -35,24 +181,29 @@
     var resSpill = document.getElementById("fp-res-spill");
     var resH = document.getElementById("fp-res-h");
 
-    resFp.innerHTML = footprint_mm.toFixed(3) + " mm (" + (footprint_mm * 1000).toFixed(0) + " μm)";
-    resH.innerHTML = beamH_um.toFixed(1) + " μm";
+    if (resFp) resFp.innerHTML = footprint_mm.toFixed(3) + " mm (" + (footprint_mm * 1000).toFixed(0) + " μm)";
+    if (resH) resH.innerHTML = beamH_um.toFixed(1) + " μm";
 
-    if (sampleL_mm > 0) {
-      if (spilloverPct > 0) {
-        resSpill.innerHTML = TXT("res_fp_spill") + " (" + spilloverPct.toFixed(1) + "%)";
-        resSpill.style.color = "var(--ink-primary)";
+    if (resSpill) {
+      if (sampleL_mm > 0) {
+        if (spilloverPct > 0) {
+          resSpill.innerHTML = TXT("res_fp_spill") + " (" + spilloverPct.toFixed(1) + "%)";
+          resSpill.style.color = "var(--ink-primary)";
+        } else {
+          resSpill.innerHTML = TXT("res_fp_ok") + " (" + ((footprint_mm / sampleL_mm) * 100).toFixed(1) + "%)";
+          resSpill.style.color = "var(--accent-ink)";
+        }
       } else {
-        resSpill.innerHTML = TXT("res_fp_ok") + " (" + ((footprint_mm / sampleL_mm) * 100).toFixed(1) + "%)";
-        resSpill.style.color = "var(--accent-ink)";
+        resSpill.innerHTML = TXT("res_fp_nolen");
+        resSpill.style.color = "var(--ink-muted)";
       }
-    } else {
-      resSpill.innerHTML = TXT("res_fp_nolen");
-      resSpill.style.color = "var(--ink-muted)";
     }
 
+    // Render Geometric Schematic
+    renderFootprintDiagram(beamV_um, beamH_um, clAngle, sampleL_mm, footprint_mm, spilloverPct);
+
     if (window.recordCalculation) {
-      window.recordCalculation("2.1 Beam Footprint", "V = " + beamV_um + " μm @ " + incAngleDeg + "°", "L = " + footprint_mm.toFixed(3) + " mm");
+      window.recordCalculation("2.1 Beam Footprint", "V = " + beamV_um + " μm @ " + clAngle + "°", "L = " + footprint_mm.toFixed(3) + " mm");
     }
   }
 
