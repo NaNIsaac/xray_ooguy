@@ -513,6 +513,80 @@ sub {
   margin: 6px 14px;
 }
 
+/* Section tree — the § items of the open suite, mirrored from the table of
+   contents. Set as an indented list in the margin of the section heading, the
+   way sub-entries sit under a chapter in a printed table of contents: no
+   panel, no fill, no boxes. The only furniture is a hairline standing in for
+   the margin rule, and it darkens beside the entry being read. */
+.nav-sub {
+  display: none;
+  margin: 1px 12px 7px 20px;
+  padding-left: 11px;
+  border-left: 1px solid var(--line-soft);
+}
+
+.nav-sub-open {
+  display: block;
+}
+
+.nav-sub-item {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  padding: 2.5px 0;
+  font-family: var(--font-serif);
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--ink-secondary);
+  text-decoration: none;
+  /* The global rule underlines every anchor and inverts it on hover; a list of
+     contents is not a page of links. */
+  border-bottom: none;
+}
+
+.nav-sub-item:hover {
+  color: var(--ink-primary);
+  background-color: transparent;
+}
+
+.nav-sub-item.active {
+  color: var(--ink-primary);
+}
+
+/* The margin rule darkens beside the current entry. Weight is deliberately
+   left alone: bolding a Korean line at 10.5px thickens it into a blob and
+   shifts the whole column. */
+.nav-sub-item.active::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 0.35em;
+  width: 1.5px;
+  height: 1em;
+  background-color: var(--ink-primary);
+}
+
+.nav-sub-num {
+  flex: 0 0 auto;
+  min-width: 1.5em;
+  margin-right: 7px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-faint);
+}
+
+.nav-sub-item.active .nav-sub-num {
+  color: var(--ink-primary);
+}
+
+.nav-sub-name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .nav-item-minor {
   font-size: 11.5px;
   color: var(--ink-secondary);
@@ -599,7 +673,12 @@ sub {
 /* ==========================================================================
    Dedicated Horizontal Tab Strip (Horizontally Scrollable, Highly Visible)
    ========================================================================== */
+/* The tab strip is the small-screen navigation: below 900px the sidebar is
+   hidden and this is all there is. On a desktop the sidebar already carries
+   the same five routes plus their section tree, so showing both was the same
+   list twice. */
 #top-tab-strip {
+  display: none;
   width: 100%;
   max-width: 100%;
   background-color: var(--bg-paper-subtle);
@@ -609,6 +688,12 @@ sub {
   z-index: 90;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  #top-tab-strip {
+    display: block;
+  }
 }
 
 .tab-strip-scroll {
@@ -983,10 +1068,15 @@ select.form-control {
 /* Every numeric field declares its physical domain through min/max, so the
    browser can flag a value the calculator will refuse to use. The result box
    keeps its last valid number rather than showing a nonsense one. */
-.form-control:invalid,
+/* Only the domain matters here: :invalid would also fire on a step mismatch,
+   painting a perfectly good 0.55 deg red just because the spinner counts in
+   tenths. readField accepts anything inside min/max. */
 .form-control:out-of-range {
   border-color: var(--danger);
-  box-shadow: inset 0 0 0 1px var(--danger);
+  /* The global reset kills box-shadow with !important, so the second stroke
+     is an outline drawn inside the box instead. */
+  outline: 1px solid var(--danger);
+  outline-offset: -2px;
 }
 
 textarea.form-control {
@@ -1309,13 +1399,19 @@ select.form-control {
    the card frame and reads as an appendix table: caption above the rules,
    figures right-aligned, units and provenance set quietly beside them.
    -------------------------------------------------------------------------- */
+/* Closes the table of contents as an appendix, so it is set off from the
+   section cards above it rather than butting against them. */
 .datasheet {
   display: block;
-  padding: 4px 0 0 0;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: var(--rule-light);
 }
 
+/* The table opens with a heavy rule; without air above it the caption looked
+   like it was resting on a black bar. */
 .datasheet-head {
-  margin-bottom: 8px;
+  margin-bottom: 18px;
 }
 
 .datasheet-label {
@@ -1946,9 +2042,30 @@ select.form-control {
   }
 }
 
+/* The card being worked on. Persistent, unlike the pulse, and quiet enough to
+   sit under a screenful of them: a rule down the inner edge, the same marker
+   the sidebar puts beside the matching entry. */
+.card-current {
+  position: relative;
+}
+
+.card-current::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--accent-ink);
+}
+
 .card-highlight-pulse {
   animation: cardPulseAnim 2.2s ease-out;
   position: relative;
+  /* Drawn inside the border box. An outline sits outside it, and the cards in
+     the left column end flush against .view-section, which clips overflow —
+     so their left edge was the one side that never lit up. */
+  outline-offset: -2px;
 }
 
 /* TOC needs no per-theme overrides: every rule above already reads the
@@ -2190,12 +2307,17 @@ select.form-control {
   background-color: var(--bg-paper);
   border: var(--rule-light);
   font-size: 11.5px;
-  line-height: 1.6;
+  /* Whole number of lines: the previous cap fell mid-line, so the last row of
+     the header was sliced in half and read as a rendering fault. */
+  line-height: 18px;
   white-space: pre-wrap;
   word-wrap: break-word;
   color: var(--ink-primary);
-  max-height: 220px;
+  max-height: 274px;    /* 14 lines + padding + border, box-sizing: border-box */
   overflow-y: auto;
+  /* The headers are ~70 columns of monospace; a full-width box left the right
+     half empty. */
+  max-width: 78ch;
 }
 
 .rec-tpl-copy-bar {
@@ -2215,12 +2337,14 @@ select.form-control {
 
 /* Editing one of the user's own headers */
 #rec-tpl-name {
+  max-width: 34ch;
   margin-bottom: 6px;
   font-weight: 700;
 }
 
 .rec-tpl-editor {
   width: 100%;
+  max-width: 78ch;
   min-height: 220px !important;
   font-size: 11.5px;
   line-height: 1.6;
@@ -2710,6 +2834,10 @@ select.form-control {
   display: block;
   width: 100%;
   height: auto;
+  /* The viewBox is 320 wide and its type scales with it, so a plot dropped in
+     a two-thirds-width card rendered its axis labels larger than the body
+     text. Capping the width keeps every plot the same size on every card. */
+  max-width: 380px;
 }
 
 .miniplot-axis {

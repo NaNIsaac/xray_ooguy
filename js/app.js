@@ -576,11 +576,7 @@
       setTimeout(function () {
         var cardEl = document.getElementById(targetCardId);
         if (cardEl) {
-          try {
-            cardEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          } catch (e) {
-            if (contentArea) contentArea.scrollTop = cardEl.offsetTop - 10;
-          }
+          scrollCardIntoView(cardEl);
           // Add pulse highlight animation
           cardEl.classList.remove("card-highlight-pulse");
           void cardEl.offsetWidth; // trigger reflow
@@ -593,13 +589,59 @@
         }
       }, 60);
     } else {
-      if (contentArea) {
-        contentArea.scrollTop = 0;
-      }
-      if (window.scrollTo) {
-        window.scrollTo(0, 0);
-      }
+      scrollToTop();
     }
+  }
+
+  // ------------------------------------------------------------------
+  // Scrolling
+  // ------------------------------------------------------------------
+  // html and body are both height:100% and overflow-x is hidden, which makes
+  // <body> the scroll container rather than the viewport. Against that layout
+  // window.scrollTo does nothing, window.pageYOffset stays 0 forever, and a
+  // smooth scrollIntoView silently no-ops — the jump-to-card links looked
+  // dead. So move whichever element genuinely scrolls, and verify it moved
+  // before trying the next candidate.
+  function scrollBy(delta) {
+    if (!delta) return;
+
+    var candidates = [
+      document.getElementById("content-area"),
+      document.body,
+      document.documentElement
+    ];
+
+    for (var i = 0; i < candidates.length; i++) {
+      var el = candidates[i];
+      if (!el || el.scrollHeight <= el.clientHeight) continue;
+      var before = el.scrollTop;
+      el.scrollTop = before + delta;
+      if (el.scrollTop !== before) return;
+    }
+  }
+
+  // The calculators redraw their plots just after a view opens, which changes
+  // the height of everything above the target and leaves a single scroll short
+  // of the mark. Re-measure a couple of times and close the gap.
+  function scrollCardIntoView(cardEl, attempt) {
+    scrollBy(cardEl.getBoundingClientRect().top - 12);
+
+    attempt = attempt || 1;
+    if (attempt >= 4) return;
+
+    setTimeout(function () {
+      if (Math.abs(cardEl.getBoundingClientRect().top - 12) > 4) {
+        scrollCardIntoView(cardEl, attempt + 1);
+      }
+    }, 120 * attempt);
+  }
+
+  function scrollToTop() {
+    var contentArea = document.getElementById("content-area");
+    if (contentArea) contentArea.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (window.scrollTo) window.scrollTo(0, 0);
   }
 
   function jumpToSection(route, targetCardId) {

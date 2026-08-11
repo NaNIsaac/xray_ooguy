@@ -50,7 +50,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=1.4">
+  <link rel="stylesheet" href="style.css?v=1.5">
 </head>
 <body>
 
@@ -272,19 +272,19 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">α <span class="unit">(°)</span></label>
-                        <input type="number" id="lat-alpha" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="any">
+                        <input type="number" id="lat-alpha" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="0.1">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">β <span class="unit">(°)</span></label>
-                        <input type="number" id="lat-beta" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="any">
+                        <input type="number" id="lat-beta" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="0.1">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label">γ <span class="unit">(°)</span></label>
-                        <input type="number" id="lat-gamma" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="any">
+                        <input type="number" id="lat-gamma" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="0.1">
                       </div>
                     </div>
                   </div>
@@ -444,7 +444,7 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_alpha">입사각 <i class="formula">α</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="grating-alpha" class="form-control mono" value="2.0" oninput="calcGrating()" min="-89.9" max="89.9" step="any">
+                        <input type="number" id="grating-alpha" class="form-control mono" value="2.0" oninput="calcGrating()" min="-89.9" max="89.9" step="0.1">
                       </div>
                     </div>
                     <div class="col-6">
@@ -631,112 +631,6 @@
               </div>
             </div>
 
-            <!-- § 9. Reference data, not a calculator: a plain ruled table in
-                 the style of an appendix, with no card chrome around it. -->
-            <div class="col-12">
-              <section class="datasheet" id="card-physical-constants">
-                <div class="datasheet-head">
-                  <span class="datasheet-label">§ 9 &middot; <span data-i18n="const_kicker">참조 데이터</span></span>
-                  <h3 class="datasheet-title" data-i18n="const_title">기본 물리 상수 및 결정 격자 데이터</h3>
-                  <p class="datasheet-note" data-i18n="const_note">CODATA 2022 권장값. 격자면 간격은 298.15 K 기준이며, (exact)는 SI 정의에 의해 오차가 없는 값이다.</p>
-                </div>
-
-                <table class="lab-table datasheet-table">
-                  <thead>
-                    <tr>
-                      <th class="dt-sym" data-i18n="const_hdr_symbol">기호</th>
-                      <th data-i18n="const_hdr_quantity">물리량</th>
-                      <th class="dt-val" data-i18n="const_hdr_value">값</th>
-                      <th class="dt-unit" data-i18n="const_hdr_unit">단위</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">hc</i></td>
-                      <td data-i18n="const_hc">광자 에너지-파장 적</td>
-                      <td class="dt-val mono">12398.41984</td>
-                      <td class="dt-unit mono">eV&middot;&Aring; <span class="dt-alt">= 1.239842 keV&middot;nm</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">h</i></td>
-                      <td data-i18n="const_h">플랑크 상수</td>
-                      <td class="dt-val mono">6.626070 &times; 10<sup>-34</sup></td>
-                      <td class="dt-unit mono">J&middot;s <span class="dt-alt">(exact)</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">&#295;</i></td>
-                      <td data-i18n="const_hbar">디랙 상수</td>
-                      <td class="dt-val mono">1.054572 &times; 10<sup>-34</sup></td>
-                      <td class="dt-unit mono">J&middot;s</td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">c</i></td>
-                      <td data-i18n="const_c">진공 중 광속</td>
-                      <td class="dt-val mono">299,792,458</td>
-                      <td class="dt-unit mono">m&middot;s<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">e</i></td>
-                      <td data-i18n="const_e">기본 전하</td>
-                      <td class="dt-val mono">1.602177 &times; 10<sup>-19</sup></td>
-                      <td class="dt-unit mono">C <span class="dt-alt">(exact)</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">r</i><sub>e</sub></td>
-                      <td data-i18n="const_re">고전 전자 반경</td>
-                      <td class="dt-val mono">2.817940 &times; 10<sup>-15</sup></td>
-                      <td class="dt-unit mono">m</td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">m</i><sub>e</sub></td>
-                      <td data-i18n="const_me">전자 정지 질량</td>
-                      <td class="dt-val mono">9.109384 &times; 10<sup>-31</sup></td>
-                      <td class="dt-unit mono">kg <span class="dt-alt">= 0.5110 MeV/<i class="formula">c</i><sup>2</sup></span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">&alpha;</i></td>
-                      <td data-i18n="const_alpha">미세구조 상수</td>
-                      <td class="dt-val mono">1 / 137.035999</td>
-                      <td class="dt-unit mono"><span class="dt-alt" data-i18n="const_dimensionless">무차원</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">N</i><sub>A</sub></td>
-                      <td data-i18n="const_na">아보가드로 상수</td>
-                      <td class="dt-val mono">6.022141 &times; 10<sup>23</sup></td>
-                      <td class="dt-unit mono">mol<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">k</i><sub>B</sub></td>
-                      <td data-i18n="const_kb">볼츠만 상수</td>
-                      <td class="dt-val mono">1.380649 &times; 10<sup>-23</sup></td>
-                      <td class="dt-unit mono">J&middot;K<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
-                    </tr>
-
-                    <tr class="dt-group">
-                      <td colspan="4" data-i18n="const_group_d">결정 격자면 간격 d (298.15 K)</td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">d</i><sub>Si(111)</sub></td>
-                      <td data-i18n="const_d_si">실리콘 Si(111)</td>
-                      <td class="dt-val mono">3.13560</td>
-                      <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.43102 &Aring;</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">d</i><sub>Ge(111)</sub></td>
-                      <td data-i18n="const_d_ge">게르마늄 Ge(111)</td>
-                      <td class="dt-val mono">3.26636</td>
-                      <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.65750 &Aring;</span></td>
-                    </tr>
-                    <tr>
-                      <td class="dt-sym"><i class="formula">d</i><sub>C(111)</sub></td>
-                      <td data-i18n="const_d_c">다이아몬드 C(111)</td>
-                      <td class="dt-val mono">2.05930</td>
-                      <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 3.56683 &Aring;</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-            </div>
 
           </div>
         </section>
@@ -780,7 +674,7 @@
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ (tth)</span> <span class="unit">(°)</span></label>
-                          <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" oninput="calcBraggRow1()" min="0.01" max="179.99" step="any">
+                          <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" oninput="calcBraggRow1()" min="0.1" max="179.9" step="0.1">
                         </div>
                       </div>
                       <div class="col-4">
@@ -802,7 +696,7 @@
                       <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ (tth)</span> <span class="unit">(°)</span></label>
-                          <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" oninput="calcBraggRow2()" min="0.01" max="179.99" step="any">
+                          <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" oninput="calcBraggRow2()" min="0.1" max="179.9" step="0.1">
                         </div>
                       </div>
                       <div class="col-4">
@@ -869,13 +763,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_angle_th">각도 <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="q-theta" class="form-control mono" value="10.0" oninput="calcQSpace('theta')" min="0.001" max="90" step="any">
+                        <input type="number" id="q-theta" class="form-control mono" value="10.0" oninput="calcQSpace('theta')" min="0.1" max="90" step="0.1">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_angle_2th">회절각 <i class="formula">2θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="q-twotheta" class="form-control mono" value="20.0" oninput="calcQSpace('twotheta')" min="0.002" max="180" step="any">
+                        <input type="number" id="q-twotheta" class="form-control mono" value="20.0" oninput="calcQSpace('twotheta')" min="0.2" max="180" step="0.1">
                       </div>
                     </div>
                     <div class="col-6">
@@ -914,13 +808,13 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_ref_theta">기준 각도 θ (th)</span> <span class="unit">(°)</span></label>
-                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" oninput="syncRefAngle('th')" min="0.001" max="89.999" step="any">
+                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" oninput="syncRefAngle('th')" min="0.1" max="89.9" step="0.1">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n="lbl_ref_twotheta">기준 각도 2θ (tth)</span> <span class="unit">(°)</span></label>
-                        <input type="number" id="ea-tth1" class="form-control mono" value="22.806" oninput="syncRefAngle('tth')" min="0.002" max="179.998" step="any">
+                        <input type="number" id="ea-tth1" class="form-control mono" value="22.806" oninput="syncRefAngle('tth')" min="0.2" max="179.8" step="0.1">
                       </div>
                     </div>
                   </div>
@@ -999,7 +893,7 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_inc_ang">입사각 <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="fp-inc-angle" class="form-control mono" value="0.5" oninput="calcFootprint()" min="0.001" max="90" step="any">
+                        <input type="number" id="fp-inc-angle" class="form-control mono" value="0.5" oninput="calcFootprint()" min="0" max="90" step="0.1">
                       </div>
                     </div>
                     <div class="col-6">
@@ -1135,13 +1029,13 @@
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_chiphi_th">브래그 각도 <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="chiphi-theta" class="form-control mono" value="15.0" oninput="calcChiPhi()" min="0.001" max="89.999" step="any">
+                        <input type="number" id="chiphi-theta" class="form-control mono" value="15.0" oninput="calcChiPhi()" min="0.1" max="89.9" step="0.1">
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_chiphi_chi">Chi 틸트 변화량 <i class="formula">Δχ</i></span> <span class="unit">(°)</span></label>
-                        <input type="number" id="chiphi-chi" class="form-control mono" value="5.0" oninput="calcChiPhi()" min="-90" max="90" step="any">
+                        <input type="number" id="chiphi-chi" class="form-control mono" value="5.0" oninput="calcChiPhi()" min="-90" max="90" step="0.1">
                       </div>
                     </div>
                   </div>
@@ -1307,13 +1201,6 @@
                       <span class="toc-item-formula">&Delta;&theta;, &Delta;E from &Delta;T</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-physical-constants')">
-                    <span class="toc-item-num">&sect; 9.</span>
-                    <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_constants">기본 물리 상수 &amp; 결정 격자 레퍼런스</span>
-                      <span class="toc-item-formula">CODATA 2022: c, h, ħ, hc, re, NA, kB, Si/Ge d</span>
-                    </div>
-                  </a>
                 </div>
               </div>
 
@@ -1470,6 +1357,111 @@
             </div>
 
           </div>
+
+          <!-- § 9. Reference data, not a calculator: a plain ruled table in
+               the style of an appendix, with no card chrome around it. -->
+          <section class="datasheet" id="card-physical-constants">
+              <div class="datasheet-head">
+                <span class="datasheet-label" data-i18n="const_kicker">부록 &middot; 참조 데이터</span>
+                <h3 class="datasheet-title" data-i18n="const_title">기본 물리 상수 및 결정 격자 데이터</h3>
+                <p class="datasheet-note" data-i18n="const_note">CODATA 2022 권장값. 격자면 간격은 298.15 K 기준이며, (exact)는 SI 정의에 의해 오차가 없는 값이다.</p>
+              </div>
+
+              <table class="lab-table datasheet-table">
+                <thead>
+                  <tr>
+                    <th class="dt-sym" data-i18n="const_hdr_symbol">기호</th>
+                    <th data-i18n="const_hdr_quantity">물리량</th>
+                    <th class="dt-val" data-i18n="const_hdr_value">값</th>
+                    <th class="dt-unit" data-i18n="const_hdr_unit">단위</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">hc</i></td>
+                    <td data-i18n="const_hc">광자 에너지-파장 적</td>
+                    <td class="dt-val mono">12398.41984</td>
+                    <td class="dt-unit mono">eV&middot;&Aring; <span class="dt-alt">= 1.239842 keV&middot;nm</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">h</i></td>
+                    <td data-i18n="const_h">플랑크 상수</td>
+                    <td class="dt-val mono">6.626070 &times; 10<sup>-34</sup></td>
+                    <td class="dt-unit mono">J&middot;s <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">&#295;</i></td>
+                    <td data-i18n="const_hbar">디랙 상수</td>
+                    <td class="dt-val mono">1.054572 &times; 10<sup>-34</sup></td>
+                    <td class="dt-unit mono">J&middot;s</td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">c</i></td>
+                    <td data-i18n="const_c">진공 중 광속</td>
+                    <td class="dt-val mono">299,792,458</td>
+                    <td class="dt-unit mono">m&middot;s<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">e</i></td>
+                    <td data-i18n="const_e">기본 전하</td>
+                    <td class="dt-val mono">1.602177 &times; 10<sup>-19</sup></td>
+                    <td class="dt-unit mono">C <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">r</i><sub>e</sub></td>
+                    <td data-i18n="const_re">고전 전자 반경</td>
+                    <td class="dt-val mono">2.817940 &times; 10<sup>-15</sup></td>
+                    <td class="dt-unit mono">m</td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">m</i><sub>e</sub></td>
+                    <td data-i18n="const_me">전자 정지 질량</td>
+                    <td class="dt-val mono">9.109384 &times; 10<sup>-31</sup></td>
+                    <td class="dt-unit mono">kg <span class="dt-alt">= 0.5110 MeV/<i class="formula">c</i><sup>2</sup></span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">&alpha;</i></td>
+                    <td data-i18n="const_alpha">미세구조 상수</td>
+                    <td class="dt-val mono">1 / 137.035999</td>
+                    <td class="dt-unit mono"><span class="dt-alt" data-i18n="const_dimensionless">무차원</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">N</i><sub>A</sub></td>
+                    <td data-i18n="const_na">아보가드로 상수</td>
+                    <td class="dt-val mono">6.022141 &times; 10<sup>23</sup></td>
+                    <td class="dt-unit mono">mol<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">k</i><sub>B</sub></td>
+                    <td data-i18n="const_kb">볼츠만 상수</td>
+                    <td class="dt-val mono">1.380649 &times; 10<sup>-23</sup></td>
+                    <td class="dt-unit mono">J&middot;K<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                  </tr>
+
+                  <tr class="dt-group">
+                    <td colspan="4" data-i18n="const_group_d">결정 격자면 간격 d (298.15 K)</td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">d</i><sub>Si(111)</sub></td>
+                    <td data-i18n="const_d_si">실리콘 Si(111)</td>
+                    <td class="dt-val mono">3.13560</td>
+                    <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.43102 &Aring;</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">d</i><sub>Ge(111)</sub></td>
+                    <td data-i18n="const_d_ge">게르마늄 Ge(111)</td>
+                    <td class="dt-val mono">3.26636</td>
+                    <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.65750 &Aring;</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">d</i><sub>C(111)</sub></td>
+                    <td data-i18n="const_d_c">다이아몬드 C(111)</td>
+                    <td class="dt-val mono">2.05930</td>
+                    <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 3.56683 &Aring;</span></td>
+                  </tr>
+                </tbody>
+              </table>
+          </section>
         </section>
 
 
@@ -1890,14 +1882,15 @@
   <div id="toast-container"></div>
 
   <!-- Load Scripts in Dependency Order (CentOS 7 Offline-Safe) -->
-  <script src="js/data.js?v=1.4"></script>
-  <script src="js/i18n.js?v=1.4"></script>
-  <script src="js/app.js?v=1.4"></script>
-  <script src="js/optics.js?v=1.4"></script>
-  <script src="js/beamline.js?v=1.4"></script>
-  <script src="js/lattice.js?v=1.4"></script>
-  <script src="js/validity.js?v=1.4"></script>
-  <script src="js/miniplot.js?v=1.4"></script>
-  <script src="js/record.js?v=1.4"></script>
+  <script src="js/data.js?v=1.5"></script>
+  <script src="js/i18n.js?v=1.5"></script>
+  <script src="js/app.js?v=1.5"></script>
+  <script src="js/optics.js?v=1.5"></script>
+  <script src="js/beamline.js?v=1.5"></script>
+  <script src="js/lattice.js?v=1.5"></script>
+  <script src="js/validity.js?v=1.5"></script>
+  <script src="js/miniplot.js?v=1.5"></script>
+  <script src="js/record.js?v=1.5"></script>
+  <script src="js/nav.js?v=1.5"></script>
 </body>
 </html>

@@ -89,7 +89,7 @@
       lat_err_range: "입력값이 허용 범위를 벗어났습니다.",
 
       // Reference datasheet (§ 9)
-      const_kicker: "참조 데이터",
+      const_kicker: "부록 · 참조 데이터",
       const_title: "기본 물리 상수 및 결정 격자 데이터",
       const_note: "CODATA 2022 권장값. 격자면 간격은 298.15 K 기준이며, (exact)는 SI 정의에 의해 오차가 없는 값이다.",
       const_hdr_symbol: "기호",
@@ -216,7 +216,6 @@
       toc_tool_beam_5: "CDI / BCDI 결맞음 오버샘플링",
       toc_tool_beam_6: "슬릿 간격 및 빔 수용각",
       toc_tool_beam_7: "결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)",
-      toc_tool_constants: "기본 물리 상수 및 결정 격자 레퍼런스",
       toc_sec3_title: "로그북 & 실시간 기록 (Record)",
       toc_sec3_desc: "연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫",
       toc_tool_rec_1: "빔타임 로그북 서식 프리셋 (Logbook Headers)",
@@ -422,7 +421,7 @@
       lat_err_range: "An input is outside its allowed range.",
 
       // Reference datasheet (§ 9)
-      const_kicker: "Reference data",
+      const_kicker: "Appendix · Reference data",
       const_title: "Fundamental physical constants and crystal lattice data",
       const_note: "CODATA 2022 recommended values. Lattice spacings are quoted at 298.15 K; values marked (exact) are fixed by the SI definitions.",
       const_hdr_symbol: "Symbol",
@@ -549,7 +548,6 @@
       toc_tool_beam_5: "CDI / BCDI Coherent Oversampling",
       toc_tool_beam_6: "Slit Aperture Opening & Acceptance",
       toc_tool_beam_7: "Crystal Thermal Expansion & Angular Drift",
-      toc_tool_constants: "Fundamental Physical Constants & Reference Data",
       toc_sec3_title: "Logbook & Live Records",
       toc_sec3_desc: "Standard logbook templates for lab notebooks and 1-click in-situ beamtime event snippets",
       toc_tool_rec_1: "Beamtime Logbook Header Presets",

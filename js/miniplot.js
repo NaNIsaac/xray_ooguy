@@ -70,10 +70,17 @@
     if (yMax === yMin) yMax = yMin + 1;
     if (xMax === xMin) xMax = xMin + 1;
 
-    // A little headroom keeps the curve off the frame.
+    // A little headroom keeps the curve off the frame — but the headroom must
+    // not invent values the quantity cannot take. None of these curves goes
+    // negative, and a transmittance cannot pass 100%, so the axis was reading
+    // "-4.37 mm" of footprint and "108 %" of transmittance.
+    var dataMin = Math.min.apply(null, ys);
+    var dataMax = Math.max.apply(null, ys);
     var pad = (yMax - yMin) * 0.08;
     yMin -= pad;
     yMax += pad;
+    if (dataMin >= 0 && yMin < 0) yMin = 0;
+    if (opts.yCap !== undefined && dataMax <= opts.yCap && yMax > opts.yCap) yMax = opts.yCap;
 
     function px(x) { return PAD_L + (x - xMin) / (xMax - xMin) * (W - PAD_L - PAD_R); }
     function py(y) { return H - PAD_B - (y - yMin) / (yMax - yMin) * (H - PAD_T - PAD_B); }
@@ -235,7 +242,8 @@
       xlabel: t("mp_x_thickness"),
       ylabel: t("mp_y_transmit"),
       callout: callout,
-      yZero: true
+      yZero: true,
+      yCap: 100        // per cent
     }));
   }
 
