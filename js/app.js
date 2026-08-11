@@ -45,6 +45,16 @@
   //     so values stored under the old key no longer mean the same thing.
   var CALC_INPUT_KEY = "calc_inputs_v2";
 
+  // Results carry one customary unit. When a figure runs past what fixed
+  // notation reads well it switches to exponent form, rather than growing a
+  // second unit beside it.
+  function fmt(value, digits) {
+    if (!isFinite(value)) return "-";
+    var size = Math.abs(value);
+    if (size !== 0 && (size >= 1e5 || size < 1e-3)) return value.toExponential(3);
+    return value.toFixed(digits === undefined ? 3 : digits);
+  }
+
   // A field is only worth reading if it is inside the domain declared on the
   // element itself. Out-of-range input yields NaN, which every calculator
   // already treats as "no result" — so a negative thickness or a 400% mirror
@@ -768,6 +778,7 @@
   window.THEMES = THEMES;
   window.isDarkTheme = isDarkTheme;
   window.readField = readField;
+  window.fmt = fmt;
   window.copyTextToClipboard = copyTextToClipboard;
   window.initResultBoxCopy = initResultBoxCopy;
   window.extractResultBoxText = extractResultBoxText;

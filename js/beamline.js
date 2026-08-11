@@ -17,6 +17,11 @@
     return (window.i18n && window.i18n.t) ? window.i18n.t(key) : key;
   }
 
+  // One customary unit per figure; exponent form when it runs long.
+  function fmt(value, digits) {
+    return window.fmt ? window.fmt(value, digits) : String(value);
+  }
+
   // --- 2.1 Beam Footprint Calculator & Geometric Diagram ---
   //
   // Two things the schematic has to get right, and they pull against each other:
@@ -220,7 +225,7 @@
     var resSpill = document.getElementById("fp-res-spill");
     var resH = document.getElementById("fp-res-h");
 
-    if (resFp) resFp.innerHTML = footprint_mm.toFixed(3) + " mm (" + (footprint_mm * 1000).toFixed(0) + " μm)";
+    if (resFp) resFp.innerHTML = fmt(footprint_mm, 3) + " mm";
     if (resH) resH.innerHTML = beamH_um.toFixed(1) + " μm";
 
     if (resSpill) {
@@ -303,9 +308,9 @@
     var total_de_over_e = Math.sqrt(Math.pow(darwin_de_over_e, 2) + Math.pow(div_contrib, 2));
     var delta_E_eV = total_de_over_e * energy_keV * 1000;
 
-    document.getElementById("res-res-de-over-e").innerHTML = total_de_over_e.toExponential(3) + " (ΔE/E)";
-    document.getElementById("res-res-delta-e").innerHTML = delta_E_eV.toFixed(3) + " eV (" + (delta_E_eV * 1000).toFixed(1) + " meV)";
-    document.getElementById("res-res-theta").innerHTML = ((thetaRad * 180) / Math.PI).toFixed(3) + "° (θ)";
+    document.getElementById("res-res-de-over-e").innerHTML = total_de_over_e.toExponential(3);
+    document.getElementById("res-res-delta-e").innerHTML = fmt(delta_E_eV, 3) + " eV";
+    document.getElementById("res-res-theta").innerHTML = ((thetaRad * 180) / Math.PI).toFixed(3) + "°";
 
     if (window.recordCalculation) {
       window.recordCalculation("2.3 Resolution", crystalType + " @ " + energy_keV + " keV", "ΔE = " + delta_E_eV.toFixed(2) + " eV (ΔE/E = " + total_de_over_e.toExponential(2) + ")");
@@ -326,7 +331,7 @@
     var deltaTheta_arcsec = deltaTheta_deg * 3600;
 
     document.getElementById("ang-res-mrad").innerHTML = deltaTheta_mrad.toFixed(4) + " mrad";
-    document.getElementById("ang-res-deg").innerHTML = deltaTheta_deg.toFixed(5) + "° (" + deltaTheta_arcsec.toFixed(2) + " arcsec)";
+    document.getElementById("ang-res-deg").innerHTML = fmt(deltaTheta_deg, 5) + "°";
 
     if (window.recordCalculation) {
       window.recordCalculation("2.4 Angular Res", "Pixel=" + pixelSize_um + " μm, Dist=" + distance_mm + " mm", "Δθ = " + deltaTheta_mrad.toFixed(4) + " mrad (" + deltaTheta_arcsec.toFixed(1) + " arcsec)");
@@ -354,8 +359,8 @@
     var resSpeckle = document.getElementById("cdi-res-speckle");
     var resVerdict = document.getElementById("cdi-res-verdict");
 
-    resSigma.innerHTML = sigma.toFixed(2) + " (σ)";
-    resSpeckle.innerHTML = speckle_um.toFixed(2) + " μm";
+    resSigma.innerHTML = sigma.toFixed(2);
+    resSpeckle.innerHTML = fmt(speckle_um, 2) + " μm";
 
     if (sigma >= 2.0) {
       resVerdict.innerHTML = TXT("res_cdi_pass");
@@ -386,8 +391,8 @@
 
     var recommendedOpening_mm = beamFWHM_mm * (sigmaMult / 2.355);
 
-    document.getElementById("slit-res-fwhm").innerHTML = beamFWHM_mm.toFixed(3) + " mm (" + (beamFWHM_mm * 1000).toFixed(0) + " μm)";
-    document.getElementById("slit-res-opening").innerHTML = recommendedOpening_mm.toFixed(3) + " mm (" + (recommendedOpening_mm * 1000).toFixed(0) + " μm, " + sigmaMult + "σ)";
+    document.getElementById("slit-res-fwhm").innerHTML = fmt(beamFWHM_mm, 3) + " mm";
+    document.getElementById("slit-res-opening").innerHTML = fmt(recommendedOpening_mm, 3) + " mm";
 
     if (window.recordCalculation) {
       window.recordCalculation("2.6 Slit Opening", "Dist=" + distSourceToSlit_m + " m, Div=" + beamDiv_urad + " μrad", "Opening = " + recommendedOpening_mm.toFixed(3) + " mm");
@@ -425,7 +430,7 @@
     var deltaTheta_arcsec = (deltaTheta_rad * 180 / Math.PI) * 3600;
     var deltaE_eV = alpha * deltaTemp_C * energy_keV * 1000;
 
-    document.getElementById("therm-res-urad").innerHTML = deltaTheta_urad.toFixed(3) + " μrad (" + deltaTheta_arcsec.toFixed(3) + " arcsec)";
+    document.getElementById("therm-res-urad").innerHTML = fmt(deltaTheta_urad, 3) + " μrad";
     document.getElementById("therm-res-de").innerHTML = deltaE_eV.toFixed(3) + " eV";
 
     if (window.recordCalculation) {
