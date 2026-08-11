@@ -87,6 +87,14 @@
       lat_err_hkl: "밀러 지수 h, k, l 중 하나 이상이 0이 아니어야 합니다.",
       lat_err_angles: "입력한 격자각으로는 단위포를 구성할 수 없습니다.",
       lat_err_range: "입력값이 허용 범위를 벗어났습니다.",
+      lat_centering: "격자 중심화 (Centring)",
+      lat_refl_title: "이 에너지에서 접근 가능한 반사",
+      lat_refl_hkl: "h k l",
+      lat_refl_d: "d (Å)",
+      lat_refl_tth: "2θ (°)",
+      lat_refl_q: "|Q| (Å⁻¹)",
+      lat_refl_note: "{shown}개 표시 · 중심화 조건으로 {extinct}개 소멸",
+      lat_refl_none: "이 에너지에서는 회절 조건을 만족하는 반사가 없습니다.",
 
       // Reference datasheet (§ 9)
       const_kicker: "부록 · 참조 데이터",
@@ -150,7 +158,7 @@
       vm_cdi_coherent: "완전 결맞음 조명 가정",
       vw_cdi_nearfield: "Fresnel 수 F > 1 \u2014 근거리장 영역이라 원거리장 가정이 깨집니다.",
       vm_lat_exact: "역격자 계량 텐서 \u2014 근사 없음, 7개 결정계 정확",
-      vm_lat_nosymmetry: "소멸칙(systematic absence)은 검사하지 않음",
+      vm_lat_nosymmetry: "격자 중심화 소멸만 적용 — 나선축·글라이드면 소멸칙은 미검사",
       vm_euler_rigid: "강체 회전, 기계적 오프셋 없음",
       vm_energy_exact: "E\u00b7\u03bb = hc \u2014 근사 없음",
 
@@ -419,6 +427,14 @@
       lat_err_hkl: "At least one of the Miller indices h, k, l must be non-zero.",
       lat_err_angles: "These cell angles cannot form a valid unit cell.",
       lat_err_range: "An input is outside its allowed range.",
+      lat_centering: "Lattice centring",
+      lat_refl_title: "Reflections reachable at this energy",
+      lat_refl_hkl: "h k l",
+      lat_refl_d: "d (Å)",
+      lat_refl_tth: "2θ (°)",
+      lat_refl_q: "|Q| (Å⁻¹)",
+      lat_refl_note: "{shown} shown · {extinct} extinguished by the centring condition",
+      lat_refl_none: "No reflection satisfies the Bragg condition at this energy.",
 
       // Reference datasheet (§ 9)
       const_kicker: "Appendix · Reference data",
@@ -482,7 +498,7 @@
       vm_cdi_coherent: "Fully coherent illumination assumed",
       vw_cdi_nearfield: "Fresnel number F > 1 \u2014 you are in the near field, so the far-field assumption fails.",
       vm_lat_exact: "Reciprocal metric tensor \u2014 exact for all seven crystal systems",
-      vm_lat_nosymmetry: "Systematic absences are not checked",
+      vm_lat_nosymmetry: "Centring absences only — screw axis and glide plane conditions are not checked",
       vm_euler_rigid: "Rigid-body rotation, no mechanical offsets",
       vm_energy_exact: "E\u00b7\u03bb = hc \u2014 no approximation",
 

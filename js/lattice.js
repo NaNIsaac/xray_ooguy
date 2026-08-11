@@ -33,16 +33,16 @@
   // Standard room-temperature cell parameters. Trigonal entries use the
   // hexagonal setting, which is how beamline software usually reports them.
   var LATTICE_PRESETS = [
-    { name: "Si", system: "cubic", a: 5.43102 },
-    { name: "Ge", system: "cubic", a: 5.65750 },
-    { name: "Diamond", system: "cubic", a: 3.56700 },
-    { name: "GaAs", system: "cubic", a: 5.65320 },
-    { name: "InP", system: "cubic", a: 5.86870 },
-    { name: "Cu", system: "cubic", a: 3.61500 },
-    { name: "Au", system: "cubic", a: 4.07820 },
-    { name: "Al2O3", system: "hexagonal", a: 4.75800, c: 12.99100 },
-    { name: "SiO2", system: "hexagonal", a: 4.91340, c: 5.40520 },
-    { name: "SrTiO3", system: "cubic", a: 3.90500 }
+    { name: "Si", system: "cubic", a: 5.43102, centering: "diamond" },
+    { name: "Ge", system: "cubic", a: 5.65750, centering: "diamond" },
+    { name: "Diamond", system: "cubic", a: 3.56700, centering: "diamond" },
+    { name: "GaAs", system: "cubic", a: 5.65320, centering: "F" },
+    { name: "InP", system: "cubic", a: 5.86870, centering: "F" },
+    { name: "Cu", system: "cubic", a: 3.61500, centering: "F" },
+    { name: "Au", system: "cubic", a: 4.07820, centering: "F" },
+    { name: "Al2O3", system: "hexagonal", a: 4.75800, c: 12.99100, centering: "R" },
+    { name: "SiO2", system: "hexagonal", a: 4.91340, c: 5.40520, centering: "P" },
+    { name: "SrTiO3", system: "cubic", a: 3.90500, centering: "P" }
   ];
 
   // Which cell parameters a system lets the user set; the rest are mirrored.
@@ -151,6 +151,135 @@
     ];
   }
 
+  // ------------------------------------------------------------------
+  // Which reflections exist, and which are reachable
+  // ------------------------------------------------------------------
+  // The metric tensor gives d for any (hkl), but most of those planes do not
+  // diffract: the lattice centring extinguishes whole families, and Bragg's law
+  // rules out everything with 2d < lambda. Listing what survives both is the
+  // question actually asked when planning a scan, and every input it needs is
+  // already on this card.
+  //
+  // Rules are the standard centring conditions. Diamond (Fd-3m, the setting Si,
+  // Ge and diamond use) is F plus the glide condition that extinguishes 222.
+  var CENTERINGS = {
+    P: function () { return true; },
+    F: function (h, k, l) {
+      var eo = (h % 2) + (k % 2) + (l % 2);
+      return eo === 0 || eo === 3;
+    },
+    I: function (h, k, l) { return (h + k + l) % 2 === 0; },
+    A: function (h, k, l) { return (k + l) % 2 === 0; },
+    B: function (h, k, l) { return (h + l) % 2 === 0; },
+    C: function (h, k, l) { return (h + k) % 2 === 0; },
+    R: function (h, k, l) { return (((-h + k + l) % 3) + 3) % 3 === 0; },
+    diamond: function (h, k, l) {
+      var odd = (h % 2) && (k % 2) && (l % 2);
+      if (odd) return true;
+      if ((h % 2) || (k % 2) || (l % 2)) return false;   // mixed parity
+      return (h + k + l) % 4 === 0;
+    }
+  };
+
+  var MAX_INDEX = 6;
+  var MAX_ROWS = 12;
+
+  function currentCentering() {
+    var node = el("centering");
+    var key = node ? node.value : "P";
+    return CENTERINGS[key] ? key : "P";
+  }
+
+  function dFromGstar(Gstar, h, k, l) {
+    var hkl = [h, k, l];
+    var invD2 = 0;
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) invD2 += hkl[i] * Gstar[i][j] * hkl[j];
+    }
+    return invD2 > 0 ? 1 / Math.sqrt(invD2) : NaN;
+  }
+
+  // Reference tables write the equivalent planes of a family under one
+  // representative — 220, not 022 — so of the triplets sharing a spacing, keep
+  // the one in descending order, and the largest of those. Enumeration order
+  // would otherwise decide it, and the list would not match the tables the
+  // numbers are being checked against.
+  function preferred(a, b) {
+    var aDesc = (a.h >= a.k && a.k >= a.l) ? 1 : 0;
+    var bDesc = (b.h >= b.k && b.k >= b.l) ? 1 : 0;
+    if (aDesc !== bDesc) return aDesc ? a : b;
+    if (a.h !== b.h) return a.h > b.h ? a : b;
+    if (a.k !== b.k) return a.k > b.k ? a : b;
+    return a.l >= b.l ? a : b;
+  }
+
+  // One row per distinct spacing: different index triplets that share a d are
+  // the same ring, so listing them all would just pad the table.
+  function reflectionList(Gstar, lambda) {
+    var allowed = CENTERINGS[currentCentering()];
+    var byD = {};
+    var order = [];
+    var extinct = 0;
+
+    for (var h = 0; h <= MAX_INDEX; h++) {
+      for (var k = 0; k <= MAX_INDEX; k++) {
+        for (var l = 0; l <= MAX_INDEX; l++) {
+          if (h === 0 && k === 0 && l === 0) continue;
+          if (!allowed(h, k, l)) { extinct++; continue; }
+
+          var d = dFromGstar(Gstar, h, k, l);
+          if (!isFinite(d) || d <= 0) continue;
+
+          var row = { h: h, k: k, l: l, d: d, twoTheta: NaN };
+          if (lambda > 0 && lambda / (2 * d) <= 1) {
+            row.twoTheta = 2 * Math.asin(lambda / (2 * d)) / DEG;
+          }
+
+          var tag = d.toFixed(5);
+          if (byD[tag]) {
+            byD[tag] = preferred(byD[tag], row);
+          } else {
+            byD[tag] = row;
+            order.push(tag);
+          }
+        }
+      }
+    }
+
+    var rows = [];
+    for (var i = 0; i < order.length; i++) rows.push(byD[order[i]]);
+    rows.sort(function (p, q) { return q.d - p.d; });
+    return { rows: rows, extinct: extinct };
+  }
+
+  function renderReflections(Gstar, lambda) {
+    var body = document.getElementById("lat-refl-body");
+    var note = document.getElementById("lat-refl-note");
+    if (!body) return;
+
+    var list = reflectionList(Gstar, lambda);
+    var html = "";
+    var shown = 0;
+
+    for (var i = 0; i < list.rows.length && shown < MAX_ROWS; i++) {
+      var r = list.rows[i];
+      if (isNaN(r.twoTheta)) continue;          // beyond the Bragg limit
+      shown++;
+      html += "<tr><td class='mono'>" + r.h + " " + r.k + " " + r.l + "</td>" +
+        "<td class='mono dt-val'>" + r.d.toFixed(5) + "</td>" +
+        "<td class='mono dt-val'>" + r.twoTheta.toFixed(3) + "</td>" +
+        "<td class='mono dt-val'>" + (2 * Math.PI / r.d).toFixed(4) + "</td></tr>";
+    }
+
+    body.innerHTML = html || "<tr><td colspan='4'>" + t("lat_refl_none") + "</td></tr>";
+
+    if (note) {
+      note.textContent = shown
+        ? t("lat_refl_note").replace("{shown}", shown).replace("{extinct}", list.extinct)
+        : "";
+    }
+  }
+
   function setText(id, value) {
     var node = document.getElementById("lat-res-" + id);
     if (node) node.innerHTML = value;
@@ -163,6 +292,12 @@
     setText("vol", "-");
     var note = document.getElementById("lat-res-note");
     if (note) note.textContent = message || "";
+
+    // The reflection list is read off the same cell, so it cannot outlive it.
+    var body = document.getElementById("lat-refl-body");
+    if (body) body.innerHTML = "";
+    var reflNote = document.getElementById("lat-refl-note");
+    if (reflNote) reflNote.textContent = "";
   }
 
   function calcLattice() {
@@ -234,6 +369,11 @@
     var Q = 2 * Math.PI / d;
     var volume = Math.sqrt(detG);
 
+    var listEnergy = num("energy", 0);
+    renderReflections(Gstar, (!isNaN(listEnergy) && listEnergy > 0)
+      ? CONSTANTS.hc_eV_A / (listEnergy * 1000)
+      : 0);
+
     setText("d", d.toFixed(5) + " Å");
     setText("q", Q.toFixed(4) + " Å<sup>-1</sup>");
     setText("vol", volume.toFixed(3) + " Å<sup>3</sup>");
@@ -290,6 +430,9 @@
 
     var systemEl = el("system");
     if (systemEl) systemEl.value = preset.system;
+
+    var centeringEl = el("centering");
+    if (centeringEl && preset.centering) centeringEl.value = preset.centering;
 
     setVal("a", preset.a);
     setVal("b", preset.b !== undefined ? preset.b : preset.a);
