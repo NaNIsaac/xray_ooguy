@@ -165,7 +165,7 @@
     var qVal = (4 * Math.PI / lambda_A) * sinTh;
 
     if (resTth) {
-      resTth.innerHTML = "2θ = " + tthDeg.toFixed(4) + "° <span style=\"font-size:13px; font-weight:normal; color:var(--ink-secondary);\">(θ = " + thDeg.toFixed(4) + "°)</span>";
+      resTth.innerHTML = "2θ = " + tthDeg.toFixed(4) + "°";
     }
     if (resSub) {
       resSub.innerHTML = "2θ = " + ((tthDeg * Math.PI / 180) * 1000).toFixed(2) + " mrad | λ = " + (lambda_A / 10).toFixed(5) + " nm | Q = " + qVal.toFixed(4) + " Å<sup>-1</sup>";

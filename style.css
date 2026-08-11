@@ -1201,19 +1201,25 @@ select.form-control {
 }
 
 /* Calculated Results Box with Unobtrusive Copy Action */
+/* The answer, not another field. A result used to be a bordered box on a
+   tinted ground — the same construction as the inputs above it — so the eye
+   had nothing to land on. It now carries a rule down its inner edge and sets
+   the figure large, the way a total is set apart at the foot of a table. */
 .result-box {
   position: relative;
-  margin-top: 0.6rem;
-  padding: 0.5rem 2rem 0.5rem 0.6rem;
+  margin-top: 0.7rem;
+  padding: 0.55rem 2rem 0.6rem 0.75rem;
   min-height: 2.8rem;
-  border: var(--rule-main);
+  border: none;
+  border-left: 2px solid var(--accent-ink);
   background-color: var(--bg-paper-subtle);
   box-sizing: border-box;
-  transition: border-color 0.15s ease;
 }
 
+/* The headline result of a card: the same rule, drawn heavier. Framing it
+   instead put a box back around the answer. */
 .result-box.highlight {
-  border: var(--rule-heavy);
+  border-left-width: 4px;
   background-color: var(--accent-ink-subtle);
 }
 
@@ -1275,23 +1281,26 @@ select.form-control {
   display: block;
 }
 
+/* The label steps back so the number can carry the row */
 .result-label {
-  font-family: var(--font-serif);
-  font-size: 0.785rem;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
   line-height: 1.3;
-  min-height: 1.15em;
-  color: var(--ink-secondary);
+  min-height: 1.1em;
+  color: var(--ink-muted);
   text-transform: uppercase;
-  letter-spacing: 0.035em;
-  margin-bottom: 0.25rem;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.2rem;
 }
 
 .result-value {
   font-family: var(--font-mono);
-  font-size: 0.95rem;
+  font-size: 1.12rem;
   font-weight: 700;
-  line-height: 1.35;
-  min-height: 1.35em;
+  line-height: 1.3;
+  min-height: 1.3em;
+  letter-spacing: -0.01em;
   color: var(--ink-primary);
   font-variant-numeric: tabular-nums;
 }
@@ -1906,21 +1915,23 @@ select.form-control {
     padding-top: 4px !important;
   }
 
-  /* Bragg 3-Way Suite: 2 inputs side-by-side (50% each) + result box full-width underneath */
+  /* Bragg suite on a narrow screen: the result runs full width at the top of
+     the row, the two inputs share the line under it. The result is the first
+     column now, so the child numbers follow it. */
   .bragg-calc-row {
     padding: 8px 8px 4px 8px !important;
     margin-bottom: 8px !important;
   }
-  .bragg-calc-row .flex-row > .col-4:nth-child(1),
-  .bragg-calc-row .flex-row > .col-4:nth-child(2) {
-    width: 50% !important;
-    max-width: 50% !important;
+  .bragg-calc-row .flex-row > .col-4:nth-child(1) {
+    width: 100% !important;
+    max-width: 100% !important;
     padding: 0 4px !important;
     margin-bottom: 4px !important;
   }
+  .bragg-calc-row .flex-row > .col-4:nth-child(2),
   .bragg-calc-row .flex-row > .col-4:nth-child(3) {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 50% !important;
+    max-width: 50% !important;
     padding: 0 4px !important;
     margin-bottom: 4px !important;
   }
