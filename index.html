@@ -332,7 +332,12 @@
 
                   <!-- Which reflections this lattice actually gives at this energy -->
                   <div class="refl-block">
-                    <div class="refl-title" data-i18n="lat_refl_title">이 에너지에서 접근 가능한 반사</div>
+                    <button type="button" class="refl-toggle" id="lat-refl-toggle" onclick="toggleReflections()" aria-expanded="false" aria-controls="lat-refl-panel">
+                      <span class="refl-caret" id="lat-refl-caret">&#9656;</span>
+                      <span class="refl-title" data-i18n="lat_refl_title">이 에너지에서 접근 가능한 반사</span>
+                      <span class="refl-count" id="lat-refl-count"></span>
+                    </button>
+                    <div class="refl-panel" id="lat-refl-panel" style="display:none;">
                     <table class="lab-table refl-table">
                       <thead>
                         <tr>
@@ -345,6 +350,7 @@
                       <tbody id="lat-refl-body"></tbody>
                     </table>
                     <div class="refl-note" id="lat-refl-note"></div>
+                    </div>
                   </div>
                 </div>
               </div>

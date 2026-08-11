@@ -252,6 +252,26 @@
     return { rows: rows, extinct: extinct };
   }
 
+  // The list runs a dozen rows, which is longer than the card it hangs off, so
+  // it stays folded and announces its own size on the fold. Open state is kept
+  // for the session rather than reset on every keystroke.
+  var reflOpen = false;
+
+  function applyReflOpen() {
+    var panel = document.getElementById("lat-refl-panel");
+    var caret = document.getElementById("lat-refl-caret");
+    var toggle = document.getElementById("lat-refl-toggle");
+
+    if (panel) panel.style.display = reflOpen ? "block" : "none";
+    if (caret) caret.innerHTML = reflOpen ? "&#9662;" : "&#9656;";
+    if (toggle) toggle.setAttribute("aria-expanded", reflOpen ? "true" : "false");
+  }
+
+  function toggleReflections() {
+    reflOpen = !reflOpen;
+    applyReflOpen();
+  }
+
   function renderReflections(Gstar, lambda) {
     var body = document.getElementById("lat-refl-body");
     var note = document.getElementById("lat-refl-note");
@@ -272,6 +292,11 @@
     }
 
     body.innerHTML = html || "<tr><td colspan='4'>" + t("lat_refl_none") + "</td></tr>";
+
+    // The count is the part worth seeing while folded.
+    var count = document.getElementById("lat-refl-count");
+    if (count) count.textContent = shown ? String(shown) : "0";
+    applyReflOpen();
 
     if (note) {
       note.textContent = shown
@@ -465,6 +490,7 @@
   }
 
   window.calcLattice = calcLattice;
+  window.toggleReflections = toggleReflections;
   window.applyLatticeSystem = applyLatticeSystem;
   window.applyLatticePreset = applyLatticePreset;
   window.initLattice = initLattice;
