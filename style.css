@@ -513,6 +513,76 @@ sub {
   margin: 6px 14px;
 }
 
+/* Search — the results are the tree itself, so the box is a line of type
+   above it rather than a widget. */
+.sidebar-search {
+  position: relative;
+  padding: 8px 12px 4px 12px;
+}
+
+/* The shortcut is a key cap at the end of the field, not part of the prompt */
+.sidebar-search-key {
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  transform: translateY(-45%);
+  padding: 0 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  border: var(--rule-light);
+  pointer-events: none;
+}
+
+.sidebar-search-input {
+  width: 100%;
+  height: 1.7rem;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-primary);
+  background-color: var(--bg-paper);
+  border: var(--rule-light);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.sidebar-search-input:focus {
+  border-color: var(--accent-ink);
+}
+
+.nav-search-empty {
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+}
+
+/* Reference results: presets, materials and constants, which are not routes */
+.nav-ref {
+  margin-top: 4px;
+}
+
+.nav-ref-head {
+  padding: 2px 0 3px 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.nav-ref-item {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.nav-ref-meta {
+  font-size: 9.5px;
+  color: var(--ink-faint);
+}
+
 /* Section tree — the § items of the open suite, mirrored from the table of
    contents. Set as an indented list in the margin of the section heading, the
    way sub-entries sit under a chapter in a printed table of contents: no

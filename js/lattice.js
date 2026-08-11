@@ -491,6 +491,8 @@
 
   window.calcLattice = calcLattice;
   window.toggleReflections = toggleReflections;
+  // Search offers the presets as results, so it needs to see them.
+  window.LATTICE_PRESETS = LATTICE_PRESETS;
   window.applyLatticeSystem = applyLatticeSystem;
   window.applyLatticePreset = applyLatticePreset;
   window.initLattice = initLattice;

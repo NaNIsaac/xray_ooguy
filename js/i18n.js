@@ -196,6 +196,9 @@
       theme_tokyo_desc: "모던 네온 블루/퍼플 다크, 고가독성",
 
       sidebar_offline: "Client Offline-Ready",
+      search_ph: "검색",
+      search_reference: "참조",
+      search_empty: "일치하는 항목 없음",
 
       // Banners
       b_set_title: "설정 및 히스토리 관리 (Settings & History)",
@@ -243,9 +246,9 @@
       lbl_frequency: "주파수",
       opt_t1_res_label: "실시간 등가 변환값",
       opt_t2_title: "§ 1. 브래그 법칙 (Bragg's Law 3-Way Suite)",
-      bragg_row1_title: "d + 2θ(tth) ➔ 에너지 (Energy)",
-      bragg_row2_title: "2θ(tth) + 에너지 ➔ d-spacing (d)",
-      bragg_row3_title: "d + 에너지 ➔ 2θ(tth) & θ(th)",
+      bragg_solve_energy: "에너지 E — 주어진 값 d, 2θ",
+      bragg_solve_d: "격자면 간격 d — 주어진 값 2θ, E",
+      bragg_solve_angle: "회절각 2θ, θ — 주어진 값 d, E",
       lbl_dspacing: "격자면 간격 d",
       lbl_tth: "회절각 2θ (tth)",
       lbl_presets: "자주 쓰는 결정면 프리셋",
@@ -536,6 +539,9 @@
       theme_tokyo_desc: "Modern neon blue/purple dark theme, high legibility",
 
       sidebar_offline: "Client Offline-Ready",
+      search_ph: "Search",
+      search_reference: "Reference",
+      search_empty: "No match",
 
       // Banners
       b_set_title: "Settings & History Management",
@@ -591,9 +597,9 @@
       lbl_frequency: "Frequency",
       opt_t1_res_label: "Equivalent Physical Quantities",
       opt_t2_title: "§ 1. Bragg's Law (3-Way Suite)",
-      bragg_row1_title: "d + 2θ(tth) ➔ Energy (E)",
-      bragg_row2_title: "2θ(tth) + Energy ➔ d-spacing (d)",
-      bragg_row3_title: "d + Energy ➔ 2θ(tth) & θ(th)",
+      bragg_solve_energy: "Energy E — given d, 2θ",
+      bragg_solve_d: "d-spacing d — given 2θ, E",
+      bragg_solve_angle: "Diffraction angle 2θ, θ — given d, E",
       lbl_dspacing: "Lattice d-spacing d",
       lbl_tth: "Diffraction Angle 2θ (tth)",
       lbl_presets: "Common Crystal Reflection Presets",
@@ -718,6 +724,18 @@
       if (current && current[key] !== undefined) return current[key];
       if (translations.ko && translations.ko[key] !== undefined) return translations.ko[key];
       return key;
+    },
+
+    // Every wording a key has, in every language. Search matches against all
+    // of them, so a Korean interface still finds "goniometry" and an English
+    // one still finds "고니오메트리".
+    allText: function (key) {
+      var out = [];
+      for (var lang in translations) {
+        if (!translations.hasOwnProperty(lang)) continue;
+        if (translations[lang][key] !== undefined) out.push(translations[lang][key]);
+      }
+      return out.join(" ");
     },
 
     setLang: function (lang) {
