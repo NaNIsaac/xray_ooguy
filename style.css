@@ -1898,33 +1898,31 @@ select.form-control {
 }
 
 /* TOC Section Cards (Roman Numerals I ~ VII) */
+/* --------------------------------------------------------------------------
+   Table of contents — set as type, not as panels.
+
+   The section groups used to be built exactly like a calculator card: same
+   border, same filled header bar, same rule under it. Reading the page, the
+   entries looked like things you could compute in. A printed table of contents
+   has no boxes at all — a chapter heading, a rule under it, then indented
+   entries — so the frame comes off entirely and the distinction becomes
+   structural: panels are where work happens, type is where you find it.
+   -------------------------------------------------------------------------- */
 .toc-section-card {
-  border: var(--rule-main);
-  background-color: var(--bg-paper);
-  margin-bottom: 18px;
-  transition: border-color 0.15s ease;
+  margin-bottom: 26px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.toc-section-card:hover {
-  border-color: var(--accent-ink);
-}
-
+/* Chapter heading: the rule belongs under the title, not around a bar */
 .toc-sec-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px 14px;
-  background-color: var(--bg-paper-subtle);
-  border-bottom: var(--rule-main);
+  align-items: baseline;
+  padding: 0 0 5px 0;
+  border-bottom: var(--rule-heavy);
   box-sizing: border-box;
   cursor: pointer;
-  transition: background-color 0.12s ease;
-}
-
-.toc-sec-header:hover {
-  background-color: var(--bg-paper-hover);
 }
 
 .toc-sec-title {
@@ -1934,31 +1932,35 @@ select.form-control {
   letter-spacing: 0.3px;
   color: var(--ink-primary);
   display: flex;
-  align-items: center;
+  align-items: baseline;
+}
+
+.toc-sec-header:hover .toc-sec-title {
+  color: var(--accent-ink);
 }
 
 .toc-roman-badge {
-  font-family: var(--font-serif);
+  font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 13px;
-  color: var(--accent-ink);
-  margin-right: 8px;
-  letter-spacing: 0.5px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  margin-right: 9px;
+  flex-shrink: 0;
 }
 
 .toc-sec-desc {
   font-size: 11px;
   color: var(--ink-secondary);
-  padding: 6px 14px;
-  border-bottom: var(--rule-faint);
-  background-color: var(--bg-paper);
-  line-height: 1.4;
+  padding: 7px 0 2px 0;
+  line-height: 1.5;
   box-sizing: border-box;
+  max-width: 60em;
 }
 
 /* TOC Item Links (Section § Items) */
 .toc-items-container {
-  padding: 4px 0;
+  padding: 2px 0 0 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -1966,35 +1968,39 @@ select.form-control {
 .toc-item-link {
   display: flex;
   align-items: baseline;
-  padding: 7px 14px;
+  padding: 4px 0;
   text-decoration: none;
   color: var(--ink-primary);
   cursor: pointer;
-  transition: background-color 0.12s ease, color 0.12s ease;
-  border-bottom: 1px solid transparent;
   width: 100%;
   box-sizing: border-box;
+  /* The global rule underlines every anchor; an index is not a page of links */
+  border-bottom: none;
 }
 
+/* No fill on hover — the ink darkens and the entry underlines, the way a
+   line of type answers to a pointer. */
 .toc-item-link:hover {
-  background-color: var(--bg-paper-hover);
+  background-color: transparent;
   color: var(--accent-ink);
 }
 
 .toc-item-link:hover .toc-item-name {
   color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-.toc-item-link:last-child {
-  border-bottom: none;
+.toc-item-link:hover .toc-item-num {
+  color: var(--accent-ink);
 }
 
 .toc-item-num {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--accent-ink);
-  min-width: 32px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  min-width: 34px;
   flex-shrink: 0;
 }
 
@@ -2012,15 +2018,15 @@ select.form-control {
   font-size: 12.5px;
   font-weight: 600;
   color: var(--ink-primary);
-  line-height: 1.3;
+  line-height: 1.35;
   word-break: break-word;
-  transition: color 0.12s ease;
 }
 
 .toc-item-formula {
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
   color: var(--ink-muted);
-  line-height: 1.3;
+  line-height: 1.35;
   margin-top: 1px;
   word-break: break-all;
   white-space: normal;
