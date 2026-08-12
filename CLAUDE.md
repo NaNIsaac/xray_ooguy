@@ -1,0 +1,127 @@
+# CLAUDE.md
+
+Constraints for anyone — human or agent — editing this repo. These are not style preferences.
+Breaking them breaks the site on the machines it was built for: old beamline control-room PCs.
+
+## What this is
+
+A static single-page X-ray calculator toolkit. No build step, no bundler, no dependencies,
+no server, no package.json. `index.html` loads `style.css` and the `js/*.js` files directly,
+in order, as classic scripts. Deployed by pushing `main` to GitHub Pages.
+
+Editing means: change the file, reload the browser. That is the whole loop.
+
+## Hard constraints
+
+### 1. ES5 JavaScript only
+
+Target is Firefox 60 ESR / Chrome 60–70 on CentOS 7. Modern syntax is a **parse error** there,
+which kills the entire file, not just the feature.
+
+Banned: `let`, `const`, arrow functions, template literals, `class`, `async`/`await`,
+optional chaining `?.`, nullish coalescing `??`, destructuring, default/rest params, spread.
+
+Use: `var`, `function`, IIFE modules (`(function () { "use strict"; ... })();`),
+`if (obj && obj.prop)` instead of `obj?.prop`.
+
+The current `js/` tree is clean ES5 — keep it that way. Verify:
+
+```powershell
+Get-ChildItem .\js\*.js | ForEach-Object { node --check $_.FullName }
+```
+
+`node --check` catches syntax errors but **not** modern builtins. Also avoid
+`Array.prototype.includes`, `Object.assign`, `String.prototype.padStart`, `Promise`,
+`fetch`, `URLSearchParams` unless you ship a fallback.
+
+### 2. No network at runtime
+
+Zero `fetch` / `XMLHttpRequest`. Every physical constant, d-spacing table and attenuation
+dataset lives as a JS object literal in `js/data.js`. No CDNs, no web fonts, no analytics.
+The site must work with the network cable pulled.
+
+### 3. No CSS Grid, no flex `gap`
+
+Layout is Flexbox with percentage columns (`.col-12`, `.col-8`, `.col-6`, `.col-4`).
+Gutters are negative margin on the row plus padding on the columns — `gap` is unsupported
+in the target browsers and silently collapses spacing.
+
+Two known deviations exist and should be migrated, not copied:
+`.rec-memo-grid` (`style.css:2528`) and `.tab-pill` (`style.css:807`).
+
+### 4. Storage is localStorage, prefixed
+
+All persisted state uses the `bl_toolkit_` prefix (see `js/app.js:20`, `js/i18n.js:718`).
+No accounts, no upload, no IndexedDB. Anything persisted must be covered by the
+Settings backup/restore JSON.
+
+### 5. Bilingual or it does not ship
+
+Every user-visible string needs a `data-i18n` key (or `data-i18n-html` for markup),
+with entries added to **both** `ko` and `en` in `js/i18n.js`. Untranslated keys fall back
+to Korean, then render the raw key — both look like bugs.
+
+Strings built in JS (result text, status labels) must go through `I18n.t(key)`, because
+`setLang` re-runs the calculators to re-render them.
+
+### 6. Print output is a feature
+
+`@media print` hides the sidebar, header, tab strip, toasts and buttons, and forces black
+on white. New cards need `break-inside: avoid; page-break-inside: avoid;` so formulas and
+tables do not split across A4 pages.
+
+## Design system
+
+Academic print aesthetic. Themed via `[data-theme=...]` on `<html>`:
+`light`/`paper`, `parchment`, `crt`, `dark`/`tokyo`, `datasheet`, `blueprint`, `console`.
+
+- **Never hardcode a color.** Use the CSS custom properties (`--bg-paper`, `--ink-primary`,
+  `--ink-muted`, `--accent-ink`, …). A literal hex breaks every theme but one.
+- **One accent** — `--accent-ink`, reserved for links, the active tab and result values.
+- **No emoji anywhere in the UI.** Use section marks (`§ 1.1`), symbols, or text labels.
+- **No `border-radius`, no `box-shadow`, no gradients.** Square edges, hairline rules
+  (0.75–1.5px), LaTeX booktabs-style separators instead of cards-with-shadows.
+- **Superscripts use `<sup>`**, never Unicode `⁻¹` / `²` — the target fonts render them
+  inconsistently. Formulas are italic: `<i class="formula">nλ = 2d sin θ</i>`.
+- `--font-serif` is a **sans-serif** system stack despite the name; `--font-mono` is for
+  every number, input, result and timestamp.
+- Buttons invert on hover (ink background, paper text).
+
+## Navigation
+
+Dual navigation, kept in sync by `navigateTo(route)` in `js/app.js`:
+the sidebar (`.nav-item`) and the independent top tab strip (`.tab-pill`).
+
+The tab strip is its own sticky layer **below** the 48px header — not inside it. It was
+inside the header once, and narrow viewports clipped it away entirely under
+`overflow: hidden`. Keep `#top-tab-strip` separate, keep `.tab-strip-scroll` on
+`overflow-x: auto; white-space: nowrap`, keep `.tab-pill { flex-shrink: 0 }`, and keep
+`#content-area` on `overflow-x: hidden`.
+
+`js/nav.js` builds the sidebar tree and its search index by **reading the in-page table of
+contents markup** — the section list is not duplicated in JS. A new calculator added to the
+contents block appears in the sidebar automatically.
+
+Routes: `spectroscopy`, `goniometry`, `record`, `settings`, `about`, `dashboard`
+(`Alt`+`1`–`6`). One route per view section, no aliases.
+
+## Physics
+
+- Do not "clean up" a formula or a constant without a source. `js/data.js` follows CODATA;
+  `hc = 12398.41984 eV·Å`.
+- `js/lattice.js` handles all seven crystal systems through one metric-tensor path
+  (`1/d² = [hkl]·G*·[hkl]ᵀ`). Do not add per-system special cases.
+- Every calculator states its model assumptions and validity domain via `js/validity.js`.
+  A new calculator needs a validity entry — an undisclosed approximation is a wrong answer
+  waiting to happen.
+- `js/miniplot.js` draws inline SVG from the same expression the card evaluates. If you
+  change a formula, the plot must follow, or it will quietly disagree with the number.
+
+## Adding a calculator
+
+1. Markup in the relevant `<section id="view-...">` of `index.html`, with a `§ N.` card title.
+2. Add the entry to that suite's table of contents block (sidebar + search come free).
+3. Compute in `js/optics.js` or `js/beamline.js` — engines are keyed off DOM ids.
+4. `ko` + `en` keys in `js/i18n.js` for every string.
+5. Validity entry in `js/validity.js`.
+6. Check: both languages, several themes, print preview, narrow viewport, `node --check`.
