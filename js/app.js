@@ -449,13 +449,18 @@
       seoTitle: "All Calculators — Index | X-Ray Beamline Toolkit",
       seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
     },
+    data: {
+      title: "IV. DATA", subtitle: "스캔 파일 판독, XY 플롯 및 XRR 이어붙이기",
+      seoTitle: "Scan Data Viewer & XRR Stitching | X-Ray Beamline Toolkit",
+      seoDesc: "Open two-column scan files in the browser, plot them on a linear or log axis, normalise, crop the range and stitch overlapping XRR segments into one curve."
+    },
     settings: {
-      title: "IV. SETTINGS", subtitle: "언어, 테마, 데이터 백업 및 단축키",
+      title: "V. SETTINGS", subtitle: "언어, 테마, 데이터 백업 및 단축키",
       seoTitle: "Settings | X-Ray Beamline Toolkit",
       seoDesc: "Language, display theme, local data backup and keyboard shortcuts for the X-Ray Beamline Toolkit."
     },
     about: {
-      title: "V. ABOUT", subtitle: "프로젝트 정보 및 제작자",
+      title: "VI. ABOUT", subtitle: "프로젝트 정보 및 제작자",
       seoTitle: "About | X-Ray Beamline Toolkit",
       seoDesc: "A lightweight, offline-first toolkit of synchrotron X-ray calculators and session logging, built for beamline researchers."
     }
@@ -748,15 +753,16 @@
   // Keyboard Shortcuts Setup
   function setupShortcuts() {
     document.addEventListener("keydown", function (e) {
-      // Alt + 1 ~ 6 for tab switching
+      // Alt + 1 ~ 7 for tab switching
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         var keyMap = {
           "1": "spectroscopy",
           "2": "goniometry",
           "3": "record",
-          "4": "settings",
-          "5": "about",
-          "6": "dashboard"
+          "4": "data",
+          "5": "settings",
+          "6": "about",
+          "7": "dashboard"
         };
         if (keyMap[e.key]) {
           e.preventDefault();

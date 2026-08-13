@@ -41,6 +41,10 @@ shipped is flatter and lighter:
 - Added since: metric-tensor d-spacing for all seven crystal systems (`lattice.js`),
   per-card model validity disclosure (`validity.js`), inline SVG mini plots (`miniplot.js`),
   sidebar tree with search (`nav.js`), eight themes.
+- **DATA** (`dataview.js`) closes the loop the other three suites open: calculate, record,
+  then look at what came back. Two-column scan files are read in the browser, plotted on a
+  linear or log axis, normalised, cropped, and — for XRR — stitched across their overlaps.
+  It reads files; it does not manage them. No project, no dataset, no library.
 
 The lesson worth keeping: **features that do not survive contact with a real beamtime get cut.**
 Adding a calculator is cheap; adding a data model is not.
@@ -60,6 +64,14 @@ Unordered — priority is the maintainer's call, not the document's.
   before commit would stop regressions that `node --check` cannot see.
 
 ### Candidates
+
+- **DATA: read the cursor off the plot** — an x/y readout on hover would answer "where is
+  that fringe" without exporting. Needs a hit-test against the drawn points, not a library.
+- **DATA: fringe spacing → thickness** — Kiessig fringe period on a stitched XRR curve gives
+  the film thickness directly. The suite already has the curve; this is the calculation the
+  user is doing on paper afterwards.
+- **DATA: remember the last import** — parsed traces vanish on reload. Keeping them in
+  `localStorage` would need a size cap and a place in the backup JSON.
 
 - **Reflection list depth** — the Bragg suite now lists allowed reflections for a cell at a
   given energy. Structure-factor-based intensity ordering is the obvious next step.

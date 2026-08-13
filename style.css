@@ -3146,3 +3146,312 @@ html[data-theme="console"] .result-value.primary {
   white-space: nowrap;
   border: 0;
 }
+
+/* ==========================================================================
+   DATA view — scan file table, XY plot, stitching controls
+   ==========================================================================
+   Trace colours are their own tokens rather than the single accent: a plot
+   may carry six curves at once, which is the one place in this design where
+   one accent is not enough. Two sets only — one for paper-coloured themes,
+   one for the dark-ground themes — so a new theme inherits a usable pair
+   without declaring anything. */
+:root {
+  --dv-c1: #003366;
+  --dv-c2: #a03000;
+  --dv-c3: #1d6b3a;
+  --dv-c4: #6a2c8f;
+  --dv-c5: #7a6000;
+  --dv-c6: #2b2b2b;
+}
+
+[data-theme="dark"], [data-theme="tokyo"], [data-theme="crt"],
+[data-theme="blueprint"], [data-theme="console"] {
+  --dv-c1: #7aa2f7;
+  --dv-c2: #ff9e64;
+  --dv-c3: #9ece6a;
+  --dv-c4: #bb9af7;
+  --dv-c5: #e0af68;
+  --dv-c6: #c0caf5;
+}
+
+/* -- File input ---------------------------------------------------------- */
+.dv-drop {
+  border: 1px dashed var(--ink-muted);
+  background-color: var(--bg-paper-subtle);
+  padding: 18px 14px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.dv-drop-over {
+  border-color: var(--accent-ink);
+  background-color: var(--accent-ink-subtle);
+}
+
+.dv-drop-text {
+  font-size: 12.5px;
+  color: var(--ink-primary);
+  margin-bottom: 8px;
+}
+
+.dv-drop-note {
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  margin-top: 8px;
+}
+
+/* The real input is unstyleable across the target browsers, so the label is
+   the button and the input is parked behind it. */
+.dv-file-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.dv-file-btn input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dv-actions {
+  margin-top: 10px;
+}
+
+.dv-actions .btn {
+  margin-right: 6px;
+}
+
+/* -- Trace table --------------------------------------------------------- */
+#dv-traces {
+  overflow-x: auto;
+}
+
+.dv-table {
+  width: 100%;
+  font-size: 11.5px;
+}
+
+.dv-table td, .dv-table th {
+  vertical-align: middle;
+}
+
+.dv-num {
+  text-align: right;
+}
+
+.dv-hidden td {
+  opacity: 0.45;
+}
+
+.dv-file-label {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.dv-meta {
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.dv-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  vertical-align: middle;
+}
+
+.dv-swatch.dv-c1 { background-color: var(--dv-c1); }
+.dv-swatch.dv-c2 { background-color: var(--dv-c2); }
+.dv-swatch.dv-c3 { background-color: var(--dv-c3); }
+.dv-swatch.dv-c4 { background-color: var(--dv-c4); }
+.dv-swatch.dv-c5 { background-color: var(--dv-c5); }
+.dv-swatch.dv-c6 { background-color: var(--dv-c6); }
+
+.dv-badge {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.dv-badge-warn {
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+
+/* A pinned scale is marked, so an old manual value is never mistaken for a
+   fresh automatic one. */
+.dv-scale {
+  width: 92px;
+  text-align: right;
+}
+
+.dv-scale-manual {
+  border-color: var(--accent-ink);
+  font-weight: 700;
+}
+
+.form-control-xs {
+  padding: 2px 4px;
+  font-size: 11px;
+  height: auto;
+  min-width: 70px;
+}
+
+.btn-xs {
+  padding: 1px 7px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* -- Plot ---------------------------------------------------------------- */
+.dv-controls {
+  margin-bottom: 10px;
+}
+
+.dv-crop-row {
+  display: flex;
+  align-items: center;
+}
+
+.dv-crop-row .form-control {
+  min-width: 0;
+}
+
+.dv-crop-sep {
+  padding: 0 6px;
+  color: var(--ink-muted);
+}
+
+.dv-crop-row .btn {
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
+.dv-plot {
+  border: var(--rule-main);
+  background-color: var(--bg-paper);
+  padding: 6px;
+}
+
+.dv-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dv-grid {
+  stroke: var(--ink-muted);
+  stroke-width: 0.4;
+  opacity: 0.35;
+  fill: none;
+}
+
+.dv-axis {
+  stroke: var(--ink-primary);
+  stroke-width: 1;
+  fill: none;
+}
+
+.dv-tick, .dv-axis-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--ink-muted);
+}
+
+.dv-axis-label {
+  font-size: 11px;
+  fill: var(--ink-primary);
+}
+
+.dv-curve {
+  fill: none;
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.dv-curve.dv-c1 { stroke: var(--dv-c1); }
+.dv-curve.dv-c2 { stroke: var(--dv-c2); }
+.dv-curve.dv-c3 { stroke: var(--dv-c3); }
+.dv-curve.dv-c4 { stroke: var(--dv-c4); }
+.dv-curve.dv-c5 { stroke: var(--dv-c5); }
+.dv-curve.dv-c6 { stroke: var(--dv-c6); }
+
+.dv-summary {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.dv-note {
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: var(--accent-ink);
+}
+
+.dv-empty {
+  padding: 26px 10px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.dv-explain {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--ink-primary);
+  margin: 0 0 10px 0;
+}
+
+.dv-explain-quiet {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  margin: 10px 0 0 0;
+}
+
+@media (max-width: 700px) {
+  .dv-crop-row {
+    display: block;
+  }
+  .dv-crop-row .btn {
+    margin-left: 0;
+    margin-top: 6px;
+  }
+}
+
+/* A printed plot is the reason to print this view at all: the frame and the
+   curve stay, the file picker and the buttons go. */
+@media print {
+  .dv-drop, .dv-actions {
+    display: none !important;
+  }
+
+  .dv-plot {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .dv-curve {
+    stroke: #000000 !important;
+  }
+
+  .dv-curve.dv-c2 { stroke-dasharray: 5 3; }
+  .dv-curve.dv-c3 { stroke-dasharray: 2 2; }
+  .dv-curve.dv-c4 { stroke-dasharray: 8 3 2 3; }
+  .dv-curve.dv-c5 { stroke-dasharray: 1 3; }
+  .dv-curve.dv-c6 { stroke-dasharray: 12 4; }
+
+  .dv-swatch { background-color: #000000 !important; }
+  .dv-grid { stroke: #999999 !important; }
+  .dv-axis { stroke: #000000 !important; }
+  .dv-tick, .dv-axis-label { fill: #000000 !important; }
+}

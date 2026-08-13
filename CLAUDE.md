@@ -102,8 +102,10 @@ inside the header once, and narrow viewports clipped it away entirely under
 contents markup** — the section list is not duplicated in JS. A new calculator added to the
 contents block appears in the sidebar automatically.
 
-Routes: `spectroscopy`, `goniometry`, `record`, `settings`, `about`, `dashboard`
-(`Alt`+`1`–`6`). One route per view section, no aliases.
+Routes: `spectroscopy`, `goniometry`, `record`, `data`, `settings`, `about`, `dashboard`
+(`Alt`+`1`–`7`). One route per view section, no aliases. Adding a route means touching
+four places: `routes` and the `Alt` keymap in `app.js`, the sidebar item and tab pill in
+`index.html`, the roman numerals on every later suite, and the shortcut table in Settings.
 
 ## Physics
 
@@ -116,6 +118,10 @@ Routes: `spectroscopy`, `goniometry`, `record`, `settings`, `about`, `dashboard`
   waiting to happen.
 - `js/miniplot.js` draws inline SVG from the same expression the card evaluates. If you
   change a formula, the plot must follow, or it will quietly disagree with the number.
+- `js/dataview.js` is the exception to all of the above: it plots measured numbers rather
+  than a model, so it has no validity entry. It keeps parsed columns exactly as read and
+  applies scale, crop and normalisation on the way to the plot — never in place. Its
+  namespace is `dv*`, never `DataView`, which is the typed-array builtin.
 
 ## Adding a calculator
 
