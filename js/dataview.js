@@ -81,45 +81,64 @@
     { name: "whitespace", re: /\s+/ }
   ];
 
+  // A trailing delimiter — "20, 465," — leaves an empty field that is not a
+  // column. Instrument exports do this constantly.
   function splitLine(line, delim) {
-    return line.replace(/^\s+|\s+$/g, "").split(delim.re);
+    var f = line.replace(/^\s+|\s+$/g, "").split(delim.re);
+    while (f.length > 2 && f[f.length - 1] === "") f.pop();
+    return f;
+  }
+
+  function numericFields(fields) {
+    var n = 0;
+    for (var i = 0; i < fields.length; i++) if (isNumeric(fields[i])) n++;
+    return n;
   }
 
   /**
-   * Scores each candidate on a sample of the body: a delimiter is good when it
-   * yields at least two numeric fields and yields the *same* field count on
-   * every line. Whitespace is tried last, so a comma file whose columns are
-   * also space-padded is still read as comma-separated.
+   * The longest unbroken run of lines that split into the same number of
+   * fields, at least two of them numeric.
+   *
+   * This is what finds the data inside a file that is mostly not data. A
+   * Bruker RAW4 export opens with 200-odd lines of "Alpha1=1.5406" before it
+   * reaches [Data]; Rigaku, PANalytical and SPEC all have their own preamble.
+   * None of them are worth recognising by name — the numbers are always the
+   * one long stretch of structurally identical lines, whatever sits above.
    */
-  function detectDelimiter(body) {
-    var sample = body.slice(0, 40);
-    var best = DELIMS[DELIMS.length - 1];
-    var bestScore = -1;
+  function longestRun(lines, delim) {
+    var best = { start: -1, end: -1, ncol: 0, count: 0 };
+    var runStart = -1, runCol = -1, runCount = 0;
 
-    for (var d = 0; d < DELIMS.length; d++) {
-      var counts = {};
-      var numericLines = 0;
+    for (var i = 0; i < lines.length; i++) {
+      var f = splitLine(lines[i], delim);
+      var ok = f.length >= 2 && numericFields(f) >= 2;
 
-      for (var i = 0; i < sample.length; i++) {
-        var f = splitLine(sample[i], DELIMS[d]);
-        if (f.length < 2) continue;
-
-        var numeric = 0;
-        for (var k = 0; k < f.length; k++) if (isNumeric(f[k])) numeric++;
-        if (numeric < 2) continue;
-
-        numericLines++;
-        counts[f.length] = (counts[f.length] || 0) + 1;
+      if (ok && f.length === runCol) {
+        runCount++;
+      } else if (ok) {
+        runStart = i; runCol = f.length; runCount = 1;
+      } else {
+        runCount = 0; runCol = -1;
+        continue;
       }
 
-      if (!numericLines) continue;
+      if (runCount > best.count) {
+        best = { start: runStart, end: i, ncol: runCol, count: runCount };
+      }
+    }
+    return best;
+  }
 
-      // Consistency: the share of sampled lines that agree on a field count.
-      var top = 0;
-      for (var c in counts) if (counts.hasOwnProperty(c)) top = Math.max(top, counts[c]);
-      var score = numericLines * (top / numericLines);
-
-      if (score > bestScore) { bestScore = score; best = DELIMS[d]; }
+  /**
+   * The delimiter that finds the longest data block wins. Ties go to whichever
+   * comes first in DELIMS, so a comma file whose columns are also space-padded
+   * is read as comma-separated rather than by its padding.
+   */
+  function detectDelimiter(lines) {
+    var best = null;
+    for (var d = 0; d < DELIMS.length; d++) {
+      var run = longestRun(lines, DELIMS[d]);
+      if (!best || run.count > best.run.count) best = { delim: DELIMS[d], run: run };
     }
     return best;
   }
@@ -144,57 +163,52 @@
    * way a scan file labels itself.
    */
   function parseText(text, name) {
-    var lines = text.split(/\r\n|\r|\n/);
-    var body = [];
-    var lastComment = "";
+    var raw = text.split(/\r\n|\r|\n/);
+    var lines = [];
+    var i, c;
 
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i];
-      if (!line.replace(/\s+/g, "")) continue;
-      if (isComment(line)) { lastComment = line; continue; }
-      body.push(line);
+    // Blank lines carry no structure and would otherwise break a run in two.
+    for (i = 0; i < raw.length; i++) {
+      if (raw[i].replace(/\s+/g, "")) lines.push(raw[i]);
     }
-    if (!body.length) return null;
+    if (!lines.length) return null;
 
-    var delim = detectDelimiter(body);
+    var found = detectDelimiter(lines);
+    if (!found || found.run.count < 2) return null;
+
+    var delim = found.delim;
+    var ncol = found.run.ncol;
+
+    // The run establishes the shape; the block is then every line of that
+    // shape from the first to the last, so one corrupt row in the middle of a
+    // scan costs that row rather than everything after it.
+    var first = -1, last = -1;
+    for (i = 0; i < lines.length; i++) {
+      var f = splitLine(lines[i], delim);
+      if (f.length !== ncol || numericFields(f) < 2) continue;
+      if (first < 0) first = i;
+      last = i;
+    }
+    if (first < 0) return null;
+
+    // Column names come from the line directly above the block, whether that
+    // is a header row or a comment. It has to have the same number of fields
+    // as the data — otherwise it is prose, not labels.
     var colNames = null;
-
-    var first = splitLine(body[0], delim);
-    if (!allNumeric(first)) {
-      colNames = first;
-      body.shift();
-    } else if (lastComment) {
-      var tokens = splitLine(stripCommentMark(lastComment), delim);
-      if (tokens.length >= 2 && !isNumeric(tokens[0])) colNames = tokens;
+    if (first > 0) {
+      var prev = lines[first - 1];
+      var cand = splitLine(isComment(prev) ? stripCommentMark(prev) : prev, delim);
+      if (cand.length === ncol && !allNumeric(cand)) colNames = cand;
     }
-    if (!body.length) return null;
-
-    // The row width most lines agree on. Trailing junk and a truncated last
-    // row (an aborted scan) are dropped rather than allowed to shift columns.
-    var widths = {};
-    var w;
-    for (i = 0; i < body.length; i++) {
-      w = splitLine(body[i], delim).length;
-      widths[w] = (widths[w] || 0) + 1;
-    }
-    var ncol = 2, bestCount = 0;
-    for (var key in widths) {
-      if (!widths.hasOwnProperty(key)) continue;
-      if (widths[key] > bestCount || (widths[key] === bestCount && parseInt(key, 10) > ncol)) {
-        bestCount = widths[key];
-        ncol = parseInt(key, 10);
-      }
-    }
-    if (ncol < 2) return null;
 
     var cols = [];
-    for (var c = 0; c < ncol; c++) cols.push([]);
+    for (c = 0; c < ncol; c++) cols.push([]);
     var skipped = 0;
 
-    for (i = 0; i < body.length; i++) {
-      var f = splitLine(body[i], delim);
-      if (f.length !== ncol) { skipped++; continue; }
-      for (c = 0; c < ncol; c++) cols[c].push(toNumber(f[c]));
+    for (i = first; i <= last; i++) {
+      var row = splitLine(lines[i], delim);
+      if (row.length !== ncol || numericFields(row) < 2) { skipped++; continue; }
+      for (c = 0; c < ncol; c++) cols[c].push(toNumber(row[c]));
     }
     if (!cols[0].length) return null;
 
@@ -210,7 +224,9 @@
       cols: cols,
       delimiter: delim.name,
       hasHeader: !!colNames,
-      skipped: skipped
+      skipped: skipped,
+      // Everything above the block: an instrument preamble, not an error.
+      preamble: first - (colNames ? 1 : 0)
     };
   }
 
@@ -644,6 +660,7 @@
           ' onchange="dvToggleTrace(' + tr.id + ')"> <span class="mono">' + esc(tr.name) + "</span></label>" +
           '<div class="dv-meta mono">' + esc(tr.delimiter) + " · " +
           esc(t(tr.hasHeader ? "dv_header_yes" : "dv_header_no")) +
+          (tr.preamble ? " · " + t("dv_preamble").replace("{n}", tr.preamble) : "") +
           (tr.skipped ? " · " + t("dv_skipped").replace("{n}", tr.skipped) : "") + "</div></td>" +
         "<td>" + colSel("x") + "</td>" +
         "<td>" + colSel("y") + "</td>" +
@@ -688,8 +705,25 @@
   // ------------------------------------------------------------------
   // File input
   // ------------------------------------------------------------------
+  // Columns 1 and 2 are the usual answer, but a results table can open with a
+  // label column. Default to the first two columns that actually hold numbers.
+  function defaultColumns(cols) {
+    var usable = [];
+    for (var c = 0; c < cols.length; c++) {
+      var finite = 0;
+      for (var i = 0; i < cols[c].length; i++) if (isFinite(cols[c][i])) finite++;
+      if (finite > cols[c].length * 0.9) usable.push(c);
+      if (usable.length === 2) break;
+    }
+    return {
+      x: usable.length > 0 ? usable[0] : 0,
+      y: usable.length > 1 ? usable[1] : Math.min(1, cols.length - 1)
+    };
+  }
+
   function addParsed(parsed) {
     if (!parsed) return;
+    var pick = defaultColumns(parsed.cols);
     traces.push({
       id: nextId++,
       name: parsed.name,
@@ -698,8 +732,9 @@
       delimiter: parsed.delimiter,
       hasHeader: parsed.hasHeader,
       skipped: parsed.skipped,
-      xcol: 0,
-      ycol: 1,
+      preamble: parsed.preamble,
+      xcol: pick.x,
+      ycol: pick.y,
       autoScale: 1,
       manualScale: null,
       overlap: null,
