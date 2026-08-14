@@ -184,7 +184,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-energy">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t1_title">§ 1. 에너지 - 파장 - 주파수 변환 (Energy-Wavelength-Frequency)</span>
+                  <span class="card-title" data-i18n="opt_t1_title">§ 1. 에너지 - 파장 - 주파수 변환</span>
                   <span class="card-tag"><i class="formula">E = hc/λ = hν</i></span>
                 </div>
                 <div class="card-body">
@@ -220,7 +220,7 @@
             <div class="col-12 col-lg-8">
               <div class="card" id="card-lattice-dspacing">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="lat_title">§ 2. 격자 상수 &amp; 밀러 지수 → 격자면 간격 (Lattice &amp; Miller Indices)</span>
+                  <span class="card-title" data-i18n="lat_title">§ 2. 격자 상수 &amp; 밀러 지수 → 격자면 간격</span>
                   <span class="card-tag"><i class="formula">1/d² = h·G*·h</i></span>
                 </div>
                 <div class="card-body">
@@ -228,7 +228,7 @@
 
                   <!-- Crystal System Selector -->
                   <div class="form-group">
-                    <label class="form-label" data-i18n="lat_system">결정계 (Crystal System)</label>
+                    <label class="form-label" data-i18n="lat_system">결정계</label>
                     <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
                       <option value="cubic">Cubic (a = b = c, 90°)</option>
                       <option value="tetragonal">Tetragonal (a = b ≠ c, 90°)</option>
@@ -301,7 +301,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label" data-i18n="lat_centering">격자 중심화 (Centring)</label>
+                    <label class="form-label" data-i18n="lat_centering">격자 중심화</label>
                     <select id="lat-centering" class="form-control" onchange="calcLattice()">
                       <option value="P">P — Primitive</option>
                       <option value="F">F — Face-centred</option>
@@ -377,7 +377,7 @@
                   <div class="flex-row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label class="form-label"><span data-i18n="lbl_select_mat">재료 선택 (Materials DB)</span></label>
+                        <label class="form-label"><span data-i18n="lbl_select_mat">재료 선택</span></label>
                         <select id="refract-mat" class="form-control" onchange="calcRefractive()"></select>
                       </div>
                     </div>
@@ -398,7 +398,7 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_trans">빔 투과율 (Transmittance)</div>
+                        <div class="result-label" data-i18n="res_trans">빔 투과율</div>
                         <div id="refract-res-trans" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
@@ -421,7 +421,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-reflection">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t7_title">§ 4. 전반사 임계각 (Total External Reflection)</span>
+                  <span class="card-title" data-i18n="opt_t7_title">§ 4. 전반사 임계각</span>
                   <span class="card-tag"><i class="formula">θ<sub>c</sub> = √(2δ)</i></span>
                 </div>
                 <div class="card-body">
@@ -472,7 +472,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-grating">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t3_title">§ 5. 회절격자 (Diffraction Grating)</span>
+                  <span class="card-title" data-i18n="opt_t3_title">§ 5. 회절격자</span>
                   <span class="card-tag"><i class="formula">mλ = d(sin α + sin β)</i></span>
                 </div>
                 <div class="card-body">
@@ -526,7 +526,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-resolution">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t3_title">§ 6. 에너지 분해능 (Energy Resolution ΔE/E)</span>
+                  <span class="card-title" data-i18n="beam_t3_title">§ 6. 에너지 분해능 (ΔE/E)</span>
                   <span class="card-tag">Monochromator Intrinsic</span>
                 </div>
                 <div class="card-body">
@@ -549,7 +549,7 @@
                     </div>
                     <div class="col-12">
                       <div class="form-group">
-                        <label class="form-label"><span data-i18n="lbl_beam_div">빔 수직 발산각 (Divergence)</span> <span class="unit">(μrad)</span></label>
+                        <label class="form-label"><span data-i18n="lbl_beam_div">빔 수직 발산각</span> <span class="unit">(μrad)</span></label>
                         <input type="number" id="res-div" class="form-control mono" value="15" oninput="calcEnergyResolution()" min="0" max="10000" step="any">
                       </div>
                     </div>
@@ -578,7 +578,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-flux">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t2_title">§ 7. 빔라인 광자 플럭스 (Photon Flux)</span>
+                  <span class="card-title" data-i18n="beam_t2_title">§ 7. 빔라인 광자 플럭스</span>
                   <span class="card-tag">Delivered Flux</span>
                 </div>
                 <div class="card-body">
@@ -634,7 +634,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-drift">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t7_title">§ 8. 결정 열팽창 각도 및 에너지 시프트 (Thermal Drift)</span>
+                  <span class="card-title" data-i18n="beam_t7_title">§ 8. 결정 열팽창 각도 및 에너지 시프트</span>
                   <span class="card-tag"><i class="formula">Δθ = -α ΔT tan θ</i></span>
                 </div>
                 <div class="card-body">
@@ -697,7 +697,7 @@
             <div class="col-6 col-lg-8">
               <div class="card" id="card-optics-bragg">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t2_title">§ 1. 브래그 법칙 (Bragg's Law 3-Way Suite)</span>
+                  <span class="card-title" data-i18n="opt_t2_title">§ 1. 브래그 법칙 3-Way Suite</span>
                   <span class="card-tag"><i class="formula">λ = 2d sin θ ⇔ E = hc / (2d sin θ)</i></span>
                 </div>
                 <div class="card-body">
@@ -796,7 +796,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-qspace">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t8_title">§ 2. 상호공간 Q-Space 변환 (Reciprocal Space)</span>
+                  <span class="card-title" data-i18n="opt_t8_title">§ 2. 상호공간 Q-Space 변환</span>
                   <span class="card-tag"><i class="formula">Q = (4π/λ) sin θ = 2π/d</i></span>
                 </div>
                 <div class="card-body">
@@ -838,12 +838,12 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-scaling">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t5_title">§ 3. 에너지 스케일링 &amp; 각도 계산기 (Energy Scaling)</span>
+                  <span class="card-title" data-i18n="opt_t5_title">§ 3. 에너지 스케일링 &amp; 각도 계산기</span>
                   <span class="card-tag"><i class="formula">E<sub>ref</sub> sin θ<sub>ref</sub> = E<sub>target</sub> sin θ<sub>target</sub> ⇔ Q = const</i></span>
                 </div>
                 <div class="card-body">
                   <!-- Reference Beam & Angle Input -->
-                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; color:var(--ink-primary);" data-i18n="sec_ref_condition">기준 빔 조건 (Reference Beam & Angle)</div>
+                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; color:var(--ink-primary);" data-i18n="sec_ref_condition">기준 빔 조건</div>
                   <div class="flex-row">
                     <div class="col-4">
                       <div class="form-group">
@@ -866,7 +866,7 @@
                   </div>
 
                   <!-- Target Beam Input & Quick Presets -->
-                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; margin-top:2px; color:var(--ink-primary);" data-i18n="sec_target_condition">목표 에너지 선택 (Target Beam Energy)</div>
+                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; margin-top:2px; color:var(--ink-primary);" data-i18n="sec_target_condition">목표 에너지 선택</div>
                   <div class="flex-row">
                     <div class="col-6">
                       <div class="form-group">
@@ -919,7 +919,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-footprint">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t1_title">§ 4. 시료 상 빔 풋프린트 (Beam Footprint)</span>
+                  <span class="card-title" data-i18n="beam_t1_title">§ 4. 시료 상 빔 풋프린트</span>
                   <span class="card-tag"><i class="formula">L = V / sin θ</i></span>
                 </div>
                 <div class="card-body">
@@ -975,7 +975,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-detector">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t4_title">§ 5. 디텍터 각도 분해능 (Angular Resolution)</span>
+                  <span class="card-title" data-i18n="beam_t4_title">§ 5. 디텍터 각도 분해능</span>
                   <span class="card-tag"><i class="formula">Δθ = Pixel / Distance</i></span>
                 </div>
                 <div class="card-body">
@@ -1013,7 +1013,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-slit">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t6_title">§ 6. 슬릿 간격 및 수용각 (Slit Opening)</span>
+                  <span class="card-title" data-i18n="beam_t6_title">§ 6. 슬릿 간격 및 수용각</span>
                   <span class="card-tag">Beam Acceptance</span>
                 </div>
                 <div class="card-body">
@@ -1067,7 +1067,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-optics-euler">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="opt_t6_title">§ 7. Chi-Phi 오일러 크래들 보정 (Eulerian Cradle)</span>
+                  <span class="card-title" data-i18n="opt_t6_title">§ 7. Chi-Phi 오일러 크래들 보정</span>
                   <span class="card-tag">4-Circle Diffractometer</span>
                 </div>
                 <div class="card-body">
@@ -1101,7 +1101,7 @@
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-cdi">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="beam_t5_title">§ 8. CDI / BCDI 결맞음 오버샘플링 (Oversampling)</span>
+                  <span class="card-title" data-i18n="beam_t5_title">§ 8. CDI / BCDI 결맞음 오버샘플링</span>
                   <span class="card-tag"><i class="formula">σ = (λ·D) / (p·S) ≥ 2</i></span>
                 </div>
                 <div class="card-body">
@@ -1322,7 +1322,7 @@
                 <div class="toc-sec-header" onclick="jumpToSection('record')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION III.</span>
-                    <span data-i18n="toc_sec3_title">로그북 &amp; 실시간 기록 (Record)</span>
+                    <span data-i18n="toc_sec3_title">로그북 &amp; 실시간 기록</span>
                   </div>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec3_desc">
@@ -1332,14 +1332,14 @@
                   <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-headers')">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_1">빔타임 로그북 서식 프리셋 (Logbook Headers)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_1">빔타임 로그북 서식 프리셋</span>
                       <span class="toc-item-formula">Standard / Shift Handover / Run Table Matrix</span>
                     </div>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-snippets')">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">실시간 빔타임 이벤트 스니펫 (In-Situ Snippets)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">실시간 빔타임 이벤트 스니펫</span>
                       <span class="toc-item-formula">Beam dump, Restored, Mount, Alignment, Scan start/finish</span>
                     </div>
                   </a>
@@ -1351,7 +1351,7 @@
                 <div class="toc-sec-header" onclick="jumpToSection('data')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION IV.</span>
-                    <span data-i18n="toc_sec4_title">스캔 데이터 판독 및 플롯 (Data)</span>
+                    <span data-i18n="toc_sec4_title">스캔 데이터 판독 및 플롯</span>
                   </div>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec4_desc">
@@ -1361,21 +1361,21 @@
                   <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-load')">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_dv_1">데이터 파일 불러오기 (Load Scan Files)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_1">데이터 파일 불러오기</span>
                       <span class="toc-item-formula">TXT / CSV / DAT — delimiter &amp; header auto-detect</span>
                     </div>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-plot')">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_dv_2">XY 플롯 (Generic XY Plot)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_2">XY 플롯</span>
                       <span class="toc-item-formula">Linear / log&#8321;&#8320; y · normalize · x crop</span>
                     </div>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-stitch')">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR 세그먼트 이어붙이기 (Stitching)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR 세그먼트 이어붙이기</span>
                       <span class="toc-item-formula">scale = median(I<sub>prev</sub> / I<sub>seg</sub>) over overlap</span>
                     </div>
                   </a>
@@ -1392,7 +1392,7 @@
                 <div class="toc-sec-header" onclick="jumpToSection('settings')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION V.</span>
-                    <span data-i18n="toc_sec6_title">환경설정 및 아카이브 (Settings)</span>
+                    <span data-i18n="toc_sec6_title">환경설정 및 아카이브</span>
                   </div>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec6_desc">
@@ -1402,21 +1402,21 @@
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-lang')">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_set_1">언어 설정 (Language Selection)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_set_1">언어 설정</span>
                       <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
                     </div>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드 (Theme Mode)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드</span>
                       <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
                     </div>
                   </a>
                   <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
-                      <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내 (Shortcuts)</span>
+                      <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내</span>
                       <span class="toc-item-formula">Alt + 1 ~ 7 Quick Tab Switcher</span>
                     </div>
                   </a>
@@ -1428,7 +1428,7 @@
                 <div class="toc-sec-header" onclick="jumpToSection('about')">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION VI.</span>
-                    <span data-i18n="toc_sec7_title">연구자 프로필 및 후원 (About)</span>
+                    <span data-i18n="toc_sec7_title">연구자 프로필 및 후원</span>
                   </div>
                 </div>
                 <div class="toc-sec-desc" data-i18n="toc_sec7_desc">
@@ -1726,7 +1726,7 @@
             <div class="col-12">
               <div class="card" id="card-data-load">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="dv_c1_title">§ 1. 데이터 파일 불러오기 (Load Scan Files)</span>
+                  <span class="card-title" data-i18n="dv_c1_title">§ 1. 데이터 파일 불러오기</span>
                   <span class="card-tag" data-i18n="dv_c1_tag">구분자 &amp; 헤더 자동 감지</span>
                 </div>
                 <div class="card-body">
@@ -1756,7 +1756,7 @@
             <div class="col-12">
               <div class="card" id="card-data-plot">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="dv_c2_title">§ 2. XY 플롯 (Generic XY Plot)</span>
+                  <span class="card-title" data-i18n="dv_c2_title">§ 2. XY 플롯</span>
                   <span class="card-tag" data-i18n="dv_c2_tag">Linear / Log · Normalize · Crop</span>
                 </div>
                 <div class="card-body">
@@ -1802,7 +1802,7 @@
             <div class="col-12">
               <div class="card" id="card-data-stitch">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="dv_c3_title">§ 3. XRR 세그먼트 이어붙이기 (Segment Stitching)</span>
+                  <span class="card-title" data-i18n="dv_c3_title">§ 3. XRR 세그먼트 이어붙이기</span>
                   <span class="card-tag" data-i18n="dv_c3_tag">겹침 구간 자동 배율</span>
                 </div>
                 <div class="card-body">
@@ -1832,7 +1832,7 @@
         <section id="view-settings" class="view-section">
           <div class="section-banner">
             <div class="banner-info">
-              <h2 id="banner-set-title" data-i18n="b_set_title">설정 및 히스토리 관리 (Settings & History)</h2>
+              <h2 id="banner-set-title" data-i18n="b_set_title">설정 및 히스토리 관리</h2>
               <p id="banner-set-desc" data-i18n="b_set_desc">언어 설정, 테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원</p>
             </div>
           </div>
@@ -1843,7 +1843,7 @@
             <div class="col-12">
               <div class="card" id="card-set-lang">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_lang_title">§ 1. 언어 설정 (Language Selection)</span>
+                  <span class="card-title" data-i18n="set_card_lang_title">§ 1. 언어 설정</span>
                 </div>
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
@@ -1866,7 +1866,7 @@
             <div class="col-12 col-lg-8">
               <div class="card" id="card-set-theme">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_theme_title">§ 2. 화면 테마 모드 설정 (Display Theme Mode)</span>
+                  <span class="card-title" data-i18n="set_card_theme_title">§ 2. 화면 테마 설정</span>
                 </div>
                 <div class="card-body">
                   <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 테마: 학술 논문 (Academic Paper)</div>
@@ -1939,7 +1939,7 @@
             <div class="col-12 col-lg-4">
               <div class="card" id="card-set-shortcuts">
                 <div class="card-header">
-                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 3. 키보드 단축키 안내 (Keyboard Shortcuts)</span>
+                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 3. 키보드 단축키 안내</span>
                 </div>
                 <div class="card-body">
                   <table class="lab-table">
