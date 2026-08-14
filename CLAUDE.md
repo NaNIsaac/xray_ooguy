@@ -24,15 +24,25 @@ optional chaining `?.`, nullish coalescing `??`, destructuring, default/rest par
 Use: `var`, `function`, IIFE modules (`(function () { "use strict"; ... })();`),
 `if (obj && obj.prop)` instead of `obj?.prop`.
 
-The current `js/` tree is clean ES5 — keep it that way. Verify:
+The current `js/` tree is clean ES5 — keep it that way. Verify with the one command that
+checks everything:
 
 ```powershell
-Get-ChildItem .\js\*.js | ForEach-Object { node --check $_.FullName }
+node .\tools\check.js
 ```
 
-`node --check` catches syntax errors but **not** modern builtins. Also avoid
-`Array.prototype.includes`, `Object.assign`, `String.prototype.padStart`, `Promise`,
-`fetch`, `URLSearchParams` unless you ship a fallback.
+It parses every script, greps `js/` for syntax the target browsers cannot parse, and confirms
+the generated English page is current. `node --check` alone would not catch the second one:
+node parses `let` and arrow functions happily, and Firefox 60 does not.
+
+Also avoid the modern builtins the tripwire cannot see — `String.prototype.padStart`,
+`Promise`, `fetch`, `URLSearchParams` — unless you ship a fallback.
+
+Run it before committing, or install the hook once per clone so it runs itself:
+
+```powershell
+git config core.hooksPath .githooks
+```
 
 ### 2. No network at runtime
 

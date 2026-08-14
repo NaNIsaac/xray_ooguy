@@ -1,0 +1,4 @@
+# Shell scripts must keep LF. A hook checked out with CRLF fails to run at all
+# — the interpreter line ends up as "/bin/sh\r", which is not a program.
+.githooks/** text eol=lf
+*.sh text eol=lf

@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Refuses a commit that would publish a broken or stale site.
+#
+# Enable once per clone:
+#
+#     git config core.hooksPath .githooks
+#
+# Bypass for a work-in-progress commit with --no-verify. CI runs the same
+# checks, so anything skipped here is caught before it reaches the site.
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node not found — skipping checks (CI will still run them)" >&2
+  exit 0
+fi
+
+exec node tools/check.js

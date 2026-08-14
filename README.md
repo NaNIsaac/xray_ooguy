@@ -116,19 +116,31 @@ start index.html
 python -m http.server 8000
 ```
 
-문법 검사:
+검사는 하나로 통일돼 있다. 커밋 전에:
 
 ```powershell
-Get-ChildItem .\js\*.js | ForEach-Object { node --check $_.FullName }
+node .\tools\check.js
 ```
 
-`index.html`이나 `js/i18n.js`를 고쳤으면 영어판을 다시 생성하고 함께 커밋한다:
+세 가지를 본다 — 모든 스크립트가 파싱되는가, 구형 브라우저에서 파스 에러를 내는 최신 문법이
+섞이지 않았는가(`let`/`const`, 화살표 함수, 템플릿 리터럴, `?.`, `.includes()` 등),
+그리고 `en/index.html`이 최신인가.
+
+`index.html`이나 `js/i18n.js`의 영어 항목을 고쳤으면 영어판을 다시 생성해서 함께 커밋한다:
 
 ```powershell
 node .\tools\build-en.js
 ```
 
-CI가 `node tools/build-en.js --check`로 검사해서, 영어판이 뒤처져 있으면 실패한다.
+**자동으로 걸리게 하려면** 클론당 한 번:
+
+```powershell
+git config core.hooksPath .githooks
+```
+
+이러면 커밋할 때마다 `tools/check.js`가 돌고, 실패하면 커밋이 막힌다.
+급할 때는 `git commit --no-verify`로 건너뛸 수 있고, 그래도 CI가 같은 검사를 한다.
+
 `en/index.html`은 생성물이므로 직접 편집하면 다음 생성 때 사라진다.
 
 **코드를 고치기 전에 [`CLAUDE.md`](CLAUDE.md)를 읽을 것.** 구형 브라우저 호환성과 디자인 시스템 제약이

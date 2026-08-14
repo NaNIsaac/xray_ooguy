@@ -19,10 +19,7 @@ jobs:
         with:
           node-version: '20'
 
-      # Modern syntax is a parse error on the CentOS 7 browsers this site
-      # targets, and a parse error takes the whole file with it.
-      - name: Parse every script
-        run: for f in js/*.js tools/*.js; do node --check "$f"; done
-
-      - name: English page is in step with the Korean one
-        run: node tools/build-en.js --check
+      # The same entry point the pre-commit hook runs, so CI and a local commit
+      # can never disagree about what "passing" means.
+      - name: Checks
+        run: node tools/check.js
