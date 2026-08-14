@@ -51,6 +51,137 @@ Adding a calculator is cheap; adding a data model is not.
 
 ---
 
+## Next version — discoverability
+
+> Make the existing tools findable through search engines without making the site feel
+> SEO-driven. It stays a beamline tool, not a marketing page.
+
+The strategy is **tool intent, not topic**: someone searching "bcdi oversampling calculator"
+or "eulerian cradle correction" should land on the thing that does it. The homepage
+establishes the category; the individual tools carry the niche queries.
+
+### Already true — do not redo
+
+- Navigation says INDEX, not CONTENTS, and the INDEX control has no dotted border
+  (`border: none !important` on `.tab-pill-index`).
+- `js/app.js` already carries `seoTitle` / `seoDesc` per route and rewrites the document
+  title and meta description on navigation.
+- `index.html` already has canonical, Open Graph, a `WebApplication` block with a
+  `featureList`, an English `<h1 class="sr-only">`, and an English `<noscript>` tool list.
+- `robots.txt` allows everything and points at the sitemap.
+
+### The decision this rests on
+
+**English search intent currently has no rendered home.**
+
+The page is served as `<html lang="ko">` with Korean body text, and `i18n.js` swaps language
+client-side with Korean as the default. A crawler that renders the page sees Korean. Every
+English phrase the plan targets exists only in `<head>`, the `noscript` block and the
+`sr-only` heading — never in the rendered body unless a visitor has chosen English.
+
+Compounding it: hash routes are not URLs. `#goniometry/card-optics-bragg` cannot hold its own
+`<title>`, canonical or schema, so per-tool metadata has nothing to attach to.
+
+Two ways out:
+
+**A. Hash-only.** Keep one page; strengthen metadata, anchor text, internal links and the
+INDEX. Cheapest, nothing new to maintain. Ceiling: one URL competes for every query, and the
+per-tool titles the plan asks for cannot exist.
+
+**B. Thin static landing pages — recommended.** One small hand-written English page per Tier 1
+and Tier 2 tool at a descriptive path (`/goniometry/q-space`, `/cdi/bcdi-oversampling`, …),
+each with its own title, `h1`, description, canonical, `WebApplication` schema, the
+explanation block below, links to related tools, and a prominent link into the live card
+(`/#goniometry/card-optics-bragg`). Solves the language problem and the URL problem together,
+needs no build step, and leaves the SPA untouched.
+
+Cost of B is honest: ~15 files that can drift from the tools they describe. They are only
+worth building if each carries real explanation — a page that is a title and a link is a
+doorway page, and search engines treat it as one. Every page gets:
+
+```text
+What this calculates
+Inputs
+Output
+Experimental use
+```
+
+Existing URLs must not break either way.
+
+### Priority tiers
+
+**Tier 1** — strongest metadata, own page, internal links pointing in:
+X-ray Beamline Calculator · X-ray Goniometry Calculator · BCDI Oversampling Calculator ·
+X-ray Q-space Calculator · Eulerian Cradle / Chi–Phi Correction · X-Ray Beamline Toolkit
+
+Add to Tier 1: **XRR segment stitching / reflectivity data viewer**. The plan predates the
+DATA suite. It is distinctive, barely contested, and nothing else on the site is as unusual.
+
+**Tier 2** — optimise naturally: Bragg angle · d-spacing · energy–wavelength · beam footprint ·
+detector angular resolution · slit acceptance · photon flux · energy resolution.
+
+**Tier 3** — do not chase, do not stuff into the UI: "x-ray calculator", "diffraction
+calculator", "bragg law calculator", "wavelength calculator", "absorption calculator".
+
+### Naming
+
+Search-intent wording, not in-house shorthand: *X-ray Q-space Calculator* over *Reciprocal
+Space*; *BCDI Oversampling Calculator* over *Oversampling*; *Eulerian Cradle / Chi–Phi
+Correction* over *Cradle*. The visible UI can stay compact — this governs titles, headings,
+descriptions and anchor text.
+
+### INDEX as the tool directory
+
+Grouped by search intent and usefulness rather than by the suite a card happens to live in —
+INDEX is a directory, not a second copy of the navigation, so the grouping is allowed to cut
+across SPECTROSCOPY and GONIOMETRY:
+
+```text
+X-RAY BASICS   Energy ↔ Wavelength · Bragg Angle · d-spacing / Miller Index ·
+               Critical Angle · Transmission / Absorption
+GONIOMETRY     Q-space · Energy Scaling · Beam Footprint · Detector Angular Resolution ·
+               Slit Acceptance · Chi–Phi / Eulerian Cradle
+CDI / BCDI     BCDI Oversampling
+BEAMLINE       Photon Flux · Energy Resolution · Thermal Drift
+DATA           XRR Segment Stitching · Scan File Viewer
+RECORD         Beamtime Header · In-Situ Event Snippets
+```
+
+Internal links should follow the order of a real calculation, so the graph a crawler reads is
+the workflow a user walks: Bragg → d-spacing → energy/wavelength → Q-space → footprint, and
+Bragg → Q-space → BCDI oversampling → detector angular resolution.
+
+### Conflicts to settle first
+
+- The source plan lists RECORD as six tools (Experiment Log, Beam Status, Sample / Alignment,
+  Calibration, Scan Record). RECORD has two cards. Either build them or leave them out —
+  listing tools that do not exist in INDEX and the sitemap is worse than a short list.
+- The source plan has no DATA section; it was written before that suite shipped.
+- "CDI / BCDI" as an INDEX group holds one item. Fine as a heading, not worth a page of its own
+  beyond the oversampling tool.
+
+### Order of work
+
+1. INDEX regrouping and ordering, tool naming, homepage title and description,
+   per-tool headings, internal links. *No architectural commitment — safe to do first.*
+2. Tier 1 entries: BCDI oversampling, Q-space, Chi–Phi, beam footprint, goniometry, XRR.
+3. `sitemap.xml` (currently one URL), canonical URLs, per-tool structured data.
+   **Depends on the A/B decision above.**
+4. Verify by query, not by deploy date. Crawling and indexing take weeks.
+
+### Boundaries
+
+No blog, no generic articles, no ads, no cookie banner, no analytics, no accounts, no
+newsletter, no social sections, no fake ratings or reviews or organisations, no keyword
+stuffing, no marketing voice. Copy reads like a beamline scientist wrote it: "Calculate Bragg
+angle from photon energy and lattice spacing", never "unlock the power of…".
+
+The engineering constraints in [`../CLAUDE.md`](../CLAUDE.md) hold throughout — static, no
+build step, no framework, no runtime network, ES5, offline. Landing pages are hand-written
+HTML for the same reason everything else is.
+
+---
+
 ## Backlog
 
 Unordered — priority is the maintainer's call, not the document's.
