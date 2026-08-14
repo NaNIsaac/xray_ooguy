@@ -87,13 +87,20 @@ Phase one, all of it inside the existing single page:
   seven-crystal-system d-spacing, no DATA suite, no XRR stitching. Korean search terms added
   alongside the English ones.
 - **An honest sitemap.** Still one URL, with a comment saying why.
-- **The default language now follows the browser.** `ko` was hardcoded, so a crawler — which
-  arrives with empty storage every time — always rendered Korean while the `<title>` and
-  description were English. Now a Korean browser opens in Korean and everything else opens in
-  English, and an explicit choice still wins. This is a **trade, not a free win**: the rendered
-  body a crawler indexes is now English, so the Korean body text stops being indexed. It is
-  worth it on volume — English tool-intent queries dwarf 브래그 각도 계산기 — but it is a
-  choice, not an improvement in both directions.
+- **One URL per language, and the English one is generated.** `/` is Korean, `/en/` is
+  English, each declaring its language on `<html lang>`, cross-linked with `hreflang`, each
+  with its own canonical. `i18n.js` reads the declared language instead of storage or
+  `navigator`, so the URL decides — which is what makes the pair honest to a crawler.
+
+  This replaced a browser-language default that was only ever a trade: whichever language the
+  crawler happened to get was the only one indexed. Both are indexed now.
+
+  The objection to two URLs was duplication — a second copy of 2,000 lines of markup drifting
+  from the first. `tools/build-en.js` removes it by generating the English page from the
+  Korean markup and the English half of the translation table. It works because every visible
+  string is already behind a `data-i18n` key, and it stays honest because it refuses to write
+  a page with Korean left in it. CI runs it in `--check` mode and fails on a stale page; it
+  verifies, it never commits.
 
 ### Deliberately not done
 
@@ -106,20 +113,21 @@ Phase one, all of it inside the existing single page:
   English tool names on cards is cloaking, and it is the kind of thing that gets a small site
   penalised rather than ranked.
 
-### Having both languages indexed
+### Still to do on the bilingual pair
 
-Browser-language detection picks one language per visitor, and a crawler is one visitor, so
-only one language is ever indexed. Getting both means what Google documents: **one URL per
-language**, `/` and `/en/`, cross-linked with `hreflang` and each carrying its own canonical.
+The pages exist and each is authoritative for its language. What has not caught up is the
+metadata *above* the body:
 
-The obstacle is not SEO, it is duplication. The interface is a single 2,000-line
-`index.html` whose Korean text is inline and whose English text comes from `i18n.js` at
-runtime. A second URL means a second copy of that markup, and with no build step to generate
-it the two copies drift the moment anyone edits a card — the exact failure the stale docs and
-stale metadata already demonstrated twice.
+- **`index.html` still has an English `<title>`, description and Open Graph**, while its body
+  is Korean. It is now the Korean page and should say so in Korean — that is the half of the
+  argument that made two URLs worth building, and it is still unclaimed.
+- **`routes` in `js/app.js` carries one English `seoTitle` and `seoDesc` per route** and
+  applies it on every navigation, so it overwrites whatever the page started with. It needs a
+  Korean side, chosen by the active language, or the Korean page reverts to English titles the
+  moment anyone clicks a tab.
 
-Worth reopening only if the English side actually earns traffic. Until then one indexed
-language is the honest trade.
+Neither is hard; both were left out of the structural change on purpose, so that what shipped
+was one coherent thing.
 
 ### The open decision — static landing pages
 

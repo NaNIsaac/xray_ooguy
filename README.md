@@ -80,11 +80,14 @@
 
 ```text
 xray/
-├── index.html      단일 진입점 SPA — 모든 뷰의 마크업
+├── index.html      단일 진입점 SPA — 모든 뷰의 마크업 (한국어, /)
+├── en/index.html   영어판 — tools/build-en.js가 생성. 직접 고치지 말 것 (/en/)
 ├── style.css       Academic print 디자인 시스템
 ├── CNAME           커스텀 도메인 (xray.ooguy.com)
 ├── CLAUDE.md       코드 수정 시 지켜야 하는 제약 (사람·AI 공통)
 ├── docs/PLAN.md    제품 방향 및 백로그
+├── tools/
+│   └── build-en.js en/index.html 생성기 (node, 의존성 0)
 └── js/
     ├── app.js      해시 라우터, 탭·사이드바 동기화, 단축키, 계산 기록
     ├── nav.js      본문 목차를 읽어 사이드바 트리·검색 생성
@@ -118,6 +121,15 @@ python -m http.server 8000
 ```powershell
 Get-ChildItem .\js\*.js | ForEach-Object { node --check $_.FullName }
 ```
+
+`index.html`이나 `js/i18n.js`를 고쳤으면 영어판을 다시 생성하고 함께 커밋한다:
+
+```powershell
+node .\tools\build-en.js
+```
+
+CI가 `node tools/build-en.js --check`로 검사해서, 영어판이 뒤처져 있으면 실패한다.
+`en/index.html`은 생성물이므로 직접 편집하면 다음 생성 때 사라진다.
 
 **코드를 고치기 전에 [`CLAUDE.md`](CLAUDE.md)를 읽을 것.** 구형 브라우저 호환성과 디자인 시스템 제약이
 문서화되어 있고, 이 제약들은 무심코 어기기 쉽다.

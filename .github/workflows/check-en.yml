@@ -1,0 +1,28 @@
+name: checks
+
+# The English page is generated, so the only way it can be wrong is by being
+# stale. CI verifies rather than generates: it never writes to the repository,
+# it just refuses a commit where en/index.html does not match what
+# tools/build-en.js would produce from the current index.html and i18n table.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Modern syntax is a parse error on the CentOS 7 browsers this site
+      # targets, and a parse error takes the whole file with it.
+      - name: Parse every script
+        run: for f in js/*.js tools/*.js; do node --check "$f"; done
+
+      - name: English page is in step with the Korean one
+        run: node tools/build-en.js --check

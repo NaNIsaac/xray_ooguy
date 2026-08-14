@@ -10,6 +10,15 @@
   <meta name="author" content="Isaac Yong">
   <link rel="canonical" href="https://xray.ooguy.com/">
 
+  <!-- Two pages, one per language, each authoritative for its own. The set is
+       identical on both and every version lists every version, including
+       itself, which is what makes the pair valid rather than a guess.
+       x-default points at English: it is the version for a reader whose
+       language is neither. -->
+  <link rel="alternate" hreflang="ko" href="https://xray.ooguy.com/">
+  <link rel="alternate" hreflang="en" href="https://xray.ooguy.com/en/">
+  <link rel="alternate" hreflang="x-default" href="https://xray.ooguy.com/en/">
+
   <!-- Social preview -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="X-Ray Beamline Toolkit">
@@ -1906,7 +1915,7 @@
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
-                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current">현재 언어: 한국어 (Korean)</div>
+                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current" data-i18n="lang_current">현재 언어: 한국어</div>
                       <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc" data-i18n="lang_desc">
                         한국어와 영어(English) 인터페이스를 즉시 전환합니다. 모든 물리량 및 계산기가 실시간으로 갱신됩니다.
                       </div>
@@ -1927,7 +1936,7 @@
                   <span class="card-title" data-i18n="set_card_theme_title">§ 2. 화면 테마 설정</span>
                 </div>
                 <div class="card-body">
-                  <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current">현재 테마: 학술 논문 (Academic Paper)</div>
+                  <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current" data-i18n="theme_current_initial">현재 테마: 학술 논문</div>
                   <div style="font-size:11px; color:var(--ink-secondary); margin-bottom:10px;" id="settings-theme-desc" data-i18n="theme_desc">
                     일곱 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.
                   </div>

@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<!--
+  GENERATED FILE — do not edit.
+
+  Written by tools/build-en.js from index.html and the English half of
+  js/i18n.js. Any edit here is lost on the next build. Change index.html
+  or the translation table, then run:
+
+      node tools/build-en.js
+-->
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="...">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X-Ray Beamline Toolkit — Bragg Angle, d-spacing &amp; Synchrotron Calculators</title>
+  <meta name="description" content="Offline calculators for synchrotron X-ray experiments: Bragg angle, energy-wavelength conversion, lattice d-spacing for all seven crystal systems, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.">
+  <meta name="keywords" content="X-ray beamline calculator, Bragg angle calculator, d-spacing calculator, Q-space calculator, BCDI oversampling calculator, Eulerian cradle chi-phi correction, beam footprint calculator, XRR stitching, X-ray reflectivity, synchrotron">
+  <meta name="author" content="Isaac Yong">
+  <link rel="canonical" href="https://xray.ooguy.com/en/">
+
+  <!-- Two pages, one per language, each authoritative for its own. The set is
+       identical on both and every version lists every version, including
+       itself, which is what makes the pair valid rather than a guess.
+       x-default points at English: it is the version for a reader whose
+       language is neither. -->
+  <link rel="alternate" hreflang="ko" href="https://xray.ooguy.com/">
+  <link rel="alternate" hreflang="en" href="https://xray.ooguy.com/en/">
+  <link rel="alternate" hreflang="x-default" href="https://xray.ooguy.com/en/">
+
+  <!-- Social preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="X-Ray Beamline Toolkit">
+  <meta property="og:title" content="X-Ray Beamline Toolkit — Synchrotron X-ray Calculators">
+  <meta property="og:description" content="Bragg angle, d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching for synchrotron beamline work. Runs fully offline, no account required.">
+  <meta property="og:url" content="https://xray.ooguy.com/en/">
+  <meta name="twitter:card" content="summary">
+
+  <!-- Structured data: tells a crawler this is a research tool, not an article.
+       Kept as literal markup so it is collected without running any script.
+
+       The interface renders in Korean by default, so this block is also where
+       each calculator states its English identity. A crawler gets the tool
+       inventory — name, purpose, and the fragment that opens it — without the
+       Korean UI having to carry English labels it does not need. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://xray.ooguy.com/en/#website",
+        "name": "X-Ray Beamline Toolkit",
+        "url": "https://xray.ooguy.com/en/",
+        "inLanguage": ["ko", "en"]
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://xray.ooguy.com/en/#app",
+        "name": "X-Ray Beamline Toolkit",
+        "alternateName": "X선 빔라인 툴킷",
+        "url": "https://xray.ooguy.com/en/",
+        "isPartOf": { "@id": "https://xray.ooguy.com/en/#website" },
+        "applicationCategory": "EducationalApplication",
+        "applicationSubCategory": "X-ray diffraction and synchrotron beamline calculators",
+        "operatingSystem": "Any (browser-based, works offline)",
+        "browserRequirements": "Runs in Firefox 60 ESR, Chrome 60 and later",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "license": "https://opensource.org/licenses/MIT",
+        "inLanguage": ["ko", "en"],
+        "author": { "@type": "Person", "name": "Isaac Yong" },
+        "description": "Synchrotron X-ray optics and beamline geometry calculators: Bragg angle, energy-wavelength conversion, lattice d-spacing from Miller indices for all seven crystal systems, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance, BCDI oversampling, X-ray transmittance, and an XRR scan viewer that stitches overlapping segments.",
+        "featureList": [
+          "Bragg angle from photon energy and lattice plane spacing",
+          "Energy, wavelength and frequency conversion",
+          "Lattice d-spacing from lattice constants and Miller indices, all seven crystal systems",
+          "Reciprocal-space scattering vector Q",
+          "Complex refractive index and X-ray transmittance",
+          "Total external reflection critical angle",
+          "Beam footprint and spillover on the sample",
+          "Detector angular resolution and slit acceptance",
+          "Eulerian cradle chi-phi tilt correction",
+          "BCDI coherent diffraction oversampling",
+          "Two-column scan file viewer with linear and log axes",
+          "XRR segment stitching from the overlap between scans",
+          "Formatted beamtime logbook headers and timestamped event snippets"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://xray.ooguy.com/en/#tools",
+        "name": "Calculators in the X-Ray Beamline Toolkit",
+        "itemListOrder": "https://schema.org/ItemListUnordered",
+        "numberOfItems": 21,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "X-ray Bragg Angle Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-optics-bragg", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Solves the Bragg condition three ways: diffraction angle from photon energy and plane spacing, plane spacing from angle and energy, or energy from angle and spacing, and lists the reflections a cell gives at that energy." } },
+          { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "X-ray Q-space Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-optics-qspace", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Converts scattering angle and photon energy into the reciprocal-space momentum transfer Q, and back." } },
+          { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "BCDI Oversampling Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-beamline-cdi", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Checks the Nyquist oversampling ratio for Bragg coherent diffraction imaging from detector pixel size, sample size and distance, and reports whether the geometry samples the fringes finely enough to invert." } },
+          { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Eulerian Cradle Chi-Phi Correction", "url": "https://xray.ooguy.com/en/#goniometry/card-optics-euler", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Corrects the phi rotation needed to hold a reflection when the chi cradle of a four-circle goniometer is tilted." } },
+          { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "X-ray Beam Footprint Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-beamline-footprint", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Length of the illuminated strip on the sample at grazing incidence, and whether the beam spills off the edge." } },
+          { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "X-ray Detector Angular Resolution Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-beamline-detector", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Angle subtended by one detector pixel at a given sample-to-detector distance, in mrad, degrees and arcsec." } },
+          { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "X-ray Slit Acceptance Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-beamline-slit", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Slit opening for a Gaussian beam: size at the slit from source size, divergence and distance, with 3-sigma and 4-sigma acceptance." } },
+          { "@type": "ListItem", "position": 8, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy Scaling and Angle Calculator", "url": "https://xray.ooguy.com/en/#goniometry/card-optics-scaling", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Where a reflection moves when the photon energy changes, holding the same lattice plane." } },
+          { "@type": "ListItem", "position": 9, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy to Wavelength Converter", "url": "https://xray.ooguy.com/en/#spectroscopy/card-optics-energy", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Photon energy, wavelength and frequency conversion using hc = 12398.41984 eV angstrom." } },
+          { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "Lattice d-spacing Calculator from Miller Indices", "url": "https://xray.ooguy.com/en/#spectroscopy/card-lattice-dspacing", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plane spacing from the lattice constants and Miller indices through the reciprocal metric tensor, covering all seven crystal systems including triclinic and monoclinic." } },
+          { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "X-ray Transmission and Refractive Index Calculator", "url": "https://xray.ooguy.com/en/#spectroscopy/card-optics-refraction", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Complex refractive index n = 1 - delta + i beta, attenuation length and Beer-Lambert transmittance through a material." } },
+          { "@type": "ListItem", "position": 12, "item": { "@type": "SoftwareApplication", "name": "X-ray Critical Angle Calculator", "url": "https://xray.ooguy.com/en/#spectroscopy/card-optics-reflection", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Critical angle for total external reflection from the refractive index decrement." } },
+          { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "X-ray Diffraction Grating Calculator", "url": "https://xray.ooguy.com/en/#spectroscopy/card-optics-grating", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Grating equation and angular dispersion for soft X-ray and VUV monochromator gratings." } },
+          { "@type": "ListItem", "position": 14, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy Resolution Calculator", "url": "https://xray.ooguy.com/en/#spectroscopy/card-beamline-resolution", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Monochromator energy resolution dE/E from the intrinsic Darwin width and the beam divergence." } },
+          { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Synchrotron Photon Flux Calculator", "url": "https://xray.ooguy.com/en/#spectroscopy/card-beamline-flux", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Photons per second delivered to the sample from ring current and the transmission of the optics." } },
+          { "@type": "ListItem", "position": 16, "item": { "@type": "SoftwareApplication", "name": "Crystal Thermal Drift Calculator", "url": "https://xray.ooguy.com/en/#spectroscopy/card-beamline-drift", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Bragg angle and effective energy shift caused by thermal expansion of a monochromator crystal." } },
+          { "@type": "ListItem", "position": 17, "item": { "@type": "SoftwareApplication", "name": "XRR Segment Stitching Tool", "url": "https://xray.ooguy.com/en/#data/card-data-stitch", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Joins X-ray reflectivity scans measured through different absorbers into one curve, taking each segment's scale from the median ratio across the angular overlap, with manual override." } },
+          { "@type": "ListItem", "position": 18, "item": { "@type": "SoftwareApplication", "name": "Scan File XY Plotter", "url": "https://xray.ooguy.com/en/#data/card-data-plot", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plots two-column scan data on a linear or logarithmic axis with normalisation and range cropping, entirely in the browser." } },
+          { "@type": "ListItem", "position": 19, "item": { "@type": "SoftwareApplication", "name": "Scan File Reader", "url": "https://xray.ooguy.com/en/#data/card-data-load", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Reads two-column txt, csv and dat scan files, detecting the delimiter and header and skipping instrument preambles such as Bruker RAW4 exports. Nothing is uploaded." } },
+          { "@type": "ListItem", "position": 20, "item": { "@type": "SoftwareApplication", "name": "Beamtime Logbook Header Generator", "url": "https://xray.ooguy.com/en/#record/card-record-headers", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plain-text beamtime logbook headers to paste into an existing lab notebook." } },
+          { "@type": "ListItem", "position": 21, "item": { "@type": "SoftwareApplication", "name": "Beamtime Event Snippets", "url": "https://xray.ooguy.com/en/#record/card-record-snippets", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "One-click timestamped entries for beam dump, sample mount, alignment and scan start." } }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="../style.css?v=1.9">
+</head>
+<body>
+
+  <noscript>
+    <div style="background:#fdfcf8; color:#1a1a1a; padding:16px; font-family:Georgia, serif; font-size:13px; line-height:1.7; border-bottom:1px solid #1a1a1a;">
+      <strong>X-Ray Beamline Toolkit</strong> — calculators for synchrotron X-ray experiments.
+      JavaScript is required to run them; the tools included are:
+      <ul style="margin:8px 0 8px 18px;">
+        <li><strong>Bragg angle</strong> — diffraction angle from photon energy and lattice plane spacing (&lambda; = 2d sin&theta;)</li>
+        <li><strong>Energy, wavelength and frequency</strong> conversion (E = hc/&lambda;)</li>
+        <li><strong>Lattice d-spacing</strong> from lattice constants and Miller indices (hkl), for all seven crystal systems</li>
+        <li><strong>Scattering vector Q</strong> in reciprocal space (Q = 4&pi; sin&theta; / &lambda;)</li>
+        <li><strong>Complex refractive index and transmittance</strong> (n = 1 &minus; &delta; + i&beta;)</li>
+        <li><strong>Total external reflection critical angle</strong> (&theta;c = &radic;2&delta;)</li>
+        <li><strong>Beam footprint</strong> and spillover on the sample, <strong>detector angular resolution</strong>, <strong>slit acceptance</strong></li>
+        <li><strong>Eulerian cradle</strong> chi-phi correction and <strong>BCDI oversampling</strong> for coherent diffraction imaging</li>
+        <li><strong>Photon flux</strong>, <strong>energy resolution</strong> and monochromator <strong>thermal drift</strong></li>
+        <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>
+      </ul>
+      Enable JavaScript to use these calculators. Everything is computed inside your browser; nothing is uploaded.</div>
+  </noscript>
+
+  <!-- The visible interface is Korean, and the headings inside it are Korean.
+       This states in English what the page is, once, for readers and crawlers
+       that arrive without it. -->
+  <h1 class="sr-only">
+    X-Ray Beamline Toolkit — synchrotron X-ray calculators for Bragg angle, lattice
+    d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching
+  </h1>
+
+  <div id="app-layout">
+
+    <!-- Fixed Left Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <span class="brand-title">X-RAY BEAMLINE TOOLKIT</span>
+        <span class="brand-badge">v1.4</span>
+      </div>
+
+      <div class="sidebar-search">
+        <input type="text" id="nav-search" class="sidebar-search-input mono" autocomplete="off" spellcheck="false"
+               data-i18n-placeholder="search_ph" placeholder="Search" oninput="runNavSearch()">
+        <span class="sidebar-search-key" aria-hidden="true">/</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <!-- 0. Table of Contents / Index -->
+        <a class="nav-item nav-item-index" data-route="dashboard" href="#dashboard">
+          <span><span class="nav-index-icon">≡</span> <span data-i18n="nav_dashboard_index">CONTENTS</span></span>
+        </a>
+
+        <!-- 3 Core Major Suites -->
+        <a class="nav-item nav-item-major active" data-route="spectroscopy" href="#spectroscopy">
+          <span data-i18n="nav_spectroscopy">I. SPECTROSCOPY</span>
+        </a>
+        <a class="nav-item nav-item-major" data-route="goniometry" href="#goniometry">
+          <span data-i18n="nav_goniometry">II. GONIOMETRY</span>
+        </a>
+        <a class="nav-item nav-item-major" data-route="record" href="#record">
+          <span data-i18n="nav_record">III. RECORD</span>
+        </a>
+        <a class="nav-item nav-item-major" data-route="data" href="#data">
+          <span data-i18n="nav_data">IV. DATA</span>
+        </a>
+
+        <!-- Divider Line between Main and Secondary -->
+        <div class="sidebar-divider"></div>
+
+        <!-- Secondary Utility Suites (De-emphasized) -->
+        <a class="nav-item nav-item-minor" data-route="settings" href="#settings">
+          <span data-i18n="nav_settings">V. SETTINGS</span>
+        </a>
+        <a class="nav-item nav-item-minor" data-route="about" href="#about">
+          <span data-i18n="nav_about">VI. ABOUT</span>
+        </a>
+        <div class="nav-search-empty" id="nav-search-empty" data-i18n="search_empty" style="display:none;">No match</div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div style="font-weight:700; color:var(--ink-primary); margin-bottom:2px;" data-i18n="sidebar_offline">Client Offline-Ready</div>
+        <div>CentOS 7 / Chrome / Firefox</div>
+      </div>
+    </aside>
+
+    <!-- Main View Wrapper -->
+    <div id="main-wrapper">
+
+      <!-- Top Masthead Header (Clean & Rock-Solid, Zero Shifting) -->
+      <header id="top-header">
+        <div class="header-brand-area">
+          <div class="page-breadcrumb">
+            <span class="breadcrumb-brand" style="color:var(--ink-muted);">X-RAY BEAMLINE TOOLKIT</span>
+            <span class="breadcrumb-sep">/</span>
+            <span id="breadcrumb-current">I. SPECTROSCOPY</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <span id="header-live-time"></span>
+        </div>
+      </header>
+
+      <!-- Dedicated Horizontal Tab Strip (Horizontally Scrollable) -->
+      <nav id="top-tab-strip">
+        <div class="tab-strip-scroll">
+          <button class="tab-pill tab-pill-index" data-route="dashboard">
+            <span class="tab-index-icon">≡</span> <span data-i18n="nav_dashboard_index">CONTENTS</span>
+          </button>
+          <button class="tab-pill tab-pill-major active" data-route="spectroscopy" data-i18n="nav_spectroscopy">I. SPECTROSCOPY</button>
+          <button class="tab-pill tab-pill-major" data-route="goniometry" data-i18n="nav_goniometry">II. GONIOMETRY</button>
+          <button class="tab-pill tab-pill-major" data-route="record" data-i18n="nav_record">III. RECORD</button>
+          <button class="tab-pill tab-pill-major" data-route="data" data-i18n="nav_data">IV. DATA</button>
+          <span class="tab-divider" aria-hidden="true"></span>
+          <button class="tab-pill tab-pill-minor" data-route="settings" data-i18n="nav_settings">V. SETTINGS</button>
+          <button class="tab-pill tab-pill-minor" data-route="about" data-i18n="nav_about">VI. ABOUT</button>
+        </div>
+      </nav>
+
+      <!-- Scrollable Content View -->
+      <main id="content-area">
+
+        <!-- =================================================================
+             0b. CALCULATE VIEW — grouped physics workspace hub
+             ================================================================= -->
+        <section id="view-spectroscopy" class="view-section active">
+          <div class="section-banner">
+            <div class="banner-info">
+              <h2 data-i18n="b_spec_title">SPECTROSCOPY — Energy, Wavelength &amp; Matter</h2>
+              <p data-i18n="b_spec_desc">Photon energy and wavelength, lattice spacing, transmittance and resolution</p>
+            </div>
+          </div>
+
+          <div class="flex-row">
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-energy">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t1_title">§ 1. Energy - Wavelength - Frequency Conversion</span>
+                  <span class="card-tag"><i class="formula">E = hc/λ = hν</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_energy">Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="optics-conv-kev" class="form-control mono" value="10.000" oninput="calcEnergyConverter('kev')" min="0.001" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_wavelength">Wavelength</span> <span class="unit">(nm)</span></label>
+                        <input type="number" id="optics-conv-nm" class="form-control mono" value="0.12398" oninput="calcEnergyConverter('nm')" min="0.0012" max="1250" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_frequency">Frequency</span> <span class="unit">(Hz)</span></label>
+                        <input type="number" id="optics-conv-hz" class="form-control mono" value="2.4179e+18" oninput="calcEnergyConverter('hz')" min="2.4e14" max="2.5e20" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box highlight">
+                    <div class="result-label" data-i18n="opt_t1_res_label">Equivalent Physical Quantities</div>
+                    <div id="optics-conv-summary" class="result-value primary">10.0000 keV ⟷ 0.12398 nm ⟷ 2.418 × 10<sup>18</sup> Hz</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-8">
+              <div class="card" id="card-lattice-dspacing">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="lat_title">§ 2. Lattice Constants &amp; Miller Indices → d-spacing</span>
+                  <span class="card-tag"><i class="formula">1/d² = h·G*·h</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="preset-row" id="lattice-presets"></div>
+
+                  <!-- Crystal System Selector -->
+                  <div class="form-group">
+                    <label class="form-label" data-i18n="lat_system">Crystal System</label>
+                    <select id="lat-system" class="form-control" onchange="applyLatticeSystem()">
+                      <option value="cubic">Cubic (a = b = c, 90°)</option>
+                      <option value="tetragonal">Tetragonal (a = b ≠ c, 90°)</option>
+                      <option value="orthorhombic">Orthorhombic (a ≠ b ≠ c, 90°)</option>
+                      <option value="hexagonal">Hexagonal / Trigonal (γ = 120°)</option>
+                      <option value="rhombohedral">Rhombohedral (a = b = c, α = β = γ)</option>
+                      <option value="monoclinic">Monoclinic (β ≠ 90°)</option>
+                      <option value="triclinic">Triclinic (general)</option>
+                    </select>
+                  </div>
+
+                  <!-- 3x3 Lattice Parameters & Miller Indices Grid -->
+                  <div class="flex-row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">h</label>
+                        <input type="number" id="lat-h" class="form-control mono" value="1" oninput="calcLattice()" min="-99" max="99" step="1">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">k</label>
+                        <input type="number" id="lat-k" class="form-control mono" value="1" oninput="calcLattice()" min="-99" max="99" step="1">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">l</label>
+                        <input type="number" id="lat-l" class="form-control mono" value="1" oninput="calcLattice()" min="-99" max="99" step="1">
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">a <span class="unit">(Å)</span></label>
+                        <input type="number" id="lat-a" class="form-control mono" value="5.43102" oninput="calcLattice()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">b <span class="unit">(Å)</span></label>
+                        <input type="number" id="lat-b" class="form-control mono" value="5.43102" oninput="calcLattice()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">c <span class="unit">(Å)</span></label>
+                        <input type="number" id="lat-c" class="form-control mono" value="5.43102" oninput="calcLattice()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">α <span class="unit">(°)</span></label>
+                        <input type="number" id="lat-alpha" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">β <span class="unit">(°)</span></label>
+                        <input type="number" id="lat-beta" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label">γ <span class="unit">(°)</span></label>
+                        <input type="number" id="lat-gamma" class="form-control mono" value="90" oninput="calcLattice()" min="1" max="179" step="0.1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" data-i18n="lat_centering">Lattice centring</label>
+                    <select id="lat-centering" class="form-control" onchange="calcLattice()">
+                      <option value="P">P — Primitive</option>
+                      <option value="F">F — Face-centred</option>
+                      <option value="I">I — Body-centred</option>
+                      <option value="A">A — Base-centred (bc)</option>
+                      <option value="B">B — Base-centred (ac)</option>
+                      <option value="C">C — Base-centred (ab)</option>
+                      <option value="R">R — Rhombohedral (obverse)</option>
+                      <option value="diamond" selected>Diamond / Fd-3m (Si, Ge, C)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" data-i18n="lat_energy">Energy for the Bragg angle</label>
+                    <input type="number" id="lat-energy" class="form-control mono" value="10" oninput="calcLattice()" min="0.1" max="1000" step="any">
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="lat_r_d">Plane spacing d</div>
+                        <div id="lat-res-d" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="lat_r_q">Scattering vector |Q| = 2π/d</div>
+                        <div id="lat-res-q" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="lat_r_theta">Bragg angle θ (2θ)</div>
+                        <div id="lat-res-theta" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="lat_r_vol">Unit cell volume V</div>
+                        <div id="lat-res-vol" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-note mono" id="lat-res-note"></div>
+                  </div>
+
+                  <!-- Which reflections this lattice actually gives at this energy -->
+                  <div class="refl-block">
+                    <button type="button" class="refl-toggle" id="lat-refl-toggle" onclick="toggleReflections()" aria-expanded="false" aria-controls="lat-refl-panel">
+                      <span class="refl-caret" id="lat-refl-caret">&#9656;</span>
+                      <span class="refl-title" data-i18n="lat_refl_title">Reflections reachable at this energy</span>
+                      <span class="refl-count" id="lat-refl-count"></span>
+                    </button>
+                    <div class="refl-panel" id="lat-refl-panel" style="display:none;">
+                    <table class="lab-table refl-table">
+                      <thead>
+                        <tr>
+                          <th data-i18n="lat_refl_hkl">h k l</th>
+                          <th class="dt-val" data-i18n="lat_refl_d">d (Å)</th>
+                          <th class="dt-val" data-i18n="lat_refl_tth">2θ (°)</th>
+                          <th class="dt-val" data-i18n="lat_refl_q">|Q| (Å⁻¹)</th>
+                        </tr>
+                      </thead>
+                      <tbody id="lat-refl-body"></tbody>
+                    </table>
+                    <div class="refl-note" id="lat-refl-note"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-refraction">
+                <div class="card-header">
+                  <span class="card-title" data-i18n-html="opt_t4_title">§ 3. Refractive Index & X-ray Transmittance (<i class="formula">n = 1 - δ + iβ</i>)</span>
+                  <span class="card-tag">Beer-Lambert Attenuation</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_select_mat">Select Material (Materials DB)</span></label>
+                        <select id="refract-mat" class="form-control" onchange="calcRefractive()"></select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_thickness">Sample Thickness</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="refract-thick" class="form-control mono" value="50" oninput="calcRefractive()" min="0.01" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="refract-energy" class="form-control mono" value="10.0" oninput="calcRefractive()" min="0.1" max="100" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_trans">Beam Transmittance</div>
+                        <div id="refract-res-trans" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_atten_len">Attenuation Length (1/<i class="formula">e</i>)</div>
+                        <div id="refract-res-atten-len" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_crit_ang">Critical Angle <i class="formula">θ</i><sub>c</sub></div>
+                        <div id="refract-res-crit" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_refract_delta_term">Refractive decrement</span> <i class="formula">δ</i> = <span id="refract-res-delta">-</span>, <span data-i18n="res_refract_beta_term">Absorption term</span> <i class="formula">β</i> = <span id="refract-res-beta">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-reflection">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t7_title">§ 4. Total External Reflection</span>
+                  <span class="card-tag"><i class="formula">θ<sub>c</sub> = √(2δ)</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_density">Density <i class="formula">ρ</i></span> <span class="unit">(g/cm<sup>3</sup>)</span></label>
+                        <input type="number" id="crit-density" class="form-control mono" value="19.32" oninput="calcCriticalAngle()" min="0.01" max="30" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_energy">Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="crit-energy" class="form-control mono" value="10.0" oninput="calcCriticalAngle()" min="0.1" max="100" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_z_over_a"><i class="formula">Z/A</i> Ratio</span></label>
+                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.401" oninput="calcCriticalAngle()" min="0.2" max="1" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_crit_deg">Critical Angle <i class="formula">θ</i><sub>c</sub> (°)</div>
+                        <div id="crit-res-deg" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_crit_mrad">Critical Angle <i class="formula">θ</i><sub>c</sub> (mrad)</div>
+                        <div id="crit-res-mrad" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_crit_qc">Critical Momentum <i class="formula">Q</i><sub>c</sub></div>
+                        <div id="crit-res-qc" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <i class="formula">δ</i> = <span id="crit-res-delta">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-grating">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t3_title">§ 5. Diffraction Grating</span>
+                  <span class="card-tag"><i class="formula">mλ = d(sin α + sin β)</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_grating_lines">Groove Density</span> <span class="unit">(mm<sup>-1</sup>)</span></label>
+                        <input type="number" id="grating-lines" class="form-control mono" value="1200" oninput="calcGrating()" min="1" max="20000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="grating-energy" class="form-control mono" value="0.5" oninput="calcGrating()" min="0.01" max="100" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_alpha">Incident Angle <i class="formula">α</i></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="grating-alpha" class="form-control mono" value="2.0" oninput="calcGrating()" min="-89.9" max="89.9" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_order">Diffraction Order <i class="formula">m</i></span></label>
+                        <input type="number" id="grating-order" class="form-control mono" value="1" oninput="calcGrating()" min="-10" max="10" step="1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_beta">Diffracted Angle <i class="formula">β</i></div>
+                        <div id="grating-res-beta" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_dispersion">Angular Dispersion (<i class="formula">dβ/dλ</i>)</div>
+                        <div id="grating-res-disp" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_lambda">Wavelength <i class="formula">λ</i></div>
+                        <div id="grating-res-lambda" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-resolution">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t3_title">§ 6. Energy Resolution (ΔE/E)</span>
+                  <span class="card-tag">Monochromator Intrinsic</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_mono_cryst">Monochromator Crystal</span></label>
+                        <select id="res-crystal" class="form-control" onchange="calcEnergyResolution()">
+                          <option value="si111">Si(111) — ΔE/E ~ 1.3 × 10<sup>-4</sup></option>
+                          <option value="si311">Si(311) — ΔE/E ~ 2.8 × 10<sup>-5</sup> (high resolution)</option>
+                          <option value="ge111">Ge(111) — ΔE/E ~ 3.2 × 10<sup>-4</sup></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_energy">Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="res-energy" class="form-control mono" value="10.0" oninput="calcEnergyResolution()" min="0.1" max="100" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_beam_div">Vertical Beam Divergence</span> <span class="unit">(μrad)</span></label>
+                        <input type="number" id="res-div" class="form-control mono" value="15" oninput="calcEnergyResolution()" min="0" max="10000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_delta_e">Total Bandwidth (<i class="formula">ΔE</i>)</div>
+                        <div id="res-res-delta-e" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_de_over_e">Energy Resolution (<i class="formula">ΔE/E</i>)</div>
+                        <div id="res-res-de-over-e" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_mono_th">Bragg Angle</div>
+                        <div id="res-res-theta" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-flux">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t2_title">§ 7. Beamline Photon Flux</span>
+                  <span class="card-tag">Delivered Flux</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_ring_current">Storage Ring Current</span> <span class="unit">(mA)</span></label>
+                        <input type="number" id="flux-current" class="form-control mono" value="300" oninput="calcBeamFlux()" min="0" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_source_flux">Source Base Flux</span> <span class="unit">(ph·s<sup>-1</sup>·mA<sup>-1</sup>)</span></label>
+                        <input type="number" id="flux-source-base" class="form-control mono" value="1.0e11" oninput="calcBeamFlux()" min="0" max="100000000000000000000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_mono_eff">Monochromator Efficiency</span> <span class="unit">(%)</span></label>
+                        <input type="number" id="flux-mono-eff" class="form-control mono" value="65" oninput="calcBeamFlux()" min="0" max="100" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_mirror_eff">Mirror Reflectivity</span> <span class="unit">(%)</span></label>
+                        <input type="number" id="flux-mirror-eff" class="form-control mono" value="80" oninput="calcBeamFlux()" min="0" max="100" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_win_trans">Window Transmittance</span> <span class="unit">(%)</span></label>
+                        <input type="number" id="flux-window-trans" class="form-control mono" value="90" oninput="calcBeamFlux()" min="0" max="100" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_deliv_flux">Delivered Photon Flux</div>
+                        <div id="flux-res-total" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_tot_eff">Total Optical Efficiency</div>
+                        <div id="flux-res-eff" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-drift">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t7_title">§ 8. Crystal Thermal Drift (Angle &amp; Energy Shift)</span>
+                  <span class="card-tag"><i class="formula">Δθ = -α ΔT tan θ</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_therm_mat">Monochromator Material</span></label>
+                        <select id="therm-mat" class="form-control" onchange="calcThermalShift()">
+                          <option value="si">Silicon (α = 2.6 × 10<sup>-6</sup> K<sup>-1</sup>)</option>
+                          <option value="diamond">Diamond (α = 1.0 × 10<sup>-6</sup> K<sup>-1</sup>)</option>
+                          <option value="ge">Germanium (α = 5.9 × 10<sup>-6</sup> K<sup>-1</sup>)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_temp_change">Temperature Change <i class="formula">ΔT</i></span> <span class="unit">(K / °C)</span></label>
+                        <input type="number" id="therm-temp" class="form-control mono" value="0.5" oninput="calcThermalShift()" min="-300" max="300" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_op_energy">Operating Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="therm-energy" class="form-control mono" value="10.0" oninput="calcThermalShift()" min="0.1" max="100" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_th_shift">Bragg Angle Drift (<i class="formula">Δθ</i>)</div>
+                        <div id="therm-res-urad" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_e_shift">Effective Energy Shift (<i class="formula">ΔE</i>)</div>
+                        <div id="therm-res-de" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </section>
+
+
+        <section id="view-goniometry" class="view-section">
+          <div class="section-banner">
+            <div class="banner-info">
+              <h2 data-i18n="b_gonio_title">GONIOMETRY — Angles &amp; Geometry</h2>
+              <p data-i18n="b_gonio_desc">Bragg angles, reciprocal-space Q, beam footprint and detector geometry</p>
+            </div>
+          </div>
+
+          <div class="flex-row">
+
+            <div class="col-6 col-lg-8">
+              <div class="card" id="card-optics-bragg">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t2_title">§ 1. Bragg's Law (3-Way Suite)</span>
+                  <span class="card-tag"><i class="formula">λ = 2d sin θ ⇔ E = hc / (2d sin θ)</i></span>
+                </div>
+                <div class="card-body">
+                  <!-- Preset Buttons Bar -->
+                  <div class="form-group" style="margin-bottom:10px;">
+                    <label class="form-label" data-i18n="lbl_presets">Common Crystal Reflection Presets</label>
+                    <div id="bragg-presets" class="preset-bar"></div>
+                  </div>
+
+                  <!-- Row 1: d + tth -> Energy -->
+                  <div class="bragg-calc-row">
+                    <div style="font-weight:700; font-size:11px; margin-bottom:5px; color:var(--ink-primary);">
+                      <span class="badge" style="margin-right:4px;">1</span> <span data-i18n="bragg_solve_d">d-spacing d — given 2θ, E</span>
+                    </div>
+                    <div class="flex-row">
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_d" style="font-size:10px;">Calculated d-spacing (d)</div>
+                          <div id="bragg-r2-res-d" class="result-value primary" style="font-size:13px; line-height:1.2;">3.1356 Å</div>
+                          <div id="bragg-r2-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_tth">Diffraction Angle 2θ</span> <span class="unit">(°)</span></label>
+                          <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" oninput="calcBraggRow2()" min="0.1" max="179.9" step="0.1">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_inc_energy">Incident Energy</span> <span class="unit">(keV)</span></label>
+                          <input type="number" id="bragg-r2-e" class="form-control mono" value="10.000" oninput="calcBraggRow2()" min="0.1" max="1000" step="any">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bragg-calc-row">
+                    <div style="font-weight:700; font-size:11px; margin-bottom:5px; color:var(--ink-primary);">
+                      <span class="badge" style="margin-right:4px;">2</span> <span data-i18n="bragg_solve_angle">Diffraction angle 2θ — given d, E</span>
+                    </div>
+                    <div class="flex-row">
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_tth" style="font-size:10px;">Calculated Angle 2θ</div>
+                          <div id="bragg-r3-res-tth" class="result-value primary" style="font-size:13px; line-height:1.2;">2θ = 22.806°</div>
+                          <div id="bragg-r3-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_dspacing">Lattice d-spacing d</span> <span class="unit">(Å)</span></label>
+                          <input type="number" id="bragg-r3-d" class="form-control mono" value="3.1356" oninput="calcBraggRow3()" min="0.01" max="1000" step="any">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_inc_energy">Incident Energy</span> <span class="unit">(keV)</span></label>
+                          <input type="number" id="bragg-r3-e" class="form-control mono" value="10.000" oninput="calcBraggRow3()" min="0.1" max="1000" step="any">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bragg-calc-row" style="margin-bottom:0;">
+                    <div style="font-weight:700; font-size:11px; margin-bottom:5px; color:var(--ink-primary);">
+                      <span class="badge" style="margin-right:4px;">3</span> <span data-i18n="bragg_solve_energy">Energy E — given d, 2θ</span>
+                    </div>
+                    <div class="flex-row">
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_energy" style="font-size:10px;">Calculated Energy (E)</div>
+                          <div id="bragg-r1-res-e" class="result-value primary" style="font-size:13px; line-height:1.2;">10.000 keV</div>
+                          <div id="bragg-r1-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | λ = 0.12398 nm</div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_dspacing">Lattice d-spacing d</span> <span class="unit">(Å)</span></label>
+                          <input type="number" id="bragg-r1-d" class="form-control mono" value="3.1356" oninput="calcBraggRow1()" min="0.01" max="1000" step="any">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group" style="margin-bottom:6px;">
+                          <label class="form-label"><span data-i18n="lbl_tth">Diffraction Angle 2θ</span> <span class="unit">(°)</span></label>
+                          <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" oninput="calcBraggRow1()" min="0.1" max="179.9" step="0.1">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-qspace">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t8_title">§ 2. Reciprocal Space (Q-Space) Conversion</span>
+                  <span class="card-tag"><i class="formula">Q = (4π/λ) sin θ = 2π/d</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                    <input type="number" id="q-energy" class="form-control mono" value="10.0" oninput="calcQSpace('theta')" min="0.1" max="1000" step="any">
+                  </div>
+
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_angle_th">Angle <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="q-theta" class="form-control mono" value="10.0" oninput="calcQSpace('theta')" min="0.1" max="90" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_angle_2th">Diffraction Angle <i class="formula">2θ</i></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="q-twotheta" class="form-control mono" value="20.0" oninput="calcQSpace('twotheta')" min="0.2" max="180" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_scatt_q">Scattering Vector <i class="formula">Q</i></span> <span class="unit">(Å<sup>-1</sup>)</span></label>
+                        <input type="number" id="q-val" class="form-control mono" value="1.7607" oninput="calcQSpace('q')" min="5e-7" max="2000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_real_d">Real-space Periodicity <i class="formula">d</i></span> <span class="unit">(Å)</span></label>
+                        <input type="number" id="q-d" class="form-control mono" value="3.5684" oninput="calcQSpace('d')" min="0.001" max="1e7" step="any">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-scaling">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t5_title">§ 3. Energy Scaling &amp; Angle Calculator</span>
+                  <span class="card-tag"><i class="formula">E<sub>ref</sub> sin θ<sub>ref</sub> = E<sub>target</sub> sin θ<sub>target</sub> ⇔ Q = const</i></span>
+                </div>
+                <div class="card-body">
+                  <!-- Reference Beam & Angle Input -->
+                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; color:var(--ink-primary);" data-i18n="sec_ref_condition">Reference Beam &amp; Angle</div>
+                  <div class="flex-row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_ref_energy">Reference Energy E_ref</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="ea-e1" class="form-control mono" value="10.000" oninput="calcEnergyScaling()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_ref_theta">Reference Angle θ</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="ea-th1" class="form-control mono" value="11.403" oninput="syncRefAngle('th')" min="0.1" max="89.9" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_ref_twotheta">Reference Angle 2θ</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="ea-tth1" class="form-control mono" value="22.806" oninput="syncRefAngle('tth')" min="0.2" max="179.8" step="0.1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Target Beam Input & Quick Presets -->
+                  <div style="font-weight:700; font-size:12px; margin-bottom:6px; margin-top:2px; color:var(--ink-primary);" data-i18n="sec_target_condition">Target Beam Energy Selection</div>
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_target_energy">Target Energy E_target</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="ea-e2" class="form-control mono" value="12.000" oninput="calcEnergyScaling()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label" data-i18n="lbl_target_presets">Quick Target Energy Presets</label>
+                        <div class="preset-bar" style="margin-top:2px;">
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(8.046)">8.05k (Cu)</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(10.0)">10.0k</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(12.4)">12.4k (Se)</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(15.0)">15.0k</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(17.48)">17.5k (Mo)</button>
+                          <button type="button" class="preset-chip" onclick="setTargetEnergy(20.0)">20.0k</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Results Box: 2theta, theta, Q, delta theta, and extra info -->
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_target_twotheta">Target Angle 2θ</div>
+                        <div id="ea-res-tth2" class="result-value primary">18.962°</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_target_theta">Target Angle θ</div>
+                        <div id="ea-res-th2" class="result-value">9.481°</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_scatt_q">Scattering Vector Q</div>
+                        <div id="ea-res-q" class="result-value">2.0038 Å<sup>-1</sup></div>
+                      </div>
+                    </div>
+                    <div class="result-formula" id="ea-res-delta" style="margin-top:8px;">
+                      Δθ = -1.922° | Δ(2θ) = -3.844° (-6919.2")
+                    </div>
+                    <div class="result-formula" id="ea-res-extra" style="color:var(--ink-secondary); font-size:11px; margin-top:3px;">
+                      d = 3.1356 Å | λ<sub>ref</sub>: 0.12398 nm ➔ λ<sub>target</sub>: 0.10332 nm
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-footprint">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t1_title">§ 4. Beam Footprint on Sample</span>
+                  <span class="card-tag"><i class="formula">L = V / sin θ</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_beam_v">Vertical Beam Size (V)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="fp-beam-v" class="form-control mono" value="100" oninput="calcFootprint()" min="0.01" max="1000000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_beam_h">Horizontal Beam Size (H)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="fp-beam-h" class="form-control mono" value="200" oninput="calcFootprint()" min="0.01" max="1000000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_inc_ang">Incident Angle <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="fp-inc-angle" class="form-control mono" value="0.5" oninput="calcFootprint()" min="0" max="90" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_len">Sample Length</span> <span class="unit">(mm)</span></label>
+                        <input type="number" id="fp-sample-len" class="form-control mono" value="15" oninput="calcFootprint()" min="0" max="100000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Geometric Beam Footprint Vector Schematic -->
+                  <div id="fp-diagram-box" class="fp-diagram-box"></div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_fp_len">Footprint Length on Sample</div>
+                        <div id="fp-res-len" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_beam_h">Horizontal Width</div>
+                        <div id="fp-res-h" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_fp_status">Status:</span> <strong id="fp-res-spill">-</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-detector">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t4_title">§ 5. Detector Angular Resolution</span>
+                  <span class="card-tag"><i class="formula">Δθ = Pixel / Distance</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_pixel_size">Pixel Size</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="ang-pixel" class="form-control mono" value="75" oninput="calcAngularResolution()" min="0.1" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_det_dist">Sample-Detector Distance</span> <span class="unit">(mm)</span></label>
+                        <input type="number" id="ang-dist" class="form-control mono" value="500" oninput="calcAngularResolution()" min="1" max="100000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_ang_res_mrad">Angular Resolution (mrad)</div>
+                        <div id="ang-res-mrad" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_ang_res_deg">Angular Resolution (°)</div>
+                        <div id="ang-res-deg" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-slit">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t6_title">§ 6. Slit Opening &amp; Beam Acceptance</span>
+                  <span class="card-tag">Beam Acceptance</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_source_size">Source Size (FWHM)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="slit-source" class="form-control mono" value="40" oninput="calcSlitAcceptance()" min="0" max="1000000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_source_slit_dist">Source-Slit Distance</span> <span class="unit">(m)</span></label>
+                        <input type="number" id="slit-dist" class="form-control mono" value="25" oninput="calcSlitAcceptance()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_slit_div">Beam Divergence</span> <span class="unit">(μrad)</span></label>
+                        <input type="number" id="slit-div" class="form-control mono" value="20" oninput="calcSlitAcceptance()" min="0" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_gauss_mult">Gaussian Envelope Multiplier</span></label>
+                        <select id="slit-sig-mult" class="form-control" onchange="calcSlitAcceptance()">
+                          <option value="2.355">1 × FWHM (~76% acceptance)</option>
+                          <option value="3">3 × σ (~99.7% acceptance)</option>
+                          <option value="4">4 × σ (~99.99% acceptance)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_slit_fwhm">Beam Size at Slit (FWHM)</div>
+                        <div id="slit-res-fwhm" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_slit_open">Recommended Slit Opening</div>
+                        <div id="slit-res-opening" class="result-value primary">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-optics-euler">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_t6_title">§ 7. Chi-Phi Eulerian Cradle Correction</span>
+                  <span class="card-tag">4-Circle Diffractometer</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_chiphi_th">Bragg Angle <i class="formula">θ</i></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="chiphi-theta" class="form-control mono" value="15.0" oninput="calcChiPhi()" min="0.1" max="89.9" step="0.1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n-html="lbl_chiphi_chi">Chi Tilt <i class="formula">Δχ</i></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="chiphi-chi" class="form-control mono" value="5.0" oninput="calcChiPhi()" min="-90" max="90" step="0.1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_phi_corr">Phi Axis Correction (<i class="formula">Δφ</i>)</div>
+                        <div id="chiphi-res-phi" class="result-value primary">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-beamline-cdi">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="beam_t5_title">§ 8. CDI / BCDI Coherent Oversampling</span>
+                  <span class="card-tag"><i class="formula">σ = (λ·D) / (p·S) ≥ 2</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="cdi-energy" class="form-control mono" value="9.0" oninput="calcCDIOversampling()" min="0.1" max="100" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_dist">Detector Distance</span> <span class="unit">(m)</span></label>
+                        <input type="number" id="cdi-dist" class="form-control mono" value="1.5" oninput="calcCDIOversampling()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_pixel">Detector Pixel Size</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="cdi-pixel" class="form-control mono" value="75" oninput="calcCDIOversampling()" min="0.1" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_size">Sample / Crystal Size</span> <span class="unit">(nm)</span></label>
+                        <input type="number" id="cdi-sample-size" class="form-control mono" value="300" oninput="calcCDIOversampling()" min="0.1" max="10000000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_sigma">Oversampling Ratio (<i class="formula">σ</i>)</div>
+                        <div id="cdi-res-sigma" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_speckle">Detector Speckle Size</div>
+                        <div id="cdi-res-speckle" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_verdict_lbl">Criterion Verdict:</span> <span id="cdi-res-verdict" class="badge badge-subtle">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- =================================================================
+             1. DASHBOARD VIEW
+             ================================================================= -->
+        <section id="view-dashboard" class="view-section">
+
+          <!-- Academic Table of Contents Frontmatter Masthead -->
+          <div class="toc-masthead">
+            <div class="toc-pretitle" data-i18n="toc_pretitle">SYNCHROTRON X-RAY OPTICS &amp; BEAMLINE MONOGRAPH</div>
+            <h1 class="toc-maintitle" data-i18n="toc_maintitle">INDEX</h1>
+            <p class="toc-subtitle" data-i18n="toc_subtitle">Comprehensive Index of Synchrotron Optics, Beamline Physics &amp; Experimental Suites</p>
+            <div class="toc-meta-bar">
+              <span class="toc-meta-item"><strong>DOC NO:</strong> BL-TK-2026</span>
+              <span class="toc-meta-item"><strong>TOTAL SUITES:</strong> VI</span>
+              <span class="toc-meta-item"><strong>MODULES:</strong> 25 Calculators &amp; Tools</span>
+              <span class="toc-meta-item"><strong>CALIBRATION:</strong> CODATA 2022</span>
+              <span class="toc-meta-item"><strong>STATUS:</strong> Client Offline-Native</span>
+            </div>
+          </div>
+
+          <!-- TOC 2-Column Academic Layout -->
+          <div class="flex-row toc-wrapper">
+
+            <!-- Left Column: Suites I, II, III -->
+            <div class="col-6">
+
+              <!-- SECTION X-RAY OPTICS SUITE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header" onclick="jumpToSection('spectroscopy')">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION I.</span>
+                    <span data-i18n="toc_sec1_title">Spectroscopy — Energy, Wavelength &amp; Matter</span>
+                  </div>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec1_desc">Energy-wavelength conversion, lattice spacing, complex refraction and transmittance, resolution and flux</div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-energy')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_1">Energy - Wavelength - Frequency</span>
+                      <span class="toc-item-formula">E = hc/&lambda; = h&nu;</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-lattice-dspacing')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_lattice">Lattice Constants &amp; Miller Indices → d-spacing</span>
+                      <span class="toc-item-formula">a, b, c, &alpha;, &beta;, &gamma; + hkl &rarr; d</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-refraction')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_4">Complex Refractive Index &amp; Transmittance</span>
+                      <span class="toc-item-formula">n = 1 &minus; &delta; + i&beta;</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-reflection')">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_7">Total External Reflection &amp; Critical Angle</span>
+                      <span class="toc-item-formula">&theta;c = &radic;(2&delta;)</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-grating')">
+                    <span class="toc-item-num">§ 5.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_3">Diffraction Grating Dispersion &amp; Resolution</span>
+                      <span class="toc-item-formula">d(sin&alpha; + sin&beta;) = m&lambda;</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-resolution')">
+                    <span class="toc-item-num">§ 6.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_3">Energy Resolution (ΔE/E) Estimator</span>
+                      <span class="toc-item-formula">&Delta;E/E</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-flux')">
+                    <span class="toc-item-num">§ 7.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_2">Beamline Photon Flux &amp; Efficiency</span>
+                      <span class="toc-item-formula">photons / s</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-drift')">
+                    <span class="toc-item-num">§ 8.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_7">Crystal Thermal Expansion &amp; Angular Drift</span>
+                      <span class="toc-item-formula">&Delta;&theta;, &Delta;E from &Delta;T</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="toc-section-card">
+                <div class="toc-sec-header" onclick="jumpToSection('goniometry')">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION II.</span>
+                    <span data-i18n="toc_sec2_title">Goniometry — Angles &amp; Geometry</span>
+                  </div>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec2_desc">Bragg angles, reciprocal-space Q, beam footprint, detector geometry, slits and cradle correction</div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-bragg')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_2">Bragg's Law 3-Way Suite</span>
+                      <span class="toc-item-formula">&lambda; = 2d sin&theta;</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-qspace')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_8">Reciprocal Q-Space &amp; Momentum Transfer</span>
+                      <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-scaling')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_5">Energy Scaling &amp; Angular Correction</span>
+                      <span class="toc-item-formula">&theta;2 from E1 &rarr; E2</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-footprint')">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_1">Sample Beam Footprint &amp; Spillover</span>
+                      <span class="toc-item-formula">L = w / sin&theta;</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-detector')">
+                    <span class="toc-item-num">§ 5.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_4">Detector Angular Resolution &amp; Geometry</span>
+                      <span class="toc-item-formula">&Delta;2&theta; = atan(px / D)</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-slit')">
+                    <span class="toc-item-num">§ 6.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_6">Slit Aperture Opening &amp; Acceptance</span>
+                      <span class="toc-item-formula">gap / distance</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-euler')">
+                    <span class="toc-item-num">§ 7.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_6">Chi-Phi Eulerian Cradle Correction</span>
+                      <span class="toc-item-formula">chi-phi cradle</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-cdi')">
+                    <span class="toc-item-num">§ 8.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_beam_5">CDI / BCDI Coherent Oversampling</span>
+                      <span class="toc-item-formula">oversampling ratio</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="toc-section-card">
+                <div class="toc-sec-header" onclick="jumpToSection('record')">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION III.</span>
+                    <span data-i18n="toc_sec3_title">Logbook &amp; Live Records</span>
+                  </div>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec3_desc">Standard logbook templates for lab notebooks and 1-click in-situ beamtime event snippets</div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-headers')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_1">Beamtime Logbook Header Presets</span>
+                      <span class="toc-item-formula">Standard / Shift Handover / Run Table Matrix</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-snippets')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_2">In-Situ Quick Log Snippets</span>
+                      <span class="toc-item-formula">Beam dump, Restored, Mount, Alignment, Scan start/finish</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SECTION DATA SUITE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header" onclick="jumpToSection('data')">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION IV.</span>
+                    <span data-i18n="toc_sec4_title">Scan Data Viewer</span>
+                  </div>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec4_desc">Two-column scan files read automatically, XY plot with a log axis, normalisation, range crop and XRR segment stitching</div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-load')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_1">Load Scan Files</span>
+                      <span class="toc-item-formula">TXT / CSV / DAT — delimiter &amp; header auto-detect</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-plot')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_2">Generic XY Plot</span>
+                      <span class="toc-item-formula">Linear / log&#8321;&#8320; y · normalize · x crop</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-stitch')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR Segment Stitching</span>
+                      <span class="toc-item-formula">scale = median(I<sub>prev</sub> / I<sub>seg</sub>) over overlap</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Suites IV, V, VI, VII -->
+            <div class="col-6">
+
+              <!-- SECTION SETTINGS & ARCHIVE -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header" onclick="jumpToSection('settings')">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION V.</span>
+                    <span data-i18n="toc_sec6_title">System Settings &amp; Archive</span>
+                  </div>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec6_desc">Language selection, high-contrast theme, calculation run logs, JSON backup &amp; keyboard shortcuts</div>
+                <div class="toc-items-container">
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-lang')">
+                    <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_1">Language Selection</span>
+                      <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_2">Display Theme Mode</span>
+                      <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_set_5">Keyboard Shortcuts Guide</span>
+                      <span class="toc-item-formula">Alt + 1 ~ 7 Quick Tab Switcher</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SECTION ABOUT & PORTFOLIO -->
+              <div class="toc-section-card">
+                <div class="toc-sec-header" onclick="jumpToSection('about')">
+                  <div class="toc-sec-title">
+                    <span class="toc-roman-badge">SECTION VI.</span>
+                    <span data-i18n="toc_sec7_title">About the Creator &amp; Research</span>
+                  </div>
+                </div>
+                <div class="toc-sec-desc" data-i18n="toc_sec7_desc">Researcher profile, Coherent X-ray Optics / BCDI domain expertise, and GitHub Sponsors</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- § 9. Reference data, not a calculator: a plain ruled table in
+               the style of an appendix, with no card chrome around it. -->
+          <section class="datasheet" id="card-physical-constants">
+              <div class="datasheet-head">
+                <span class="datasheet-label" data-i18n="const_kicker">Appendix · Reference data</span>
+                <h3 class="datasheet-title" data-i18n="const_title">Fundamental physical constants and crystal lattice data</h3>
+                <p class="datasheet-note" data-i18n="const_note">CODATA 2022 recommended values. Lattice spacings are quoted at 298.15 K; values marked (exact) are fixed by the SI definitions.</p>
+              </div>
+
+              <table class="lab-table datasheet-table">
+                <thead>
+                  <tr>
+                    <th class="dt-sym" data-i18n="const_hdr_symbol">Symbol</th>
+                    <th data-i18n="const_hdr_quantity">Quantity</th>
+                    <th class="dt-val" data-i18n="const_hdr_value">Value</th>
+                    <th class="dt-unit" data-i18n="const_hdr_unit">Unit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">hc</i></td>
+                    <td data-i18n="const_hc">Photon energy-wavelength product</td>
+                    <td class="dt-val mono">12398.41984</td>
+                    <td class="dt-unit mono">eV&middot;&Aring; <span class="dt-alt">= 1.239842 keV&middot;nm</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">h</i></td>
+                    <td data-i18n="const_h">Planck constant</td>
+                    <td class="dt-val mono">6.626070 &times; 10<sup>-34</sup></td>
+                    <td class="dt-unit mono">J&middot;s <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">&#295;</i></td>
+                    <td data-i18n="const_hbar">Reduced Planck constant</td>
+                    <td class="dt-val mono">1.054572 &times; 10<sup>-34</sup></td>
+                    <td class="dt-unit mono">J&middot;s</td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">c</i></td>
+                    <td data-i18n="const_c">Speed of light in vacuum</td>
+                    <td class="dt-val mono">299,792,458</td>
+                    <td class="dt-unit mono">m&middot;s<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">e</i></td>
+                    <td data-i18n="const_e">Elementary charge</td>
+                    <td class="dt-val mono">1.602177 &times; 10<sup>-19</sup></td>
+                    <td class="dt-unit mono">C <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">r</i><sub>e</sub></td>
+                    <td data-i18n="const_re">Classical electron radius</td>
+                    <td class="dt-val mono">2.817940 &times; 10<sup>-15</sup></td>
+                    <td class="dt-unit mono">m</td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">m</i><sub>e</sub></td>
+                    <td data-i18n="const_me">Electron rest mass</td>
+                    <td class="dt-val mono">9.109384 &times; 10<sup>-31</sup></td>
+                    <td class="dt-unit mono">kg <span class="dt-alt">= 0.5110 MeV/<i class="formula">c</i><sup>2</sup></span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">&alpha;</i></td>
+                    <td data-i18n="const_alpha">Fine-structure constant</td>
+                    <td class="dt-val mono">1 / 137.035999</td>
+                    <td class="dt-unit mono"><span class="dt-alt" data-i18n="const_dimensionless">dimensionless</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">N</i><sub>A</sub></td>
+                    <td data-i18n="const_na">Avogadro constant</td>
+                    <td class="dt-val mono">6.022141 &times; 10<sup>23</sup></td>
+                    <td class="dt-unit mono">mol<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">k</i><sub>B</sub></td>
+                    <td data-i18n="const_kb">Boltzmann constant</td>
+                    <td class="dt-val mono">1.380649 &times; 10<sup>-23</sup></td>
+                    <td class="dt-unit mono">J&middot;K<sup>-1</sup> <span class="dt-alt">(exact)</span></td>
+                  </tr>
+
+                  <tr class="dt-group">
+                    <td colspan="4" data-i18n="const_group_d">Crystal d-spacing (298.15 K)</td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">d</i><sub>Si(111)</sub></td>
+                    <td data-i18n="const_d_si">Silicon Si(111)</td>
+                    <td class="dt-val mono">3.13560</td>
+                    <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.43102 &Aring;</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">d</i><sub>Ge(111)</sub></td>
+                    <td data-i18n="const_d_ge">Germanium Ge(111)</td>
+                    <td class="dt-val mono">3.26636</td>
+                    <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 5.65750 &Aring;</span></td>
+                  </tr>
+                  <tr>
+                    <td class="dt-sym"><i class="formula">d</i><sub>C(111)</sub></td>
+                    <td data-i18n="const_d_c">Diamond C(111)</td>
+                    <td class="dt-val mono">2.05930</td>
+                    <td class="dt-unit mono">&Aring; <span class="dt-alt">a = 3.56683 &Aring;</span></td>
+                  </tr>
+                </tbody>
+              </table>
+          </section>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- =================================================================
+             3. RECORD VIEW — Plain-Text Logbook Presets & In-Situ Event Snippets
+             ================================================================= -->
+        <section id="view-record" class="view-section">
+          <div class="section-banner">
+            <div class="banner-info">
+              <h2 data-i18n="b_rec_title">RECORD — Experiment Session Log</h2>
+              <p data-i18n="b_rec_desc">One-click logging. Every field is optional.</p>
+            </div>
+          </div>
+
+          <div class="flex-row">
+            <!-- § 1. Logbook Header Presets -->
+            <div class="col-12">
+              <div class="card" id="card-record-headers">
+                <div class="card-header">
+                  <span class="card-title">§ 1. BEAMTIME LOGBOOK HEADER PRESETS</span>
+                  <span class="card-tag">Plain Text Format</span>
+                </div>
+                <div class="card-body">
+                  <!-- Built-in presets and the user's own are rendered together -->
+                  <div class="rec-tpl-tabs" id="rec-tpl-tabs"></div>
+
+                  <div class="rec-tpl-box">
+                    <!-- Built-in preset: read-only preview -->
+                    <pre class="rec-tpl-preview mono" id="logbook-tpl-preview"></pre>
+
+                    <!-- Own preset: name and body are edited in place and saved locally -->
+                    <div id="rec-tpl-edit" style="display:none;">
+                      <input type="text" id="rec-tpl-name" class="form-control" maxlength="40" placeholder="Preset name" oninput="renamePreset()">
+                      <textarea id="rec-tpl-body" class="form-control mono rec-tpl-editor" rows="14" spellcheck="false" oninput="editPresetBody()"></textarea>
+                      <div class="rec-tpl-hint mono">{date} {time} {datetime} are filled in when the header is copied.</div>
+                    </div>
+
+                    <div class="rec-tpl-copy-bar">
+                      <button class="btn btn-sm btn-secondary" id="rec-tpl-delete" onclick="deletePreset()" style="display:none;">Delete Preset</button>
+                      <button class="btn btn-sm btn-primary" onclick="copyActiveTemplate()" style="font-weight:700;">Copy Header to Clipboard</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- § 2. In-Situ Quick Snippets -->
+            <div class="col-12">
+              <div class="card" id="card-record-snippets">
+                <div class="card-header">
+                  <span class="card-title">§ 2. IN-SITU BEAMTIME EVENT SNIPPETS</span>
+                  <span class="card-tag">One-Click Timestamped Copy</span>
+                </div>
+                <div class="card-body">
+                  <div class="rec-memo-grid">
+                    <!-- Memo Card 1 -->
+                    <div class="rec-memo-card alert" onclick="triggerSnippet('beam_dump', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">BEAM DUMP</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> BEAM DUMP: Storage ring beam lost (0 mA). Beamline standby.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 2 -->
+                    <div class="rec-memo-card success" onclick="triggerSnippet('beam_restored', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">BEAM RESTORED</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> BEAM RESTORED: Top-up injection nominal (300 mA). Hutch shutter opened.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 3 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('sample_mount', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SAMPLE MOUNT</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SAMPLE MOUNT: Sample <span class="snip-ph">[            ]</span> mounted on stage.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 4 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('beam_align', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">ALIGNMENT</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> ALIGNMENT: Direct beam, pinhole, and slits centered. Counts: <span class="snip-ph">[      ]</span> ph/s.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 5 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('calibration', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">CALIBRATION</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> CALIBRATION: Standard (LaB6 / AgBh / CeO2) calibration measured.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 6 -->
+                    <div class="rec-memo-card" onclick="triggerSnippet('scan_start', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SCAN START</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SCAN START: Run #<span class="snip-ph">[    ]</span> started (Exp: <span class="snip-ph">[  ]</span> s, Attn: <span class="snip-ph">[  ]</span> dB).
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 7 -->
+                    <div class="rec-memo-card success" onclick="triggerSnippet('scan_finish', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">SCAN FINISH</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> SCAN FINISH: Run #<span class="snip-ph">[    ]</span> completed. 2D frames saved.
+                      </div>
+                    </div>
+
+                    <!-- Memo Card 8 -->
+                    <div class="rec-memo-card alert" onclick="triggerSnippet('interlock', this)">
+                      <div class="rec-memo-header">
+                        <span class="rec-memo-tag mono">INTERLOCK</span>
+                        <span class="rec-memo-hint">CLICK TO COPY</span>
+                      </div>
+                      <div class="rec-memo-body mono">
+                        <span class="snip-time-tag">[<span class="snip-live-time">YYYY-MM-DD HH:mm:ss</span>]</span> INTERLOCK: Hutch search / Interlock / Motor error / Alarm triggered.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Custom Memo Input -->
+                  <div class="rec-custom-row">
+                    <input type="text" id="rec-custom-input" class="form-control mono" placeholder="Custom note to copy with timestamp..." onkeydown="if(event.key==='Enter') addCustomNote()">
+                    <button class="btn btn-sm btn-primary" onclick="addCustomNote()" style="flex-shrink:0; font-weight:700;">Copy Custom Note</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             4. DATA VIEW — two-column scan files: read, plot, crop, stitch
+             ================================================================= -->
+        <section id="view-data" class="view-section">
+          <div class="section-banner">
+            <div class="banner-info">
+              <h2 data-i18n="b_data_title">DATA — Scan Files &amp; XY Plot</h2>
+              <p data-i18n="b_data_desc">Two-column txt / csv read automatically, log axis, normalisation, range crop, XRR segment stitching</p>
+            </div>
+          </div>
+
+          <div class="flex-row">
+
+            <!-- § 1. File input -->
+            <div class="col-12">
+              <div class="card" id="card-data-load">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="dv_c1_title">§ 1. Load Scan Files</span>
+                  <span class="card-tag" data-i18n="dv_c1_tag">Delimiter &amp; header auto-detect</span>
+                </div>
+                <div class="card-body">
+                  <!-- Files never leave the browser: FileReader only, no upload. -->
+                  <div class="dv-drop" id="dv-drop">
+                    <div class="dv-drop-text" data-i18n="dv_drop_hint">Drop files here, or</div>
+                    <label class="btn btn-sm btn-primary dv-file-btn">
+                      <span data-i18n="dv_choose">Choose files</span>
+                      <input type="file" id="dv-file" multiple accept=".txt,.csv,.dat,.xy,.tsv,.asc,text/plain"
+                             onchange="dvFilesPicked(this)">
+                    </label>
+                    <div class="dv-drop-note mono" data-i18n="dv_drop_note">TXT · CSV · DAT · XY — tab / comma / semicolon / whitespace, # % ! ; comments</div>
+                  </div>
+
+                  <div id="dv-traces"></div>
+
+                  <div class="dv-actions">
+                    <button class="btn btn-sm btn-secondary" onclick="dvClearAll()" data-i18n="dv_clear">Clear all</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- § 2. Plot -->
+            <div class="col-12">
+              <div class="card" id="card-data-plot">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="dv_c2_title">§ 2. Generic XY Plot</span>
+                  <span class="card-tag" data-i18n="dv_c2_tag">Linear / Log · Normalize · Crop</span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row dv-controls">
+                    <div class="col-4">
+                      <label class="form-label" data-i18n="dv_yaxis">Y axis</label>
+                      <select class="form-control" id="dv-yscale" onchange="dvSetYScale(this.value)">
+                        <option value="linear" data-i18n="dv_y_linear">Linear</option>
+                        <option value="log" data-i18n="dv_y_log">Log₁₀</option>
+                      </select>
+                    </div>
+                    <div class="col-4">
+                      <label class="form-label" data-i18n="dv_norm">Normalisation</label>
+                      <select class="form-control" id="dv-norm" onchange="dvSetNorm(this.value)">
+                        <option value="none" data-i18n="dv_norm_none">None (raw values)</option>
+                        <option value="max" data-i18n="dv_norm_max">Maximum = 1</option>
+                        <option value="xrr" data-i18n="dv_norm_xrr">XRR plateau = 1</option>
+                      </select>
+                    </div>
+                    <div class="col-4">
+                      <label class="form-label" data-i18n="dv_crop">Crop x range</label>
+                      <div class="dv-crop-row">
+                        <input type="text" class="form-control mono" id="dv-xmin" placeholder="min" spellcheck="false" onchange="dvApplyCrop()">
+                        <span class="dv-crop-sep">–</span>
+                        <input type="text" class="form-control mono" id="dv-xmax" placeholder="max" spellcheck="false" onchange="dvApplyCrop()">
+                        <button class="btn btn-xs btn-secondary" onclick="dvResetCrop()" data-i18n="dv_crop_reset">Reset</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dv-plot" id="dv-plot"></div>
+                  <div class="dv-summary" id="dv-summary"></div>
+
+                  <div class="dv-actions">
+                    <button class="btn btn-sm btn-secondary" onclick="dvCopyData()" data-i18n="dv_copy">Copy visible curve (TSV)</button>
+                    <button class="btn btn-sm btn-secondary" onclick="dvDownloadData()" data-i18n="dv_download">Save as .txt</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- § 3. XRR stitching -->
+            <div class="col-12">
+              <div class="card" id="card-data-stitch">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="dv_c3_title">§ 3. XRR Segment Stitching</span>
+                  <span class="card-tag" data-i18n="dv_c3_tag">Scale from the overlap</span>
+                </div>
+                <div class="card-body">
+                  <p class="dv-explain" data-i18n="dv_stitch_explain">XRR segments measured through different absorbers are the same reflectivity times an unknown constant each. Where two segments overlap in angle they measure the same thing, so the point-by-point ratio across the overlap is that constant; its median is used. Each segment is matched against the whole curve assembled so far, so an error does not simply repeat down the chain.</p>
+                  <div class="dv-actions">
+                    <button class="btn btn-sm btn-primary" onclick="dvAutoStitch()" style="font-weight:700;" data-i18n="dv_stitch_run">Stitch on the overlap</button>
+                    <button class="btn btn-sm btn-secondary" onclick="dvResetScales()" data-i18n="dv_stitch_reset">Reset scales</button>
+                  </div>
+                  <p class="dv-explain dv-explain-quiet" data-i18n="dv_stitch_manual_hint">Typing a value into the scale column in § 1 overrides the automatic one; clearing the box hands it back to auto. A segment with no overlap is left at scale 1 and flagged, so a known absorber factor can be entered directly.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- =================================================================
+             7. SETTINGS VIEW
+             ================================================================= -->
+        <section id="view-settings" class="view-section">
+          <div class="section-banner">
+            <div class="banner-info">
+              <h2 id="banner-set-title" data-i18n="b_set_title">Settings &amp; History Management</h2>
+              <p id="banner-set-desc" data-i18n="b_set_desc">Language selection, display theme mode, calculation history archive, shortcuts, and full data backup/restore</p>
+            </div>
+          </div>
+
+          <div class="flex-row">
+
+            <!-- 0. Language Selection Card -->
+            <div class="col-12">
+              <div class="card" id="card-set-lang">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="set_card_lang_title">§ 1. Language Selection</span>
+                </div>
+                <div class="card-body">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                    <div>
+                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current" data-i18n="lang_current">Current language: English</div>
+                      <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc" data-i18n="lang_desc">Switch the interface language. Each language has its own address, so the page reloads.</div>
+                    </div>
+                    <div style="margin-top:6px;">
+                      <button id="btn-lang-ko" class="btn btn-sm btn-primary" onclick="window.setLanguage('ko')" style="margin-right:6px; font-weight:700;" data-i18n="btn_lang_ko">한국어</button>
+                      <button id="btn-lang-en" class="btn btn-sm btn-secondary" onclick="window.setLanguage('en')" style="font-weight:700;" data-i18n="btn_lang_en">English</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1. Theme Configuration Card -->
+            <div class="col-12 col-lg-8">
+              <div class="card" id="card-set-theme">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="set_card_theme_title">§ 2. Display Theme Configuration</span>
+                </div>
+                <div class="card-body">
+                  <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current" data-i18n="theme_current_initial">Current theme: Academic Paper</div>
+                  <div style="font-size:11px; color:var(--ink-secondary); margin-bottom:10px;" id="settings-theme-desc" data-i18n="theme_desc">Pick one of seven themes. Layout and print specification stay identical across all themes.</div>
+
+                  <div class="theme-picker">
+                    <button id="btn-theme-paper" class="theme-swatch" onclick="applyTheme('paper')">
+                      <span class="theme-chip theme-chip-paper"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_paper_name">Academic Paper</strong>
+                        <em data-i18n="theme_paper_desc">Off-white paper, ink black, Oxford navy — the default print specification</em>
+                      </span>
+                    </button>
+
+                    <button id="btn-theme-parchment" class="theme-swatch" onclick="applyTheme('parchment')">
+                      <span class="theme-chip theme-chip-parchment"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_parchment_name">Vintage Parchment</strong>
+                        <em data-i18n="theme_parchment_desc">Aged notebook stock with deep sepia ink — warm and easy on the eyes</em>
+                      </span>
+                    </button>
+
+                    <button id="btn-theme-datasheet" class="theme-swatch" onclick="applyTheme('datasheet')">
+                      <span class="theme-chip theme-chip-datasheet"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_datasheet_name">Technical Datasheet</strong>
+                        <em data-i18n="theme_datasheet_desc">Cool white paper, drafting navy ink &amp; millimetre graph spec sheet</em>
+                      </span>
+                    </button>
+
+                    <button id="btn-theme-blueprint" class="theme-swatch" onclick="applyTheme('blueprint')">
+                      <span class="theme-chip theme-chip-blueprint"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_blueprint_name">Cyanotype Blueprint</strong>
+                        <em data-i18n="theme_blueprint_desc">Deep Prussian blue drafting board with chalk white &amp; cyan lines</em>
+                      </span>
+                    </button>
+
+                    <button id="btn-theme-crt" class="theme-swatch" onclick="applyTheme('crt')">
+                      <span class="theme-chip theme-chip-crt"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_crt_name">CRT Terminal (Green / Amber)</strong>
+                        <em data-i18n="theme_crt_desc">1980s lab phosphor green with amber accent, monospace throughout</em>
+                      </span>
+                    </button>
+
+                    <button id="btn-theme-tokyo" class="theme-swatch" onclick="applyTheme('tokyo')">
+                      <span class="theme-chip theme-chip-tokyo"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_tokyo_name">Tokyo Night (Neon Dark)</strong>
+                        <em data-i18n="theme_tokyo_desc">Modern neon blue/purple dark theme, high legibility</em>
+                      </span>
+                    </button>
+
+                    <button id="btn-theme-console" class="theme-swatch" onclick="applyTheme('console')">
+                      <span class="theme-chip theme-chip-console"></span>
+                      <span class="theme-swatch-text">
+                        <strong data-i18n="theme_console_name">Beamline Control Room</strong>
+                        <em data-i18n="theme_console_desc">Very high contrast industrial dark mode, styled after an EPICS console</em>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Keyboard Shortcuts -->
+            <div class="col-12 col-lg-4">
+              <div class="card" id="card-set-shortcuts">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="set_card_shortcuts_title">§ 3. Keyboard Shortcuts</span>
+                </div>
+                <div class="card-body">
+                  <table class="lab-table">
+                    <tbody>
+                      <tr>
+                        <td><code class="mono">[Alt + 1]</code></td>
+                        <td data-i18n="sc_1">Jump to SPECTROSCOPY</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 2]</code></td>
+                        <td data-i18n="sc_2">Jump to GONIOMETRY</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 3]</code></td>
+                        <td data-i18n="sc_3">Jump to RECORD</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 4]</code></td>
+                        <td data-i18n="sc_4">Jump to DATA</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 5]</code></td>
+                        <td data-i18n="sc_5">Jump to SETTINGS</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 6]</code></td>
+                        <td data-i18n="sc_6">Jump to ABOUT</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 7]</code></td>
+                        <td data-i18n="sc_7">Jump to INDEX</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- =================================================================
+             8. ABOUT VIEW (Creator Portfolio & Research & Coffee Donation)
+             ================================================================= -->
+        <section id="view-about" class="view-section">
+          <div class="about-head">
+            <h2 class="about-title">X-Ray Beamline Toolkit</h2>
+            <p class="about-tagline" data-i18n="about_tagline">A lightweight toolkit for X-ray experiments.</p>
+            <p class="about-version mono">Version 1.4 &middot; Offline-ready &middot; No account, no server</p>
+          </div>
+
+          <div class="about-links">
+            <a class="about-link" href="https://github.com/SJB7777/xray" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="about-link" href="https://github.com/SJB7777/xray#readme" target="_blank" rel="noopener noreferrer" data-i18n="about_docs">Documentation</a>
+            <a class="about-link" href="https://github.com/SJB7777/xray/issues" target="_blank" rel="noopener noreferrer" data-i18n="about_feedback">Feedback</a>
+            <a class="about-link" href="mailto:isaacyong@naver.com" data-i18n="about_contact">Contact</a>
+          </div>
+
+          <div class="flex-row">
+            <div class="col-8">
+              <div class="about-body">
+                <p data-i18n="about_scope">Handles the calculations an X-ray diffraction experiment needs over and over — Bragg angle, wavelength conversion, lattice spacing, scattering vector — on a single screen, and keeps a light record of session context and logs. It does not replace your lab notebook; it removes the work of redoing the same calculation and retyping the same header every time.</p>
+
+                <h3 class="about-sub" data-i18n="about_what_title">What is inside</h3>
+                <dl class="about-list">
+                  <dt data-i18n="about_f1_t">SPECTROSCOPY</dt>
+                  <dd data-i18n="about_f1_d">Energy-wavelength conversion, lattice plane spacing, complex refractive index and transmittance, energy resolution and photon flux.</dd>
+
+                  <dt data-i18n="about_f2_t">GONIOMETRY</dt>
+                  <dd data-i18n="about_f2_d">Bragg angles, reciprocal-space Q, beam footprint, detector geometry and slit acceptance, Eulerian cradle correction.</dd>
+
+                  <dt data-i18n="about_f3_t">RECORD</dt>
+                  <dd data-i18n="about_f3_d">One-click experiment logs with session context, plus a formatted session header ready to paste into an external logbook.</dd>
+                </dl>
+
+                <h3 class="about-sub" data-i18n="about_design_title">Design principles</h3>
+                <ul class="about-bullets">
+                  <li data-i18n="about_p1">No account, no server, no upload. Everything lives in this browser's localStorage and can be exported or imported as JSON.</li>
+                  <li data-i18n="about_p2">Works without a network. No external libraries, web fonts, or tracking scripts.</li>
+                  <li data-i18n="about_p3">Built for the machines labs actually run — it behaves identically on Firefox 60 ESR under CentOS 7.</li>
+                  <li data-i18n="about_p4">Shows only what you need. Nothing forces you to fill in metadata, and empty fields are a valid state.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="about-side">
+                <h3 class="about-sub" data-i18n="about_author_title">Who made it</h3>
+                <div class="about-person">
+                  <div class="about-person-name">Isaac Yong <span class="about-person-ko">(용이삭)</span></div>
+                  <div class="about-person-role" data-i18n="about_person_role">MSc candidate, Dept. of Physics, Sogang University · Synchrotron X-ray optics &amp; coherent diffraction imaging</div>
+                </div>
+
+                <p class="about-person-note" data-i18n="about_person_note">Started after repeating the same calculations one beamtime too many, to put the tools that were actually needed in one place.</p>
+
+                <h3 class="about-sub" data-i18n="about_research_title">Research interests</h3>
+                <ul class="about-tags">
+                  <li>X-ray Optics &amp; Wave Propagation</li>
+                  <li>Coherent Diffraction Imaging (CDI / BCDI)</li>
+                  <li>Phase Retrieval &amp; 3D Strain Mapping</li>
+                  <li>Beamline Instrumentation &amp; DAQ</li>
+                </ul>
+
+                <h3 class="about-sub" data-i18n="about_sciencetitle">Sources</h3>
+                <p class="about-person-note" data-i18n="about_science">Physical constants use CODATA recommended values; lattice parameters and scattering factors come from published crystallographic data. Results are meant to support experiment planning and on-site decisions — verify them yourself before using them in a presentation or publication.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-footer">
+            <div class="about-footer-line mono">X-Ray Beamline Toolkit &middot; v1.4 &middot; MIT License</div>
+            <div class="about-footer-meta">
+              <span data-i18n="about_developed_by">Developed by</span>
+              <a href="mailto:isaacyong@naver.com">Isaac Yong</a>
+              <span class="about-footer-sep">&middot;</span>
+              <span data-i18n="about_supported_by">Supported by</span>
+              <a class="sponsor-btn" href="https://github.com/sponsors/SJB7777" target="_blank" rel="noopener noreferrer" data-i18n="about_sponsor_btn">Sponsor</a>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Load Scripts in Dependency Order (CentOS 7 Offline-Safe) -->
+  <script src="../js/data.js?v=1.9"></script>
+  <script src="../js/i18n.js?v=1.9"></script>
+  <script src="../js/app.js?v=1.9"></script>
+  <script src="../js/optics.js?v=1.9"></script>
+  <script src="../js/beamline.js?v=1.9"></script>
+  <script src="../js/lattice.js?v=1.9"></script>
+  <script src="../js/validity.js?v=1.9"></script>
+  <script src="../js/miniplot.js?v=1.9"></script>
+  <script src="../js/record.js?v=1.9"></script>
+  <script src="../js/dataview.js?v=1.9"></script>
+  <script src="../js/nav.js?v=1.9"></script>
+</body>
+</html>

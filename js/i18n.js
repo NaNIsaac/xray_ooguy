@@ -90,9 +90,11 @@
       // Settings Tab (previously English-only; these are reached through t()
       // at runtime, so Korean users were seeing the raw key names)
       set_card_lang_title: "§ 1. 언어 선택",
-      lang_desc: "모든 계산기와 기록 화면의 인터페이스 언어를 즉시 전환합니다.",
+      lang_desc: "인터페이스 언어를 전환합니다. 언어마다 주소가 다르므로 페이지가 다시 열립니다.",
       btn_lang_ko: "한국어",
       btn_lang_en: "English",
+      lang_current: "현재 언어: 한국어",
+      theme_current_initial: "현재 테마: 학술 논문",
       set_card_theme_title: "§ 2. 화면 테마 설정",
       set_card_shortcuts_title: "§ 3. 키보드 단축키 안내",
 
@@ -714,9 +716,11 @@
 
       // Settings Tab
       set_card_lang_title: "§ 1. Language Selection",
-      lang_desc: "Instantaneously switch between Korean and English interface across all tools and calculations.",
+      lang_desc: "Switch the interface language. Each language has its own address, so the page reloads.",
       btn_lang_ko: "한국어",
       btn_lang_en: "English",
+      lang_current: "Current language: English",
+      theme_current_initial: "Current theme: Academic Paper",
       set_card_theme_title: "§ 2. Display Theme Configuration",
       set_card_shortcuts_title: "§ 3. Keyboard Shortcuts",
 
@@ -844,22 +848,18 @@
   var I18n = {
     lang: "ko",
 
-    // A visitor who has chosen a language keeps it. Everyone else gets the one
-    // their browser asks for: a Korean browser opens in Korean, everything else
-    // opens in English.
+    // The URL decides the language, not storage and not the browser.
     //
-    // This also decides what a search engine sees. A crawler arrives with empty
-    // storage every time, so a hardcoded "ko" default meant the rendered page
-    // was always Korean — while the <title> and description were English. The
-    // English phrasing the tools are searched by never appeared in the body it
-    // was supposed to describe.
+    // There are two pages: / is Korean and /en/ is English, each declaring its
+    // language on <html lang>. That is what makes hreflang true — a crawler
+    // asking for either one gets that language every time — and it is why both
+    // languages can be indexed instead of whichever the default happened to be.
+    //
+    // Switching language navigates between them rather than swapping text in
+    // place, so the address always matches what is on screen.
     init: function () {
-      var saved = localStorage.getItem("bl_toolkit_lang");
-      if (!saved) {
-        var pref = navigator.language || navigator.userLanguage || "";
-        saved = String(pref).toLowerCase().indexOf("ko") === 0 ? "ko" : "en";
-      }
-      this.setLang(saved);
+      var declared = String(document.documentElement.getAttribute("lang") || "").toLowerCase();
+      this.setLang(declared.indexOf("en") === 0 ? "en" : "ko");
     },
 
     t: function (key) {
@@ -945,9 +945,7 @@
 
       // 5. Settings Language Card Dynamic Update & Button Highlights
       var langCur = document.getElementById("settings-lang-current");
-      if (langCur) {
-        langCur.textContent = (this.lang === "ko") ? "현재 언어: 한국어 (Korean)" : "Current Language: English";
-      }
+      if (langCur) langCur.textContent = t.lang_current;
 
       var langDesc = document.getElementById("settings-lang-desc");
       if (langDesc) langDesc.textContent = t.lang_desc;
@@ -1008,7 +1006,24 @@
   };
 
   window.i18n = I18n;
+
+  // Relative hops, not absolute paths: "/en/" would resolve to the filesystem
+  // root when the page is opened straight off disk, which is how this site is
+  // developed and how it is used on a control-room machine with no server.
+  // The section being read is carried across.
   window.setLanguage = function (lang) {
-    I18n.setLang(lang);
+    var here = String(document.documentElement.getAttribute("lang") || "ko").toLowerCase();
+    var onEnglishPage = here.indexOf("en") === 0;
+    var wantEnglish = lang === "en";
+
+    if (wantEnglish === onEnglishPage) return;
+
+    try {
+      localStorage.setItem("bl_toolkit_lang", wantEnglish ? "en" : "ko");
+    } catch (e) {
+      // Private mode: the hop still works, it just is not remembered.
+    }
+
+    window.location.href = (wantEnglish ? "en/" : "../") + (window.location.hash || "");
   };
 })(window);

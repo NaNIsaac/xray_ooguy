@@ -64,7 +64,38 @@ to Korean, then render the raw key — both look like bugs.
 Strings built in JS (result text, status labels) must go through `I18n.t(key)`, because
 `setLang` re-runs the calculators to re-render them.
 
-### 6. Print output is a feature
+This is now load-bearing beyond the interface: `en/index.html` is **generated** from the
+markup and the English table, so a string that is not behind a key cannot be translated and
+leaks Korean into the English page. The build refuses to write that page when it happens.
+
+### 6. `en/index.html` is generated — never edit it
+
+Two URLs, one per language:
+
+| URL | File | Language |
+|:---|:---|:---|
+| `/` | `index.html` | Korean, hand-written |
+| `/en/` | `en/index.html` | English, **generated** |
+
+Each declares its language on `<html lang>`, and `i18n.js` reads that rather than storage or
+`navigator` — the URL is what decides, which is what makes the `hreflang` pair honest and
+lets both languages be indexed. Switching language navigates between the two (relative hops,
+`en/` and `../`, so it still works opened straight off disk).
+
+After changing anything in `index.html` or the translation table:
+
+```powershell
+node tools/build-en.js
+```
+
+and commit the result. CI runs `node tools/build-en.js --check`, which fails if the English
+page is stale. It verifies, never writes — nothing commits on your behalf.
+
+The generator refuses to produce a page with Korean left in it. When it fails on a string you
+meant to keep Korean — a name, an endonym — add it to `ALLOWED_HANGUL` in the script with a
+reason, rather than loosening the check.
+
+### 7. Print output is a feature
 
 `@media print` hides the sidebar, header, tab strip, toasts and buttons, and forces black
 on white. New cards need `break-inside: avoid; page-break-inside: avoid;` so formulas and
