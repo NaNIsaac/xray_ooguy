@@ -87,6 +87,13 @@ Phase one, all of it inside the existing single page:
   seven-crystal-system d-spacing, no DATA suite, no XRR stitching. Korean search terms added
   alongside the English ones.
 - **An honest sitemap.** Still one URL, with a comment saying why.
+- **The default language now follows the browser.** `ko` was hardcoded, so a crawler — which
+  arrives with empty storage every time — always rendered Korean while the `<title>` and
+  description were English. Now a Korean browser opens in Korean and everything else opens in
+  English, and an explicit choice still wins. This is a **trade, not a free win**: the rendered
+  body a crawler indexes is now English, so the Korean body text stops being indexed. It is
+  worth it on volume — English tool-intent queries dwarf 브래그 각도 계산기 — but it is a
+  choice, not an improvement in both directions.
 
 ### Deliberately not done
 
@@ -98,6 +105,21 @@ Phase one, all of it inside the existing single page:
 - **No hidden keyword text.** One `sr-only` heading naming the page is fair; twenty hidden
   English tool names on cards is cloaking, and it is the kind of thing that gets a small site
   penalised rather than ranked.
+
+### Having both languages indexed
+
+Browser-language detection picks one language per visitor, and a crawler is one visitor, so
+only one language is ever indexed. Getting both means what Google documents: **one URL per
+language**, `/` and `/en/`, cross-linked with `hreflang` and each carrying its own canonical.
+
+The obstacle is not SEO, it is duplication. The interface is a single 2,000-line
+`index.html` whose Korean text is inline and whose English text comes from `i18n.js` at
+runtime. A second URL means a second copy of that markup, and with no build step to generate
+it the two copies drift the moment anyone edits a card — the exact failure the stale docs and
+stale metadata already demonstrated twice.
+
+Worth reopening only if the English side actually earns traffic. Until then one indexed
+language is the honest trade.
 
 ### The open decision — static landing pages
 

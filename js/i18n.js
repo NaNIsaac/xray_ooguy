@@ -844,8 +844,21 @@
   var I18n = {
     lang: "ko",
 
+    // A visitor who has chosen a language keeps it. Everyone else gets the one
+    // their browser asks for: a Korean browser opens in Korean, everything else
+    // opens in English.
+    //
+    // This also decides what a search engine sees. A crawler arrives with empty
+    // storage every time, so a hardcoded "ko" default meant the rendered page
+    // was always Korean — while the <title> and description were English. The
+    // English phrasing the tools are searched by never appeared in the body it
+    // was supposed to describe.
     init: function () {
-      var saved = localStorage.getItem("bl_toolkit_lang") || "ko";
+      var saved = localStorage.getItem("bl_toolkit_lang");
+      if (!saved) {
+        var pref = navigator.language || navigator.userLanguage || "";
+        saved = String(pref).toLowerCase().indexOf("ko") === 0 ? "ko" : "en";
+      }
       this.setLang(saved);
     },
 
