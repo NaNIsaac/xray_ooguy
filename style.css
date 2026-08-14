@@ -3480,3 +3480,49 @@ html[data-theme="console"] .result-value.primary {
   .dv-axis { stroke: #000000 !important; }
   .dv-tick, .dv-axis-label { fill: #000000 !important; }
 }
+
+/* ==========================================================================
+   Language toggle in the masthead
+   ==========================================================================
+   Two languages, so this is a switch rather than a menu, and it names where it
+   goes rather than where you are. The globe is drawn here instead of set as an
+   emoji: this design system has no emoji, and an emoji globe picks a different
+   continent on every operating system. */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 12px;
+  padding: 2px 7px 2px 5px;
+  border: var(--rule-main);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.lang-toggle:hover,
+.lang-toggle:focus {
+  background-color: var(--ink-primary);
+  color: var(--bg-paper);
+  text-decoration: none;
+}
+
+/* currentColor carries the hover inversion into the drawing for free. */
+.lang-globe {
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+}
+
+.lang-code {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+@media print {
+  .lang-toggle { display: none !important; }
+}

@@ -32,7 +32,7 @@ node .\tools\check.js
 ```
 
 It parses every script, greps `js/` for syntax the target browsers cannot parse, and confirms
-the generated English page is current. `node --check` alone would not catch the second one:
+the generated Korean page is current. `node --check` alone would not catch the second one:
 node parses `let` and arrow functions happily, and Firefox 60 does not.
 
 Also avoid the modern builtins the tripwire cannot see — `String.prototype.padStart`,
@@ -74,36 +74,40 @@ to Korean, then render the raw key — both look like bugs.
 Strings built in JS (result text, status labels) must go through `I18n.t(key)`, because
 `setLang` re-runs the calculators to re-render them.
 
-This is now load-bearing beyond the interface: `en/index.html` is **generated** from the
-markup and the English table, so a string that is not behind a key cannot be translated and
-leaks Korean into the English page. The build refuses to write that page when it happens.
+This is now load-bearing beyond the interface: `ko/index.html` is **generated** from the
+markup and the Korean table, so a string that is not behind a key cannot be translated and
+stays English on the Korean page. The build fails on a key with no entry.
 
-### 6. `en/index.html` is generated — never edit it
+### 6. `ko/index.html` is generated — never edit it
 
 Two URLs, one per language:
 
 | URL | File | Language |
 |:---|:---|:---|
-| `/` | `index.html` | Korean, hand-written |
-| `/en/` | `en/index.html` | English, **generated** |
+| `/` | `index.html` | English, hand-written |
+| `/ko/` | `ko/index.html` | Korean, **generated** |
 
-Each declares its language on `<html lang>`, and `i18n.js` reads that rather than storage or
-`navigator` — the URL is what decides, which is what makes the `hreflang` pair honest and
-lets both languages be indexed. Switching language navigates between the two (relative hops,
-`en/` and `../`, so it still works opened straight off disk).
+English is the default because it is the site root. Each page declares its language on
+`<html lang>`, and `i18n.js` reads that rather than storage or `navigator` — the URL is what
+decides, which is what makes the `hreflang` pair honest and lets both languages be indexed.
+
+The header globe switches between them. It is a real `<a href>`, so it works without
+JavaScript; the hops are relative (`ko/` and `../`) so they also work opened straight off
+disk. `tools/build-i18n.js` rewrites that one link explicitly — it is the only link that must
+not be rebased with the rest, since `ko/` carried into `/ko/` would point at itself.
 
 After changing anything in `index.html` or the translation table:
 
 ```powershell
-node tools/build-en.js
+node tools/build-i18n.js
 ```
 
-and commit the result. CI runs `node tools/build-en.js --check`, which fails if the English
+and commit the result. CI runs `node tools/build-i18n.js --check`, which fails if the Korean
 page is stale. It verifies, never writes — nothing commits on your behalf.
 
-The generator refuses to produce a page with Korean left in it. When it fails on a string you
-meant to keep Korean — a name, an endonym — add it to `ALLOWED_HANGUL` in the script with a
-reason, rather than loosening the check.
+Inline text in `index.html` is only a pre-JavaScript fallback; `i18n.js` overwrites it on
+load and the generator ignores it. Keep it English and roughly accurate, but the `en` entry
+in `js/i18n.js` is the real string.
 
 ### 7. Print output is a feature
 

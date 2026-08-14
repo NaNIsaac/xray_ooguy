@@ -94,6 +94,10 @@
       btn_lang_ko: "한국어",
       btn_lang_en: "English",
       lang_current: "현재 언어: 한국어",
+      lang_switch_title: "English로 보기",
+      lang_switch_code: "EN",
+      noscript_note: "자바스크립트를 활성화하면 위 계산기를 사용할 수 있습니다. 모든 계산은 브라우저 안에서만 수행됩니다.",
+      page_h1: "X선 빔라인 툴킷 — 브래그 각도, 격자면 간격, 상호공간 Q, 빔 풋프린트, BCDI 오버샘플링, XRR 세그먼트 이어붙이기 계산기",
       theme_current_initial: "현재 테마: 학술 논문",
       set_card_theme_title: "§ 2. 화면 테마 설정",
       set_card_shortcuts_title: "§ 3. 키보드 단축키 안내",
@@ -720,6 +724,10 @@
       btn_lang_ko: "한국어",
       btn_lang_en: "English",
       lang_current: "Current language: English",
+      lang_switch_title: "한국어로 보기",
+      lang_switch_code: "KO",
+      noscript_note: "Enable JavaScript to use these calculators. Everything is computed inside your browser; nothing is uploaded.",
+      page_h1: "X-Ray Beamline Toolkit — synchrotron X-ray calculators for Bragg angle, lattice d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching",
       theme_current_initial: "Current theme: Academic Paper",
       set_card_theme_title: "§ 2. Display Theme Configuration",
       set_card_shortcuts_title: "§ 3. Keyboard Shortcuts",
@@ -1011,19 +1019,33 @@
   // root when the page is opened straight off disk, which is how this site is
   // developed and how it is used on a control-room machine with no server.
   // The section being read is carried across.
+  // English is the site root and Korean lives at /ko/, so the hop is "ko/" one
+  // way and "../" the other. Relative, because absolute paths resolve to the
+  // filesystem root when the page is opened straight off disk — which is how
+  // this site is developed and how it runs on a control-room machine with no
+  // server. The section being read is carried across.
   window.setLanguage = function (lang) {
-    var here = String(document.documentElement.getAttribute("lang") || "ko").toLowerCase();
-    var onEnglishPage = here.indexOf("en") === 0;
-    var wantEnglish = lang === "en";
+    var here = String(document.documentElement.getAttribute("lang") || "en").toLowerCase();
+    var onKoreanPage = here.indexOf("ko") === 0;
+    var wantKorean = lang === "ko";
 
-    if (wantEnglish === onEnglishPage) return;
+    if (wantKorean === onKoreanPage) return;
 
     try {
-      localStorage.setItem("bl_toolkit_lang", wantEnglish ? "en" : "ko");
+      localStorage.setItem("bl_toolkit_lang", wantKorean ? "ko" : "en");
     } catch (e) {
       // Private mode: the hop still works, it just is not remembered.
     }
 
-    window.location.href = (wantEnglish ? "en/" : "../") + (window.location.hash || "");
+    window.location.href = (wantKorean ? "ko/" : "../") + (window.location.hash || "");
+  };
+
+  // The header control is a plain link, so it still works with no JavaScript.
+  // Taking over the click only adds carrying the open section across.
+  window.switchLanguage = function (e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var here = String(document.documentElement.getAttribute("lang") || "en").toLowerCase();
+    window.setLanguage(here.indexOf("ko") === 0 ? "en" : "ko");
+    return false;
   };
 })(window);

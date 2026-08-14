@@ -92,11 +92,11 @@ scripts.filter(function (rel) { return rel.indexOf("js" + path.sep) === 0 || rel
 // 3. The generated English page
 // ---------------------------------------------------------------------------
 try {
-  cp.execFileSync(process.execPath, [path.join(ROOT, "tools", "build-en.js"), "--check"], { stdio: "pipe" });
+  cp.execFileSync(process.execPath, [path.join(ROOT, "tools", "build-i18n.js"), "--check"], { stdio: "pipe" });
 } catch (e) {
   var msg = String(e.stdout || "") + String(e.stderr || "");
-  failures.push("en/index.html is out of step:\n    " + msg.trim().split("\n").join("\n    ") +
-    "\n    fix: node tools/build-en.js");
+  failures.push("ko/index.html is out of step:\n    " + msg.trim().split("\n").join("\n    ") +
+    "\n    fix: node tools/build-i18n.js");
 }
 
 // ---------------------------------------------------------------------------
@@ -106,4 +106,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("check: " + scripts.length + " scripts parse, no modern syntax, en/index.html in step");
+console.log("check: " + scripts.length + " scripts parse, no modern syntax, ko/index.html in step");
