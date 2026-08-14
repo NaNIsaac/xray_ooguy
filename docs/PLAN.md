@@ -51,123 +51,85 @@ Adding a calculator is cheap; adding a data model is not.
 
 ---
 
-## Next version — discoverability
+## Discoverability
 
-> Make the existing tools findable through search engines without making the site feel
-> SEO-driven. It stays a beamline tool, not a marketing page.
+> Make the tools findable through search engines without making the site feel SEO-driven.
+> It stays a beamline tool, not a marketing page.
 
-The strategy is **tool intent, not topic**: someone searching "bcdi oversampling calculator"
-or "eulerian cradle correction" should land on the thing that does it. The homepage
-establishes the category; the individual tools carry the niche queries.
+### What the site actually is
 
-### Already true — do not redo
+One `index.html`. Twenty-one calculators behind `#hash` fragments. No build step, no server,
+no framework. The interface renders **Korean by default** — `i18n.js` swaps language on the
+client and Korean is what a crawler sees.
 
-- Navigation says INDEX, not CONTENTS, and the INDEX control has no dotted border
-  (`border: none !important` on `.tab-pill-index`).
-- `js/app.js` already carries `seoTitle` / `seoDesc` per route and rewrites the document
-  title and meta description on navigation.
-- `index.html` already has canonical, Open Graph, a `WebApplication` block with a
-  `featureList`, an English `<h1 class="sr-only">`, and an English `<noscript>` tool list.
-- `robots.txt` allows everything and points at the sitemap.
+That shape decides the whole strategy, and it splits into two very unequal halves.
 
-### The decision this rests on
+**Korean is the cheap half.** The rendered body is already Korean, the tool names are already
+the words a Korean researcher would type (브래그 각도, 격자면 간격, 산란 벡터, 빔 풋프린트),
+and almost nobody competes for them. This side needs no work beyond not breaking it.
 
-**English search intent currently has no rendered home.**
+**English is the expensive half.** Every English phrase worth ranking for lives in `<head>`,
+the `noscript` block and the `sr-only` heading — never in the rendered body. And a fragment
+cannot hold its own `<title>`, canonical or schema, so per-tool metadata has nowhere to
+attach. English intent is structurally handicapped here, and no amount of metadata polish
+changes that on its own.
 
-The page is served as `<html lang="ko">` with Korean body text, and `i18n.js` swaps language
-client-side with Korean as the default. A crawler that renders the page sees Korean. Every
-English phrase the plan targets exists only in `<head>`, the `noscript` block and the
-`sr-only` heading — never in the rendered body unless a visitor has chosen English.
+### Done
 
-Compounding it: hash routes are not URLs. `#goniometry/card-optics-bragg` cannot hold its own
-`<title>`, canonical or schema, so per-tool metadata has nothing to attach to.
+Phase one, all of it inside the existing single page:
 
-Two ways out:
+- **Per-tool structured data.** An `ItemList` of 21 `SoftwareApplication` entries in the
+  `@graph`, each with its English name, what it computes, and the fragment that opens it.
+  This is where each tool states its English identity — the Korean UI does not have to carry
+  English labels to be understood by a crawler.
+- **Metadata brought back in line with the site.** Description, keywords, Open Graph, the
+  `featureList`, the `noscript` inventory and the `sr-only` heading had all drifted: no
+  seven-crystal-system d-spacing, no DATA suite, no XRR stitching. Korean search terms added
+  alongside the English ones.
+- **An honest sitemap.** Still one URL, with a comment saying why.
 
-**A. Hash-only.** Keep one page; strengthen metadata, anchor text, internal links and the
-INDEX. Cheapest, nothing new to maintain. Ceiling: one URL competes for every query, and the
-per-tool titles the plan asks for cannot exist.
+### Deliberately not done
 
-**B. Thin static landing pages — recommended.** One small hand-written English page per Tier 1
-and Tier 2 tool at a descriptive path (`/goniometry/q-space`, `/cdi/bcdi-oversampling`, …),
-each with its own title, `h1`, description, canonical, `WebApplication` schema, the
-explanation block below, links to related tools, and a prominent link into the live card
-(`/#goniometry/card-optics-bragg`). Solves the language problem and the URL problem together,
-needs no build step, and leaves the SPA untouched.
+- **Fragments are not listed in `sitemap.xml`.** They are not URLs. Claiming them would be a
+  lie to the crawler with no upside.
+- **No English labels were added back to the Korean UI.** They were removed on purpose —
+  a Korean reader gained nothing from "전반사 임계각 (Total External Reflection)". English
+  belongs in the metadata layer, not in the interface. Do not undo that for SEO.
+- **No hidden keyword text.** One `sr-only` heading naming the page is fair; twenty hidden
+  English tool names on cards is cloaking, and it is the kind of thing that gets a small site
+  penalised rather than ranked.
 
-Cost of B is honest: ~15 files that can drift from the tools they describe. They are only
-worth building if each carries real explanation — a page that is a title and a link is a
-doorway page, and search engines treat it as one. Every page gets:
+### The open decision — static landing pages
 
-```text
-What this calculates
-Inputs
-Output
-Experimental use
-```
+The only remaining way to give English intent a real home is a page per tool:
+`/goniometry/q-space`, `/cdi/bcdi-oversampling`, and so on. Each would carry its own title,
+`h1`, description, canonical, schema, a short explanation, and a link into the live card.
 
-Existing URLs must not break either way.
-
-### Priority tiers
-
-**Tier 1** — strongest metadata, own page, internal links pointing in:
-X-ray Beamline Calculator · X-ray Goniometry Calculator · BCDI Oversampling Calculator ·
-X-ray Q-space Calculator · Eulerian Cradle / Chi–Phi Correction · X-Ray Beamline Toolkit
-
-Add to Tier 1: **XRR segment stitching / reflectivity data viewer**. The plan predates the
-DATA suite. It is distinctive, barely contested, and nothing else on the site is as unusual.
-
-**Tier 2** — optimise naturally: Bragg angle · d-spacing · energy–wavelength · beam footprint ·
-detector angular resolution · slit acceptance · photon flux · energy resolution.
-
-**Tier 3** — do not chase, do not stuff into the UI: "x-ray calculator", "diffraction
-calculator", "bragg law calculator", "wavelength calculator", "absorption calculator".
-
-### Naming
-
-Search-intent wording, not in-house shorthand: *X-ray Q-space Calculator* over *Reciprocal
-Space*; *BCDI Oversampling Calculator* over *Oversampling*; *Eulerian Cradle / Chi–Phi
-Correction* over *Cradle*. The visible UI can stay compact — this governs titles, headings,
-descriptions and anchor text.
-
-### INDEX as the tool directory
-
-Grouped by search intent and usefulness rather than by the suite a card happens to live in —
-INDEX is a directory, not a second copy of the navigation, so the grouping is allowed to cut
-across SPECTROSCOPY and GONIOMETRY:
+Worth doing for the handful of queries this site can actually win — the distinctive,
+uncontested ones:
 
 ```text
-X-RAY BASICS   Energy ↔ Wavelength · Bragg Angle · d-spacing / Miller Index ·
-               Critical Angle · Transmission / Absorption
-GONIOMETRY     Q-space · Energy Scaling · Beam Footprint · Detector Angular Resolution ·
-               Slit Acceptance · Chi–Phi / Eulerian Cradle
-CDI / BCDI     BCDI Oversampling
-BEAMLINE       Photon Flux · Energy Resolution · Thermal Drift
-DATA           XRR Segment Stitching · Scan File Viewer
-RECORD         Beamtime Header · In-Situ Event Snippets
+bcdi oversampling calculator
+xrr segment stitching / xrr data stitching
+eulerian cradle chi-phi correction
+x-ray beam footprint calculator
+x-ray q-space calculator
+d-spacing calculator triclinic / monoclinic
 ```
 
-Internal links should follow the order of a real calculation, so the graph a crawler reads is
-the workflow a user walks: Bragg → d-spacing → energy/wavelength → Q-space → footprint, and
-Bragg → Q-space → BCDI oversampling → detector angular resolution.
+Not worth doing for `bragg angle calculator`, `wavelength calculator`, `absorption
+calculator` — dozens of established pages own those, and a thin page competing for them is
+wasted maintenance.
 
-### Conflicts to settle first
+Cost, stated plainly: six or so hand-written files that can drift from the tools they
+describe, and each one has to carry real explanation — what it calculates, inputs, output,
+experimental use. A page that is a heading and a link is a doorway page and gets treated
+as one.
 
-- The source plan lists RECORD as six tools (Experiment Log, Beam Status, Sample / Alignment,
-  Calibration, Scan Record). RECORD has two cards. Either build them or leave them out —
-  listing tools that do not exist in INDEX and the sitemap is worse than a short list.
-- The source plan has no DATA section; it was written before that suite shipped.
-- "CDI / BCDI" as an INDEX group holds one item. Fine as a heading, not worth a page of its own
-  beyond the oversampling tool.
-
-### Order of work
-
-1. INDEX regrouping and ordering, tool naming, homepage title and description,
-   per-tool headings, internal links. *No architectural commitment — safe to do first.*
-2. Tier 1 entries: BCDI oversampling, Q-space, Chi–Phi, beam footprint, goniometry, XRR.
-3. `sitemap.xml` (currently one URL), canonical URLs, per-tool structured data.
-   **Depends on the A/B decision above.**
-4. Verify by query, not by deploy date. Crawling and indexing take weeks.
+**Do not start this on theory.** Verify the site is indexed and see which queries already
+surface it first. If Search Console shows impressions for the niche English phrases against
+the single URL, the landing pages have something to build on. If the site is not indexed at
+all, that is the problem to fix instead.
 
 ### Boundaries
 
@@ -177,7 +139,7 @@ stuffing, no marketing voice. Copy reads like a beamline scientist wrote it: "Ca
 angle from photon energy and lattice spacing", never "unlock the power of…".
 
 The engineering constraints in [`../CLAUDE.md`](../CLAUDE.md) hold throughout — static, no
-build step, no framework, no runtime network, ES5, offline. Landing pages are hand-written
+build step, no framework, no runtime network, ES5, offline. Any landing pages are hand-written
 HTML for the same reason everything else is.
 
 ---

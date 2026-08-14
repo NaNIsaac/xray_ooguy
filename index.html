@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>X-Ray Beamline Toolkit — Bragg Angle, d-spacing &amp; Synchrotron Calculators</title>
-  <meta name="description" content="Free offline calculators for synchrotron X-ray experiments: Bragg angle, energy-wavelength conversion, lattice d-spacing, scattering vector Q, beam footprint, detector geometry and transmittance.">
-  <meta name="keywords" content="Bragg angle calculator, d-spacing, synchrotron, X-ray diffraction, scattering vector, beam footprint, Eulerian cradle, transmittance, beamline, 방사광, 브래그 각도, 격자면 간격">
+  <meta name="description" content="Offline calculators for synchrotron X-ray experiments: Bragg angle, energy-wavelength conversion, lattice d-spacing for all seven crystal systems, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.">
+  <meta name="keywords" content="X-ray beamline calculator, Bragg angle calculator, d-spacing calculator, Q-space calculator, BCDI oversampling calculator, Eulerian cradle chi-phi correction, beam footprint calculator, XRR stitching, X-ray reflectivity, synchrotron, 방사광 빔라인 계산기, 브래그 각도 계산, 격자면 간격, 산란 벡터, XRR 이어붙이기, 결맞음 회절">
   <meta name="author" content="Isaac Yong">
   <link rel="canonical" href="https://xray.ooguy.com/">
 
@@ -14,38 +14,91 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="X-Ray Beamline Toolkit">
   <meta property="og:title" content="X-Ray Beamline Toolkit — Synchrotron X-ray Calculators">
-  <meta property="og:description" content="Bragg angle, d-spacing, scattering vector Q, beam footprint and transmittance calculators for synchrotron beamline work. Runs fully offline, no account required.">
+  <meta property="og:description" content="Bragg angle, d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching for synchrotron beamline work. Runs fully offline, no account required.">
   <meta property="og:url" content="https://xray.ooguy.com/">
   <meta name="twitter:card" content="summary">
 
   <!-- Structured data: tells a crawler this is a research tool, not an article.
-       Kept as literal markup so it is collected without running any script. -->
+       Kept as literal markup so it is collected without running any script.
+
+       The interface renders in Korean by default, so this block is also where
+       each calculator states its English identity. A crawler gets the tool
+       inventory — name, purpose, and the fragment that opens it — without the
+       Korean UI having to carry English labels it does not need. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "X-Ray Beamline Toolkit",
-    "url": "https://xray.ooguy.com/",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Any (browser-based, works offline)",
-    "browserRequirements": "Runs in Firefox 60 ESR, Chrome 60 and later",
-    "isAccessibleForFree": true,
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "license": "https://opensource.org/licenses/MIT",
-    "inLanguage": ["en", "ko"],
-    "author": { "@type": "Person", "name": "Isaac Yong" },
-    "description": "Synchrotron X-ray optics and beamline geometry calculators: Bragg angle, energy-wavelength conversion, lattice d-spacing from Miller indices, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance and X-ray transmittance.",
-    "featureList": [
-      "Bragg angle from energy and lattice plane spacing",
-      "Energy, wavelength and frequency conversion",
-      "Lattice d-spacing from lattice constants and Miller indices",
-      "Reciprocal-space scattering vector Q",
-      "Complex refractive index and X-ray transmittance",
-      "Total external reflection critical angle",
-      "Beam footprint and spillover on the sample",
-      "Detector angular resolution and slit acceptance",
-      "Coherent diffraction imaging oversampling",
-      "Experiment session logging and formatted logbook headers"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://xray.ooguy.com/#website",
+        "name": "X-Ray Beamline Toolkit",
+        "url": "https://xray.ooguy.com/",
+        "inLanguage": ["ko", "en"]
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://xray.ooguy.com/#app",
+        "name": "X-Ray Beamline Toolkit",
+        "alternateName": "X선 빔라인 툴킷",
+        "url": "https://xray.ooguy.com/",
+        "isPartOf": { "@id": "https://xray.ooguy.com/#website" },
+        "applicationCategory": "EducationalApplication",
+        "applicationSubCategory": "X-ray diffraction and synchrotron beamline calculators",
+        "operatingSystem": "Any (browser-based, works offline)",
+        "browserRequirements": "Runs in Firefox 60 ESR, Chrome 60 and later",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "license": "https://opensource.org/licenses/MIT",
+        "inLanguage": ["ko", "en"],
+        "author": { "@type": "Person", "name": "Isaac Yong" },
+        "description": "Synchrotron X-ray optics and beamline geometry calculators: Bragg angle, energy-wavelength conversion, lattice d-spacing from Miller indices for all seven crystal systems, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance, BCDI oversampling, X-ray transmittance, and an XRR scan viewer that stitches overlapping segments.",
+        "featureList": [
+          "Bragg angle from photon energy and lattice plane spacing",
+          "Energy, wavelength and frequency conversion",
+          "Lattice d-spacing from lattice constants and Miller indices, all seven crystal systems",
+          "Reciprocal-space scattering vector Q",
+          "Complex refractive index and X-ray transmittance",
+          "Total external reflection critical angle",
+          "Beam footprint and spillover on the sample",
+          "Detector angular resolution and slit acceptance",
+          "Eulerian cradle chi-phi tilt correction",
+          "BCDI coherent diffraction oversampling",
+          "Two-column scan file viewer with linear and log axes",
+          "XRR segment stitching from the overlap between scans",
+          "Formatted beamtime logbook headers and timestamped event snippets"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://xray.ooguy.com/#tools",
+        "name": "Calculators in the X-Ray Beamline Toolkit",
+        "itemListOrder": "https://schema.org/ItemListUnordered",
+        "numberOfItems": 21,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "X-ray Bragg Angle Calculator", "url": "https://xray.ooguy.com/#goniometry/card-optics-bragg", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Solves the Bragg condition three ways: diffraction angle from photon energy and plane spacing, plane spacing from angle and energy, or energy from angle and spacing, and lists the reflections a cell gives at that energy." } },
+          { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "X-ray Q-space Calculator", "url": "https://xray.ooguy.com/#goniometry/card-optics-qspace", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Converts scattering angle and photon energy into the reciprocal-space momentum transfer Q, and back." } },
+          { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "BCDI Oversampling Calculator", "url": "https://xray.ooguy.com/#goniometry/card-beamline-cdi", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Checks the Nyquist oversampling ratio for Bragg coherent diffraction imaging from detector pixel size, sample size and distance, and reports whether the geometry samples the fringes finely enough to invert." } },
+          { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Eulerian Cradle Chi-Phi Correction", "url": "https://xray.ooguy.com/#goniometry/card-optics-euler", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Corrects the phi rotation needed to hold a reflection when the chi cradle of a four-circle goniometer is tilted." } },
+          { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "X-ray Beam Footprint Calculator", "url": "https://xray.ooguy.com/#goniometry/card-beamline-footprint", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Length of the illuminated strip on the sample at grazing incidence, and whether the beam spills off the edge." } },
+          { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "X-ray Detector Angular Resolution Calculator", "url": "https://xray.ooguy.com/#goniometry/card-beamline-detector", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Angle subtended by one detector pixel at a given sample-to-detector distance, in mrad, degrees and arcsec." } },
+          { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "X-ray Slit Acceptance Calculator", "url": "https://xray.ooguy.com/#goniometry/card-beamline-slit", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Slit opening for a Gaussian beam: size at the slit from source size, divergence and distance, with 3-sigma and 4-sigma acceptance." } },
+          { "@type": "ListItem", "position": 8, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy Scaling and Angle Calculator", "url": "https://xray.ooguy.com/#goniometry/card-optics-scaling", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Where a reflection moves when the photon energy changes, holding the same lattice plane." } },
+          { "@type": "ListItem", "position": 9, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy to Wavelength Converter", "url": "https://xray.ooguy.com/#spectroscopy/card-optics-energy", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Photon energy, wavelength and frequency conversion using hc = 12398.41984 eV angstrom." } },
+          { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "Lattice d-spacing Calculator from Miller Indices", "url": "https://xray.ooguy.com/#spectroscopy/card-lattice-dspacing", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plane spacing from the lattice constants and Miller indices through the reciprocal metric tensor, covering all seven crystal systems including triclinic and monoclinic." } },
+          { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "X-ray Transmission and Refractive Index Calculator", "url": "https://xray.ooguy.com/#spectroscopy/card-optics-refraction", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Complex refractive index n = 1 - delta + i beta, attenuation length and Beer-Lambert transmittance through a material." } },
+          { "@type": "ListItem", "position": 12, "item": { "@type": "SoftwareApplication", "name": "X-ray Critical Angle Calculator", "url": "https://xray.ooguy.com/#spectroscopy/card-optics-reflection", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Critical angle for total external reflection from the refractive index decrement." } },
+          { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "X-ray Diffraction Grating Calculator", "url": "https://xray.ooguy.com/#spectroscopy/card-optics-grating", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Grating equation and angular dispersion for soft X-ray and VUV monochromator gratings." } },
+          { "@type": "ListItem", "position": 14, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy Resolution Calculator", "url": "https://xray.ooguy.com/#spectroscopy/card-beamline-resolution", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Monochromator energy resolution dE/E from the intrinsic Darwin width and the beam divergence." } },
+          { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Synchrotron Photon Flux Calculator", "url": "https://xray.ooguy.com/#spectroscopy/card-beamline-flux", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Photons per second delivered to the sample from ring current and the transmission of the optics." } },
+          { "@type": "ListItem", "position": 16, "item": { "@type": "SoftwareApplication", "name": "Crystal Thermal Drift Calculator", "url": "https://xray.ooguy.com/#spectroscopy/card-beamline-drift", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Bragg angle and effective energy shift caused by thermal expansion of a monochromator crystal." } },
+          { "@type": "ListItem", "position": 17, "item": { "@type": "SoftwareApplication", "name": "XRR Segment Stitching Tool", "url": "https://xray.ooguy.com/#data/card-data-stitch", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Joins X-ray reflectivity scans measured through different absorbers into one curve, taking each segment's scale from the median ratio across the angular overlap, with manual override." } },
+          { "@type": "ListItem", "position": 18, "item": { "@type": "SoftwareApplication", "name": "Scan File XY Plotter", "url": "https://xray.ooguy.com/#data/card-data-plot", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plots two-column scan data on a linear or logarithmic axis with normalisation and range cropping, entirely in the browser." } },
+          { "@type": "ListItem", "position": 19, "item": { "@type": "SoftwareApplication", "name": "Scan File Reader", "url": "https://xray.ooguy.com/#data/card-data-load", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Reads two-column txt, csv and dat scan files, detecting the delimiter and header and skipping instrument preambles such as Bruker RAW4 exports. Nothing is uploaded." } },
+          { "@type": "ListItem", "position": 20, "item": { "@type": "SoftwareApplication", "name": "Beamtime Logbook Header Generator", "url": "https://xray.ooguy.com/#record/card-record-headers", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plain-text beamtime logbook headers to paste into an existing lab notebook." } },
+          { "@type": "ListItem", "position": 21, "item": { "@type": "SoftwareApplication", "name": "Beamtime Event Snippets", "url": "https://xray.ooguy.com/#record/card-record-snippets", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "One-click timestamped entries for beam dump, sample mount, alignment and scan start." } }
+        ]
+      }
     ]
   }
   </script>
@@ -66,15 +119,20 @@
         <li><strong>Complex refractive index and transmittance</strong> (n = 1 &minus; &delta; + i&beta;)</li>
         <li><strong>Total external reflection critical angle</strong> (&theta;c = &radic;2&delta;)</li>
         <li><strong>Beam footprint</strong> and spillover on the sample, <strong>detector angular resolution</strong>, <strong>slit acceptance</strong></li>
-        <li><strong>Eulerian cradle</strong> chi-phi correction and <strong>CDI / BCDI oversampling</strong></li>
+        <li><strong>Eulerian cradle</strong> chi-phi correction and <strong>BCDI oversampling</strong> for coherent diffraction imaging</li>
+        <li><strong>Photon flux</strong>, <strong>energy resolution</strong> and monochromator <strong>thermal drift</strong></li>
+        <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>
       </ul>
       [안내] 자바스크립트를 활성화하면 위 계산기를 사용할 수 있습니다. 모든 계산은 브라우저 안에서만 수행됩니다.
     </div>
   </noscript>
 
+  <!-- The visible interface is Korean, and the headings inside it are Korean.
+       This states in English what the page is, once, for readers and crawlers
+       that arrive without it. -->
   <h1 class="sr-only">
-    X-Ray Beamline Toolkit — synchrotron X-ray diffraction calculators for Bragg angle,
-    lattice d-spacing, scattering vector Q, beam footprint and transmittance
+    X-Ray Beamline Toolkit — synchrotron X-ray calculators for Bragg angle, lattice
+    d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching
   </h1>
 
   <div id="app-layout">

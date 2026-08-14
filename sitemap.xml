@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+  One URL, deliberately. The tools live at #hash fragments of this page, and a
+  fragment is not a separate URL — listing them here would claim pages that do
+  not exist. The per-tool inventory is published as ItemList structured data in
+  index.html instead. If tools ever get their own static pages, they get entries
+  here at the same time.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://xray.ooguy.com/</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 </urlset>
