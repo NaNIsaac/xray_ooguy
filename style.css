@@ -3526,3 +3526,29 @@ html[data-theme="console"] .result-value.primary {
 @media print {
   .lang-toggle { display: none !important; }
 }
+
+/* Oversampling threshold bands and the reflection sticks.
+   The bands say pass / caution without a legend: the eye reads "am I in the
+   shaded part", which is the whole question the card answers. */
+.miniplot-band-ok {
+  fill: var(--accent-ink);
+  opacity: 0.07;
+}
+
+.miniplot-band-warn {
+  fill: var(--ink-muted);
+  opacity: 0.09;
+}
+
+.miniplot-threshold {
+  stroke: var(--accent-ink);
+  stroke-width: 0.9;
+  stroke-dasharray: 4 2.5;
+  fill: none;
+}
+
+.miniplot-stick {
+  stroke: var(--accent-ink);
+  stroke-width: 1.4;
+  fill: none;
+}

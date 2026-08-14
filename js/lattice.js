@@ -303,6 +303,11 @@
         ? t("lat_refl_note").replace("{shown}", shown).replace("{extinct}", list.extinct)
         : "";
     }
+
+    // The table answers "where is each reflection"; the stick plot answers
+    // "where are they all", which is the question you actually have when
+    // deciding a scan range. Drawing lives in miniplot.js, the rows live here.
+    if (window.renderReflectionPlot) window.renderReflectionPlot(list.rows);
   }
 
   function setText(id, value) {

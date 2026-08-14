@@ -287,45 +287,138 @@
   }
 
   // ------------------------------------------------------------------
-  // Slit: beam FWHM growth with distance from the source
+  // CDI / BCDI: where the oversampling condition starts being met
   // ------------------------------------------------------------------
-  function plotSlit() {
-    var source_um = val("slit-source");
-    var dist_m = val("slit-dist");
-    var div_urad = val("slit-div");
-    if (isNaN(source_um) || isNaN(div_urad)) return draw("card-beamline-slit", "mp_slit", "");
+  // sigma = lambda D / (S p) is linear in the detector distance, so the line
+  // itself says little. The useful part is where it crosses 2: that reads off
+  // as "move the detector to at least this far", which is the decision being
+  // made at the instrument. The pass and caution bands are drawn behind it and
+  // the required distance is stated outright.
+  function plotCDI() {
+    var energy = val("cdi-energy");        // keV
+    var dist = val("cdi-dist");            // m
+    var pixel = val("cdi-pixel");          // um
+    var sample = val("cdi-sample-size");   // nm
 
-    var maxDist = isNaN(dist_m) || dist_m <= 0 ? 40 : dist_m * 2;
+    if (isNaN(energy) || energy <= 0 || isNaN(pixel) || pixel <= 0 || isNaN(sample) || sample <= 0) {
+      return draw("card-beamline-cdi", "mp_cdi", "");
+    }
+
+    var lambda_nm = CONSTANTS.hc_keV_nm / energy;
+
+    // sigma at a detector distance in metres.
+    function sigmaAt(D_m) {
+      var speckle_um = ((lambda_nm * (D_m * 1e9)) / sample) / 1000;
+      return speckle_um / pixel;
+    }
+
+    var needed = sigmaAt(1) > 0 ? 2 / sigmaAt(1) : NaN;   // metres for sigma = 2
+    if (!isFinite(needed) || needed <= 0) return draw("card-beamline-cdi", "mp_cdi", "");
+
+    // Show the crossing whether or not the current distance reaches it.
+    var hi = Math.max(needed * 1.8, isNaN(dist) ? 0 : dist * 1.4);
     var pts = [];
-    var steps = 100;
-    for (var i = 0; i <= steps; i++) {
-      var L = maxDist * i / steps;
-      var expansion_mm = (L * 1000) * (div_urad * 1e-6);
-      var fwhm = Math.sqrt(Math.pow(source_um / 1000, 2) + Math.pow(expansion_mm, 2));
-      pts.push([L, fwhm]);
+    for (var i = 0; i <= 100; i++) {
+      var D = hi * i / 100;
+      pts.push([D, sigmaAt(D)]);
     }
 
     var marker = null, callout = "";
-    if (!isNaN(dist_m) && dist_m > 0) {
-      var ex = (dist_m * 1000) * (div_urad * 1e-6);
-      var f = Math.sqrt(Math.pow(source_um / 1000, 2) + Math.pow(ex, 2));
-      marker = [dist_m, f];
-      callout = f.toFixed(2) + " mm";
+    if (!isNaN(dist) && dist > 0) {
+      marker = [dist, sigmaAt(dist)];
+      callout = "σ " + sigmaAt(dist).toFixed(2);
     }
 
-    draw("card-beamline-slit", "mp_slit", svgLine(pts, marker, {
-      xlabel: t("mp_x_distance"),
-      ylabel: t("mp_y_fwhm"),
+    var html = svgLine(pts, marker, {
+      xlabel: t("mp_x_det_distance"),
+      ylabel: t("mp_y_sigma"),
       callout: callout,
       yZero: true
-    }));
+    });
+
+    if (html) {
+      var yMax = sigmaAt(hi) * 1.08;
+      var top = PAD_T, bottom = H - PAD_B;
+      function py(v) { return bottom - (v / yMax) * (bottom - top); }
+      function px(D) { return PAD_L + (D / hi) * (W - PAD_L - PAD_R); }
+
+      var bands =
+        '<rect class="miniplot-band-ok" x="' + PAD_L + '" y="' + py(yMax).toFixed(1) +
+          '" width="' + (W - PAD_L - PAD_R) + '" height="' + (py(2) - py(yMax)).toFixed(1) + '"/>' +
+        '<rect class="miniplot-band-warn" x="' + PAD_L + '" y="' + py(2).toFixed(1) +
+          '" width="' + (W - PAD_L - PAD_R) + '" height="' + (py(1.5) - py(2)).toFixed(1) + '"/>' +
+        '<path class="miniplot-threshold" d="M' + PAD_L + ',' + py(2).toFixed(1) +
+          ' L' + (W - PAD_R) + ',' + py(2).toFixed(1) + '"/>' +
+        '<text class="miniplot-label" x="' + (PAD_L + 3) + '" y="' + (py(2) - 3).toFixed(1) + '">σ = 2</text>';
+
+      // Bands go behind the curve.
+      html = html.replace('<path class="miniplot-curve"', bands + '<path class="miniplot-curve"');
+
+      html = html.replace("</svg>",
+        '<text class="miniplot-callout" x="' + (W - PAD_R) + '" y="' + (H - PAD_B - 6) +
+        '" text-anchor="end">' + esc(t("mp_cdi_needs") + " " + needed.toFixed(2) + " m") + "</text></svg>");
+    }
+
+    draw("card-beamline-cdi", "mp_cdi", html);
   }
+
+  // ------------------------------------------------------------------
+  // Lattice: where this cell puts its reflections
+  // ------------------------------------------------------------------
+  // Not a curve — a stick at every accessible reflection, which is what the
+  // detector will actually see. Called by lattice.js, which owns the rows.
+  function plotReflections(rows) {
+    if (!rows || !rows.length) return draw("card-lattice-dspacing", "mp_refl", "");
+
+    var sticks = [];
+    for (var i = 0; i < rows.length; i++) {
+      if (isFinite(rows[i].twoTheta)) sticks.push(rows[i]);
+    }
+    if (sticks.length < 2) return draw("card-lattice-dspacing", "mp_refl", "");
+
+    var maxTT = sticks[0].twoTheta;
+    for (i = 0; i < sticks.length; i++) maxTT = Math.max(maxTT, sticks[i].twoTheta);
+    var hi = Math.min(180, Math.ceil(maxTT / 10) * 10 + 10);
+
+    function px(tt) { return PAD_L + (tt / hi) * (W - PAD_L - PAD_R); }
+
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet" role="img">';
+    svg += '<path class="miniplot-axis" d="M' + PAD_L + ',' + (H - PAD_B) +
+           ' L' + (W - PAD_R) + ',' + (H - PAD_B) + '"/>';
+
+    // Low-angle reflections are the strong ones in practice, so height carries
+    // d-spacing rank rather than a structure factor this page does not compute.
+    for (i = 0; i < sticks.length; i++) {
+      var frac = 1 - (i / sticks.length) * 0.55;
+      var x = px(sticks[i].twoTheta).toFixed(1);
+      var top = (H - PAD_B) - frac * (H - PAD_B - PAD_T - 12);
+      svg += '<path class="miniplot-stick" d="M' + x + ',' + (H - PAD_B) + ' L' + x + ',' + top.toFixed(1) + '"/>';
+      if (i < 4) {
+        svg += '<text class="miniplot-label" x="' + x + '" y="' + (top - 3).toFixed(1) +
+               '" text-anchor="middle">' +
+               esc(sticks[i].h + "" + sticks[i].k + "" + sticks[i].l) + "</text>";
+      }
+    }
+
+    for (var tick = 0; tick <= hi; tick += (hi > 120 ? 30 : 20)) {
+      svg += '<text class="miniplot-label" x="' + px(tick).toFixed(1) + '" y="' + (H - PAD_B + 12) +
+             '" text-anchor="middle">' + tick + "</text>";
+    }
+
+    svg += '<text class="miniplot-label" x="' + ((PAD_L + W - PAD_R) / 2) + '" y="' + (H - 2) +
+           '" text-anchor="middle">' + esc(t("mp_x_twotheta")) + "</text>";
+    svg += "</svg>";
+
+    draw("card-lattice-dspacing", "mp_refl", svg);
+  }
+
+  window.renderReflectionPlot = plotReflections;
 
   var PLOTS = [
     { fn: plotFootprint, watch: ["fp-beam-v", "fp-inc-angle", "fp-sample-len"] },
     { fn: plotTransmittance, watch: ["refract-thick", "refract-energy", "refract-mat"] },
     { fn: plotBragg, watch: ["bragg-r3-d", "bragg-r3-e"] },
-    { fn: plotSlit, watch: ["slit-source", "slit-dist", "slit-div"] }
+    { fn: plotCDI, watch: ["cdi-energy", "cdi-dist", "cdi-pixel", "cdi-sample-size"] }
   ];
 
   function renderMiniPlots() {
