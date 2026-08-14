@@ -91,7 +91,7 @@
       // at runtime, so Korean users were seeing the raw key names)
       set_card_lang_title: "§ 1. 언어 선택",
       lang_desc: "모든 계산기와 기록 화면의 인터페이스 언어를 즉시 전환합니다.",
-      btn_lang_ko: "한국어 (Korean)",
+      btn_lang_ko: "한국어",
       btn_lang_en: "English",
       set_card_theme_title: "§ 2. 화면 테마 설정",
       set_card_shortcuts_title: "§ 3. 키보드 단축키 안내",
@@ -715,7 +715,7 @@
       // Settings Tab
       set_card_lang_title: "§ 1. Language Selection",
       lang_desc: "Instantaneously switch between Korean and English interface across all tools and calculations.",
-      btn_lang_ko: "한국어 (Korean)",
+      btn_lang_ko: "한국어",
       btn_lang_en: "English",
       set_card_theme_title: "§ 2. Display Theme Configuration",
       set_card_shortcuts_title: "§ 3. Keyboard Shortcuts",
