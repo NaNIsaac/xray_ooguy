@@ -1242,7 +1242,11 @@
           <!-- Academic Table of Contents Frontmatter Masthead -->
           <div class="toc-masthead">
             <div class="toc-pretitle" data-i18n="toc_pretitle">SYNCHROTRON X-RAY OPTICS &amp; BEAMLINE MONOGRAPH</div>
-            <h1 class="toc-maintitle" data-i18n="toc_maintitle">INDEX</h1>
+            <!-- h2, not h1: the page already has one h1 (the sr-only page_h1
+                 above), and a document with two competing h1s hands a crawler
+                 "INDEX" as the title of the site. Styling is on the class, so
+                 the level is free to be the honest one. -->
+            <h2 class="toc-maintitle" data-i18n="toc_maintitle">INDEX</h2>
             <p class="toc-subtitle" data-i18n="toc_subtitle">Comprehensive Index of Synchrotron Optics, Beamline Physics &amp; Experimental Suites</p>
             <div class="toc-meta-bar">
               <span class="toc-meta-item"><strong>DOC NO:</strong> BL-TK-2026</span>
