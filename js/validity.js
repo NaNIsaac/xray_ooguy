@@ -37,6 +37,26 @@
     return isNaN(n) ? "-" : n.toFixed(digits === undefined ? 2 : digits);
   }
 
+  // The energy the tabulated delta and beta are measured at. Everything the
+  // transmittance card reports is a power-law extrapolation away from here, so
+  // it is also the far end of the interval an absorption edge can fall inside.
+  var SCALING_ANCHOR_KEV = 10.0;
+
+  // How close to an edge counts as too close, as a fraction of the edge energy.
+  // 8% of 11.9 keV is about a keV — roughly the width over which the near-edge
+  // structure makes a smooth power law meaningless.
+  var EDGE_NEAR_FRACTION = 0.08;
+
+  // The material the transmittance card is set to. Its <select> carries indices
+  // into MATERIALS_DB rather than names.
+  function selectedMaterial() {
+    var el = document.getElementById("refract-mat");
+    if (!el || typeof MATERIALS_DB === "undefined") return null;
+    var idx = parseInt(el.value, 10);
+    if (isNaN(idx)) return null;
+    return MATERIALS_DB[idx] || null;
+  }
+
   // ------------------------------------------------------------------
   // Per-calculator model declarations
   // ------------------------------------------------------------------
@@ -126,14 +146,56 @@
     },
     {
       card: "card-optics-refraction",
-      watch: ["refract-energy", "refract-thick"],
+      watch: ["refract-energy", "refract-thick", "refract-mat"],
       model: ["vm_refract_scaling", "vm_refract_noedge", "vm_refract_beer"],
       check: function () {
         var out = [];
         var e = val("refract-energy");
-        // delta and beta are scaled from tabulated 10 keV values as E^-2 and
-        // E^-3.5; that power law only holds well away from absorption edges.
-        if (!isNaN(e) && e > 0 && (e < 5 || e > 30)) {
+        if (isNaN(e) || e <= 0) return out;
+
+        // The old check only asked whether the energy was inside 5–30 keV. That
+        // is the wrong question: what breaks the E^-2 / E^-3.5 scaling is not
+        // distance from 10 keV, it is an absorption edge in between, and the
+        // edges of these very materials sit inside that band. Gold at 12 keV
+        // was the worst case — one step above the L3 edge at 11.919 keV, beta
+        // several times larger than the power law says, and no warning at all
+        // because 12 is comfortably inside 5–30.
+        var mat = selectedMaterial();
+        var edges = (mat && mat.edges) ? mat.edges : [];
+
+        var lo = Math.min(SCALING_ANCHOR_KEV, e);
+        var hi = Math.max(SCALING_ANCHOR_KEV, e);
+        var crossed = [];
+        var near = null;
+
+        for (var i = 0; i < edges.length; i++) {
+          var edge = edges[i];
+          if (edge.keV > lo && edge.keV < hi) crossed.push(edge);
+
+          // Close to an edge the smooth model is wrong even on the correct
+          // side of it: this is where the fine structure lives.
+          var gap = Math.abs(e - edge.keV) / edge.keV;
+          if (gap <= EDGE_NEAR_FRACTION && (!near || gap < near.gap)) {
+            near = { edge: edge, gap: gap };
+          }
+        }
+
+        if (crossed.length) {
+          var names = [];
+          for (var c = 0; c < crossed.length; c++) {
+            names.push(crossed[c].n + " " + fmt(crossed[c].keV, 3) + " keV");
+          }
+          out.push({ key: "vw_refract_edge_crossed", text: names.join(", ") });
+        } else if (near) {
+          out.push({
+            key: "vw_refract_edge_near",
+            text: near.edge.n + " " + fmt(near.edge.keV, 3) + " keV"
+          });
+        }
+
+        // Still worth saying when the extrapolation is stretched a long way,
+        // edges or no edges.
+        if (e < 1 || e > 60) {
           out.push({ key: "vw_refract_range", text: fmt(e, 2) + " keV" });
         }
         return out;
