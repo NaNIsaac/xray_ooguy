@@ -47,6 +47,19 @@ var CRYSTAL_D_SPACINGS = [
 
 // Common Material Properties for Attenuation & Critical Angles
 //
+// beta and mu_rho describe the same absorption twice, and they used to
+// disagree — by a factor of 1.85 for gold, platinum, nickel and water, 1.55 for
+// copper, 1.24 the other way for germanium. mu_rho is the column that matches
+// the published tables, so beta is derived from it:
+//
+//     beta = mu * lambda / (4 pi),   mu = (mu/rho) * rho,   lambda at 10 keV
+//
+// which puts the attenuation lengths back on the accepted values — Si 135 um,
+// Au 2.4 um, Cu 5.1 um, Al 141 um, water 1.88 mm. The transmittance card reads
+// beta, so before this it reported gold as roughly twice as transparent as it
+// is. Recompute beta whenever mu_rho changes; nothing should ever edit it by
+// hand into disagreement again.
+//
 // delta and beta are tabulated at 10 keV and the transmittance card
 // extrapolates them as E^-2 and E^-3.5. That power law describes a smooth
 // curve, and an absorption edge is not smooth: beta steps by a large factor
@@ -62,35 +75,35 @@ var CRYSTAL_D_SPACINGS = [
 // working energies. Every one of them is inside the 5–30 keV band the old
 // range check called validated.
 var MATERIALS_DB = [
-  { name: "Silicon (Si)", symbol: "Si", Z: 14, A: 28.0855, density_g_cm3: 2.329, delta_10keV: 4.85e-6, beta_10keV: 7.23e-8, mu_rho_10keV: 31.84,
+  { name: "Silicon (Si)", symbol: "Si", Z: 14, A: 28.0855, density_g_cm3: 2.329, delta_10keV: 4.85e-6, beta_10keV: 7.32e-8, mu_rho_10keV: 31.84,
     edges: [{ n: "K", keV: 1.839 }] },
-  { name: "Germanium (Ge)", symbol: "Ge", Z: 32, A: 72.63, density_g_cm3: 5.323, delta_10keV: 1.05e-5, beta_10keV: 8.82e-7, mu_rho_10keV: 140.2,
+  { name: "Germanium (Ge)", symbol: "Ge", Z: 32, A: 72.63, density_g_cm3: 5.323, delta_10keV: 1.05e-5, beta_10keV: 7.36e-7, mu_rho_10keV: 140.2,
     edges: [{ n: "L3", keV: 1.217 }, { n: "L2", keV: 1.248 }, { n: "L1", keV: 1.414 }, { n: "K", keV: 11.103 }] },
-  { name: "Gold (Au)", symbol: "Au", Z: 79, A: 196.966, density_g_cm3: 19.32, delta_10keV: 3.01e-5, beta_10keV: 2.21e-6, mu_rho_10keV: 213.5,
+  { name: "Gold (Au)", symbol: "Au", Z: 79, A: 196.966, density_g_cm3: 19.32, delta_10keV: 3.01e-5, beta_10keV: 4.07e-6, mu_rho_10keV: 213.5,
     edges: [{ n: "L3", keV: 11.919 }, { n: "L2", keV: 13.734 }, { n: "L1", keV: 14.353 }, { n: "K", keV: 80.725 }] },
-  { name: "Platinum (Pt)", symbol: "Pt", Z: 78, A: 195.084, density_g_cm3: 21.45, delta_10keV: 3.25e-5, beta_10keV: 2.38e-6, mu_rho_10keV: 209.1,
+  { name: "Platinum (Pt)", symbol: "Pt", Z: 78, A: 195.084, density_g_cm3: 21.45, delta_10keV: 3.25e-5, beta_10keV: 4.43e-6, mu_rho_10keV: 209.1,
     edges: [{ n: "L3", keV: 11.564 }, { n: "L2", keV: 13.273 }, { n: "L1", keV: 13.880 }, { n: "K", keV: 78.395 }] },
-  { name: "Rhodium (Rh)", symbol: "Rh", Z: 45, A: 102.905, density_g_cm3: 12.41, delta_10keV: 2.28e-5, beta_10keV: 8.24e-7, mu_rho_10keV: 124.7,
+  { name: "Rhodium (Rh)", symbol: "Rh", Z: 45, A: 102.905, density_g_cm3: 12.41, delta_10keV: 2.28e-5, beta_10keV: 1.53e-6, mu_rho_10keV: 124.7,
     edges: [{ n: "L3", keV: 3.004 }, { n: "L2", keV: 3.146 }, { n: "L1", keV: 3.412 }, { n: "K", keV: 23.220 }] },
-  { name: "Nickel (Ni)", symbol: "Ni", Z: 28, A: 58.693, density_g_cm3: 8.908, delta_10keV: 1.83e-5, beta_10keV: 1.01e-6, mu_rho_10keV: 214.2,
+  { name: "Nickel (Ni)", symbol: "Ni", Z: 28, A: 58.693, density_g_cm3: 8.908, delta_10keV: 1.83e-5, beta_10keV: 1.88e-6, mu_rho_10keV: 214.2,
     edges: [{ n: "L3", keV: 0.855 }, { n: "L2", keV: 0.872 }, { n: "L1", keV: 1.008 }, { n: "K", keV: 8.333 }] },
-  { name: "Copper (Cu)", symbol: "Cu", Z: 29, A: 63.546, density_g_cm3: 8.96, delta_10keV: 1.79e-5, beta_10keV: 1.25e-6, mu_rho_10keV: 218.4,
+  { name: "Copper (Cu)", symbol: "Cu", Z: 29, A: 63.546, density_g_cm3: 8.96, delta_10keV: 1.79e-5, beta_10keV: 1.93e-6, mu_rho_10keV: 218.4,
     edges: [{ n: "L3", keV: 0.931 }, { n: "L2", keV: 0.951 }, { n: "L1", keV: 1.096 }, { n: "K", keV: 8.979 }] },
-  { name: "Aluminum (Al)", symbol: "Al", Z: 13, A: 26.9815, density_g_cm3: 2.6989, delta_10keV: 5.43e-6, beta_10keV: 5.63e-8, mu_rho_10keV: 26.24,
+  { name: "Aluminum (Al)", symbol: "Al", Z: 13, A: 26.9815, density_g_cm3: 2.6989, delta_10keV: 5.43e-6, beta_10keV: 6.99e-8, mu_rho_10keV: 26.24,
     edges: [{ n: "K", keV: 1.560 }] },
-  { name: "Beryllium (Be)", symbol: "Be", Z: 4, A: 9.0121, density_g_cm3: 1.848, delta_10keV: 4.01e-6, beta_10keV: 1.72e-9, mu_rho_10keV: 1.17,
+  { name: "Beryllium (Be)", symbol: "Be", Z: 4, A: 9.0121, density_g_cm3: 1.848, delta_10keV: 4.01e-6, beta_10keV: 2.13e-9, mu_rho_10keV: 1.17,
     edges: [{ n: "K", keV: 0.111 }] },
-  { name: "Diamond (C)", symbol: "C", Z: 6, A: 12.011, density_g_cm3: 3.515, delta_10keV: 7.21e-6, beta_10keV: 9.35e-9, mu_rho_10keV: 4.52,
+  { name: "Diamond (C)", symbol: "C", Z: 6, A: 12.011, density_g_cm3: 3.515, delta_10keV: 7.21e-6, beta_10keV: 1.57e-8, mu_rho_10keV: 4.52,
     edges: [{ n: "C K", keV: 0.284 }] },
-  { name: "Kapton (Polyimide)", symbol: "C22H10N2O5", Z: 7, A: 382.32, density_g_cm3: 1.42, delta_10keV: 2.94e-6, beta_10keV: 5.34e-9, mu_rho_10keV: 4.70,
+  { name: "Kapton (Polyimide)", symbol: "C22H10N2O5", Z: 7, A: 382.32, density_g_cm3: 1.42, delta_10keV: 2.94e-6, beta_10keV: 6.58e-9, mu_rho_10keV: 4.70,
     edges: [{ n: "C K", keV: 0.284 }, { n: "N K", keV: 0.410 }, { n: "O K", keV: 0.532 }] },
-  { name: "Mylar (PET)", symbol: "C10H8O4", Z: 6.4, A: 192.17, density_g_cm3: 1.39, delta_10keV: 2.88e-6, beta_10keV: 5.12e-9, mu_rho_10keV: 4.61,
+  { name: "Mylar (PET)", symbol: "C10H8O4", Z: 6.4, A: 192.17, density_g_cm3: 1.39, delta_10keV: 2.88e-6, beta_10keV: 6.32e-9, mu_rho_10keV: 4.61,
     edges: [{ n: "C K", keV: 0.284 }, { n: "O K", keV: 0.532 }] },
-  { name: "Silicon Dioxide (SiO2)", symbol: "SiO2", Z: 10, A: 60.084, density_g_cm3: 2.20, delta_10keV: 4.55e-6, beta_10keV: 4.21e-8, mu_rho_10keV: 24.1,
+  { name: "Silicon Dioxide (SiO2)", symbol: "SiO2", Z: 10, A: 60.084, density_g_cm3: 2.20, delta_10keV: 4.55e-6, beta_10keV: 5.23e-8, mu_rho_10keV: 24.1,
     edges: [{ n: "O K", keV: 0.532 }, { n: "Si K", keV: 1.839 }] },
-  { name: "Air (NTP, 20°C, 1atm)", symbol: "Air", Z: 7.2, A: 28.97, density_g_cm3: 0.001205, delta_10keV: 2.45e-9, beta_10keV: 3.65e-12, mu_rho_10keV: 5.15,
+  { name: "Air (NTP, 20°C, 1atm)", symbol: "Air", Z: 7.2, A: 28.97, density_g_cm3: 0.001205, delta_10keV: 2.45e-9, beta_10keV: 6.12e-12, mu_rho_10keV: 5.15,
     edges: [{ n: "N K", keV: 0.410 }, { n: "O K", keV: 0.532 }, { n: "Ar K", keV: 3.206 }] },
-  { name: "Water (H2O)", symbol: "H2O", Z: 3.3, A: 18.015, density_g_cm3: 1.00, delta_10keV: 2.11e-6, beta_10keV: 2.85e-9, mu_rho_10keV: 5.33,
+  { name: "Water (H2O)", symbol: "H2O", Z: 3.3, A: 18.015, density_g_cm3: 1.00, delta_10keV: 2.11e-6, beta_10keV: 5.26e-9, mu_rho_10keV: 5.33,
     edges: [{ n: "O K", keV: 0.532 }] }
 ];
 
