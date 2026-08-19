@@ -59,7 +59,7 @@ Adding a calculator is cheap; adding a data model is not.
 ### What the site actually is
 
 One `index.html`. Twenty-one calculators behind `#hash` fragments. No build step, no server,
-no framework. The interface renders **Korean by default** — `i18n.js` swaps language on the
+no framework. English is the site root and Korean lives at `/ko/` — `i18n.js` swaps language on the
 client and Korean is what a crawler sees.
 
 That shape decides the whole strategy, and it splits into two very unequal halves.

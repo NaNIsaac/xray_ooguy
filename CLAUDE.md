@@ -147,10 +147,23 @@ inside the header once, and narrow viewports clipped it away entirely under
 contents markup** — the section list is not duplicated in JS. A new calculator added to the
 contents block appears in the sidebar automatically.
 
-Routes: `spectroscopy`, `goniometry`, `record`, `data`, `settings`, `about`, `dashboard`
-(`Alt`+`1`–`7`). One route per view section, no aliases. Adding a route means touching
-four places: `routes` and the `Alt` keymap in `app.js`, the sidebar item and tab pill in
-`index.html`, the roman numerals on every later suite, and the shortcut table in Settings.
+Routes, in the order a beamtime runs: `radiometry`, `optics`, `geometry`, `coherence`,
+`data`, `record`, then `settings`, `about`, `dashboard` (`Alt`+`1`–`9`). One route per
+view section, no aliases. Adding a route means touching four places: `routes` and the
+`Alt` keymap in `app.js`, the sidebar item and tab pill in `index.html`, the roman
+numerals on every later suite, and the shortcut table in Settings.
+
+Retiring or renaming a route means adding it to `LEGACY_ROUTES` in `app.js`, mapping each
+card to the suite it moved to. A `#route/card` fragment is the only address a card has
+ever had, so a rename without that entry breaks every saved and published link.
+`handleHashChange` rewrites the address bar on arrival.
+
+**Nothing positional in a key or a label.** Section numbers come from the card's position
+in its view (`renumberCards` in `app.js`, drawn by `.card-title[data-num]::before`);
+contents and shortcut keys are named after their route and destination, not their
+position; the breadcrumb reads `nav_<route>`. This is not tidiness — the previous scheme
+had four hand-kept copies of the § number and twelve of the thirteen calculation-history
+labels had drifted out of step with the interface.
 
 ## Physics
 
@@ -170,9 +183,19 @@ four places: `routes` and the `Alt` keymap in `app.js`, the sidebar item and tab
 
 ## Adding a calculator
 
-1. Markup in the relevant `<section id="view-...">` of `index.html`, with a `§ N.` card title.
-2. Add the entry to that suite's table of contents block (sidebar + search come free).
-3. Compute in `js/optics.js` or `js/beamline.js` — engines are keyed off DOM ids.
+1. Markup in the relevant `<section id="view-...">` of `index.html`. **Do not write a
+   `§ N.` into the title** — the number is derived from the card's position in the view.
+2. Add the entry to that suite's table of contents block, in the same order as the cards
+   (sidebar + search come free). The literal `§ N.` there is a pre-JavaScript fallback and
+   is overwritten on load; contents order and card order disagreeing is a visible bug.
+3. Compute in `js/optics.js` or `js/beamline.js` — engines are keyed off DOM ids. Expose
+   the function on `window` and call it from `initOpticsView` / `initBeamlineView`.
 4. `ko` + `en` keys in `js/i18n.js` for every string.
-5. Validity entry in `js/validity.js`.
-6. Check: both languages, several themes, print preview, narrow viewport, `node --check`.
+5. Validity entry in `js/validity.js`. Attenuation goes through `muOf` in `beamline.js`,
+   so a new card cannot disagree with the transmittance card about how much a material
+   absorbs.
+6. Pass the card id to `recordCalculation`, never a printed label — the history resolves
+   the number and the wording at render time.
+7. Publish it: a `ListItem` in the `ItemList` structured data, and keep `numberOfItems`,
+   the `MODULES:` value in the masthead and the actual card count agreeing.
+8. Check: both languages, several themes, print preview, narrow viewport, `node tools/check.js`.
