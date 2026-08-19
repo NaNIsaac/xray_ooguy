@@ -226,6 +226,59 @@
       check: function () { return []; }
     },
     {
+      card: "card-rad-scantime",
+      watch: ["rad-scan-n1", "rad-scan-n2", "rad-scan-dwell", "rad-scan-overhead", "rad-scan-repeats"],
+      model: ["vm_scan_stepping", "vm_scan_overhead"],
+      check: function () {
+        var out = [];
+        var dwell = val("rad-scan-dwell"), over = val("rad-scan-overhead");
+        // Worth saying out loud: at this point the scan is a motor exercise and
+        // buying statistics by raising the dwell is nearly free.
+        if (!isNaN(dwell) && !isNaN(over) && dwell > 0 && over > dwell) {
+          out.push({
+            key: "vw_scan_overhead_dominant",
+            text: fmt(100 * over / (over + dwell), 0) + "%"
+          });
+        }
+        return out;
+      }
+    },
+    {
+      card: "card-rad-dose",
+      watch: ["rad-dose-energy", "rad-dose-thick", "rad-dose-mat", "rad-dose-flux"],
+      model: ["vm_dose_local", "vm_dose_beer", "vm_dose_scaling"],
+      check: function () {
+        var out = [];
+        var t_um = val("rad-dose-thick");
+        var e = val("rad-dose-energy");
+        // A crude stand-in for the photoelectron range, which grows roughly as
+        // E^1.7 and is of order a micron at 10 keV in a solid. Below that the
+        // "all energy stays put" assumption starts giving the sample credit for
+        // absorbing what actually left it.
+        if (!isNaN(t_um) && !isNaN(e) && e > 0) {
+          var range_um = 1.0 * Math.pow(e / 10, 1.7);
+          if (t_um < range_um) out.push({ key: "vw_dose_thin", text: "~" + fmt(range_um, 2) + " μm" });
+        }
+        return out;
+      }
+    },
+    {
+      card: "card-rad-absorber",
+      watch: ["rad-abs-energy", "rad-abs-d-1", "rad-abs-d-2", "rad-abs-d-3", "rad-abs-d-4",
+              "rad-abs-mat-1", "rad-abs-mat-2", "rad-abs-mat-3", "rad-abs-mat-4"],
+      model: ["vm_abs_beer", "vm_abs_noharm", "vm_refract_scaling"],
+      check: function () {
+        var out = [];
+        var el = document.getElementById("rad-abs-res-factor");
+        var txt = el ? (el.textContent || "") : "";
+        var factor = parseFloat(txt);
+        if (!isNaN(factor) && factor > 1e4) {
+          out.push({ key: "vw_abs_hard", text: factor.toExponential(1) + " ×" });
+        }
+        return out;
+      }
+    },
+    {
       card: "card-beamline-drift",
       watch: ["therm-temp", "therm-energy"],
       model: ["vm_drift_linear"],

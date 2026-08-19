@@ -446,8 +446,247 @@
   window.calcCDIOversampling = calcCDIOversampling;
   window.calcSlitAcceptance = calcSlitAcceptance;
   window.calcThermalShift = calcThermalShift;
+  window.calcScanTime = calcScanTime;
+  window.calcDose = calcDose;
+  window.calcAbsorberStack = calcAbsorberStack;
+
+  // ==================================================================
+  // Shared: linear attenuation coefficient
+  // ==================================================================
+  // Same power-law extrapolation from the tabulated 10 keV beta that the
+  // transmittance card uses, so the dose and absorber cards cannot disagree
+  // with it. The absorption-edge caveat is the same one too, and each card
+  // states it through its own validity entry.
+  //
+  // Returns mu in cm^-1.
+  function muOf(mat, energy_keV) {
+    if (!mat || !(energy_keV > 0)) return NaN;
+    var beta = mat.beta_10keV * Math.pow(10.0 / energy_keV, 3.5);
+    var lambda_cm = (CONSTANTS.hc_keV_nm * 10 / energy_keV) * 1e-8;
+    return (4 * Math.PI * beta) / lambda_cm;
+  }
+
+  function materialAt(selectId) {
+    var el = document.getElementById(selectId);
+    if (!el) return null;
+    var idx = parseInt(el.value, 10);
+    if (isNaN(idx)) return null;
+    return MATERIALS_DB[idx] || null;
+  }
+
+  // Fills a <select> with the material list once.
+  function fillMaterialSelect(id, defaultIndex) {
+    var sel = document.getElementById(id);
+    if (!sel || sel.options.length) return;
+    for (var i = 0; i < MATERIALS_DB.length; i++) {
+      var opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = MATERIALS_DB[i].name;
+      sel.appendChild(opt);
+    }
+    if (defaultIndex !== undefined && MATERIALS_DB[defaultIndex]) sel.value = String(defaultIndex);
+  }
+
+  // Seconds as something a person reads off a clock. Beamtime is counted in
+  // hours and shifts, and 27143 s is not a number anyone can act on.
+  function duration(seconds) {
+    if (!isFinite(seconds) || seconds < 0) return "-";
+    if (seconds < 60) return fmt(seconds, 2) + " s";
+
+    var s = Math.round(seconds);
+    var h = Math.floor(s / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var sec = s % 60;
+
+    if (h >= 24) {
+      var d = Math.floor(h / 24);
+      return d + " d " + (h % 24) + " h " + m + " min";
+    }
+    if (h > 0) return h + " h " + m + " min " + sec + " s";
+    return m + " min " + sec + " s";
+  }
+
+  // ==================================================================
+  // Scan time & shift budget
+  // ==================================================================
+  // Points times dwell plus per-point overhead. The overhead is the term people
+  // leave out and then wonder where the shift went: a motor that settles for
+  // 0.3 s costs two extra minutes on a 401-point scan, and forty on a map.
+  function calcScanTime() {
+    var n1 = readField("rad-scan-n1");
+    var n2 = readField("rad-scan-n2");
+    var dwell = readField("rad-scan-dwell");
+    var overhead = readField("rad-scan-overhead");
+    var repeats = readField("rad-scan-repeats");
+    var shift_h = readField("rad-scan-shift");
+
+    if (isNaN(n1) || isNaN(n2) || isNaN(dwell) || isNaN(overhead) || isNaN(repeats)) return;
+    if (n1 < 1 || n2 < 1 || repeats < 1 || dwell <= 0 || overhead < 0) return;
+
+    var points = Math.round(n1) * Math.round(n2);
+    var each = points * (dwell + overhead);
+    var total = each * Math.round(repeats);
+
+    var totalEl = document.getElementById("rad-scan-res-total");
+    if (!totalEl) return;
+
+    totalEl.innerHTML = duration(total);
+    document.getElementById("rad-scan-res-each").innerHTML = duration(each);
+    document.getElementById("rad-scan-res-points").innerHTML = points.toLocaleString
+      ? points.toLocaleString("en-US")
+      : String(points);
+
+    // Turn the question round: given the beamtime left, how long can each point
+    // count for? Negative overhead-only cases fall out as a non-answer.
+    var budget_s = (isNaN(shift_h) ? NaN : shift_h * 3600);
+    var maxDwell = NaN;
+    if (!isNaN(budget_s) && points > 0 && repeats > 0) {
+      maxDwell = budget_s / (points * Math.round(repeats)) - overhead;
+    }
+    document.getElementById("rad-scan-res-maxdwell").innerHTML =
+      (isNaN(maxDwell) || maxDwell <= 0) ? "-" : fmt(maxDwell, 3) + " s";
+
+    var verdict = document.getElementById("rad-scan-res-verdict");
+    if (verdict) {
+      if (isNaN(budget_s) || budget_s <= 0) {
+        verdict.innerHTML = "-";
+      } else if (total <= budget_s) {
+        verdict.innerHTML = TXT("res_scan_fits") + " (" + duration(budget_s - total) + " " + TXT("res_scan_spare") + ")";
+      } else {
+        verdict.innerHTML = TXT("res_scan_over") + " (" + duration(total - budget_s) + ")";
+      }
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-rad-scantime",
+        points + " pts × " + dwell + " s + " + overhead + " s × " + Math.round(repeats),
+        duration(total));
+    }
+  }
+
+  // ==================================================================
+  // Absorbed dose & exposure limit
+  // ==================================================================
+  // D = F t E (1 - T) / (rho A d). The numerator is the energy stopped in the
+  // illuminated volume, the denominator its mass.
+  //
+  // Note what happens as the sample gets thin: (1 - e^-mu d)/d tends to mu, so
+  // the dose rate stops depending on thickness. That is the right behaviour —
+  // a thinner sample absorbs less energy into proportionally less material.
+  function calcDose() {
+    var energy_keV = readField("rad-dose-energy");
+    var flux = readField("rad-dose-flux");
+    var bh_um = readField("rad-dose-bh");
+    var bv_um = readField("rad-dose-bv");
+    var thick_um = readField("rad-dose-thick");
+    var time_s = readField("rad-dose-time");
+    var limit_Gy = readField("rad-dose-limit");
+    var mat = materialAt("rad-dose-mat");
+
+    if (!mat) return;
+    if (isNaN(energy_keV) || energy_keV <= 0 || isNaN(flux) || flux <= 0) return;
+    if (isNaN(bh_um) || bh_um <= 0 || isNaN(bv_um) || bv_um <= 0) return;
+    if (isNaN(thick_um) || thick_um <= 0 || isNaN(time_s) || time_s <= 0) return;
+
+    var mu_cm = muOf(mat, energy_keV);
+    if (!isFinite(mu_cm) || mu_cm <= 0) return;
+
+    var d_cm = thick_um * 1e-4;
+    var absorbedFrac = 1 - Math.exp(-mu_cm * d_cm);
+
+    var area_cm2 = (bh_um * 1e-4) * (bv_um * 1e-4);
+    var mass_g = mat.density_g_cm3 * area_cm2 * d_cm;
+    var mass_kg = mass_g * 1e-3;
+
+    // keV to joules.
+    var E_J = energy_keV * 1000 * CONSTANTS.e;
+
+    var doseRate = (flux * E_J * absorbedFrac) / mass_kg;   // Gy/s
+    var doseTotal = doseRate * time_s;
+
+    var rateEl = document.getElementById("rad-dose-res-rate");
+    if (!rateEl) return;
+
+    rateEl.innerHTML = doseRate.toExponential(3) + " Gy·s<sup>-1</sup>";
+    document.getElementById("rad-dose-res-total").innerHTML = doseTotal.toExponential(3) + " Gy";
+    document.getElementById("rad-dose-res-abs").innerHTML = (absorbedFrac * 100).toFixed(3) + "%";
+
+    var ttl = (!isNaN(limit_Gy) && limit_Gy > 0 && doseRate > 0) ? (limit_Gy / doseRate) : NaN;
+    document.getElementById("rad-dose-res-ttl").innerHTML = isNaN(ttl) ? "-" : duration(ttl);
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-rad-dose",
+        mat.name + ", " + thick_um + " μm @ " + energy_keV + " keV, " + flux.toExponential(1) + " ph/s",
+        doseRate.toExponential(2) + " Gy/s, " + doseTotal.toExponential(2) + " Gy in " + time_s + " s");
+    }
+  }
+
+  // ==================================================================
+  // Absorber stack
+  // ==================================================================
+  // Four foils in series, and the inverse: the thickness of the first material
+  // that would reach the attenuation asked for. A foil left at zero thickness
+  // contributes a transmission of 1 and is simply not in the stack.
+  var ABSORBER_ROWS = 4;
+
+  function calcAbsorberStack() {
+    var energy_keV = readField("rad-abs-energy");
+    if (isNaN(energy_keV) || energy_keV <= 0) return;
+
+    var totalEl = document.getElementById("rad-abs-res-total");
+    if (!totalEl) return;
+
+    var stackT = 1;
+    var firstMat = null;
+
+    for (var i = 1; i <= ABSORBER_ROWS; i++) {
+      var mat = materialAt("rad-abs-mat-" + i);
+      var d_um = readField("rad-abs-d-" + i);
+      var cell = document.getElementById("rad-abs-t-" + i);
+      if (i === 1) firstMat = mat;
+
+      if (!mat || isNaN(d_um) || d_um <= 0) {
+        if (cell) cell.innerHTML = "—";
+        continue;
+      }
+
+      var mu = muOf(mat, energy_keV);
+      var T = Math.exp(-mu * d_um * 1e-4);
+      stackT *= T;
+      if (cell) cell.innerHTML = (T * 100).toFixed(3) + "%";
+    }
+
+    totalEl.innerHTML = (stackT * 100).toExponential(3) + "%";
+    document.getElementById("rad-abs-res-factor").innerHTML =
+      stackT > 0 ? (1 / stackT).toExponential(3) + " ×" : "-";
+
+    // Inverse: d = ln(factor) / mu, in the first foil's material.
+    var target = readField("rad-abs-target");
+    var needEl = document.getElementById("rad-abs-res-need");
+    if (needEl) {
+      var muFirst = muOf(firstMat, energy_keV);
+      if (firstMat && !isNaN(target) && target > 1 && isFinite(muFirst) && muFirst > 0) {
+        var d_needed_um = (Math.log(target) / muFirst) * 1e4;
+        needEl.innerHTML = firstMat.name + " " + fmt(d_needed_um, 1) + " μm";
+      } else {
+        needEl.innerHTML = "-";
+      }
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-rad-absorber",
+        "stack @ " + energy_keV + " keV",
+        "T = " + (stackT * 100).toExponential(2) + "%, " + (stackT > 0 ? (1 / stackT).toExponential(2) : "-") + " ×");
+    }
+  }
 
   function initBeamlineView() {
+    fillMaterialSelect("rad-dose-mat", 0);
+    fillMaterialSelect("rad-abs-mat-1", 7);   // Aluminium: the drawer's default
+    fillMaterialSelect("rad-abs-mat-2", 7);
+    fillMaterialSelect("rad-abs-mat-3", 6);   // Copper
+    fillMaterialSelect("rad-abs-mat-4", 0);   // Silicon
+
     calcFootprint();
     calcBeamFlux();
     calcEnergyResolution();
@@ -455,6 +694,9 @@
     calcCDIOversampling();
     calcSlitAcceptance();
     calcThermalShift();
+    calcScanTime();
+    calcDose();
+    calcAbsorberStack();
   }
 
   window.initBeamlineView = initBeamlineView;

@@ -273,6 +273,241 @@
 
           <div class="flex-row">
 
+            <!-- Scan time. The arithmetic every shift does in its head, and the
+                 one that decides whether a map is attempted at all. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-rad-scantime">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="rad_scan_title">Scan Time &amp; Shift Budget</span>
+                  <span class="card-tag"><i class="formula">T = N<sub>1</sub>N<sub>2</sub>(t<sub>d</sub> + t<sub>o</sub>)</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_scan_pts1">Points, axis 1</span></label>
+                        <input type="number" id="rad-scan-n1" class="form-control mono" value="401" oninput="calcScanTime()" min="1" max="1000000" step="1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_scan_pts2">Points, axis 2</span></label>
+                        <input type="number" id="rad-scan-n2" class="form-control mono" value="1" oninput="calcScanTime()" min="1" max="1000000" step="1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_scan_dwell">Dwell per point</span> <span class="unit">(s)</span></label>
+                        <input type="number" id="rad-scan-dwell" class="form-control mono" value="1.0" oninput="calcScanTime()" min="0.000001" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_scan_overhead">Overhead per point</span> <span class="unit">(s)</span></label>
+                        <input type="number" id="rad-scan-overhead" class="form-control mono" value="0.3" oninput="calcScanTime()" min="0" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_scan_repeats">Repeats</span></label>
+                        <input type="number" id="rad-scan-repeats" class="form-control mono" value="1" oninput="calcScanTime()" min="1" max="100000" step="1">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_scan_shift">Beamtime left</span> <span class="unit">(h)</span></label>
+                        <input type="number" id="rad-scan-shift" class="form-control mono" value="8" oninput="calcScanTime()" min="0" max="10000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_scan_total">Total time</div>
+                        <div id="rad-scan-res-total" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_scan_each">Per repeat</div>
+                        <div id="rad-scan-res-each" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_scan_points">Points</div>
+                        <div id="rad-scan-res-points" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_scan_maxdwell">Dwell that just fits</div>
+                        <div id="rad-scan-res-maxdwell" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_scan_fit_lbl">Against the beamtime left:</span> <span id="rad-scan-res-verdict" class="badge badge-subtle">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dose. Flux answers how bright; this answers how long before the
+                 sample stops being the sample. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-rad-dose">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="rad_dose_title">Absorbed Dose &amp; Exposure Limit</span>
+                  <span class="card-tag"><i class="formula">D = FtE(1 &minus; T) / &rho;Ad</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="rad-dose-energy" class="form-control mono" value="10" oninput="calcDose()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_dose_flux">Flux on sample</span> <span class="unit">(ph/s)</span></label>
+                        <input type="number" id="rad-dose-flux" class="form-control mono" value="1e11" oninput="calcDose()" min="1" max="1e22" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_dose_bh">Beam H</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="rad-dose-bh" class="form-control mono" value="20" oninput="calcDose()" min="0.001" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_dose_bv">Beam V</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="rad-dose-bv" class="form-control mono" value="20" oninput="calcDose()" min="0.001" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_select_mat">Select Material (Materials DB)</span></label>
+                        <select id="rad-dose-mat" class="form-control mono" onchange="calcDose()"></select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_dose_thick">Sample thickness</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="rad-dose-thick" class="form-control mono" value="1" oninput="calcDose()" min="0.001" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_dose_exposure">Exposure</span> <span class="unit">(s)</span></label>
+                        <input type="number" id="rad-dose-time" class="form-control mono" value="1" oninput="calcDose()" min="0.000001" max="1000000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_dose_limit">Damage limit</span> <span class="unit">(Gy)</span></label>
+                        <input type="number" id="rad-dose-limit" class="form-control mono" value="1e8" oninput="calcDose()" min="1" max="1e20" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_dose_rate">Dose rate</div>
+                        <div id="rad-dose-res-rate" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_dose_total">Dose this exposure</div>
+                        <div id="rad-dose-res-total" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_dose_ttl">Time to the limit</div>
+                        <div id="rad-dose-res-ttl" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_dose_absorbed">Absorbed fraction</div>
+                        <div id="rad-dose-res-abs" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Absorber stack. The transmittance card answers one foil; the
+                 question on shift is always which combination of the foils in
+                 the drawer gets the detector out of saturation. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-rad-absorber">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="rad_abs_title">Absorber Stack</span>
+                  <span class="card-tag"><i class="formula">T = &Pi; e<sup>&minus;&mu;<sub>i</sub>d<sub>i</sub></sup></i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="rad-abs-energy" class="form-control mono" value="10" oninput="calcAbsorberStack()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_abs_target">Attenuation wanted</span> <span class="unit">(×)</span></label>
+                        <input type="number" id="rad-abs-target" class="form-control mono" value="20" oninput="calcAbsorberStack()" min="1" max="1e12" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <table class="lab-table rad-abs-table">
+                    <thead>
+                      <tr>
+                        <th data-i18n="th_abs_material">Foil</th>
+                        <th data-i18n="th_abs_thick">Thickness (μm)</th>
+                        <th data-i18n="th_abs_trans">Transmission</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><select id="rad-abs-mat-1" class="form-control form-control-sm mono" onchange="calcAbsorberStack()"></select></td>
+                        <td><input type="number" id="rad-abs-d-1" class="form-control form-control-sm mono" value="100" oninput="calcAbsorberStack()" min="0" max="100000" step="any"></td>
+                        <td id="rad-abs-t-1" class="mono">-</td>
+                      </tr>
+                      <tr>
+                        <td><select id="rad-abs-mat-2" class="form-control form-control-sm mono" onchange="calcAbsorberStack()"></select></td>
+                        <td><input type="number" id="rad-abs-d-2" class="form-control form-control-sm mono" value="0" oninput="calcAbsorberStack()" min="0" max="100000" step="any"></td>
+                        <td id="rad-abs-t-2" class="mono">-</td>
+                      </tr>
+                      <tr>
+                        <td><select id="rad-abs-mat-3" class="form-control form-control-sm mono" onchange="calcAbsorberStack()"></select></td>
+                        <td><input type="number" id="rad-abs-d-3" class="form-control form-control-sm mono" value="0" oninput="calcAbsorberStack()" min="0" max="100000" step="any"></td>
+                        <td id="rad-abs-t-3" class="mono">-</td>
+                      </tr>
+                      <tr>
+                        <td><select id="rad-abs-mat-4" class="form-control form-control-sm mono" onchange="calcAbsorberStack()"></select></td>
+                        <td><input type="number" id="rad-abs-d-4" class="form-control form-control-sm mono" value="0" oninput="calcAbsorberStack()" min="0" max="100000" step="any"></td>
+                        <td id="rad-abs-t-4" class="mono">-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_abs_total">Stack transmission</div>
+                        <div id="rad-abs-res-total" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_abs_factor">Attenuation factor</div>
+                        <div id="rad-abs-res-factor" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_abs_need_lbl">For the attenuation wanted, in the first foil:</span> <span id="rad-abs-res-need" class="mono">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-flux">
                 <div class="card-header">
@@ -1320,15 +1555,36 @@
                 </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec_radiometry_desc">Photon flux and slit acceptance, absorber stacks, dose and the exposure-time budget</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" href="#radiometry/card-beamline-flux">
+                  <a class="toc-item-link" href="#radiometry/card-rad-scantime">
                     <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_rad_scan">Scan Time &amp; Shift Budget</span>
+                      <span class="toc-item-formula">T = N<sub>1</sub>N<sub>2</sub>(t<sub>d</sub> + t<sub>o</sub>)</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#radiometry/card-rad-dose">
+                    <span class="toc-item-num">§ 2.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_rad_dose">Absorbed Dose &amp; Exposure Limit</span>
+                      <span class="toc-item-formula">D = FtE(1 &minus; T) / &rho;Ad</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#radiometry/card-rad-absorber">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_rad_abs">Absorber Stack &amp; Inverse</span>
+                      <span class="toc-item-formula">T = &Pi; e<sup>&minus;&mu;<sub>i</sub>d<sub>i</sub></sup></span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#radiometry/card-beamline-flux">
+                    <span class="toc-item-num">§ 4.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_2">Beamline Photon Flux &amp; Efficiency</span>
                       <span class="toc-item-formula">photons / s</span>
                     </div>
                   </a>
                   <a class="toc-item-link" href="#radiometry/card-beamline-slit">
-                    <span class="toc-item-num">§ 2.</span>
+                    <span class="toc-item-num">§ 5.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_6">Slit Aperture Opening &amp; Acceptance</span>
                       <span class="toc-item-formula">gap / distance</span>
