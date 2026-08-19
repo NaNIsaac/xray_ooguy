@@ -1433,6 +1433,13 @@
                       <span class="toc-item-formula">Beam dump, Restored, Mount, Alignment, Scan start/finish</span>
                     </div>
                   </a>
+                  <a class="toc-item-link" href="#record/card-record-history">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_rec_3">Calculation History</span>
+                      <span class="toc-item-formula">Last 25 runs, resolved to the current numbering</span>
+                    </div>
+                  </a>
                 </div>
               </div>
 
@@ -1483,7 +1490,7 @@
                     <span data-i18n="toc_sec6_title">System Settings &amp; Archive</span>
                   </div>
                 </a>
-                <div class="toc-sec-desc" data-i18n="toc_sec6_desc">Language selection, high-contrast theme, calculation run logs, JSON backup &amp; keyboard shortcuts</div>
+                <div class="toc-sec-desc" data-i18n="toc_sec6_desc">Language, seven display themes and the keyboard shortcut table</div>
                 <div class="toc-items-container">
                   <a class="toc-item-link" href="#settings/card-set-lang">
                     <span class="toc-item-num">§ 1.</span>
@@ -1790,6 +1797,40 @@
                 </div>
               </div>
             </div>
+
+            <!-- Calculation history. Every calculator has been writing to this
+                 log all along; until now there was nowhere to read it. Rows
+                 name their calculator by card id, so the number and the wording
+                 are resolved at render time rather than frozen at write time. -->
+            <div class="col-12">
+              <div class="card" id="card-record-history">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="rec_c3_title">Calculation History</span>
+                  <span class="card-tag"><span id="rec-history-count" class="mono">0</span> / 25</span>
+                </div>
+                <div class="card-body">
+                  <p class="dv-explain" data-i18n="rec_hist_desc">The last 25 calculations, newest first, held in this browser only. Each row names the calculator it came from, so an entry keeps its meaning after a suite is reorganised or the language is switched.</p>
+                  <div class="rec-history-scroll">
+                    <table class="lab-table rec-history-table">
+                      <thead>
+                        <tr>
+                          <th data-i18n="rec_hist_th_time">Time</th>
+                          <th data-i18n="rec_hist_th_tool">Calculator</th>
+                          <th data-i18n="rec_hist_th_in">Inputs</th>
+                          <th data-i18n="rec_hist_th_out">Result</th>
+                        </tr>
+                      </thead>
+                      <tbody id="rec-history-body">
+                        <tr><td colspan="4" class="rec-history-empty" data-i18n="rec_hist_empty">No calculations recorded yet.</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="margin-top:10px;">
+                    <button class="btn btn-sm" onclick="clearCalcHistory()" data-i18n="rec_hist_clear">Clear history</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1908,7 +1949,7 @@
           <div class="section-banner">
             <div class="banner-info">
               <h2 id="banner-set-title" data-i18n="b_set_title">Settings &amp; History Management</h2>
-              <p id="banner-set-desc" data-i18n="b_set_desc">Language selection, display theme mode, calculation history archive, shortcuts, and full data backup/restore</p>
+              <p id="banner-set-desc" data-i18n="b_set_desc">Language, display theme and keyboard shortcuts</p>
             </div>
           </div>
 

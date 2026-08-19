@@ -405,26 +405,150 @@
   }
 
   // Record calculation to local history
-  function recordCalculation(toolName, inputsStr, resultStr) {
+  // ------------------------------------------------------------------
+  // Calculation history
+  // ------------------------------------------------------------------
+  // What is stored is the card id, not a printed label. A label freezes the
+  // section number and the language at the moment of the calculation, and both
+  // move: the number follows the card's position and the wording follows the
+  // interface language. Storing the id lets an entry made this morning in
+  // Korean render this afternoon in English under its current number.
+  //
+  // variant is for a card that solves more than one way — the Bragg suite runs
+  // three directions off one set of inputs, and which one produced the number
+  // is worth keeping.
+  var HISTORY_LIMIT = 25;
+
+  // Calculators recompute on every keystroke, so typing "10.5" into one field
+  // fires four times. Left alone that fills all 25 slots with the intermediate
+  // states of a single edit and throws away the actual history.
+  //
+  // A repeat of the same card within this window overwrites the entry it is
+  // repeating instead of pushing a new one: the row updates live while a field
+  // is being edited, and only settles into its own line once the work moves on.
+  // Long enough to cover typing and a moment's thought, short enough that
+  // returning to a card later is recorded as the separate run it is.
+  var HISTORY_MERGE_MS = 4000;
+
+  function recordCalculation(cardId, inputsStr, resultStr, variant) {
     try {
+      var now = Date.now();
       var item = {
-        id: Date.now(),
+        id: now,
         timestamp: new Date().toLocaleTimeString(),
-        tool: toolName,
+        card: cardId,
         inputs: inputsStr,
         result: resultStr
       };
+      if (variant) item.variant = variant;
 
       var list = Storage.get("calc_history", []);
-      list.unshift(item);
-      if (list.length > 25) {
-        list = list.slice(0, 25);
+      var head = list.length ? list[0] : null;
+      var isRepeat = head && head.card === cardId &&
+                     (head.variant || "") === (variant || "") &&
+                     (now - (head.id || 0)) < HISTORY_MERGE_MS;
+
+      if (isRepeat) {
+        // The displayed time stays at the moment the run started, while id
+        // tracks the last touch — the window is measured from the previous
+        // keystroke, so a slow edit keeps merging instead of splitting into a
+        // new row every four seconds.
+        item.timestamp = head.timestamp;
+        list[0] = item;
+      } else {
+        list.unshift(item);
+      }
+
+      if (list.length > HISTORY_LIMIT) {
+        list = list.slice(0, HISTORY_LIMIT);
       }
       Storage.set("calc_history", list);
+      renderCalcHistory();
 
     } catch (e) {
       console.error("Failed to record calculation:", e);
     }
+  }
+
+  // The card's own title, resolved through the same key the header uses, so a
+  // renamed calculator renames itself in the history too. Entries written by an
+  // older build carry a printed label in .tool instead; those are shown as they
+  // were stored rather than dropped.
+  function historyLabel(item) {
+    if (!item.card) return item.tool || "";
+
+    var card = document.getElementById(item.card);
+    var titleEl = card ? card.querySelector(".card-title") : null;
+    var key = titleEl
+      ? (titleEl.getAttribute("data-i18n") || titleEl.getAttribute("data-i18n-html"))
+      : "";
+
+    var name = item.card;
+    if (key && window.i18n && window.i18n.t) {
+      // A title may carry markup (the refractive index card states its formula
+      // in the heading). The history column wants the words, not the tags.
+      var probe = document.createElement("span");
+      probe.innerHTML = window.i18n.t(key);
+      name = probe.textContent || probe.innerText || item.card;
+    }
+
+    var num = cardNumber(item.card);
+    return (num ? num + " " : "") + name;
+  }
+
+  function renderCalcHistory() {
+    var body = document.getElementById("rec-history-body");
+    if (!body) return;
+
+    var list = Storage.get("calc_history", []);
+    var t = (window.i18n && window.i18n.t) ? function (k) { return window.i18n.t(k); }
+                                           : function (k) { return k; };
+
+    var count = document.getElementById("rec-history-count");
+    if (count) count.textContent = String(list.length);
+
+    if (!list.length) {
+      body.innerHTML = '<tr><td colspan="4" class="rec-history-empty">' +
+        escapeHtml(t("rec_hist_empty")) + "</td></tr>";
+      return;
+    }
+
+    var rows = [];
+    for (var i = 0; i < list.length; i++) {
+      var it = list[i];
+      var label = escapeHtml(historyLabel(it));
+      if (it.variant) {
+        label += ' <span class="rec-history-variant">' + escapeHtml(it.variant) + "</span>";
+      }
+      rows.push(
+        "<tr>" +
+        '<td class="mono rec-history-time">' + escapeHtml(it.timestamp || "") + "</td>" +
+        '<td class="rec-history-tool">' + label + "</td>" +
+        '<td class="mono">' + escapeHtml(it.inputs || "") + "</td>" +
+        // Results are composed with <sup> markup for units such as ph s^-1, so
+        // this one column is written as markup rather than escaped text. It is
+        // built by the calculators, never by anything the user typed.
+        '<td class="mono rec-history-result">' + (it.result || "") + "</td>" +
+        "</tr>"
+      );
+    }
+    body.innerHTML = rows.join("");
+  }
+
+  function clearCalcHistory() {
+    var t = (window.i18n && window.i18n.t) ? window.i18n.t("rec_hist_confirm") : "Clear the calculation history?";
+    if (!window.confirm(t)) return;
+    Storage.set("calc_history", []);
+    renderCalcHistory();
+    if (window.showToast) {
+      window.showToast(window.i18n ? window.i18n.t("rec_hist_cleared") : "History cleared.", "info");
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str === undefined || str === null ? "" : str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   // Router logic — one route per view section, no aliases.
@@ -457,7 +581,7 @@
     settings: {
       title: "V. SETTINGS", subtitle: "언어, 테마, 데이터 백업 및 단축키",
       seoTitle: "Settings | X-Ray Beamline Toolkit",
-      seoDesc: "Language, display theme, local data backup and keyboard shortcuts for the X-Ray Beamline Toolkit."
+      seoDesc: "Language, display theme and keyboard shortcuts for the X-Ray Beamline Toolkit."
     },
     about: {
       title: "VI. ABOUT", subtitle: "프로젝트 정보 및 제작자",
@@ -835,6 +959,8 @@
   window.jumpToSection = jumpToSection;
   window.renumberCards = renumberCards;
   window.cardNumber = cardNumber;
+  window.renderCalcHistory = renderCalcHistory;
+  window.clearCalcHistory = clearCalcHistory;
   window.setPageMeta = setPageMeta;
   window.applyTheme = applyTheme;
   window.THEMES = THEMES;
@@ -856,6 +982,9 @@
     // sidebar out of the contents block from its own DOMContentLoaded handler,
     // registered after this one, so the map is filled by the time it looks.
     renumberCards();
+
+    // History labels resolve through the numbering map, so this follows it.
+    renderCalcHistory();
 
     // Load theme (migrates old "light"/"dark" values on the way in)
     var savedTheme = Storage.get("theme", "paper");

@@ -58,7 +58,7 @@
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.1 Energy/Wavelength", sourceField + " = " + energy_keV.toFixed(4) + " keV", lambda_nm.toFixed(5) + " nm (" + energy_keV.toFixed(4) + " keV)");
+      window.recordCalculation("card-optics-energy", sourceField + " = " + energy_keV.toFixed(4) + " keV", lambda_nm.toFixed(5) + " nm (" + energy_keV.toFixed(4) + " keV)");
     }
   }
 
@@ -96,7 +96,7 @@
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.2 Bragg (d,tth➔E)", "d=" + dVal + " Å, 2θ=" + tthDeg + "°", "E = " + e_keV.toFixed(4) + " keV (θ=" + thDeg.toFixed(4) + "°)");
+      window.recordCalculation("card-optics-bragg", "d=" + dVal + " Å, 2θ=" + tthDeg + "°", "E = " + e_keV.toFixed(4) + " keV (θ=" + thDeg.toFixed(4) + "°)", "d, 2θ → E");
     }
   }
 
@@ -132,7 +132,7 @@
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.2 Bragg (tth,E➔d)", "2θ=" + tthDeg + "°, E=" + e_keV + " keV", "d = " + dVal.toFixed(5) + " Å (Q=" + qVal.toFixed(4) + " Å⁻¹)");
+      window.recordCalculation("card-optics-bragg", "2θ=" + tthDeg + "°, E=" + e_keV + " keV", "d = " + dVal.toFixed(5) + " Å (Q=" + qVal.toFixed(4) + " Å<sup>-1</sup>)", "2θ, E → d");
     }
   }
 
@@ -177,7 +177,7 @@
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.2 Bragg (d,E➔tth)", "d=" + dVal + " Å, E=" + e_keV + " keV", "2θ = " + tthDeg.toFixed(4) + "°, θ = " + thDeg.toFixed(4) + "°");
+      window.recordCalculation("card-optics-bragg", "d=" + dVal + " Å, E=" + e_keV + " keV", "2θ = " + tthDeg.toFixed(4) + "°, θ = " + thDeg.toFixed(4) + "°", "d, E → 2θ");
     }
   }
 
@@ -236,7 +236,7 @@
     resDispersion.innerHTML = fmt(dispersion_rad_per_nm * 1000, 3) + " mrad/nm";
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.3 Grating Calc", linesPerMm + " lines/mm, E=" + energy_keV + " keV, α=" + alphaDeg + "°", "β=" + betaDeg.toFixed(4) + "° (m=" + order + ")");
+      window.recordCalculation("card-optics-grating", linesPerMm + " lines/mm, E=" + energy_keV + " keV, α=" + alphaDeg + "°", "β=" + betaDeg.toFixed(4) + "° (m=" + order + ")");
     }
   }
 
@@ -271,7 +271,7 @@
     document.getElementById("refract-res-crit").innerHTML = critical_angle_deg.toFixed(4) + "°";
 
     if (window.recordCalculation) {
-      window.recordCalculation("1.4 Transmittance", mat.name + ", " + thickness_um + " μm @ " + energy_keV + " keV", "T = " + (transmittance * 100).toFixed(2) + "%, θc = " + critical_angle_deg.toFixed(3) + "°");
+      window.recordCalculation("card-optics-refraction", mat.name + ", " + thickness_um + " μm @ " + energy_keV + " keV", "T = " + (transmittance * 100).toFixed(2) + "%, θc = " + critical_angle_deg.toFixed(3) + "°");
     }
   }
 

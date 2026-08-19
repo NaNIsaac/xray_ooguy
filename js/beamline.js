@@ -247,7 +247,7 @@
     renderFootprintDiagram(beamV_um, beamH_um, clAngle, sampleL_mm, footprint_mm, spilloverPct);
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.1 Beam Footprint", "V = " + beamV_um + " μm @ " + clAngle + "°", "L = " + footprint_mm.toFixed(3) + " mm");
+      window.recordCalculation("card-beamline-footprint", "V = " + beamV_um + " μm @ " + clAngle + "°", "L = " + footprint_mm.toFixed(3) + " mm");
     }
   }
 
@@ -270,7 +270,7 @@
     document.getElementById("flux-res-eff").innerHTML = (totalEff * 100).toFixed(2) + "%";
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.2 Beam Flux", ringCurrent_mA + " mA, η = " + (totalEff * 100).toFixed(1) + "%", deliveredFlux.toExponential(2) + " ph·s<sup>-1</sup>");
+      window.recordCalculation("card-beamline-flux", ringCurrent_mA + " mA, η = " + (totalEff * 100).toFixed(1) + "%", deliveredFlux.toExponential(2) + " ph·s<sup>-1</sup>");
     }
   }
 
@@ -313,7 +313,7 @@
     document.getElementById("res-res-theta").innerHTML = ((thetaRad * 180) / Math.PI).toFixed(3) + "°";
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.3 Resolution", crystalType + " @ " + energy_keV + " keV", "ΔE = " + delta_E_eV.toFixed(2) + " eV (ΔE/E = " + total_de_over_e.toExponential(2) + ")");
+      window.recordCalculation("card-beamline-resolution", crystalType + " @ " + energy_keV + " keV", "ΔE = " + delta_E_eV.toFixed(2) + " eV (ΔE/E = " + total_de_over_e.toExponential(2) + ")");
     }
   }
 
@@ -334,7 +334,7 @@
     document.getElementById("ang-res-deg").innerHTML = fmt(deltaTheta_deg, 5) + "°";
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.4 Angular Res", "Pixel=" + pixelSize_um + " μm, Dist=" + distance_mm + " mm", "Δθ = " + deltaTheta_mrad.toFixed(4) + " mrad (" + deltaTheta_arcsec.toFixed(1) + " arcsec)");
+      window.recordCalculation("card-beamline-detector", "Pixel=" + pixelSize_um + " μm, Dist=" + distance_mm + " mm", "Δθ = " + deltaTheta_mrad.toFixed(4) + " mrad (" + deltaTheta_arcsec.toFixed(1) + " arcsec)");
     }
   }
 
@@ -371,7 +371,7 @@
     }
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.5 CDI Oversampling", sampleSize_nm + " nm @ " + energy_keV + " keV", "σ = " + sigma.toFixed(2) + " (" + (sigma >= 2 ? "Pass" : "Fail") + ")");
+      window.recordCalculation("card-beamline-cdi", sampleSize_nm + " nm @ " + energy_keV + " keV", "σ = " + sigma.toFixed(2) + " (" + (sigma >= 2 ? "Pass" : "Fail") + ")");
     }
   }
 
@@ -395,7 +395,7 @@
     document.getElementById("slit-res-opening").innerHTML = fmt(recommendedOpening_mm, 3) + " mm";
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.6 Slit Opening", "Dist=" + distSourceToSlit_m + " m, Div=" + beamDiv_urad + " μrad", "Opening = " + recommendedOpening_mm.toFixed(3) + " mm");
+      window.recordCalculation("card-beamline-slit", "Dist=" + distSourceToSlit_m + " m, Div=" + beamDiv_urad + " μrad", "Opening = " + recommendedOpening_mm.toFixed(3) + " mm");
     }
   }
 
@@ -434,7 +434,7 @@
     document.getElementById("therm-res-de").innerHTML = deltaE_eV.toFixed(3) + " eV";
 
     if (window.recordCalculation) {
-      window.recordCalculation("2.7 Thermal Drift", matSelect + ", ΔT=" + deltaTemp_C + "°C", "Δθ = " + deltaTheta_urad.toFixed(2) + " μrad (" + deltaE_eV.toFixed(2) + " eV)");
+      window.recordCalculation("card-beamline-drift", matSelect + ", ΔT=" + deltaTemp_C + "°C", "Δθ = " + deltaTheta_urad.toFixed(2) + " μrad (" + deltaE_eV.toFixed(2) + " eV)");
     }
   }
 

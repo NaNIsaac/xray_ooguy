@@ -30,6 +30,16 @@
       rec_c1_tag: "일반 텍스트 형식",
       rec_c2_title: "실시간 빔타임 이벤트 스니펫",
       rec_c2_tag: "타임스탬프 1클릭 복사",
+      rec_c3_title: "계산 이력",
+      rec_hist_desc: "최근 계산 25건, 최신순. 이 브라우저에만 남습니다. 각 행은 어느 계산기에서 나왔는지를 카드로 지목하므로, 수트를 재편하거나 언어를 바꿔도 항목의 의미가 유지됩니다.",
+      rec_hist_th_time: "시각",
+      rec_hist_th_tool: "계산기",
+      rec_hist_th_in: "입력",
+      rec_hist_th_out: "결과",
+      rec_hist_empty: "아직 기록된 계산이 없습니다.",
+      rec_hist_clear: "이력 지우기",
+      rec_hist_confirm: "계산 이력을 모두 지울까요?",
+      rec_hist_cleared: "계산 이력을 지웠습니다.",
       rec_copied: "클립보드에 복사되었습니다.",
       btn_copy_results: "결과값 전체 복사",
 
@@ -278,7 +288,7 @@
 
       // Banners
       b_set_title: "설정 및 히스토리 관리",
-      b_set_desc: "언어 설정, 테마 변경, 계산 기록 관리, 단축키 안내 및 전체 데이터 백업/복원",
+      b_set_desc: "언어 설정, 화면 테마, 키보드 단축키",
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
@@ -314,13 +324,14 @@
       toc_sec3_desc: "연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫",
       toc_tool_rec_1: "빔타임 로그북 서식 프리셋",
       toc_tool_rec_2: "실시간 빔타임 이벤트 스니펫",
+      toc_tool_rec_3: "계산 이력",
       toc_sec4_title: "스캔 데이터 판독 및 플롯",
       toc_sec4_desc: "2열 스캔 파일 자동 판독, XY 플롯과 로그 축, 정규화와 구간 자르기, XRR 세그먼트 이어붙이기",
       toc_tool_dv_1: "데이터 파일 불러오기",
       toc_tool_dv_2: "XY 플롯",
       toc_tool_dv_3: "XRR 세그먼트 이어붙이기",
       toc_sec6_title: "환경설정 및 아카이브",
-      toc_sec6_desc: "언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드",
+      toc_sec6_desc: "언어 설정, 일곱 가지 화면 테마, 키보드 단축키 안내",
       toc_tool_set_1: "언어 설정",
       toc_tool_set_2: "화면 테마 모드",
       toc_tool_set_5: "키보드 단축키 안내",
@@ -475,6 +486,16 @@
       rec_c1_tag: "Plain Text Format",
       rec_c2_title: "In-Situ Beamtime Event Snippets",
       rec_c2_tag: "One-Click Timestamped Copy",
+      rec_c3_title: "Calculation History",
+      rec_hist_desc: "The last 25 calculations, newest first, held in this browser only. Each row names the calculator it came from, so an entry keeps its meaning after a suite is reorganised or the language is switched.",
+      rec_hist_th_time: "Time",
+      rec_hist_th_tool: "Calculator",
+      rec_hist_th_in: "Inputs",
+      rec_hist_th_out: "Result",
+      rec_hist_empty: "No calculations recorded yet.",
+      rec_hist_clear: "Clear history",
+      rec_hist_confirm: "Clear the whole calculation history?",
+      rec_hist_cleared: "Calculation history cleared.",
       rec_copied: "Copied to clipboard.",
       btn_copy_results: "Copy all results",
 
@@ -708,7 +729,7 @@
 
       // Banners
       b_set_title: "Settings & History Management",
-      b_set_desc: "Language selection, display theme mode, calculation history archive, shortcuts, and full data backup/restore",
+      b_set_desc: "Language, display theme and keyboard shortcuts",
 
       // Table of Contents (TOC)
       toc_pretitle: "SYNCHROTRON X-RAY OPTICS & BEAMLINE MONOGRAPH",
@@ -744,13 +765,14 @@
       toc_sec3_desc: "Standard logbook templates for lab notebooks and 1-click in-situ beamtime event snippets",
       toc_tool_rec_1: "Beamtime Logbook Header Presets",
       toc_tool_rec_2: "In-Situ Quick Log Snippets",
+      toc_tool_rec_3: "Calculation History",
       toc_sec4_title: "Scan Data Viewer",
       toc_sec4_desc: "Two-column scan files read automatically, XY plot with a log axis, normalisation, range crop and XRR segment stitching",
       toc_tool_dv_1: "Load Scan Files",
       toc_tool_dv_2: "Generic XY Plot",
       toc_tool_dv_3: "XRR Segment Stitching",
       toc_sec6_title: "System Settings & Archive",
-      toc_sec6_desc: "Language selection, high-contrast theme, calculation run logs, JSON backup & keyboard shortcuts",
+      toc_sec6_desc: "Language, seven display themes and the keyboard shortcut table",
       toc_tool_set_1: "Language Selection",
       toc_tool_set_2: "Display Theme Mode",
       toc_tool_set_5: "Keyboard Shortcuts Guide",
@@ -950,6 +972,9 @@
       if (window.renderValidity) window.renderValidity();
       if (window.renderMiniPlots) window.renderMiniPlots();
       if (window.initDataView) window.initDataView();
+      // History rows name their calculator through the card's title key, so
+      // they follow the language like everything else on the page.
+      if (window.renderCalcHistory) window.renderCalcHistory();
     },
 
     applyTranslations: function () {

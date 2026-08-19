@@ -2628,6 +2628,51 @@ html[lang="ko"] .nav-ref-head {
   color: var(--ink-muted);
 }
 
+/* Calculation history
+   ------------------------------------------------------------------
+   Its own scroll container. #content-area is overflow-x: hidden so that a wide
+   table cannot push the whole page sideways; the table has to carry the scroll
+   itself, and the input column is the one that gets long. */
+.rec-history-scroll {
+  overflow-x: auto;
+  border-top: var(--rule-main);
+}
+
+.rec-history-table {
+  min-width: 34rem;
+}
+
+.rec-history-time {
+  white-space: nowrap;
+  color: var(--ink-muted);
+  width: 1%;
+}
+
+.rec-history-tool {
+  white-space: nowrap;
+}
+
+.rec-history-result {
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+
+/* Which of a multi-way card produced the number — quieter than the card name
+   it follows, on the same line. */
+.rec-history-variant {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.rec-history-empty {
+  text-align: center;
+  color: var(--ink-muted);
+  padding: 14px 8px;
+}
+
 /* In-Situ Snippet Memo Cards */
 .rec-memo-grid {
   display: grid;
