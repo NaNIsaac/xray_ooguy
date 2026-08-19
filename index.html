@@ -924,6 +924,62 @@
             </div>
 
 
+
+            <!-- Energy calibration. The thermal drift card says where a known
+                 energy takes the crystal; this is the inverse, and the one
+                 done at the start of a shift: a reflection whose d is known,
+                 measured, gives the energy the mono is really at. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-opt-calibration">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_cal_title">Monochromator Energy Calibration</span>
+                  <span class="card-tag"><i class="formula">E = hc / 2d sin&theta;</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cal_d">Reference d-spacing</span> <span class="unit">(Å)</span></label>
+                        <input type="number" id="cal-d" class="form-control mono" value="3.13560" oninput="calcEnergyCalibration()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cal_tth">Measured 2&theta;</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="cal-tth" class="form-control mono" value="22.7000" oninput="calcEnergyCalibration()" min="0.0001" max="179.9" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cal_nominal">Energy the mono is set to</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="cal-nominal" class="form-control mono" value="10.0000" oninput="calcEnergyCalibration()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_actual">Energy actually delivered</div>
+                        <div id="cal-res-actual" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_offset">Offset from the setting</div>
+                        <div id="cal-res-offset" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_rel">Relative offset</div>
+                        <div id="cal-res-rel" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_dtheta">Angle offset that explains it</div>
+                        <div id="cal-res-dtheta" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1438,6 +1494,127 @@
               </div>
             </div>
 
+
+            <!-- Strain. The Bragg card solves d from an angle; this frames the
+                 same measurement the way a nanocrystal result is reported. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-geo-strain">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="geo_strain_title">Lattice Strain from a Peak Shift</span>
+                  <span class="card-tag"><i class="formula">&epsilon; = &Delta;d / d<sub>0</sub></i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_strain_d0">Unstrained d<sub>0</sub></span> <span class="unit">(Å)</span></label>
+                        <input type="number" id="str-d0" class="form-control mono" value="3.13560" oninput="calcStrain()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="str-energy" class="form-control mono" value="10.0000" oninput="calcStrain()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_strain_tth">Measured 2&theta;</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="str-tth" class="form-control mono" value="22.7000" oninput="calcStrain()" min="0.0001" max="179.9" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_eps">Strain &epsilon;</div>
+                        <div id="str-res-eps" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_micro">Microstrain</div>
+                        <div id="str-res-micro" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_d">Measured d</div>
+                        <div id="str-res-d" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_shift">Peak shift &Delta;2&theta;</div>
+                        <div id="str-res-shift" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- One pixel of an area detector, in reciprocal space. The angular
+                 resolution card gives the step per pixel; this gives where a
+                 particular pixel actually is. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-geo-pixelq">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="geo_pxq_title">Detector Pixel to Q</span>
+                  <span class="card-tag"><i class="formula">Q = 4&pi; sin&theta; / &lambda;</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="pxq-energy" class="form-control mono" value="10.0" oninput="calcPixelQ()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_det_dist">Sample-Detector Distance</span> <span class="unit">(mm)</span></label>
+                        <input type="number" id="pxq-dist" class="form-control mono" value="500" oninput="calcPixelQ()" min="1" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_pixel">Detector Pixel Size</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="pxq-pixel" class="form-control mono" value="75" oninput="calcPixelQ()" min="0.1" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_pxq_dx">From beam centre, x</span> <span class="unit">(px)</span></label>
+                        <input type="number" id="pxq-dx" class="form-control mono" value="400" oninput="calcPixelQ()" min="-100000" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_pxq_dy">From beam centre, y</span> <span class="unit">(px)</span></label>
+                        <input type="number" id="pxq-dy" class="form-control mono" value="0" oninput="calcPixelQ()" min="-100000" max="100000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_pxq_q">Scattering vector <i class="formula">Q</i></div>
+                        <div id="pxq-res-q" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_pxq_tth">Scattering angle 2&theta;</div>
+                        <div id="pxq-res-tth" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_pxq_d">Plane spacing d</div>
+                        <div id="pxq-res-d" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_pxq_azim">Azimuth on the detector</div>
+                        <div id="pxq-res-azim" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1783,6 +1960,13 @@
                       <span class="toc-item-formula">&Delta;&theta;, &Delta;E from &Delta;T</span>
                     </div>
                   </a>
+                  <a class="toc-item-link" href="#optics/card-opt-calibration">
+                    <span class="toc-item-num">§ 7.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_cal">Monochromator Energy Calibration</span>
+                      <span class="toc-item-formula">E = hc / 2d sin&theta;</span>
+                    </div>
+                  </a>
                 </div>
               </div>
 
@@ -1842,6 +2026,20 @@
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_6">Chi-Phi Eulerian Cradle Correction</span>
                       <span class="toc-item-formula">chi-phi cradle</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#geometry/card-geo-strain">
+                    <span class="toc-item-num">§ 8.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_geo_strain">Lattice Strain from a Peak Shift</span>
+                      <span class="toc-item-formula">&epsilon; = &Delta;d / d<sub>0</sub></span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#geometry/card-geo-pixelq">
+                    <span class="toc-item-num">§ 9.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_geo_pxq">Detector Pixel to Q</span>
+                      <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
                     </div>
                   </a>
                 </div>
@@ -1912,6 +2110,13 @@
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR Segment Stitching</span>
                       <span class="toc-item-formula">scale = median(I<sub>prev</sub> / I<sub>seg</sub>) over overlap</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#data/card-data-kiessig">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_kiessig">Kiessig Fringes &rarr; Film Thickness</span>
+                      <span class="toc-item-formula">t = &lambda; / 2&Delta;&theta;, refraction corrected</span>
                     </div>
                   </a>
                 </div>
@@ -2404,6 +2609,68 @@
               </div>
             </div>
 
+
+            <!-- Kiessig fringes. What anyone does next with a stitched XRR
+                 curve: read the spacing off two adjacent minima and get the
+                 film thickness. -->
+            <div class="col-12">
+              <div class="card" id="card-data-kiessig">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="dv_kiessig_title">Kiessig Fringes → Film Thickness</span>
+                  <span class="card-tag"><i class="formula">t = (&lambda;/2) / (&radic;(&theta;<sub>2</sub><sup>2</sup>&minus;&theta;<sub>c</sub><sup>2</sup>) &minus; &radic;(&theta;<sub>1</sub><sup>2</sup>&minus;&theta;<sub>c</sub><sup>2</sup>))</i></span>
+                </div>
+                <div class="card-body">
+                  <p class="dv-explain" data-i18n="dv_kiessig_desc">Two adjacent minima of the reflectivity curve. Entering the critical angle applies the refraction correction; leaving it at zero gives the plain λ/2Δθ estimate, which reads thick at low angle.</p>
+                  <div class="flex-row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="kie-energy" class="form-control mono" value="8.048" oninput="calcKiessig()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_kie_t1">Lower minimum &theta;<sub>1</sub></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="kie-t1" class="form-control mono" value="0.5000" oninput="calcKiessig()" min="0.0001" max="90" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_kie_t2">Upper minimum &theta;<sub>2</sub></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="kie-t2" class="form-control mono" value="0.6000" oninput="calcKiessig()" min="0.0001" max="90" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_kie_tc">Critical angle &theta;<sub>c</sub></span> <span class="unit">(°)</span></label>
+                        <input type="number" id="kie-tc" class="form-control mono" value="0.2200" oninput="calcKiessig()" min="0" max="10" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_t">Film thickness</div>
+                        <div id="kie-res-t" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_raw">Without the refraction correction</div>
+                        <div id="kie-res-raw" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_spacing">Fringe spacing &Delta;&theta;</div>
+                        <div id="kie-res-spacing" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_next">Next minimum expected at</div>
+                        <div id="kie-res-next" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

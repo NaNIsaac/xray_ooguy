@@ -494,6 +494,223 @@
   window.calcChiPhi = calcChiPhi;
   window.calcCriticalAngle = calcCriticalAngle;
   window.calcQSpace = calcQSpace;
+  window.calcEnergyCalibration = calcEnergyCalibration;
+  window.calcStrain = calcStrain;
+  window.calcPixelQ = calcPixelQ;
+  window.calcKiessig = calcKiessig;
+
+  // ==================================================================
+  // Monochromator energy calibration
+  // ==================================================================
+  // The inverse of the thermal drift card. Measure a reflection whose d is
+  // known and the Bragg condition hands back the energy the monochromator is
+  // really delivering, whatever the control system believes. The angle offset
+  // is the other half of the answer: the same discrepancy expressed as the
+  // encoder error that would produce it, which is what actually gets adjusted.
+  function calcEnergyCalibration() {
+    var d = readField("cal-d");
+    var tth = readField("cal-tth");
+    var nominal = readField("cal-nominal");
+
+    if (isNaN(d) || d <= 0 || isNaN(tth) || tth <= 0 || tth >= 180) return;
+    var out = document.getElementById("cal-res-actual");
+    if (!out) return;
+
+    var theta = (tth / 2) * Math.PI / 180;
+    var sinTheta = Math.sin(theta);
+    if (sinTheta <= 0) return;
+
+    var lambda_A = 2 * d * sinTheta;
+    var actual_keV = CONSTANTS.hc_eV_A / lambda_A / 1000;
+
+    out.innerHTML = actual_keV.toFixed(5) + " keV";
+
+    if (isNaN(nominal) || nominal <= 0) {
+      document.getElementById("cal-res-offset").innerHTML = "-";
+      document.getElementById("cal-res-rel").innerHTML = "-";
+      document.getElementById("cal-res-dtheta").innerHTML = "-";
+      return;
+    }
+
+    var delta_eV = (actual_keV - nominal) * 1000;
+    document.getElementById("cal-res-offset").innerHTML =
+      (delta_eV >= 0 ? "+" : "") + delta_eV.toFixed(2) + " eV";
+    document.getElementById("cal-res-rel").innerHTML =
+      (delta_eV >= 0 ? "+" : "") + ((actual_keV - nominal) / nominal * 1e6).toFixed(1) + " ppm";
+
+    // Where the crystal would have to be for the nominal energy to be right.
+    var lambdaNom_A = CONSTANTS.hc_eV_A / (nominal * 1000);
+    var s = lambdaNom_A / (2 * d);
+    if (s > 1 || s <= 0) {
+      document.getElementById("cal-res-dtheta").innerHTML = "-";
+    } else {
+      var thetaExpected = Math.asin(s);
+      var dTheta_arcsec = (theta - thetaExpected) * 180 / Math.PI * 3600;
+      document.getElementById("cal-res-dtheta").innerHTML =
+        (dTheta_arcsec >= 0 ? "+" : "") + dTheta_arcsec.toFixed(2) + " arcsec";
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-opt-calibration",
+        "d=" + d + " Å, 2θ=" + tth + "°, set to " + nominal + " keV",
+        actual_keV.toFixed(5) + " keV (" + (delta_eV >= 0 ? "+" : "") + delta_eV.toFixed(1) + " eV)");
+    }
+  }
+
+  // ==================================================================
+  // Lattice strain from a peak shift
+  // ==================================================================
+  // The same measurement the Bragg card does, framed the way a nanocrystal
+  // result is reported. Computed as d/d0 - 1 rather than through the
+  // differential -cot(theta) dtheta, which only agrees for small shifts and is
+  // the form that quietly breaks near back-scattering.
+  function calcStrain() {
+    var d0 = readField("str-d0");
+    var energy = readField("str-energy");
+    var tth = readField("str-tth");
+
+    if (isNaN(d0) || d0 <= 0 || isNaN(energy) || energy <= 0) return;
+    if (isNaN(tth) || tth <= 0 || tth >= 180) return;
+    var out = document.getElementById("str-res-eps");
+    if (!out) return;
+
+    var lambda_A = CONSTANTS.hc_eV_A / (energy * 1000);
+    var theta = (tth / 2) * Math.PI / 180;
+    var sinTheta = Math.sin(theta);
+    if (sinTheta <= 0) return;
+
+    var d = lambda_A / (2 * sinTheta);
+    var eps = d / d0 - 1;
+
+    out.innerHTML = eps.toExponential(4);
+    document.getElementById("str-res-micro").innerHTML = (eps * 1e6).toFixed(1) + " με";
+    document.getElementById("str-res-d").innerHTML = d.toFixed(6) + " Å";
+
+    // Where the unstrained reflection would have been, at this energy.
+    var s0 = lambda_A / (2 * d0);
+    if (s0 > 1 || s0 <= 0) {
+      document.getElementById("str-res-shift").innerHTML = "-";
+    } else {
+      var tth0 = 2 * Math.asin(s0) * 180 / Math.PI;
+      var shift = tth - tth0;
+      document.getElementById("str-res-shift").innerHTML =
+        (shift >= 0 ? "+" : "") + shift.toFixed(4) + "°";
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-geo-strain",
+        "d0=" + d0 + " Å, 2θ=" + tth + "° @ " + energy + " keV",
+        "ε = " + eps.toExponential(3) + " (" + (eps * 1e6).toFixed(0) + " με)");
+    }
+  }
+
+  // ==================================================================
+  // Detector pixel to Q
+  // ==================================================================
+  // The angular resolution card gives the step one pixel is worth. This gives
+  // where a particular pixel is: the radius from the beam centre, through the
+  // scattering angle, into reciprocal space.
+  //
+  // Flat detector, normal to the beam, sample on the rotation centre. A tilted
+  // detector needs the full orientation matrix and is not what this is.
+  function calcPixelQ() {
+    var energy = readField("pxq-energy");
+    var dist_mm = readField("pxq-dist");
+    var pixel_um = readField("pxq-pixel");
+    var dx = readField("pxq-dx");
+    var dy = readField("pxq-dy");
+
+    if (isNaN(energy) || energy <= 0 || isNaN(dist_mm) || dist_mm <= 0) return;
+    if (isNaN(pixel_um) || pixel_um <= 0 || isNaN(dx) || isNaN(dy)) return;
+    var out = document.getElementById("pxq-res-q");
+    if (!out) return;
+
+    var r_mm = Math.sqrt(dx * dx + dy * dy) * pixel_um / 1000;
+    var tth_rad = Math.atan2(r_mm, dist_mm);
+    var theta = tth_rad / 2;
+
+    var lambda_A = CONSTANTS.hc_eV_A / (energy * 1000);
+    var q = (4 * Math.PI * Math.sin(theta)) / lambda_A;
+
+    out.innerHTML = fmt(q, 5) + " Å<sup>-1</sup>";
+    document.getElementById("pxq-res-tth").innerHTML = (tth_rad * 180 / Math.PI).toFixed(5) + "°";
+    document.getElementById("pxq-res-d").innerHTML =
+      q > 0 ? fmt(2 * Math.PI / q, 5) + " Å" : "∞";
+
+    // Measured from the +x axis, which is how a detector image is usually read.
+    var azim = Math.atan2(dy, dx) * 180 / Math.PI;
+    document.getElementById("pxq-res-azim").innerHTML =
+      (r_mm > 0 ? azim.toFixed(3) + "°" : "-");
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-geo-pixelq",
+        "(" + dx + ", " + dy + ") px @ " + dist_mm + " mm, " + energy + " keV",
+        "Q = " + fmt(q, 4) + " Å<sup>-1</sup>, 2θ = " + (tth_rad * 180 / Math.PI).toFixed(4) + "°");
+    }
+  }
+
+  // ==================================================================
+  // Kiessig fringes to film thickness
+  // ==================================================================
+  // What anyone does next with a stitched reflectivity curve. Two adjacent
+  // minima obey
+  //
+  //     sin^2(theta_m) = sin^2(theta_c) + (m lambda / 2t)^2
+  //
+  // so with the small angles reflectivity lives at, and m2 - m1 = 1,
+  //
+  //     t = (lambda/2) / (sqrt(theta_2^2 - theta_c^2) - sqrt(theta_1^2 - theta_c^2))
+  //
+  // Leaving theta_c at zero collapses this to the familiar lambda / 2 dtheta,
+  // which reads thick at low angle because it ignores refraction — the card
+  // shows both so the size of that correction is visible rather than assumed.
+  function calcKiessig() {
+    var energy = readField("kie-energy");
+    var t1 = readField("kie-t1");
+    var t2 = readField("kie-t2");
+    var tc = readField("kie-tc");
+
+    if (isNaN(energy) || energy <= 0 || isNaN(t1) || isNaN(t2)) return;
+    if (t1 <= 0 || t2 <= t1) return;
+    var out = document.getElementById("kie-res-t");
+    if (!out) return;
+
+    var lambda_A = CONSTANTS.hc_eV_A / (energy * 1000);
+    var rad = Math.PI / 180;
+    var a1 = t1 * rad, a2 = t2 * rad;
+    var ac = (isNaN(tc) || tc < 0) ? 0 : tc * rad;
+
+    var raw_A = lambda_A / (2 * (a2 - a1));
+    document.getElementById("kie-res-raw").innerHTML = fmt(raw_A / 10, 3) + " nm";
+    document.getElementById("kie-res-spacing").innerHTML = (t2 - t1).toFixed(5) + "°";
+
+    // Below the critical angle there is no fringe to read: total external
+    // reflection, nothing has entered the film.
+    var s1 = a1 * a1 - ac * ac;
+    var s2 = a2 * a2 - ac * ac;
+    if (s1 <= 0 || s2 <= 0) {
+      out.innerHTML = "-";
+      document.getElementById("kie-res-next").innerHTML = "-";
+      return;
+    }
+
+    var denom = Math.sqrt(s2) - Math.sqrt(s1);
+    if (denom <= 0) { out.innerHTML = "-"; return; }
+
+    var t_A = (lambda_A / 2) / denom;
+    out.innerHTML = fmt(t_A / 10, 3) + " nm";
+
+    // The next order, from the same relation — a check that can be made against
+    // the curve on screen rather than taken on trust.
+    var nextAngle = Math.sqrt(Math.pow(Math.sqrt(s2) + denom, 2) + ac * ac) / rad;
+    document.getElementById("kie-res-next").innerHTML = nextAngle.toFixed(5) + "°";
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-data-kiessig",
+        "θ1=" + t1 + "°, θ2=" + t2 + "°, θc=" + (ac / rad).toFixed(3) + "° @ " + energy + " keV",
+        "t = " + fmt(t_A / 10, 2) + " nm");
+    }
+  }
 
   function initOpticsView() {
     var refractSelect = document.getElementById("refract-mat");
@@ -528,6 +745,10 @@
     calcChiPhi();
     calcCriticalAngle();
     calcQSpace("theta");
+    calcEnergyCalibration();
+    calcStrain();
+    calcPixelQ();
+    calcKiessig();
   }
 
   window.initOpticsView = initOpticsView;

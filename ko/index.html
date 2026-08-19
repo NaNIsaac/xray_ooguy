@@ -930,6 +930,62 @@
             </div>
 
 
+
+            <!-- Energy calibration. The thermal drift card says where a known
+                 energy takes the crystal; this is the inverse, and the one
+                 done at the start of a shift: a reflection whose d is known,
+                 measured, gives the energy the mono is really at. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-opt-calibration">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="opt_cal_title">모노크로메이터 에너지 교정</span>
+                  <span class="card-tag"><i class="formula">E = hc / 2d sin&theta;</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cal_d">기준 반사의 d 값</span> <span class="unit">(Å)</span></label>
+                        <input type="number" id="cal-d" class="form-control mono" value="3.13560" oninput="calcEnergyCalibration()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cal_tth">측정된 2θ</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="cal-tth" class="form-control mono" value="22.7000" oninput="calcEnergyCalibration()" min="0.0001" max="179.9" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cal_nominal">모노가 설정된 에너지</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="cal-nominal" class="form-control mono" value="10.0000" oninput="calcEnergyCalibration()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_actual">실제 전달 에너지</div>
+                        <div id="cal-res-actual" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_offset">설정값과의 차이</div>
+                        <div id="cal-res-offset" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_rel">상대 편차</div>
+                        <div id="cal-res-rel" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cal_dtheta">이를 설명하는 각도 오프셋</div>
+                        <div id="cal-res-dtheta" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1444,6 +1500,127 @@
               </div>
             </div>
 
+
+            <!-- Strain. The Bragg card solves d from an angle; this frames the
+                 same measurement the way a nanocrystal result is reported. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-geo-strain">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="geo_strain_title">피크 이동으로부터의 격자 변형</span>
+                  <span class="card-tag"><i class="formula">&epsilon; = &Delta;d / d<sub>0</sub></i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_strain_d0">무변형 d&lt;sub&gt;0&lt;/sub&gt;</span> <span class="unit">(Å)</span></label>
+                        <input type="number" id="str-d0" class="form-control mono" value="3.13560" oninput="calcStrain()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="str-energy" class="form-control mono" value="10.0000" oninput="calcStrain()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_strain_tth">측정된 2θ</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="str-tth" class="form-control mono" value="22.7000" oninput="calcStrain()" min="0.0001" max="179.9" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_eps">변형률 ε</div>
+                        <div id="str-res-eps" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_micro">마이크로변형</div>
+                        <div id="str-res-micro" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_d">측정된 d</div>
+                        <div id="str-res-d" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_strain_shift">피크 이동 Δ2θ</div>
+                        <div id="str-res-shift" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- One pixel of an area detector, in reciprocal space. The angular
+                 resolution card gives the step per pixel; this gives where a
+                 particular pixel actually is. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-geo-pixelq">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="geo_pxq_title">검출기 픽셀 → Q</span>
+                  <span class="card-tag"><i class="formula">Q = 4&pi; sin&theta; / &lambda;</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="pxq-energy" class="form-control mono" value="10.0" oninput="calcPixelQ()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_det_dist">시료-디텍터 거리</span> <span class="unit">(mm)</span></label>
+                        <input type="number" id="pxq-dist" class="form-control mono" value="500" oninput="calcPixelQ()" min="1" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_pixel">디텍터 픽셀 크기</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="pxq-pixel" class="form-control mono" value="75" oninput="calcPixelQ()" min="0.1" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_pxq_dx">빔 중심에서 x</span> <span class="unit">(px)</span></label>
+                        <input type="number" id="pxq-dx" class="form-control mono" value="400" oninput="calcPixelQ()" min="-100000" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_pxq_dy">빔 중심에서 y</span> <span class="unit">(px)</span></label>
+                        <input type="number" id="pxq-dy" class="form-control mono" value="0" oninput="calcPixelQ()" min="-100000" max="100000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_pxq_q">산란 벡터 Q</div>
+                        <div id="pxq-res-q" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_pxq_tth">산란각 2θ</div>
+                        <div id="pxq-res-tth" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_pxq_d">면간 거리 d</div>
+                        <div id="pxq-res-d" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_pxq_azim">검출기 상 방위각</div>
+                        <div id="pxq-res-azim" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1789,6 +1966,13 @@
                       <span class="toc-item-formula">&Delta;&theta;, &Delta;E from &Delta;T</span>
                     </div>
                   </a>
+                  <a class="toc-item-link" href="#optics/card-opt-calibration">
+                    <span class="toc-item-num">§ 7.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_opt_cal">모노크로메이터 에너지 교정</span>
+                      <span class="toc-item-formula">E = hc / 2d sin&theta;</span>
+                    </div>
+                  </a>
                 </div>
               </div>
 
@@ -1848,6 +2032,20 @@
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_6">Chi-Phi 오일러 크래들 보정</span>
                       <span class="toc-item-formula">chi-phi cradle</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#geometry/card-geo-strain">
+                    <span class="toc-item-num">§ 8.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_geo_strain">피크 이동으로부터의 격자 변형</span>
+                      <span class="toc-item-formula">&epsilon; = &Delta;d / d<sub>0</sub></span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#geometry/card-geo-pixelq">
+                    <span class="toc-item-num">§ 9.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_geo_pxq">검출기 픽셀 → Q</span>
+                      <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
                     </div>
                   </a>
                 </div>
@@ -1918,6 +2116,13 @@
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR 세그먼트 이어붙이기</span>
                       <span class="toc-item-formula">scale = median(I<sub>prev</sub> / I<sub>seg</sub>) over overlap</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#data/card-data-kiessig">
+                    <span class="toc-item-num">§ 4.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_dv_kiessig">Kiessig 프린지 → 박막 두께</span>
+                      <span class="toc-item-formula">t = &lambda; / 2&Delta;&theta;, refraction corrected</span>
                     </div>
                   </a>
                 </div>
@@ -2410,6 +2615,68 @@
               </div>
             </div>
 
+
+            <!-- Kiessig fringes. What anyone does next with a stitched XRR
+                 curve: read the spacing off two adjacent minima and get the
+                 film thickness. -->
+            <div class="col-12">
+              <div class="card" id="card-data-kiessig">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="dv_kiessig_title">Kiessig 프린지 → 박막 두께</span>
+                  <span class="card-tag"><i class="formula">t = (&lambda;/2) / (&radic;(&theta;<sub>2</sub><sup>2</sup>&minus;&theta;<sub>c</sub><sup>2</sup>) &minus; &radic;(&theta;<sub>1</sub><sup>2</sup>&minus;&theta;<sub>c</sub><sup>2</sup>))</i></span>
+                </div>
+                <div class="card-body">
+                  <p class="dv-explain" data-i18n="dv_kiessig_desc">반사율 곡선의 이웃한 두 극소점을 넣습니다. 임계각을 입력하면 굴절 보정이 적용되고, 0으로 두면 저각에서 두께를 크게 보는 단순 λ/2Δθ 추정값이 됩니다.</p>
+                  <div class="flex-row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="kie-energy" class="form-control mono" value="8.048" oninput="calcKiessig()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_kie_t1">낮은 쪽 극소 θ&lt;sub&gt;1&lt;/sub&gt;</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="kie-t1" class="form-control mono" value="0.5000" oninput="calcKiessig()" min="0.0001" max="90" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_kie_t2">높은 쪽 극소 θ&lt;sub&gt;2&lt;/sub&gt;</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="kie-t2" class="form-control mono" value="0.6000" oninput="calcKiessig()" min="0.0001" max="90" step="any">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_kie_tc">임계각 θ&lt;sub&gt;c&lt;/sub&gt;</span> <span class="unit">(°)</span></label>
+                        <input type="number" id="kie-tc" class="form-control mono" value="0.2200" oninput="calcKiessig()" min="0" max="10" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_t">박막 두께</div>
+                        <div id="kie-res-t" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_raw">굴절 보정 없이</div>
+                        <div id="kie-res-raw" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_spacing">프린지 간격 Δθ</div>
+                        <div id="kie-res-spacing" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_kie_next">다음 극소 예상 위치</div>
+                        <div id="kie-res-next" class="result-value">-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

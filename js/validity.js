@@ -359,6 +359,84 @@
       check: function () { return [{ key: "vw_cres_optimistic" }]; }
     },
     {
+      card: "card-opt-calibration",
+      watch: ["cal-d", "cal-tth", "cal-nominal"],
+      model: ["vm_cal_bragg", "vm_cal_dexact"],
+      check: function () {
+        var out = [];
+        var d = val("cal-d"), tth = val("cal-tth"), nominal = val("cal-nominal");
+        if (isNaN(d) || isNaN(tth) || isNaN(nominal) || d <= 0 || nominal <= 0) return out;
+        var lambda = 2 * d * Math.sin((tth / 2) * Math.PI / 180);
+        if (lambda <= 0) return out;
+        var actual = CONSTANTS.hc_eV_A / lambda / 1000;
+        // A monochromator that is out by more than a percent is not
+        // mis-calibrated, it is measuring something other than what was
+        // assumed.
+        var rel = Math.abs(actual - nominal) / nominal;
+        if (rel > 0.01) out.push({ key: "vw_cal_large", text: fmt(rel * 100, 2) + "%" });
+        return out;
+      }
+    },
+    {
+      card: "card-geo-strain",
+      watch: ["str-d0", "str-energy", "str-tth"],
+      model: ["vm_strain_uniform", "vm_strain_nozero"],
+      check: function () {
+        var out = [];
+        var d0 = val("str-d0"), e = val("str-energy"), tth = val("str-tth");
+        if (isNaN(d0) || isNaN(e) || isNaN(tth) || d0 <= 0 || e <= 0) return out;
+        var lambda = CONSTANTS.hc_eV_A / (e * 1000);
+        var s = Math.sin((tth / 2) * Math.PI / 180);
+        if (s <= 0) return out;
+        var eps = (lambda / (2 * s)) / d0 - 1;
+        // A percent of elastic strain is enormous for a crystal; past that the
+        // likelier explanations are an angle zero or the wrong reflection.
+        if (Math.abs(eps) > 0.01) out.push({ key: "vw_strain_large", text: fmt(eps * 100, 2) + "%" });
+        return out;
+      }
+    },
+    {
+      card: "card-geo-pixelq",
+      watch: ["pxq-energy", "pxq-dist", "pxq-pixel", "pxq-dx", "pxq-dy"],
+      model: ["vm_pxq_flat", "vm_pxq_notilt"],
+      check: function () {
+        var out = [];
+        var D = val("pxq-dist"), p = val("pxq-pixel");
+        var dx = val("pxq-dx"), dy = val("pxq-dy");
+        if (isNaN(D) || isNaN(p) || isNaN(dx) || isNaN(dy) || D <= 0) return out;
+        var r_mm = Math.sqrt(dx * dx + dy * dy) * p / 1000;
+        var tth = Math.atan2(r_mm, D) * 180 / Math.PI;
+        // Out here the flat-and-normal assumption stops being a formality.
+        if (tth > 30) out.push({ key: "vw_pxq_wide", text: fmt(tth, 2) + "°" });
+        return out;
+      }
+    },
+    {
+      card: "card-data-kiessig",
+      watch: ["kie-energy", "kie-t1", "kie-t2", "kie-tc"],
+      model: ["vm_kie_adjacent", "vm_kie_single"],
+      check: function () {
+        var out = [];
+        var t1 = val("kie-t1"), t2 = val("kie-t2"), tc = val("kie-tc");
+        if (isNaN(t1) || isNaN(t2) || t2 <= t1) return out;
+        var c = isNaN(tc) ? 0 : tc;
+
+        if (c > 0 && t1 <= c) {
+          out.push({ key: "vw_kie_belowc" });
+          return out;
+        }
+
+        if (c > 0) {
+          var rad = Math.PI / 180;
+          var corrected = 1 / (Math.sqrt(t2 * t2 - c * c) - Math.sqrt(t1 * t1 - c * c));
+          var raw = 1 / (t2 - t1);
+          var diff = Math.abs(corrected - raw) / raw;
+          if (diff > 0.05) out.push({ key: "vw_kie_corr", text: fmt(diff * 100, 1) + "%" });
+        }
+        return out;
+      }
+    },
+    {
       card: "card-lattice-dspacing",
       watch: ["lat-a", "lat-b", "lat-c", "lat-alpha", "lat-beta", "lat-gamma",
               "lat-h", "lat-k", "lat-l", "lat-energy"],
