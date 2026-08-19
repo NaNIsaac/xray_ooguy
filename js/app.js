@@ -9,7 +9,7 @@
 
   // Global State
   var App = {
-    currentRoute: "spectroscopy",
+    currentRoute: "radiometry",
     theme: "light"
   };
 
@@ -82,7 +82,9 @@
 
   function calcInputElements() {
     var out = [];
-    var scopes = document.querySelectorAll("#view-spectroscopy, #view-goniometry");
+    // Every view that holds a calculator. The record, data and settings views
+    // keep their own state elsewhere, so they are deliberately not listed.
+    var scopes = document.querySelectorAll("#view-radiometry, #view-optics, #view-geometry, #view-coherence");
 
     for (var i = 0; i < scopes.length; i++) {
       var els = scopes[i].querySelectorAll("input, select");
@@ -552,43 +554,105 @@
   }
 
   // Router logic — one route per view section, no aliases.
+  //
+  // The suites follow the order a beamtime actually runs: work out what the
+  // beam can afford (RADIOMETRY), set the energy and check the optics (OPTICS),
+  // place the crystal and the detector (GEOMETRY), confirm the beam is coherent
+  // enough for the experiment (COHERENCE), read the data back (DATA), write it
+  // down (RECORD). The previous split was by physics discipline, which had
+  // nowhere to put a scan-time budget or a dose limit.
+  //
+  // No `title` field: the breadcrumb reads the nav_<route> key so the suite is
+  // named in one place. It used to be duplicated here and drift was a matter of
+  // time.
   var routes = {
-    spectroscopy: {
-      title: "I. SPECTROSCOPY", subtitle: "에너지·파장·물질 상호작용 계산",
-      seoTitle: "Energy, Wavelength & d-spacing Calculators | X-Ray Beamline Toolkit",
-      seoDesc: "Convert photon energy to wavelength, find lattice d-spacing from Miller indices, and compute X-ray transmittance, critical angle, energy resolution and photon flux."
+    radiometry: {
+      seoTitle: "Photon Flux, Dose & Attenuation Calculators | X-Ray Beamline Toolkit",
+      seoDesc: "Photons per second delivered to the sample, slit acceptance for a Gaussian beam, absorber stacks, radiation dose and the exposure time a sample can take."
     },
-    goniometry: {
-      title: "II. GONIOMETRY", subtitle: "각도 및 기하 배치 계산",
-      seoTitle: "Bragg Angle & Scattering Vector Q Calculators | X-Ray Beamline Toolkit",
-      seoDesc: "Calculate the Bragg diffraction angle, reciprocal-space scattering vector Q, beam footprint, detector angular resolution, slit acceptance and Eulerian cradle corrections."
+    optics: {
+      seoTitle: "Energy, Wavelength & X-ray Transmittance Calculators | X-Ray Beamline Toolkit",
+      seoDesc: "Convert photon energy to wavelength, compute the complex refractive index and transmittance with absorption-edge warnings, the critical angle, grating dispersion, monochromator resolution and thermal drift."
     },
-    record: {
-      title: "III. RECORD", subtitle: "빔타임 로그북 서식 & 실시간 이벤트 스니펫",
-      seoTitle: "Beamtime Logbook Headers & Quick Event Snippets | X-Ray Beamline Toolkit",
-      seoDesc: "Plain-text beamtime logbook headers and one-click in-situ event snippets with real-time timestamps for lab notebooks."
+    geometry: {
+      seoTitle: "Bragg Angle, d-spacing & Scattering Vector Q Calculators | X-Ray Beamline Toolkit",
+      seoDesc: "Bragg diffraction angle, lattice d-spacing from Miller indices for all seven crystal systems, reciprocal-space scattering vector Q, beam footprint, detector angular resolution and Eulerian cradle corrections."
     },
-    dashboard: {
-      title: "INDEX", subtitle: "연구 툴킷 종합 목차 및 세부 모듈 색인",
-      seoTitle: "All Calculators — Index | X-Ray Beamline Toolkit",
-      seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
+    coherence: {
+      seoTitle: "BCDI Oversampling & Coherence Length Calculators | X-Ray Beamline Toolkit",
+      seoDesc: "Transverse and longitudinal coherence lengths at the sample, the Nyquist oversampling ratio for Bragg coherent diffraction imaging, and the real-space resolution a detector geometry can reach."
     },
     data: {
-      title: "IV. DATA", subtitle: "스캔 파일 판독, XY 플롯 및 XRR 이어붙이기",
       seoTitle: "Scan Data Viewer & XRR Stitching | X-Ray Beamline Toolkit",
       seoDesc: "Open two-column scan files in the browser, plot them on a linear or log axis, normalise, crop the range and stitch overlapping XRR segments into one curve."
     },
+    record: {
+      seoTitle: "Beamtime Logbook Headers & Calculation History | X-Ray Beamline Toolkit",
+      seoDesc: "Plain-text beamtime logbook headers, one-click in-situ event snippets with real-time timestamps, and the log of recent calculations."
+    },
+    dashboard: {
+      seoTitle: "All Calculators — Index | X-Ray Beamline Toolkit",
+      seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
+    },
     settings: {
-      title: "V. SETTINGS", subtitle: "언어, 테마, 데이터 백업 및 단축키",
       seoTitle: "Settings | X-Ray Beamline Toolkit",
       seoDesc: "Language, display theme and keyboard shortcuts for the X-Ray Beamline Toolkit."
     },
     about: {
-      title: "VI. ABOUT", subtitle: "프로젝트 정보 및 제작자",
       seoTitle: "About | X-Ray Beamline Toolkit",
       seoDesc: "A lightweight, offline-first toolkit of synchrotron X-ray calculators and session logging, built for beamline researchers."
     }
   };
+
+  // The first suite, and what an unknown route falls back to.
+  var DEFAULT_ROUTE = "radiometry";
+
+  // Links and bookmarks made before the suites were reorganised. A hash is the
+  // only address a card ever had, so dropping these would break every link
+  // anyone has saved or published. Each card moved to a known suite, so the
+  // redirect is exact rather than a guess at the nearest section.
+  var LEGACY_ROUTES = {
+    spectroscopy: {
+      "card-optics-energy": "optics",
+      "card-optics-refraction": "optics",
+      "card-optics-reflection": "optics",
+      "card-optics-grating": "optics",
+      "card-beamline-resolution": "optics",
+      "card-beamline-drift": "optics",
+      "card-lattice-dspacing": "geometry",
+      "card-beamline-flux": "radiometry",
+      "": "optics"
+    },
+    goniometry: {
+      "card-optics-bragg": "geometry",
+      "card-optics-qspace": "geometry",
+      "card-optics-scaling": "geometry",
+      "card-beamline-footprint": "geometry",
+      "card-beamline-detector": "geometry",
+      "card-optics-euler": "geometry",
+      "card-beamline-slit": "radiometry",
+      "card-beamline-cdi": "coherence",
+      "": "geometry"
+    }
+  };
+
+  // The suite's own name, from the one key that holds it.
+  function routeLabel(route) {
+    var key = "nav_" + route;
+    if (window.i18n && window.i18n.t) {
+      var s = window.i18n.t(key);
+      if (s !== key) return s;
+    }
+    return route.toUpperCase();
+  }
+
+  // Where a retired route and card now live, or null if the route is current.
+  function legacyRoute(route, cardId) {
+    var table = LEGACY_ROUTES[route];
+    if (!table) return null;
+    var moved = table[cardId || ""];
+    return moved || table[""] || null;
+  }
 
   // ------------------------------------------------------------------
   // Document metadata per route
@@ -626,7 +690,7 @@
 
   function navigateTo(route, targetCardId) {
     if (!routes[route]) {
-      route = "spectroscopy";
+      route = DEFAULT_ROUTE;
       targetCardId = "";
     }
     App.currentRoute = route;
@@ -703,11 +767,12 @@
 
     applyRouteMeta(route);
 
-    // Update Header Breadcrumb
+    // Update Header Breadcrumb. The suite name lives in the nav_<route> key
+    // and nowhere else — applyTranslations writes the same string here on a
+    // language switch, so a second copy in the routes table would only be one
+    // more thing to keep in step.
     var breadcrumbTitle = document.getElementById("breadcrumb-current");
-    if (breadcrumbTitle) {
-      breadcrumbTitle.textContent = routes[route].title;
-    }
+    if (breadcrumbTitle) breadcrumbTitle.textContent = routeLabel(route);
 
     // Scroll handling: either open the requested card or go to the top
     var contentArea = document.getElementById("content-area");
@@ -794,8 +859,25 @@
   function handleHashChange() {
     var rawHash = window.location.hash.replace(/^#\/?/, "");
     var parts = rawHash.split("/");
-    var route = parts[0] || "spectroscopy";
+    var route = parts[0] || DEFAULT_ROUTE;
     var targetCardId = parts[1] || "";
+
+    // An address from before the suites were reorganised: send it on to where
+    // the card lives now, rewriting the hash so the link the user copies next
+    // is the current one.
+    var moved = legacyRoute(route, targetCardId);
+    if (moved) {
+      var fresh = "#" + moved + (targetCardId ? "/" + targetCardId : "");
+      try {
+        if (history.replaceState) history.replaceState(null, "", fresh);
+      } catch (e) {
+        // Opened off disk in a browser that refuses replaceState on file://.
+        // The view still changes; only the address bar keeps the old text.
+      }
+      navigateTo(moved, targetCardId);
+      return;
+    }
+
     navigateTo(route, targetCardId);
   }
 
@@ -880,13 +962,15 @@
       // Alt + 1 ~ 7 for tab switching
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         var keyMap = {
-          "1": "spectroscopy",
-          "2": "goniometry",
-          "3": "record",
-          "4": "data",
-          "5": "settings",
-          "6": "about",
-          "7": "dashboard"
+          "1": "radiometry",
+          "2": "optics",
+          "3": "geometry",
+          "4": "coherence",
+          "5": "data",
+          "6": "record",
+          "7": "settings",
+          "8": "about",
+          "9": "dashboard"
         };
         if (keyMap[e.key]) {
           e.preventDefault();

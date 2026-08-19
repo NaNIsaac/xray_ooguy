@@ -277,7 +277,7 @@
           meta: "a = " + p.a + " Å",
           search: p.name + " " + p.system + " lattice preset 격자 프리셋",
           run: function () {
-            window.location.hash = "#spectroscopy/card-lattice-dspacing";
+            window.location.hash = "#geometry/card-lattice-dspacing";
             if (window.applyLatticePreset) window.applyLatticePreset(index);
           }
         });
@@ -292,7 +292,7 @@
           meta: "ρ = " + m.density_g_cm3 + " g/cm³",
           search: m.name + " " + m.symbol + " material 재료",
           run: function () {
-            window.location.hash = "#spectroscopy/card-optics-refraction";
+            window.location.hash = "#optics/card-optics-refraction";
             var sel = document.getElementById("refract-mat");
             if (sel) {
               sel.value = String(index);
