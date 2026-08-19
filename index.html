@@ -1451,6 +1451,84 @@
 
           <div class="flex-row">
 
+            <!-- Coherence lengths. The oversampling card checks that the
+                 detector samples the fringes finely enough; this one checks
+                 there are fringes to sample. A geometry can pass sigma and
+                 still be un-invertible because the beam was never coherent
+                 across the crystal. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-coh-length">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="coh_len_title">Coherence Lengths at the Sample</span>
+                  <span class="card-tag"><i class="formula">&xi;<sub>t</sub> = &lambda;R/2S, &xi;<sub>l</sub> = &lambda;/2(&Delta;E/E)</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="coh-energy" class="form-control mono" value="9.0" oninput="calcCoherenceLength()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_bandwidth">Bandwidth ΔE/E</span></label>
+                        <input type="number" id="coh-bandwidth" class="form-control mono" value="1.4e-4" oninput="calcCoherenceLength()" min="1e-9" max="1" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_src_h">Source size H (FWHM)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="coh-src-h" class="form-control mono" value="300" oninput="calcCoherenceLength()" min="0.01" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_src_v">Source size V (FWHM)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="coh-src-v" class="form-control mono" value="20" oninput="calcCoherenceLength()" min="0.01" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_dist">Source to sample</span> <span class="unit">(m)</span></label>
+                        <input type="number" id="coh-dist" class="form-control mono" value="45" oninput="calcCoherenceLength()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_size">Sample / Crystal Size</span> <span class="unit">(nm)</span></label>
+                        <input type="number" id="coh-sample" class="form-control mono" value="300" oninput="calcCoherenceLength()" min="0.1" max="10000000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_coh_xt_h">Transverse <i class="formula">&xi;<sub>t</sub></i>, horizontal</div>
+                        <div id="coh-res-xth" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_coh_xt_v">Transverse <i class="formula">&xi;<sub>t</sub></i>, vertical</div>
+                        <div id="coh-res-xtv" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_coh_xl">Longitudinal <i class="formula">&xi;<sub>l</sub></i></div>
+                        <div id="coh-res-xl" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_coh_maxpath">Max path difference</div>
+                        <div id="coh-res-path" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_coh_verdict_lbl">Sample against the transverse coherence:</span> <span id="coh-res-verdict" class="badge badge-subtle">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-cdi">
                 <div class="card-header">
@@ -1498,6 +1576,67 @@
                     </div>
                     <div class="result-formula">
                       <span data-i18n="res_verdict_lbl">Criterion Verdict:</span> <span id="cdi-res-verdict" class="badge badge-subtle">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- What the geometry can actually resolve. The number a
+                 reconstruction is reported at, and the one the oversampling
+                 ratio says nothing about. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-coh-resolution">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="coh_res_title">Reachable Real-Space Resolution</span>
+                  <span class="card-tag"><i class="formula">&Delta;r = &lambda;D / Np</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">Photon Energy</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="cres-energy" class="form-control mono" value="9.0" oninput="calcRealSpaceResolution()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_dist">Detector Distance</span> <span class="unit">(m)</span></label>
+                        <input type="number" id="cres-dist" class="form-control mono" value="1.5" oninput="calcRealSpaceResolution()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_pixel">Detector Pixel Size</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="cres-pixel" class="form-control mono" value="55" oninput="calcRealSpaceResolution()" min="0.1" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cres_npix">Pixels used (across)</span></label>
+                        <input type="number" id="cres-npix" class="form-control mono" value="256" oninput="calcRealSpaceResolution()" min="2" max="100000" step="1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_cres_dr">Real-space resolution <i class="formula">&Delta;r</i></div>
+                        <div id="cres-res-dr" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_cres_qmax">Half-width <i class="formula">Q</i> at the edge</div>
+                        <div id="cres-res-qmax" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cres_span">Angular half-span</div>
+                        <div id="cres-res-span" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cres_extent">Detector extent used</div>
+                        <div id="cres-res-extent" class="result-value">-</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1721,11 +1860,25 @@
                 </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec_coherence_desc">Coherence lengths at the sample, the oversampling ratio and the reachable real-space resolution</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" href="#coherence/card-beamline-cdi">
+                  <a class="toc-item-link" href="#coherence/card-coh-length">
                     <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_coh_len">Coherence Lengths at the Sample</span>
+                      <span class="toc-item-formula">&xi;<sub>t</sub> = &lambda;R/2S, &xi;<sub>l</sub> = &lambda;/2(&Delta;E/E)</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#coherence/card-beamline-cdi">
+                    <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_5">CDI / BCDI Coherent Oversampling</span>
                       <span class="toc-item-formula">oversampling ratio</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#coherence/card-coh-resolution">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_coh_res">Reachable Real-Space Resolution</span>
+                      <span class="toc-item-formula">&Delta;r = &lambda;D / Np</span>
                     </div>
                   </a>
                 </div>

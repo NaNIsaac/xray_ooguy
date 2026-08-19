@@ -449,6 +449,8 @@
   window.calcScanTime = calcScanTime;
   window.calcDose = calcDose;
   window.calcAbsorberStack = calcAbsorberStack;
+  window.calcCoherenceLength = calcCoherenceLength;
+  window.calcRealSpaceResolution = calcRealSpaceResolution;
 
   // ==================================================================
   // Shared: linear attenuation coefficient
@@ -680,6 +682,127 @@
     }
   }
 
+  // ==================================================================
+  // Coherence lengths at the sample
+  // ==================================================================
+  // The oversampling card asks whether the detector samples the fringes finely
+  // enough. It cannot ask whether there are fringes to sample. A geometry can
+  // pass sigma >= 2 and still be un-invertible, because the illumination was
+  // never coherent across the crystal in the first place.
+  //
+  // Transverse, from van Cittert-Zernike with a Gaussian source:
+  //
+  //     xi_t = lambda R / (2 S)        S = source size FWHM
+  //
+  // The factor of 2 is a convention — some write lambda R / (2 pi sigma) with
+  // sigma the RMS size, which for a Gaussian differs by about 6%. The card
+  // states which one it uses rather than leaving the reader to guess.
+  //
+  // Longitudinal, from the bandwidth:
+  //
+  //     xi_l = lambda^2 / (2 dlambda) = lambda / (2 dE/E)
+  //
+  // and the path difference a Bragg geometry actually imposes is what it has to
+  // be compared against: 2 d sin(theta) over the crystal, which for a crystal of
+  // size L at scattering angle 2theta is about L * 2 sin(theta) — the fringes
+  // wash out once that exceeds xi_l.
+  function calcCoherenceLength() {
+    var energy_keV = readField("coh-energy");
+    var bandwidth = readField("coh-bandwidth");
+    var srcH_um = readField("coh-src-h");
+    var srcV_um = readField("coh-src-v");
+    var dist_m = readField("coh-dist");
+    var sample_nm = readField("coh-sample");
+
+    if (isNaN(energy_keV) || energy_keV <= 0) return;
+    if (isNaN(srcH_um) || srcH_um <= 0 || isNaN(srcV_um) || srcV_um <= 0) return;
+    if (isNaN(dist_m) || dist_m <= 0 || isNaN(bandwidth) || bandwidth <= 0) return;
+
+    var out = document.getElementById("coh-res-xth");
+    if (!out) return;
+
+    var lambda_nm = CONSTANTS.hc_keV_nm / energy_keV;
+    var lambda_m = lambda_nm * 1e-9;
+
+    var xtH_um = (lambda_m * dist_m) / (2 * srcH_um * 1e-6) * 1e6;
+    var xtV_um = (lambda_m * dist_m) / (2 * srcV_um * 1e-6) * 1e6;
+    var xl_nm = lambda_nm / (2 * bandwidth);
+
+    out.innerHTML = fmt(xtH_um, 3) + " μm";
+    document.getElementById("coh-res-xtv").innerHTML = fmt(xtV_um, 3) + " μm";
+    document.getElementById("coh-res-xl").innerHTML = fmt(xl_nm, 1) + " nm";
+
+    // The path difference the longitudinal coherence has to cover, taken at the
+    // worst case of back-scattering, where 2 sin(theta) reaches 2.
+    var path_nm = isNaN(sample_nm) ? NaN : 2 * sample_nm;
+    document.getElementById("coh-res-path").innerHTML =
+      isNaN(path_nm) ? "-" : fmt(path_nm, 1) + " nm";
+
+    var verdict = document.getElementById("coh-res-verdict");
+    if (verdict) {
+      if (isNaN(sample_nm) || sample_nm <= 0) {
+        verdict.innerHTML = "-";
+      } else {
+        var sample_um = sample_nm / 1000;
+        var tight = Math.min(xtH_um, xtV_um);
+        var ratio = tight / sample_um;
+        if (ratio >= 2) verdict.innerHTML = TXT("res_coh_ok") + " (×" + fmt(ratio, 1) + ")";
+        else if (ratio >= 1) verdict.innerHTML = TXT("res_coh_marginal") + " (×" + fmt(ratio, 2) + ")";
+        else verdict.innerHTML = TXT("res_coh_fail") + " (×" + fmt(ratio, 2) + ")";
+      }
+    }
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-coh-length",
+        energy_keV + " keV, " + srcH_um + "×" + srcV_um + " μm @ " + dist_m + " m",
+        "ξt = " + fmt(xtH_um, 2) + " / " + fmt(xtV_um, 2) + " μm, ξl = " + fmt(xl_nm, 1) + " nm");
+    }
+  }
+
+  // ==================================================================
+  // Reachable real-space resolution
+  // ==================================================================
+  // Delta r = lambda D / (N p): the detector extent used sets the highest
+  // spatial frequency recorded, and that sets the smallest feature a
+  // reconstruction can carry. This is the number a BCDI result is quoted at,
+  // and the oversampling ratio says nothing about it.
+  function calcRealSpaceResolution() {
+    var energy_keV = readField("cres-energy");
+    var dist_m = readField("cres-dist");
+    var pixel_um = readField("cres-pixel");
+    var npix = readField("cres-npix");
+
+    if (isNaN(energy_keV) || energy_keV <= 0 || isNaN(dist_m) || dist_m <= 0) return;
+    if (isNaN(pixel_um) || pixel_um <= 0 || isNaN(npix) || npix < 2) return;
+
+    var out = document.getElementById("cres-res-dr");
+    if (!out) return;
+
+    var lambda_nm = CONSTANTS.hc_keV_nm / energy_keV;
+    var extent_mm = (npix * pixel_um) / 1000;
+    var dist_mm = dist_m * 1000;
+
+    var dr_nm = (lambda_nm * dist_mm) / extent_mm;
+
+    // Half-span, because the resolution is set by the distance from the centre
+    // of the pattern out to the edge of the region used.
+    var halfSpan_rad = Math.atan((extent_mm / 2) / dist_mm);
+    var theta = halfSpan_rad / 2;
+    var qmax = (4 * Math.PI * Math.sin(theta)) / (lambda_nm * 10);   // A^-1
+
+    out.innerHTML = fmt(dr_nm, 2) + " nm";
+    document.getElementById("cres-res-qmax").innerHTML = fmt(qmax, 4) + " Å<sup>-1</sup>";
+    document.getElementById("cres-res-span").innerHTML =
+      fmt(halfSpan_rad * 180 / Math.PI, 4) + "°";
+    document.getElementById("cres-res-extent").innerHTML = fmt(extent_mm, 2) + " mm";
+
+    if (window.recordCalculation) {
+      window.recordCalculation("card-coh-resolution",
+        energy_keV + " keV, " + Math.round(npix) + " px × " + pixel_um + " μm @ " + dist_m + " m",
+        "Δr = " + fmt(dr_nm, 2) + " nm");
+    }
+  }
+
   function initBeamlineView() {
     fillMaterialSelect("rad-dose-mat", 0);
     fillMaterialSelect("rad-abs-mat-1", 7);   // Aluminium: the drawer's default
@@ -697,6 +820,8 @@
     calcScanTime();
     calcDose();
     calcAbsorberStack();
+    calcCoherenceLength();
+    calcRealSpaceResolution();
   }
 
   window.initBeamlineView = initBeamlineView;

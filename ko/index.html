@@ -1457,6 +1457,84 @@
 
           <div class="flex-row">
 
+            <!-- Coherence lengths. The oversampling card checks that the
+                 detector samples the fringes finely enough; this one checks
+                 there are fringes to sample. A geometry can pass sigma and
+                 still be un-invertible because the beam was never coherent
+                 across the crystal. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-coh-length">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="coh_len_title">시료 위 결맞음 길이</span>
+                  <span class="card-tag"><i class="formula">&xi;<sub>t</sub> = &lambda;R/2S, &xi;<sub>l</sub> = &lambda;/2(&Delta;E/E)</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="coh-energy" class="form-control mono" value="9.0" oninput="calcCoherenceLength()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_bandwidth">밴드폭 ΔE/E</span></label>
+                        <input type="number" id="coh-bandwidth" class="form-control mono" value="1.4e-4" oninput="calcCoherenceLength()" min="1e-9" max="1" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_src_h">광원 크기 H (FWHM)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="coh-src-h" class="form-control mono" value="300" oninput="calcCoherenceLength()" min="0.01" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_src_v">광원 크기 V (FWHM)</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="coh-src-v" class="form-control mono" value="20" oninput="calcCoherenceLength()" min="0.01" max="100000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_coh_dist">광원-시료 거리</span> <span class="unit">(m)</span></label>
+                        <input type="number" id="coh-dist" class="form-control mono" value="45" oninput="calcCoherenceLength()" min="0.1" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_sample_size">시료/결정 크기</span> <span class="unit">(nm)</span></label>
+                        <input type="number" id="coh-sample" class="form-control mono" value="300" oninput="calcCoherenceLength()" min="0.1" max="10000000" step="any">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_coh_xt_h">횡 결맞음 길이 ξ<sub>t</sub>, 수평</div>
+                        <div id="coh-res-xth" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_coh_xt_v">횡 결맞음 길이 ξ<sub>t</sub>, 수직</div>
+                        <div id="coh-res-xtv" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_coh_xl">종 결맞음 길이 ξ<sub>l</sub></div>
+                        <div id="coh-res-xl" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_coh_maxpath">최대 경로차</div>
+                        <div id="coh-res-path" class="result-value">-</div>
+                      </div>
+                    </div>
+                    <div class="result-formula">
+                      <span data-i18n="res_coh_verdict_lbl">시료 크기 대 횡 결맞음:</span> <span id="coh-res-verdict" class="badge badge-subtle">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-6 col-lg-4">
               <div class="card" id="card-beamline-cdi">
                 <div class="card-header">
@@ -1504,6 +1582,67 @@
                     </div>
                     <div class="result-formula">
                       <span data-i18n="res_verdict_lbl">판정 결과:</span> <span id="cdi-res-verdict" class="badge badge-subtle">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- What the geometry can actually resolve. The number a
+                 reconstruction is reported at, and the one the oversampling
+                 ratio says nothing about. -->
+            <div class="col-6 col-lg-4">
+              <div class="card" id="card-coh-resolution">
+                <div class="card-header">
+                  <span class="card-title" data-i18n="coh_res_title">도달 가능한 실공간 분해능</span>
+                  <span class="card-tag"><i class="formula">&Delta;r = &lambda;D / Np</i></span>
+                </div>
+                <div class="card-body">
+                  <div class="flex-row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_photon_energy">광자 에너지</span> <span class="unit">(keV)</span></label>
+                        <input type="number" id="cres-energy" class="form-control mono" value="9.0" oninput="calcRealSpaceResolution()" min="0.1" max="200" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_dist">디텍터 거리</span> <span class="unit">(m)</span></label>
+                        <input type="number" id="cres-dist" class="form-control mono" value="1.5" oninput="calcRealSpaceResolution()" min="0.01" max="1000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_det_pixel">디텍터 픽셀 크기</span> <span class="unit">(μm)</span></label>
+                        <input type="number" id="cres-pixel" class="form-control mono" value="55" oninput="calcRealSpaceResolution()" min="0.1" max="10000" step="any">
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_cres_npix">사용 픽셀 수 (한 변)</span></label>
+                        <input type="number" id="cres-npix" class="form-control mono" value="256" oninput="calcRealSpaceResolution()" min="2" max="100000" step="1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="result-box">
+                    <div class="result-grid">
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_cres_dr">실공간 분해능 Δr</div>
+                        <div id="cres-res-dr" class="result-value primary">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n-html="res_cres_qmax">가장자리 Q (반폭)</div>
+                        <div id="cres-res-qmax" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cres_span">각도 반폭</div>
+                        <div id="cres-res-span" class="result-value">-</div>
+                      </div>
+                      <div class="result-item">
+                        <div class="result-label" data-i18n="res_cres_extent">사용한 검출기 범위</div>
+                        <div id="cres-res-extent" class="result-value">-</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1727,11 +1866,25 @@
                 </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec_coherence_desc">시료 위 결맞음 길이, 프린지 오버샘플링 비, 도달 가능한 실공간 분해능</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" href="#coherence/card-beamline-cdi">
+                  <a class="toc-item-link" href="#coherence/card-coh-length">
                     <span class="toc-item-num">§ 1.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_coh_len">시료 위 결맞음 길이</span>
+                      <span class="toc-item-formula">&xi;<sub>t</sub> = &lambda;R/2S, &xi;<sub>l</sub> = &lambda;/2(&Delta;E/E)</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#coherence/card-beamline-cdi">
+                    <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_5">CDI / BCDI 결맞음 오버샘플링</span>
                       <span class="toc-item-formula">oversampling ratio</span>
+                    </div>
+                  </a>
+                  <a class="toc-item-link" href="#coherence/card-coh-resolution">
+                    <span class="toc-item-num">§ 3.</span>
+                    <div class="toc-item-body">
+                      <span class="toc-item-name" data-i18n="toc_tool_coh_res">도달 가능한 실공간 분해능</span>
+                      <span class="toc-item-formula">&Delta;r = &lambda;D / Np</span>
                     </div>
                   </a>
                 </div>

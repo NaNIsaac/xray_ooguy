@@ -300,18 +300,63 @@
       check: function () {
         var out = [];
         var lambda_A = CONSTANTS.hc_eV_A / (val("cdi-energy") * 1000);
-        var a_um = val("cdi-sample-size");
-        var D_mm = val("cdi-dist");
-        if (!isNaN(lambda_A) && !isNaN(a_um) && !isNaN(D_mm) && a_um > 0 && D_mm > 0) {
+        // Nanometres, and metres — the field is labelled nm and the calculator
+        // reads it as nm, while the detector distance is in m. Read as um and
+        // mm this warning fired on every geometry the card was ever shown,
+        // because it inflated the Fresnel number by a million.
+        var a_nm = val("cdi-sample-size");
+        var D_m = val("cdi-dist");
+        if (!isNaN(lambda_A) && !isNaN(a_nm) && !isNaN(D_m) && a_nm > 0 && D_m > 0) {
           // Fresnel number F = a^2 / (lambda * D); far field needs F << 1.
-          var a_m = a_um * 1e-6;
+          var a_m = a_nm * 1e-9;
           var lambda_m = lambda_A * 1e-10;
-          var D_m = D_mm * 1e-3;
           var F = (a_m * a_m) / (lambda_m * D_m);
           if (F > 1) out.push({ key: "vw_cdi_nearfield", text: "F = " + fmt(F, 2) });
         }
         return out;
       }
+    },
+    {
+      card: "card-coh-length",
+      watch: ["coh-energy", "coh-bandwidth", "coh-src-h", "coh-src-v", "coh-dist", "coh-sample"],
+      model: ["vm_coh_vcz", "vm_coh_long"],
+      check: function () {
+        var out = [];
+        var e = val("coh-energy"), bw = val("coh-bandwidth");
+        var sh = val("coh-src-h"), sv = val("coh-src-v");
+        var R = val("coh-dist"), sample_nm = val("coh-sample");
+        if (isNaN(e) || e <= 0 || isNaN(sample_nm) || sample_nm <= 0) return out;
+
+        var lambda_nm = CONSTANTS.hc_keV_nm / e;
+
+        if (!isNaN(sh) && !isNaN(sv) && !isNaN(R) && sh > 0 && sv > 0 && R > 0) {
+          var lambda_m = lambda_nm * 1e-9;
+          var tight_um = Math.min(
+            (lambda_m * R) / (2 * sh * 1e-6) * 1e6,
+            (lambda_m * R) / (2 * sv * 1e-6) * 1e6
+          );
+          var sample_um = sample_nm / 1000;
+          if (tight_um < sample_um) {
+            out.push({ key: "vw_coh_undersized", text: fmt(tight_um, 3) + " μm < " + fmt(sample_um, 3) + " μm" });
+          }
+        }
+
+        if (!isNaN(bw) && bw > 0) {
+          var xl_nm = lambda_nm / (2 * bw);
+          var path_nm = 2 * sample_nm;
+          if (path_nm > xl_nm) {
+            out.push({ key: "vw_coh_pathlong", text: fmt(path_nm, 1) + " nm > " + fmt(xl_nm, 1) + " nm" });
+          }
+        }
+        return out;
+      }
+    },
+    {
+      card: "card-coh-resolution",
+      watch: ["cres-energy", "cres-dist", "cres-pixel", "cres-npix"],
+      model: ["vm_cres_farfield", "vm_cres_extent"],
+      // Always worth saying: this is a ceiling, not an achievement.
+      check: function () { return [{ key: "vw_cres_optimistic" }]; }
     },
     {
       card: "card-lattice-dspacing",
