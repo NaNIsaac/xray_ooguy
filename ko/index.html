@@ -1254,12 +1254,22 @@
                  the level is free to be the honest one. -->
             <h2 class="toc-maintitle" data-i18n="toc_maintitle">INDEX</h2>
             <p class="toc-subtitle" data-i18n="toc_subtitle">방사광 X선 광학 계산, 빔라인 물리량 분석, 실험 기록 및 결정학 레퍼런스 종합 색인</p>
+            <!-- Keys sit on the leaf nodes: the label, and the two values that
+                 are prose rather than an identifier. DOC NO, the roman suite
+                 count and CODATA 2022 read the same in both languages, so they
+                 stay as literal text.
+
+                 MODULES is 21 — the calculators and tools in suites I to IV.
+                 The three Settings panels are listed in the contents too, which
+                 is why it holds 24 entries, but they are not tools. 21 is also
+                 what the ItemList structured data publishes; the two numbers
+                 describe the same set and have to agree. -->
             <div class="toc-meta-bar">
-              <span class="toc-meta-item"><strong>DOC NO:</strong> BL-TK-2026</span>
-              <span class="toc-meta-item"><strong>TOTAL SUITES:</strong> VI</span>
-              <span class="toc-meta-item"><strong>MODULES:</strong> 25 Calculators &amp; Tools</span>
-              <span class="toc-meta-item"><strong>CALIBRATION:</strong> CODATA 2022</span>
-              <span class="toc-meta-item"><strong>STATUS:</strong> Client Offline-Native</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_docno">문서 번호:</strong> BL-TK-2026</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_suites">총 편수:</strong> VI</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_modules">모듈:</strong> <span data-i18n="toc_meta_modules_val">계산기 및 도구 21종</span></span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_calib">교정 기준:</strong> CODATA 2022</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_status">상태:</strong> <span data-i18n="toc_meta_status_val">클라이언트 오프라인 동작</span></span>
             </div>
           </div>
 
@@ -1271,64 +1281,64 @@
 
               <!-- SECTION X-RAY OPTICS SUITE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('spectroscopy')">
+                <a class="toc-sec-header" href="#spectroscopy">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION I.</span>
                     <span data-i18n="toc_sec1_title">분광 — 에너지, 파장, 물질 상호작용</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec1_desc">에너지-파장 변환, 결정 격자 간격, 복소 굴절률과 투과율, 에너지 분해능 및 플럭스</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-energy')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-energy">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_1">에너지 - 파장 - 주파수 변환</span>
                       <span class="toc-item-formula">E = hc/&lambda; = h&nu;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-lattice-dspacing')">
+                  <a class="toc-item-link" href="#spectroscopy/card-lattice-dspacing">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_lattice">격자 상수 &amp; 밀러 지수 → 격자면 간격</span>
                       <span class="toc-item-formula">a, b, c, &alpha;, &beta;, &gamma; + hkl &rarr; d</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-refraction')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-refraction">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_4">복소 굴절률 및 X선 투과율</span>
                       <span class="toc-item-formula">n = 1 &minus; &delta; + i&beta;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-reflection')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-reflection">
                     <span class="toc-item-num">§ 4.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_7">전반사 임계각</span>
                       <span class="toc-item-formula">&theta;c = &radic;(2&delta;)</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-grating')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-grating">
                     <span class="toc-item-num">§ 5.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_3">회절격자 분산 및 분해능</span>
                       <span class="toc-item-formula">d(sin&alpha; + sin&beta;) = m&lambda;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-resolution')">
+                  <a class="toc-item-link" href="#spectroscopy/card-beamline-resolution">
                     <span class="toc-item-num">§ 6.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_3">에너지 분해능 (ΔE/E) 계산</span>
                       <span class="toc-item-formula">&Delta;E/E</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-flux')">
+                  <a class="toc-item-link" href="#spectroscopy/card-beamline-flux">
                     <span class="toc-item-num">§ 7.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_2">빔라인 광자 플럭스</span>
                       <span class="toc-item-formula">photons / s</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-drift')">
+                  <a class="toc-item-link" href="#spectroscopy/card-beamline-drift">
                     <span class="toc-item-num">§ 8.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_7">결정 열팽창 각도 및 에너지 시프트</span>
@@ -1339,64 +1349,64 @@
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('goniometry')">
+                <a class="toc-sec-header" href="#goniometry">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION II.</span>
                     <span data-i18n="toc_sec2_title">고니오메트리 — 각도 및 기하 배치</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec2_desc">브래그 각도, 상호공간 Q 벡터, 빔 풋프린트, 디텍터 기하, 슬릿 및 크래들 보정</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-bragg')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-bragg">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_2">브래그 법칙 3방향 계산 수트</span>
                       <span class="toc-item-formula">&lambda; = 2d sin&theta;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-qspace')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-qspace">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_8">상호공간 Q-Space 및 주기 변환</span>
                       <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-scaling')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-scaling">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_5">에너지 스케일링 &amp; 각도 보정</span>
                       <span class="toc-item-formula">&theta;2 from E1 &rarr; E2</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-footprint')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-footprint">
                     <span class="toc-item-num">§ 4.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_1">시료 상 빔 풋프린트 &amp; 스필오버</span>
                       <span class="toc-item-formula">L = w / sin&theta;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-detector')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-detector">
                     <span class="toc-item-num">§ 5.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_4">디텍터 각도 분해능</span>
                       <span class="toc-item-formula">&Delta;2&theta; = atan(px / D)</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-slit')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-slit">
                     <span class="toc-item-num">§ 6.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_6">슬릿 간격 및 빔 수용각</span>
                       <span class="toc-item-formula">gap / distance</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-euler')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-euler">
                     <span class="toc-item-num">§ 7.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_6">Chi-Phi 오일러 크래들 보정</span>
                       <span class="toc-item-formula">chi-phi cradle</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-cdi')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-cdi">
                     <span class="toc-item-num">§ 8.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_5">CDI / BCDI 결맞음 오버샘플링</span>
@@ -1407,22 +1417,22 @@
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('record')">
+                <a class="toc-sec-header" href="#record">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION III.</span>
                     <span data-i18n="toc_sec3_title">로그북 &amp; 실시간 기록</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec3_desc">연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-headers')">
+                  <a class="toc-item-link" href="#record/card-record-headers">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_rec_1">빔타임 로그북 서식 프리셋</span>
                       <span class="toc-item-formula">Standard / Shift Handover / Run Table Matrix</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-snippets')">
+                  <a class="toc-item-link" href="#record/card-record-snippets">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_rec_2">실시간 빔타임 이벤트 스니펫</span>
@@ -1434,29 +1444,29 @@
 
               <!-- SECTION DATA SUITE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('data')">
+                <a class="toc-sec-header" href="#data">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION IV.</span>
                     <span data-i18n="toc_sec4_title">스캔 데이터 판독 및 플롯</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec4_desc">2열 스캔 파일 자동 판독, XY 플롯과 로그 축, 정규화와 구간 자르기, XRR 세그먼트 이어붙이기</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-load')">
+                  <a class="toc-item-link" href="#data/card-data-load">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_1">데이터 파일 불러오기</span>
                       <span class="toc-item-formula">TXT / CSV / DAT — delimiter &amp; header auto-detect</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-plot')">
+                  <a class="toc-item-link" href="#data/card-data-plot">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_2">XY 플롯</span>
                       <span class="toc-item-formula">Linear / log&#8321;&#8320; y · normalize · x crop</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-stitch')">
+                  <a class="toc-item-link" href="#data/card-data-stitch">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR 세그먼트 이어붙이기</span>
@@ -1473,29 +1483,29 @@
 
               <!-- SECTION SETTINGS & ARCHIVE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('settings')">
+                <a class="toc-sec-header" href="#settings">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION V.</span>
                     <span data-i18n="toc_sec6_title">환경설정 및 아카이브</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec6_desc">언어 설정, 테마 변경, 계산 히스토리 관리, 백업/복원 및 단축키 가이드</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-lang')">
+                  <a class="toc-item-link" href="#settings/card-set-lang">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_1">언어 설정</span>
                       <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
+                  <a class="toc-item-link" href="#settings/card-set-theme">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_2">화면 테마 모드</span>
                       <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
+                  <a class="toc-item-link" href="#settings/card-set-shortcuts">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내</span>
@@ -1507,12 +1517,12 @@
 
               <!-- SECTION ABOUT & PORTFOLIO -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('about')">
+                <a class="toc-sec-header" href="#about">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION VI.</span>
                     <span data-i18n="toc_sec7_title">연구자 프로필 및 후원</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec7_desc">연구자 약력, X선 광학·BCDI 연구 분야, 연락처 및 프로젝트 후원</div>
               </div>
 

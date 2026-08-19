@@ -1248,12 +1248,22 @@
                  the level is free to be the honest one. -->
             <h2 class="toc-maintitle" data-i18n="toc_maintitle">INDEX</h2>
             <p class="toc-subtitle" data-i18n="toc_subtitle">Comprehensive Index of Synchrotron Optics, Beamline Physics &amp; Experimental Suites</p>
+            <!-- Keys sit on the leaf nodes: the label, and the two values that
+                 are prose rather than an identifier. DOC NO, the roman suite
+                 count and CODATA 2022 read the same in both languages, so they
+                 stay as literal text.
+
+                 MODULES is 21 — the calculators and tools in suites I to IV.
+                 The three Settings panels are listed in the contents too, which
+                 is why it holds 24 entries, but they are not tools. 21 is also
+                 what the ItemList structured data publishes; the two numbers
+                 describe the same set and have to agree. -->
             <div class="toc-meta-bar">
-              <span class="toc-meta-item"><strong>DOC NO:</strong> BL-TK-2026</span>
-              <span class="toc-meta-item"><strong>TOTAL SUITES:</strong> VI</span>
-              <span class="toc-meta-item"><strong>MODULES:</strong> 25 Calculators &amp; Tools</span>
-              <span class="toc-meta-item"><strong>CALIBRATION:</strong> CODATA 2022</span>
-              <span class="toc-meta-item"><strong>STATUS:</strong> Client Offline-Native</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_docno">DOC NO:</strong> BL-TK-2026</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_suites">TOTAL SUITES:</strong> VI</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_modules">MODULES:</strong> <span data-i18n="toc_meta_modules_val">21 Calculators &amp; Tools</span></span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_calib">CALIBRATION:</strong> CODATA 2022</span>
+              <span class="toc-meta-item"><strong data-i18n="toc_meta_status">STATUS:</strong> <span data-i18n="toc_meta_status_val">Client Offline-Native</span></span>
             </div>
           </div>
 
@@ -1265,64 +1275,64 @@
 
               <!-- SECTION X-RAY OPTICS SUITE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('spectroscopy')">
+                <a class="toc-sec-header" href="#spectroscopy">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION I.</span>
                     <span data-i18n="toc_sec1_title">Spectroscopy — Energy, Wavelength &amp; Matter</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec1_desc">Energy-wavelength conversion, lattice spacing, complex refraction and transmittance, resolution and flux</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-energy')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-energy">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_1">Energy - Wavelength - Frequency</span>
                       <span class="toc-item-formula">E = hc/&lambda; = h&nu;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-lattice-dspacing')">
+                  <a class="toc-item-link" href="#spectroscopy/card-lattice-dspacing">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_lattice">Lattice Constants &amp; Miller Indices → d-spacing</span>
                       <span class="toc-item-formula">a, b, c, &alpha;, &beta;, &gamma; + hkl &rarr; d</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-refraction')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-refraction">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_4">Complex Refractive Index &amp; Transmittance</span>
                       <span class="toc-item-formula">n = 1 &minus; &delta; + i&beta;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-reflection')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-reflection">
                     <span class="toc-item-num">§ 4.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_7">Total External Reflection &amp; Critical Angle</span>
                       <span class="toc-item-formula">&theta;c = &radic;(2&delta;)</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-optics-grating')">
+                  <a class="toc-item-link" href="#spectroscopy/card-optics-grating">
                     <span class="toc-item-num">§ 5.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_3">Diffraction Grating Dispersion &amp; Resolution</span>
                       <span class="toc-item-formula">d(sin&alpha; + sin&beta;) = m&lambda;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-resolution')">
+                  <a class="toc-item-link" href="#spectroscopy/card-beamline-resolution">
                     <span class="toc-item-num">§ 6.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_3">Energy Resolution (ΔE/E) Estimator</span>
                       <span class="toc-item-formula">&Delta;E/E</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-flux')">
+                  <a class="toc-item-link" href="#spectroscopy/card-beamline-flux">
                     <span class="toc-item-num">§ 7.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_2">Beamline Photon Flux &amp; Efficiency</span>
                       <span class="toc-item-formula">photons / s</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('spectroscopy', 'card-beamline-drift')">
+                  <a class="toc-item-link" href="#spectroscopy/card-beamline-drift">
                     <span class="toc-item-num">§ 8.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_7">Crystal Thermal Expansion &amp; Angular Drift</span>
@@ -1333,64 +1343,64 @@
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('goniometry')">
+                <a class="toc-sec-header" href="#goniometry">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION II.</span>
                     <span data-i18n="toc_sec2_title">Goniometry — Angles &amp; Geometry</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec2_desc">Bragg angles, reciprocal-space Q, beam footprint, detector geometry, slits and cradle correction</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-bragg')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-bragg">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_2">Bragg's Law 3-Way Suite</span>
                       <span class="toc-item-formula">&lambda; = 2d sin&theta;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-qspace')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-qspace">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_8">Reciprocal Q-Space &amp; Momentum Transfer</span>
                       <span class="toc-item-formula">Q = 4&pi; sin&theta; / &lambda;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-scaling')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-scaling">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_5">Energy Scaling &amp; Angular Correction</span>
                       <span class="toc-item-formula">&theta;2 from E1 &rarr; E2</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-footprint')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-footprint">
                     <span class="toc-item-num">§ 4.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_1">Sample Beam Footprint &amp; Spillover</span>
                       <span class="toc-item-formula">L = w / sin&theta;</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-detector')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-detector">
                     <span class="toc-item-num">§ 5.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_4">Detector Angular Resolution &amp; Geometry</span>
                       <span class="toc-item-formula">&Delta;2&theta; = atan(px / D)</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-slit')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-slit">
                     <span class="toc-item-num">§ 6.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_6">Slit Aperture Opening &amp; Acceptance</span>
                       <span class="toc-item-formula">gap / distance</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-optics-euler')">
+                  <a class="toc-item-link" href="#goniometry/card-optics-euler">
                     <span class="toc-item-num">§ 7.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_opt_6">Chi-Phi Eulerian Cradle Correction</span>
                       <span class="toc-item-formula">chi-phi cradle</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('goniometry', 'card-beamline-cdi')">
+                  <a class="toc-item-link" href="#goniometry/card-beamline-cdi">
                     <span class="toc-item-num">§ 8.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_beam_5">CDI / BCDI Coherent Oversampling</span>
@@ -1401,22 +1411,22 @@
               </div>
 
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('record')">
+                <a class="toc-sec-header" href="#record">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION III.</span>
                     <span data-i18n="toc_sec3_title">Logbook &amp; Live Records</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec3_desc">Standard logbook templates for lab notebooks and 1-click in-situ beamtime event snippets</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-headers')">
+                  <a class="toc-item-link" href="#record/card-record-headers">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_rec_1">Beamtime Logbook Header Presets</span>
                       <span class="toc-item-formula">Standard / Shift Handover / Run Table Matrix</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('record', 'card-record-snippets')">
+                  <a class="toc-item-link" href="#record/card-record-snippets">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_rec_2">In-Situ Quick Log Snippets</span>
@@ -1428,29 +1438,29 @@
 
               <!-- SECTION DATA SUITE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('data')">
+                <a class="toc-sec-header" href="#data">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION IV.</span>
                     <span data-i18n="toc_sec4_title">Scan Data Viewer</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec4_desc">Two-column scan files read automatically, XY plot with a log axis, normalisation, range crop and XRR segment stitching</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-load')">
+                  <a class="toc-item-link" href="#data/card-data-load">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_1">Load Scan Files</span>
                       <span class="toc-item-formula">TXT / CSV / DAT — delimiter &amp; header auto-detect</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-plot')">
+                  <a class="toc-item-link" href="#data/card-data-plot">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_2">Generic XY Plot</span>
                       <span class="toc-item-formula">Linear / log&#8321;&#8320; y · normalize · x crop</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('data', 'card-data-stitch')">
+                  <a class="toc-item-link" href="#data/card-data-stitch">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_dv_3">XRR Segment Stitching</span>
@@ -1467,29 +1477,29 @@
 
               <!-- SECTION SETTINGS & ARCHIVE -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('settings')">
+                <a class="toc-sec-header" href="#settings">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION V.</span>
                     <span data-i18n="toc_sec6_title">System Settings &amp; Archive</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec6_desc">Language selection, high-contrast theme, calculation run logs, JSON backup &amp; keyboard shortcuts</div>
                 <div class="toc-items-container">
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-lang')">
+                  <a class="toc-item-link" href="#settings/card-set-lang">
                     <span class="toc-item-num">§ 1.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_1">Language Selection</span>
                       <span class="toc-item-formula">Korean (한국어) / English (영어)</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-theme')">
+                  <a class="toc-item-link" href="#settings/card-set-theme">
                     <span class="toc-item-num">§ 2.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_2">Display Theme Mode</span>
                       <span class="toc-item-formula">Paper, Parchment, Datasheet, Blueprint, CRT, Tokyo, Console</span>
                     </div>
                   </a>
-                  <a class="toc-item-link" onclick="jumpToSection('settings', 'card-set-shortcuts')">
+                  <a class="toc-item-link" href="#settings/card-set-shortcuts">
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_5">Keyboard Shortcuts Guide</span>
@@ -1501,12 +1511,12 @@
 
               <!-- SECTION ABOUT & PORTFOLIO -->
               <div class="toc-section-card">
-                <div class="toc-sec-header" onclick="jumpToSection('about')">
+                <a class="toc-sec-header" href="#about">
                   <div class="toc-sec-title">
                     <span class="toc-roman-badge">SECTION VI.</span>
                     <span data-i18n="toc_sec7_title">About the Creator &amp; Research</span>
                   </div>
-                </div>
+                </a>
                 <div class="toc-sec-desc" data-i18n="toc_sec7_desc">Researcher profile, Coherent X-ray Optics / BCDI domain expertise, and GitHub Sponsors</div>
               </div>
 

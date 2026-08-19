@@ -371,6 +371,49 @@ a:hover {
   border-bottom: none;
 }
 
+/* ------------------------------------------------------------------
+   Keyboard focus
+   ------------------------------------------------------------------
+   Every control that can be tabbed to says so. The buttons, nav items
+   and contents entries each set `outline: none` or inherit it, which
+   left a keyboard user with no caret at all on a page of 30-odd
+   buttons.
+
+   Outline rather than border: it is drawn outside the box and does not
+   move anything, so a square 2px ring can sit on a hairline layout
+   without shifting a single rule. It is --accent-ink, the one accent,
+   and offset so it reads as separate from the element's own border.
+
+   :focus, not :focus-visible — Firefox 60 and Chrome 60 do not know
+   the latter. The follow-up rule drops the ring for mouse clicks where
+   :focus-visible *is* understood; a browser that does not understand it
+   discards that whole rule and keeps the ring on always, which is the
+   safe direction to fail in. */
+.btn:focus,
+.nav-item:focus,
+.nav-sub-item:focus,
+.tab-pill:focus,
+.theme-swatch:focus,
+.toc-item-link:focus,
+.toc-sec-header:focus,
+.result-box-copy-btn:focus,
+.lang-toggle:focus {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.btn:focus:not(:focus-visible),
+.nav-item:focus:not(:focus-visible),
+.nav-sub-item:focus:not(:focus-visible),
+.tab-pill:focus:not(:focus-visible),
+.theme-swatch:focus:not(:focus-visible),
+.toc-item-link:focus:not(:focus-visible),
+.toc-sec-header:focus:not(:focus-visible),
+.result-box-copy-btn:focus:not(:focus-visible),
+.lang-toggle:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Mathematical Formulae and Italic Serif */
 i, em, var, .formula {
   font-family: var(--font-serif);
@@ -1251,8 +1294,10 @@ select.form-control {
   color: var(--accent-ink);
 }
 
+/* No outline reset here: the shared focus block above owns the ring, and
+   this rule sits later in the file at the same specificity, so killing the
+   outline here would win the tie and leave the button silent again. */
 .result-box-copy-btn:focus {
-  outline: none;
   opacity: 1;
   border-color: var(--accent-ink);
 }
@@ -2098,6 +2143,9 @@ html[lang="ko"] .nav-ref-head {
 }
 
 /* Chapter heading: the rule belongs under the title, not around a bar */
+/* A real link, so the section rule survives the global anchor styling:
+   the heavy rule under the heading is the border, not a link underline,
+   and the colour belongs to the badge and title inside. */
 .toc-sec-header {
   display: flex;
   justify-content: space-between;
@@ -2106,6 +2154,16 @@ html[lang="ko"] .nav-ref-head {
   border-bottom: var(--rule-heavy);
   box-sizing: border-box;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The global a:hover inverts the whole box; a section heading only tints
+   its title, which .toc-sec-header:hover .toc-sec-title already does. */
+.toc-sec-header:hover {
+  background-color: transparent;
+  color: inherit;
+  border-bottom: var(--rule-heavy);
 }
 
 .toc-sec-title {

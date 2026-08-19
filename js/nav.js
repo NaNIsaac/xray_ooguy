@@ -36,7 +36,11 @@
     return (key && window.i18n && window.i18n.allText) ? window.i18n.allText(key) : "";
   }
 
-  var JUMP = /jumpToSection\(\s*'([a-z]+)'\s*,\s*'([a-z0-9-]+)'\s*\)/;
+  // The contents entries are real links, so the route and card are read from
+  // the href the browser already follows — not from a handler attribute. One
+  // source of truth: a typo in a href breaks the link visibly instead of
+  // silently dropping the entry out of the sidebar.
+  var JUMP = /^#?([a-z]+)\/([a-z0-9-]+)$/;
   var groups = {};        // route -> [{ card, num, key, text }]
   var cardRoutes = {};    // card id -> route
   var subLists = {};      // route -> container element
@@ -45,8 +49,8 @@
   function readTableOfContents() {
     var links = document.querySelectorAll(".toc-item-link");
     for (var i = 0; i < links.length; i++) {
-      var onclick = links[i].getAttribute("onclick") || "";
-      var m = JUMP.exec(onclick);
+      var href = links[i].getAttribute("href") || "";
+      var m = JUMP.exec(href);
       if (!m) continue;
 
       var nameEl = links[i].querySelector(".toc-item-name");
