@@ -54,16 +54,19 @@
       if (!m) continue;
 
       var nameEl = links[i].querySelector(".toc-item-name");
-      var numEl = links[i].querySelector(".toc-item-num");
       if (!nameEl) continue;
 
       if (!groups[m[1]]) groups[m[1]] = [];
       cardRoutes[m[2]] = m[1];
       groups[m[1]].push({
         card: m[2],
+        // Straight from the numbering map, not off the contents markup: the
+        // card's position in its view is the one source, and reading the
+        // rendered text here would just be a second-hand copy of it.
+        //
         // Bare numeral: the § sign belongs on the card and in the table of
         // contents, but repeated down a narrow column it is just noise.
-        num: numEl ? numEl.textContent.replace(/[^0-9.]/g, "").replace(/\.$/, "") : "",
+        num: (window.cardNumber ? window.cardNumber(m[2]) : "").replace(/[^0-9.]/g, "").replace(/\.$/, ""),
         key: nameEl.getAttribute("data-i18n") || "",
         text: nameEl.textContent
       });

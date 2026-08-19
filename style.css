@@ -1096,6 +1096,27 @@ sub {
   margin: 0;
 }
 
+/* The section number is generated from a data attribute, not written into the
+   title string. Two reasons it has to be an attribute:
+
+   i18n.applyTranslations assigns textContent (or innerHTML) straight onto the
+   element carrying the key, so anything living inside .card-title as a child
+   node is wiped on every language switch. An attribute survives it untouched.
+
+   And .card-header is a two-child flexbox with space-between — title left, tag
+   right. A third child would have to be re-taught that layout; ::before joins
+   the title's own line box and changes nothing.
+
+   The number itself comes from the card's position in its view section, filled
+   in by renumberCards() in app.js. Empty attribute renders nothing, so a card
+   outside a numbered section simply has no number. */
+.card-title[data-num]::before {
+  content: attr(data-num) " ";
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
 .card-tag {
   font-family: var(--font-mono);
   font-size: 0.785rem;

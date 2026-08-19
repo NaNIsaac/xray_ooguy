@@ -772,6 +772,60 @@
     });
   }
 
+  // ------------------------------------------------------------------
+  // Section numbers
+  // ------------------------------------------------------------------
+  // The § number used to be typed into three separate places: the card title
+  // string in both languages, the contents markup, and the label passed to
+  // recordCalculation. Three copies of one fact, kept in step by hand.
+  //
+  // They drifted. When the two original suites were reorganised into
+  // spectroscopy and goniometry, twelve of the thirteen history labels kept the
+  // old numbering and pointed at sections that no longer existed.
+  //
+  // The position of a card inside its view section is the only source now.
+  // Everything that displays a number asks for it here, so a card can be moved
+  // or inserted and the numbering follows on the next load.
+  var cardNumbers = {};   // card id -> "§ 3."
+
+  function renumberCards() {
+    cardNumbers = {};
+
+    var views = document.querySelectorAll(".view-section");
+    for (var v = 0; v < views.length; v++) {
+      var cards = views[v].querySelectorAll(".card[id]");
+      for (var c = 0; c < cards.length; c++) {
+        var label = "§ " + (c + 1) + ".";
+        cardNumbers[cards[c].id] = label;
+
+        // An attribute, not text: applyTranslations writes textContent onto the
+        // element holding the key, which would wipe any child node on every
+        // language switch. CSS draws it from the attribute instead.
+        var title = cards[c].querySelector(".card-title");
+        if (title) title.setAttribute("data-num", label);
+      }
+    }
+
+    // The contents entries keep the number as real text — it is a numbered list
+    // and the number is part of what the eye scans down. The literal sitting in
+    // the markup is a pre-JavaScript fallback only, like the untranslated inline
+    // text everywhere else; this overwrites it.
+    var links = document.querySelectorAll(".toc-item-link[href]");
+    for (var i = 0; i < links.length; i++) {
+      var m = /^#?[a-z]+\/([a-z0-9-]+)$/.exec(links[i].getAttribute("href") || "");
+      if (!m) continue;
+      var numEl = links[i].querySelector(".toc-item-num");
+      if (numEl && cardNumbers[m[1]]) numEl.textContent = cardNumbers[m[1]];
+    }
+
+    return cardNumbers;
+  }
+
+  // "§ 3." for a card id, empty string for anything not in a numbered section.
+  function cardNumber(cardId) {
+    return cardNumbers[cardId] || "";
+  }
+
   // Expose global helpers to window
   window.App = App;
   window.Storage = Storage;
@@ -779,6 +833,8 @@
   window.recordCalculation = recordCalculation;
   window.navigateTo = navigateTo;
   window.jumpToSection = jumpToSection;
+  window.renumberCards = renumberCards;
+  window.cardNumber = cardNumber;
   window.setPageMeta = setPageMeta;
   window.applyTheme = applyTheme;
   window.THEMES = THEMES;
@@ -795,6 +851,11 @@
     if (window.i18n && window.i18n.init) {
       window.i18n.init();
     }
+
+    // Numbering runs before anything asks for a number. nav.js builds the
+    // sidebar out of the contents block from its own DOMContentLoaded handler,
+    // registered after this one, so the map is filled by the time it looks.
+    renumberCards();
 
     // Load theme (migrates old "light"/"dark" values on the way in)
     var savedTheme = Storage.get("theme", "paper");
