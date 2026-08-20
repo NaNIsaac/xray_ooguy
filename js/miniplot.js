@@ -193,97 +193,140 @@
       callout: callout
     });
 
-    // Mark where the footprint starts spilling off the sample.
+    // The curve on its own is 1/sin, which nobody needs a picture of. What the
+    // picture is for is the sample edge: the footprint crosses it at one angle,
+    // and below that angle the beam is lighting up the holder. That crossing is
+    // the decision, so it is drawn as a line with the angle stated, not as a
+    // label in the corner saying how long the sample is.
     if (html && !isNaN(sampleL) && sampleL > 0) {
-      html = html.replace("</svg>",
-        '<text class="miniplot-label" x="' + (W - PAD_R) + '" y="' + (PAD_T + 8) +
-        '" text-anchor="end">' + t("mp_sample") + " " + sampleL + ' mm</text></svg>');
+      var yTop = 0, yBot = 0;
+      for (var k = 0; k < pts.length; k++) {
+        yTop = Math.max(yTop, pts[k][1]);
+        yBot = k === 0 ? pts[k][1] : Math.min(yBot, pts[k][1]);
+      }
+      // Same axis the line was drawn on, headroom included.
+      var padY = (yTop - yBot) * 0.08;
+      var axMin = Math.max(0, yBot - padY), axMax = yTop + padY;
+
+      if (sampleL > axMin && sampleL < axMax) {
+        var y = (H - PAD_B) - (sampleL - axMin) / (axMax - axMin) * (H - PAD_T - PAD_B);
+        // Angle at which the footprint is exactly the sample length.
+        var sinMin = (beamV / 1000) / sampleL;
+        var spillAngle = sinMin <= 1 ? Math.asin(sinMin) * 180 / Math.PI : NaN;
+
+        var over =
+          '<rect class="miniplot-band-warn" x="' + PAD_L + '" y="' + PAD_T +
+            '" width="' + (W - PAD_L - PAD_R) + '" height="' + (y - PAD_T).toFixed(1) + '"/>' +
+          '<path class="miniplot-threshold" d="M' + PAD_L + ',' + y.toFixed(1) +
+            ' L' + (W - PAD_R) + ',' + y.toFixed(1) + '"/>' +
+          '<text class="miniplot-label" x="' + (PAD_L + 3) + '" y="' + (y - 3).toFixed(1) + '">' +
+            esc(t("mp_sample") + " " + sampleL + " mm") + '</text>';
+
+        html = html.replace('<path class="miniplot-curve"', over + '<path class="miniplot-curve"');
+
+        if (isFinite(spillAngle)) {
+          html = html.replace("</svg>",
+            '<text class="miniplot-callout" x="' + (W - PAD_R) + '" y="' + (H - PAD_B - 6) +
+            '" text-anchor="end">' + esc(t("mp_spills_below") + " " + spillAngle.toFixed(2) + "°") +
+            "</text></svg>");
+        }
+      }
     }
 
     draw("card-beamline-footprint", "mp_footprint", html);
   }
 
   // ------------------------------------------------------------------
-  // Transmittance — T(z) = exp(-mu z), and the working thickness
+  // Transmittance vs photon energy, over the range the model is valid in
   // ------------------------------------------------------------------
+  // This used to be T against thickness, which is exp(-mu z): the attenuation
+  // length printed on the card is the whole curve, and nobody needs a picture
+  // of an exponential they can already read off a number.
+  //
+  // Against energy it says two things a number does not. How much transmission
+  // another keV actually buys, which is a decision at the mono. And where the
+  // model stops: beta is scaled from the tabulated 10 keV value by a power law,
+  // and an absorption edge breaks it, so the curve ends at the edge instead of
+  // drawing a smooth line through a step several times its own height. The
+  // validity panel says the same thing in words; this makes it a wall.
+  var SCALING_ANCHOR_KEV = 10;
+
   function plotTransmittance() {
     var thick = val("refract-thick");      // um
     var energy = val("refract-energy");    // keV
     var sel = document.getElementById("refract-mat");
-    if (!sel || isNaN(energy) || energy <= 0) return draw("card-optics-refraction", "mp_transmit", "");
+    if (!sel || isNaN(thick) || thick <= 0) return draw("card-optics-refraction", "mp_transmit", "");
 
     var mat = MATERIALS_DB[parseInt(sel.value, 10)] || MATERIALS_DB[0];
-    if (!mat) return draw("card-optics-refraction", "mp_transmit", "");
+    if (!mat || !window.muOf) return draw("card-optics-refraction", "mp_transmit", "");
 
-    // Same scaling the calculator itself uses.
-    var beta = mat.beta_10keV * Math.pow(10.0 / energy, 3.5);
-    var lambda_cm = (CONSTANTS.hc_keV_nm * 10 / energy) * 1e-8;
-    var mu_cm = (4 * Math.PI * beta) / lambda_cm;
-    if (!(mu_cm > 0)) return draw("card-optics-refraction", "mp_transmit", "");
+    // The edge-free interval containing the anchor is where the power law is
+    // the material's own curve rather than an extrapolation across a step.
+    var edges = mat.edges || [];
+    var lo = 1, hi = 60, loEdge = null, hiEdge = null;
 
-    var attLen_um = (1 / mu_cm) * 1e4;
-    var maxThick = isNaN(thick) || thick <= 0 ? attLen_um * 3 : Math.max(thick * 2, attLen_um * 3);
+    for (var i = 0; i < edges.length; i++) {
+      var keV = edges[i].keV;
+      if (keV < SCALING_ANCHOR_KEV && keV > lo) { lo = keV; loEdge = edges[i]; }
+      if (keV > SCALING_ANCHOR_KEV && keV < hi) { hi = keV; hiEdge = edges[i]; }
+    }
+    if (!(hi > lo)) return draw("card-optics-refraction", "mp_transmit", "");
+
+    // Beryllium is edge-free from 1 to 60 keV, and 50 of those keV are a flat
+    // line at 100%. Zoom to a factor of three either side of where the card is
+    // working — but never past an edge, which is the one boundary that means
+    // something. An end that is still an edge keeps its label; one the zoom
+    // pulled inwards does not, or the plot would name an edge that is not there.
+    if (!isNaN(energy) && energy > 0) {
+      var zoomLo = Math.max(lo, energy / 3);
+      var zoomHi = Math.min(hi, energy * 3);
+      if (zoomHi > zoomLo) {
+        if (zoomLo > lo) { lo = zoomLo; loEdge = null; }
+        if (zoomHi < hi) { hi = zoomHi; hiEdge = null; }
+      }
+    }
 
     var pts = [];
-    var steps = 120;
-    for (var i = 0; i <= steps; i++) {
-      var z_um = maxThick * i / steps;
-      pts.push([z_um, Math.exp(-mu_cm * z_um * 1e-4) * 100]);
+    for (i = 0; i <= 120; i++) {
+      var E = lo + (hi - lo) * i / 120;
+      var mu_cm = window.muOf(mat, E);
+      if (!(mu_cm > 0)) continue;
+      pts.push([E, Math.exp(-mu_cm * thick * 1e-4) * 100]);
     }
 
     var marker = null, callout = "";
-    if (!isNaN(thick) && thick > 0) {
-      var T = Math.exp(-mu_cm * thick * 1e-4) * 100;
-      marker = [thick, T];
-      callout = T.toFixed(1) + "%";
+    if (!isNaN(energy) && energy > lo && energy < hi) {
+      var muHere = window.muOf(mat, energy);
+      if (muHere > 0) {
+        var T = Math.exp(-muHere * thick * 1e-4) * 100;
+        marker = [energy, T];
+        callout = T.toFixed(1) + "%";
+      }
     }
 
-    draw("card-optics-refraction", "mp_transmit", svgLine(pts, marker, {
-      xlabel: t("mp_x_thickness"),
+    var html = svgLine(pts, marker, {
+      xlabel: t("mp_x_energy"),
       ylabel: t("mp_y_transmit"),
       callout: callout,
       yZero: true,
       yCap: 100        // per cent
-    }));
-  }
+    });
 
-  // ------------------------------------------------------------------
-  // Bragg angle vs energy for the entered d-spacing
-  // ------------------------------------------------------------------
-  function plotBragg() {
-    var d = val("bragg-r3-d");
-    var e = val("bragg-r3-e");
-    if (isNaN(d) || d <= 0) return draw("card-optics-bragg", "mp_bragg", "");
-
-    // Only energies where a reflection actually exists: lambda <= 2d.
-    var eMin = CONSTANTS.hc_eV_A / (2 * d * 1000);
-    var lo = eMin * 1.02;
-    var hi = isNaN(e) || e <= 0 ? eMin * 6 : Math.max(e * 1.8, eMin * 3);
-
-    var pts = [];
-    var steps = 120;
-    for (var i = 0; i <= steps; i++) {
-      var energy = lo + (hi - lo) * i / steps;
-      var s = CONSTANTS.hc_eV_A / (energy * 1000) / (2 * d);
-      if (s > 1) continue;
-      pts.push([energy, Math.asin(s) * 180 / Math.PI]);
-    }
-
-    var marker = null, callout = "";
-    if (!isNaN(e) && e > 0) {
-      var sm = CONSTANTS.hc_eV_A / (e * 1000) / (2 * d);
-      if (sm <= 1) {
-        var th = Math.asin(sm) * 180 / Math.PI;
-        marker = [e, th];
-        callout = th.toFixed(2) + "°";
+    // The ends of the axis are the edges themselves, so they are named there.
+    if (html) {
+      var edgeText = "";
+      if (loEdge) {
+        edgeText += '<text class="miniplot-label" x="' + (PAD_L + 2) + '" y="' + (PAD_T + 8) + '">' +
+          esc(loEdge.n + " " + loEdge.keV.toFixed(3)) + "</text>";
       }
+      if (hiEdge) {
+        edgeText += '<text class="miniplot-label" x="' + (W - PAD_R - 2) + '" y="' + (PAD_T + 8) +
+          '" text-anchor="end">' + esc(hiEdge.n + " " + hiEdge.keV.toFixed(3)) + "</text>";
+      }
+      if (edgeText) html = html.replace("</svg>", edgeText + "</svg>");
     }
 
-    draw("card-optics-bragg", "mp_bragg", svgLine(pts, marker, {
-      xlabel: t("mp_x_energy"),
-      ylabel: t("mp_y_theta"),
-      callout: callout
-    }));
+    draw("card-optics-refraction", "mp_transmit", html);
   }
 
   // ------------------------------------------------------------------
@@ -414,10 +457,15 @@
 
   window.renderReflectionPlot = plotReflections;
 
+  // Four plots, and each one is here because it answers something the number
+  // beside it does not: where the beam stops fitting on the sample, where the
+  // material stops transmitting, how far the detector has to go, and which
+  // reflections land inside the range being scanned. Bragg angle against energy
+  // was dropped — it is a monotone curve with no threshold on it, and the angle
+  // the card prints is the only part anyone read.
   var PLOTS = [
     { fn: plotFootprint, watch: ["fp-beam-v", "fp-inc-angle", "fp-sample-len"] },
     { fn: plotTransmittance, watch: ["refract-thick", "refract-energy", "refract-mat"] },
-    { fn: plotBragg, watch: ["bragg-r3-d", "bragg-r3-e"] },
     { fn: plotCDI, watch: ["cdi-energy", "cdi-dist", "cdi-pixel", "cdi-sample-size"] }
   ];
 

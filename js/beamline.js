@@ -468,6 +468,10 @@
     return (4 * Math.PI * beta) / lambda_cm;
   }
 
+  // The transmittance plot draws the same quantity the cards compute, and a
+  // plot that disagrees with the number beside it is worse than no plot.
+  window.muOf = muOf;
+
   function materialAt(selectId) {
     var el = document.getElementById(selectId);
     if (!el) return null;

@@ -279,8 +279,8 @@
 
       // Mini visualizers
       mp_footprint: "입사각에 따른 풋프린트",
-      mp_transmit: "두께에 따른 투과율",
-      mp_bragg: "에너지에 따른 브래그 각도",
+      mp_transmit: "에너지에 따른 투과율 (흡수단 사이)",
+      mp_spills_below: "시료를 벗어나는 각도",
       mp_cdi: "디텍터 거리에 따른 오버샘플링 σ",
       mp_refl: "이 격자가 주는 반사면 위치",
       mp_x_det_distance: "디텍터 거리 (m)",
@@ -289,12 +289,8 @@
       mp_cdi_needs: "σ ≥ 2 최소 거리",
       mp_x_angle: "입사각 (°)",
       mp_y_footprint: "풋프린트 (mm)",
-      mp_x_thickness: "두께 (μm)",
       mp_y_transmit: "투과율 (%)",
       mp_x_energy: "에너지 (keV)",
-      mp_y_theta: "θ (°)",
-      mp_x_distance: "광원 거리 (m)",
-      mp_y_fwhm: "FWHM (mm)",
       mp_sample: "시료",
 
       // Themes (7 palettes)
@@ -856,8 +852,8 @@
 
       // Mini visualizers
       mp_footprint: "Footprint vs incidence angle",
-      mp_transmit: "Transmittance vs thickness",
-      mp_bragg: "Bragg angle vs energy",
+      mp_transmit: "Transmittance vs energy, between the edges",
+      mp_spills_below: "Spills off the sample below",
       mp_cdi: "Oversampling σ vs detector distance",
       mp_refl: "Where this cell puts its reflections",
       mp_x_det_distance: "Detector distance (m)",
@@ -866,12 +862,8 @@
       mp_cdi_needs: "σ ≥ 2 needs",
       mp_x_angle: "Incidence angle (°)",
       mp_y_footprint: "Footprint (mm)",
-      mp_x_thickness: "Thickness (μm)",
       mp_y_transmit: "Transmittance (%)",
       mp_x_energy: "Energy (keV)",
-      mp_y_theta: "θ (°)",
-      mp_x_distance: "Distance from source (m)",
-      mp_y_fwhm: "FWHM (mm)",
       mp_sample: "Sample",
 
       // Themes (7 palettes)
