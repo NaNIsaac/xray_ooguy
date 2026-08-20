@@ -147,6 +147,89 @@ var nav = fs.readFileSync(path.join(ROOT, "js", "nav.js"), "utf8");
 });
 
 // ---------------------------------------------------------------------------
+// 6. The gauge draws inside its own track
+// ---------------------------------------------------------------------------
+// The gauge turns two numbers into a bar against a tick, and the arithmetic
+// that places them has no visible failure mode: a fill wider than the track,
+// a tick outside it or a NaN in an attribute all render as a bar that simply
+// looks wrong, on a page nobody checks with a ruler. miniplot.js is run here
+// against a DOM stub thin enough to fit in this file, and the SVG it produces
+// is measured.
+var vm = require("vm");
+
+function renderGauge(spec) {
+  var box = { id: "", className: "", innerHTML: "" };
+  var body = { appendChild: function () {}, insertBefore: function () {} };
+  var card = { querySelector: function () { return body; } };
+
+  var sandbox = {
+    window: {},
+    console: { warn: function () {} },
+    document: {
+      readyState: "complete",
+      getElementById: function (id) {
+        if (/-plot$/.test(id)) return box;
+        if (/^card-/.test(id)) return card;
+        return null;
+      },
+      createElement: function () { return box; },
+      querySelectorAll: function () { return []; },
+      addEventListener: function () {}
+    }
+  };
+  sandbox.window = sandbox;
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "js", "miniplot.js"), "utf8"), sandbox, { filename: "miniplot.js" });
+
+  sandbox.window.renderGauge("card-test", "gauge_scan", spec);
+  return box.innerHTML;
+}
+
+[
+  { name: "under the limit", spec: { value: 30, limit: 100, pass: true } },
+  { name: "at the limit", spec: { value: 100, limit: 100, pass: true } },
+  { name: "way over", spec: { value: 4000, limit: 100, pass: false } },
+  { name: "a rounding error over", spec: { value: 100.0001, limit: 100, pass: false } },
+  { name: "zero", spec: { value: 0, limit: 100, pass: true } },
+  { name: "good side above, failing", spec: { value: 0.4, limit: 1, pass: false, goodBelow: false } },
+  { name: "good side above, passing", spec: { value: 6, limit: 1, pass: true, goodBelow: false } }
+].forEach(function (c) {
+  var svg = renderGauge(c.spec);
+  if (!svg || svg.indexOf("<svg") < 0) { failures.push("gauge (" + c.name + ") drew nothing"); return; }
+  if (/NaN|Infinity|undefined/.test(svg)) { failures.push("gauge (" + c.name + ") emitted NaN/Infinity/undefined"); return; }
+
+  // Track is x=8 width=304, so nothing the gauge draws may leave 8..312.
+  var widths = svg.match(/width="([\d.]+)"/g) || [];
+  for (var w = 0; w < widths.length; w++) {
+    var val = parseFloat(widths[w].slice(7));
+    if (val > 304.001) failures.push("gauge (" + c.name + ") drew a " + val + "px bar in a 304px track");
+  }
+  var tick = /d="M([\d.]+),/.exec(svg);
+  if (tick && (parseFloat(tick[1]) < 8 || parseFloat(tick[1]) > 312)) {
+    failures.push("gauge (" + c.name + ") put the limit tick at x=" + tick[1] + ", outside the track");
+  }
+
+  // The shaded side is the side the card wants to be on, whatever the verdict.
+  // Shading it by the verdict instead is how it read backwards for an
+  // over-long scan: the good side does not move when you fail to reach it.
+  var band = /class="gauge-band" x="([\d.]+)"[^>]*width="([\d.]+)"/.exec(svg);
+  if (band && tick) {
+    var bandStart = parseFloat(band[1]), bandEnd = bandStart + parseFloat(band[2]);
+    var at = parseFloat(tick[1]);
+    var below = c.spec.goodBelow !== false;
+    if (Math.abs((below ? bandEnd : bandStart) - at) > 0.5) {
+      failures.push("gauge (" + c.name + ") shaded " + bandStart + ".." + bandEnd +
+        " but the tick is at " + at + " and the good side is " + (below ? "below" : "above") + " it");
+    }
+  }
+});
+
+// An unusable comparison draws nothing rather than a bar of a made-up length.
+[null, { value: NaN, limit: 10 }, { value: 5, limit: 0 }].forEach(function (spec, i) {
+  if (renderGauge(spec)) failures.push("gauge drew something for unusable input #" + (i + 1));
+});
+
+// ---------------------------------------------------------------------------
 if (failures.length) {
   console.error("\ncheck: " + failures.length + " problem" + (failures.length === 1 ? "" : "s") + "\n");
   failures.forEach(function (f) { console.error("  " + f + "\n"); });

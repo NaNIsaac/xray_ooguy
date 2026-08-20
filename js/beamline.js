@@ -224,9 +224,25 @@
     var resFp = document.getElementById("fp-res-len");
     var resSpill = document.getElementById("fp-res-spill");
     var resH = document.getElementById("fp-res-h");
+    var resMin = document.getElementById("fp-res-minangle");
 
     if (resFp) resFp.innerHTML = fmt(footprint_mm, 3) + " mm";
     if (resH) resH.innerHTML = beamH_um.toFixed(1) + " μm";
+
+    // The angle at which the footprint is exactly the sample length. Below it
+    // the beam is on the holder. This is the only thing the reader could not
+    // get from the schematic, which shows the geometry they already have and
+    // not the one they need to move to.
+    if (resMin) {
+      if (!(sampleL_mm > 0)) {
+        resMin.innerHTML = "-";
+      } else {
+        var sinMin = (beamV_um / 1000) / sampleL_mm;
+        resMin.innerHTML = sinMin <= 1
+          ? fmt(Math.asin(sinMin) * 180 / Math.PI, 3) + "°"
+          : TXT("res_fp_never");            // taller than the sample at any angle
+      }
+    }
 
     if (resSpill) {
       if (sampleL_mm > 0) {
@@ -563,6 +579,21 @@
       }
     }
 
+    // Two durations printed side by side still leave the reader dividing them.
+    // The bar is the division: how much of the beamtime this scan is, and
+    // whether it lands before the tick.
+    if (window.renderGauge) {
+      window.renderGauge("card-rad-scantime", "gauge_scan",
+        (isNaN(budget_s) || budget_s <= 0) ? null : {
+          value: total,
+          limit: budget_s,
+          pass: total <= budget_s,
+          valueText: TXT("gauge_scan_total") + " " + duration(total),
+          limitText: TXT("gauge_scan_left") + " " + duration(budget_s),
+          ratioText: (total / budget_s * 100).toFixed(0) + "% " + TXT("gauge_scan_of_shift")
+        });
+    }
+
     if (window.recordCalculation) {
       window.recordCalculation("card-rad-scantime",
         points + " pts × " + dwell + " s + " + overhead + " s × " + Math.round(repeats),
@@ -754,6 +785,25 @@
         else if (ratio >= 1) verdict.innerHTML = TXT("res_coh_marginal") + " (×" + fmt(ratio, 2) + ")";
         else verdict.innerHTML = TXT("res_coh_fail") + " (×" + fmt(ratio, 2) + ")";
       }
+    }
+
+    // The verdict above says pass, marginal or fail. The bar says by how much,
+    // and against what — the coherence has to reach across the whole feature,
+    // so the tick is the sample and being short of it is being short of the
+    // experiment. The tighter of the two transverse directions is the one that
+    // decides, which is not obvious from two numbers printed in a row.
+    if (window.renderGauge) {
+      var tightest_um = Math.min(xtH_um, xtV_um);
+      window.renderGauge("card-coh-length", "gauge_coh",
+        (isNaN(sample_nm) || sample_nm <= 0) ? null : {
+          value: tightest_um,
+          limit: sample_nm / 1000,
+          pass: tightest_um >= sample_nm / 1000,
+          goodBelow: false,          // the coherence has to reach past the tick
+          valueText: TXT("gauge_coh_xt") + " " + fmt(tightest_um, 2) + " μm",
+          limitText: TXT("gauge_coh_sample") + " " + fmt(sample_nm / 1000, 2) + " μm",
+          ratioText: "×" + fmt(tightest_um / (sample_nm / 1000), 2)
+        });
     }
 
     if (window.recordCalculation) {

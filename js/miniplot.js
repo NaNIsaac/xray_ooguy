@@ -156,85 +156,69 @@
   }
 
   // ------------------------------------------------------------------
-  // Beam footprint — L(theta) = V / sin(theta)
+  // Gauge — one number against the limit that decides it
   // ------------------------------------------------------------------
-  function plotFootprint() {
-    var beamV = val("fp-beam-v");          // um
-    var angle = val("fp-inc-angle");       // deg
-    var sampleL = val("fp-sample-len");    // mm
-    if (isNaN(beamV) || beamV <= 0) return draw("card-beamline-footprint", "mp_footprint", "");
-
-    // Sweep a window around the working point rather than the whole 0-90 range,
-    // where the 1/sin divergence would flatten everything else to a line.
-    var lo = 0.2, hi = 30;
-    if (!isNaN(angle) && angle > 0) {
-      lo = Math.max(0.05, angle / 6);
-      hi = Math.min(90, Math.max(angle * 3, angle + 5));
+  // Not a plot. Several cards end in a comparison rather than a curve: does the
+  // scan fit in the time left, is the beam coherent across the feature. Both
+  // numbers are already printed, and the reader still has to divide them in
+  // their head to get the only answer they wanted — which side of the limit
+  // they are on, and by how much. A bar against a tick answers that at a
+  // glance and costs one row.
+  //
+  // Two separate facts, and they were one flag until the shading went on the
+  // wrong side of an over-long scan: goodBelow is which side of the tick the
+  // card wants to be on, which the physics fixes — under the limit for a scan
+  // that has to finish, over it for a coherence length that has to reach
+  // across the sample. pass is whether this particular number got there.
+  //
+  //   spec = { value, limit, pass, goodBelow, valueText, limitText, ratioText }
+  function gauge(cardId, titleKey, spec) {
+    if (!spec || !isFinite(spec.value) || !isFinite(spec.limit) || spec.limit <= 0 || spec.value < 0) {
+      return draw(cardId, titleKey, "");
     }
 
-    var pts = [];
-    var steps = 120;
-    for (var i = 0; i <= steps; i++) {
-      var a = lo + (hi - lo) * i / steps;
-      var L = (beamV / 1000) / Math.sin(a * Math.PI / 180);
-      pts.push([a, L]);
-    }
+    var GW = 320, GH = 44;
+    var X0 = 8, X1 = GW - 8, BAR_Y = 16, BAR_H = 11;
+    var span = X1 - X0;
 
-    var marker = null, callout = "";
-    if (!isNaN(angle) && angle > 0) {
-      var Lm = (beamV / 1000) / Math.sin(angle * Math.PI / 180);
-      marker = [angle, Lm];
-      callout = Lm.toFixed(2) + " mm";
-    }
+    // Full scale is the limit plus headroom, so the tick sits well inside the
+    // track and an overrun is visibly an overrun rather than a full bar.
+    var ratio = spec.value / spec.limit;
+    var full = Math.max(1.3, Math.min(ratio * 1.2, 4));
+    var tickX = X0 + (1 / full) * span;
+    var fillW = Math.max(0, Math.min(ratio / full, 1)) * span;
 
-    var html = svgLine(pts, marker, {
-      xlabel: t("mp_x_angle"),
-      ylabel: t("mp_y_footprint"),
-      callout: callout
-    });
+    var svg = '<svg viewBox="0 0 ' + GW + ' ' + GH + '" preserveAspectRatio="xMidYMid meet" role="img">';
 
-    // The curve on its own is 1/sin, which nobody needs a picture of. What the
-    // picture is for is the sample edge: the footprint crosses it at one angle,
-    // and below that angle the beam is lighting up the holder. That crossing is
-    // the decision, so it is drawn as a line with the angle stated, not as a
-    // label in the corner saying how long the sample is.
-    if (html && !isNaN(sampleL) && sampleL > 0) {
-      var yTop = 0, yBot = 0;
-      for (var k = 0; k < pts.length; k++) {
-        yTop = Math.max(yTop, pts[k][1]);
-        yBot = k === 0 ? pts[k][1] : Math.min(yBot, pts[k][1]);
-      }
-      // Same axis the line was drawn on, headroom included.
-      var padY = (yTop - yBot) * 0.08;
-      var axMin = Math.max(0, yBot - padY), axMax = yTop + padY;
+    // Track, then the side of it that is the good side, then the fill.
+    var goodBelow = spec.goodBelow !== false;
+    svg += '<rect class="gauge-band" x="' + (goodBelow ? X0 : tickX).toFixed(1) + '" y="' + BAR_Y +
+           '" width="' + (goodBelow ? tickX - X0 : X1 - tickX).toFixed(1) +
+           '" height="' + BAR_H + '"/>';
+    svg += '<rect class="gauge-track" x="' + X0 + '" y="' + BAR_Y +
+           '" width="' + span + '" height="' + BAR_H + '"/>';
+    svg += '<rect class="' + (spec.pass ? "gauge-fill" : "gauge-fill-over") + '" x="' + X0 +
+           '" y="' + BAR_Y + '" width="' + fillW.toFixed(1) + '" height="' + BAR_H + '"/>';
+    svg += '<path class="miniplot-threshold" d="M' + tickX.toFixed(1) + ',' + (BAR_Y - 3) +
+           ' L' + tickX.toFixed(1) + ',' + (BAR_Y + BAR_H + 3) + '"/>';
 
-      if (sampleL > axMin && sampleL < axMax) {
-        var y = (H - PAD_B) - (sampleL - axMin) / (axMax - axMin) * (H - PAD_T - PAD_B);
-        // Angle at which the footprint is exactly the sample length.
-        var sinMin = (beamV / 1000) / sampleL;
-        var spillAngle = sinMin <= 1 ? Math.asin(sinMin) * 180 / Math.PI : NaN;
+    // Both sides are handed in already formatted: the card knows whether its
+    // number is seconds, microns or a count, and this does not.
+    svg += '<text class="miniplot-callout" x="' + X0 + '" y="' + (BAR_Y - 5) + '">' +
+           esc(spec.valueText || "") + '</text>';
+    svg += '<text class="miniplot-label" x="' + X1 + '" y="' + (BAR_Y - 5) + '" text-anchor="end">' +
+           esc(spec.limitText || "") + '</text>';
 
-        var over =
-          '<rect class="miniplot-band-warn" x="' + PAD_L + '" y="' + PAD_T +
-            '" width="' + (W - PAD_L - PAD_R) + '" height="' + (y - PAD_T).toFixed(1) + '"/>' +
-          '<path class="miniplot-threshold" d="M' + PAD_L + ',' + y.toFixed(1) +
-            ' L' + (W - PAD_R) + ',' + y.toFixed(1) + '"/>' +
-          '<text class="miniplot-label" x="' + (PAD_L + 3) + '" y="' + (y - 3).toFixed(1) + '">' +
-            esc(t("mp_sample") + " " + sampleL + " mm") + '</text>';
+    // The ratio is the sentence the whole row exists to say.
+    svg += '<text class="' + (spec.pass ? "miniplot-callout" : "miniplot-label") + '" x="' + X0 +
+           '" y="' + (BAR_Y + BAR_H + 13) + '">' +
+           esc(spec.ratioText || (ratio < 0.01 ? "×0.01" : "×" + ratio.toFixed(2))) + '</text>';
 
-        html = html.replace('<path class="miniplot-curve"', over + '<path class="miniplot-curve"');
-
-        if (isFinite(spillAngle)) {
-          html = html.replace("</svg>",
-            '<text class="miniplot-callout" x="' + (W - PAD_R) + '" y="' + (H - PAD_B - 6) +
-            '" text-anchor="end">' + esc(t("mp_spills_below") + " " + spillAngle.toFixed(2) + "°") +
-            "</text></svg>");
-        }
-      }
-    }
-
-    draw("card-beamline-footprint", "mp_footprint", html);
+    svg += "</svg>";
+    draw(cardId, titleKey, svg);
   }
+
+  window.renderGauge = gauge;
 
   // ------------------------------------------------------------------
   // Transmittance vs photon energy, over the range the model is valid in
@@ -457,14 +441,18 @@
 
   window.renderReflectionPlot = plotReflections;
 
-  // Four plots, and each one is here because it answers something the number
-  // beside it does not: where the beam stops fitting on the sample, where the
-  // material stops transmitting, how far the detector has to go, and which
-  // reflections land inside the range being scanned. Bragg angle against energy
-  // was dropped — it is a monotone curve with no threshold on it, and the angle
-  // the card prints is the only part anyone read.
+  // Three plots left, and each is here because it answers something the numbers
+  // beside it do not: where the material stops transmitting, how far the
+  // detector has to go, and which reflections land in the range being scanned.
+  //
+  // Two were dropped. Bragg angle against energy is a monotone curve with no
+  // threshold on it, and the angle the card prints was the only part anyone
+  // read. Footprint against angle sat under a scale drawing of the same beam
+  // hitting the same sample — the schematic shows the geometry better than a
+  // 1/sin curve does, and the one thing the curve knew that the drawing did
+  // not is the shallowest angle that still fits, which is a number, so it is
+  // printed as one.
   var PLOTS = [
-    { fn: plotFootprint, watch: ["fp-beam-v", "fp-inc-angle", "fp-sample-len"] },
     { fn: plotTransmittance, watch: ["refract-thick", "refract-energy", "refract-mat"] },
     { fn: plotCDI, watch: ["cdi-energy", "cdi-dist", "cdi-pixel", "cdi-sample-size"] }
   ];
