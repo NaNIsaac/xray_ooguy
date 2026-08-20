@@ -120,6 +120,26 @@
       lang_switch_title: "English로 보기",
       lang_switch_code: "EN",
       noscript_note: "자바스크립트를 활성화하면 위 계산기를 사용할 수 있습니다. 모든 계산은 브라우저 안에서만 수행됩니다.",
+      noscript_body:
+        "<strong>X선 빔라인 툴킷</strong> — 방사광 X선 실험용 계산기 모음입니다.\n" +
+        "      계산에는 자바스크립트가 필요하며, 포함된 도구는 다음과 같습니다:\n" +
+        "      <ul style=\"margin:8px 0 8px 18px;\">\n" +
+        "        <li><strong>브래그 각도</strong> — 광자 에너지와 격자면 간격으로부터의 회절 각도 (&lambda; = 2d sin&theta;)</li>\n" +
+        "        <li><strong>에너지 · 파장 · 진동수</strong> 변환 (E = hc/&lambda;)</li>\n" +
+        "        <li><strong>격자면 간격</strong> — 격자 상수와 밀러 지수 (hkl), 7개 결정계 전부</li>\n" +
+        "        <li><strong>산란 벡터 Q</strong> — 상호 공간 (Q = 4&pi; sin&theta; / &lambda;)</li>\n" +
+        "        <li><strong>복소 굴절률과 투과율</strong> (n = 1 &minus; &delta; + i&beta;)</li>\n" +
+        "        <li><strong>전반사 임계각</strong> (&theta;c = &radic;2&delta;)</li>\n" +
+        "        <li><strong>빔 풋프린트</strong>와 시료 밖 유출, <strong>검출기 각분해능</strong>, <strong>슬릿 수용각</strong></li>\n" +
+        "        <li><strong>오일러 크레이들</strong> 카이-파이 보정과 결맞음 회절 이미징용 <strong>BCDI 오버샘플링</strong></li>\n" +
+        "        <li><strong>광자 선속</strong>, <strong>에너지 분해능</strong>, 단색화 결정 <strong>열 드리프트</strong></li>\n" +
+        "        <li><strong>스캔 파일 뷰어</strong> — 2열 txt / csv를 선형 또는 로그 축으로, 그리고 스캔 구간의 겹침을 이용한 <strong>XRR 구간 이어붙이기</strong></li>\n" +
+        "      </ul>\n" +
+        "      ",
+      meta_title: "X선 빔라인 툴킷 — 브래그 각도, 격자면 간격, 방사광 계산기",
+      meta_description: "방사광 X선 실험을 위한 오프라인 계산기: 브래그 각도, 에너지-파장 변환, 7개 결정계 격자면 간격, 산란 벡터 Q, 빔 풋프린트, 검출기 기하, BCDI 오버샘플링, XRR 구간 이어붙이기.",
+      meta_og_title: "X선 빔라인 툴킷 — 방사광 X선 계산기",
+      meta_og_description: "방사광 빔라인 작업을 위한 브래그 각도, 격자면 간격, Q 공간, 빔 풋프린트, BCDI 오버샘플링, XRR 구간 이어붙이기. 완전히 오프라인으로 동작하며 계정이 필요 없습니다.",
       page_h1: "X선 빔라인 툴킷 — 브래그 각도, 격자면 간격, 상호공간 Q, 빔 풋프린트, BCDI 오버샘플링, XRR 세그먼트 이어붙이기 계산기",
       theme_current_initial: "현재 테마: 학술 논문",
       set_card_theme_title: "화면 테마 설정",
@@ -950,6 +970,26 @@
       lang_switch_title: "한국어로 보기",
       lang_switch_code: "KO",
       noscript_note: "Enable JavaScript to use these calculators. Everything is computed inside your browser; nothing is uploaded.",
+      noscript_body:
+        "<strong>X-Ray Beamline Toolkit</strong> — calculators for synchrotron X-ray experiments.\n" +
+        "      JavaScript is required to run them; the tools included are:\n" +
+        "      <ul style=\"margin:8px 0 8px 18px;\">\n" +
+        "        <li><strong>Bragg angle</strong> — diffraction angle from photon energy and lattice plane spacing (&lambda; = 2d sin&theta;)</li>\n" +
+        "        <li><strong>Energy, wavelength and frequency</strong> conversion (E = hc/&lambda;)</li>\n" +
+        "        <li><strong>Lattice d-spacing</strong> from lattice constants and Miller indices (hkl), for all seven crystal systems</li>\n" +
+        "        <li><strong>Scattering vector Q</strong> in reciprocal space (Q = 4&pi; sin&theta; / &lambda;)</li>\n" +
+        "        <li><strong>Complex refractive index and transmittance</strong> (n = 1 &minus; &delta; + i&beta;)</li>\n" +
+        "        <li><strong>Total external reflection critical angle</strong> (&theta;c = &radic;2&delta;)</li>\n" +
+        "        <li><strong>Beam footprint</strong> and spillover on the sample, <strong>detector angular resolution</strong>, <strong>slit acceptance</strong></li>\n" +
+        "        <li><strong>Eulerian cradle</strong> chi-phi correction and <strong>BCDI oversampling</strong> for coherent diffraction imaging</li>\n" +
+        "        <li><strong>Photon flux</strong>, <strong>energy resolution</strong> and monochromator <strong>thermal drift</strong></li>\n" +
+        "        <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>\n" +
+        "      </ul>\n" +
+        "      ",
+      meta_title: "X-Ray Beamline Toolkit — Bragg Angle, d-spacing & Synchrotron Calculators",
+      meta_description: "Offline calculators for synchrotron X-ray experiments: Bragg angle, energy-wavelength conversion, lattice d-spacing for all seven crystal systems, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.",
+      meta_og_title: "X-Ray Beamline Toolkit — Synchrotron X-ray Calculators",
+      meta_og_description: "Bragg angle, d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching for synchrotron beamline work. Runs fully offline, no account required.",
       page_h1: "X-Ray Beamline Toolkit — synchrotron X-ray calculators for Bragg angle, lattice d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching",
       theme_current_initial: "Current theme: Academic Paper",
       set_card_theme_title: "Display Theme Configuration",
@@ -1234,7 +1274,6 @@
     setLang: function (lang) {
       if (lang !== "ko" && lang !== "en") lang = "ko";
       this.lang = lang;
-      localStorage.setItem("bl_toolkit_lang", lang);
       document.documentElement.setAttribute("lang", lang);
 
       this.applyTranslations();
@@ -1376,12 +1415,10 @@
 
     if (wantKorean === onKoreanPage) return;
 
-    try {
-      localStorage.setItem("bl_toolkit_lang", wantKorean ? "ko" : "en");
-    } catch (e) {
-      // Private mode: the hop still works, it just is not remembered.
-    }
-
+    // Nothing is stored: the URL is what decides the language, so a remembered
+    // preference could only ever contradict the page it is read on. It used to
+    // be written here and in setLang, where the unguarded write threw with
+    // storage blocked and took applyTranslations down with it.
     window.location.href = (wantKorean ? "ko/" : "../") + (window.location.hash || "");
   };
 

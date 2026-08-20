@@ -165,10 +165,29 @@ function translate(html, lang, opts) {
   opts = opts || {};
   var dir = opts.dir || "";
   var missing = [];
+  var t = loadTable(lang);
 
-  var a = translateElements(html, loadTable(lang), missing);
-  var b = translateAttributes(a.html, loadTable(lang), missing);
+  var a = translateElements(html, t, missing);
+  var b = translateAttributes(a.html, t, missing);
   html = b.html;
+
+  // The head is the one part of the page no data-i18n attribute can reach —
+  // there is no element to set the textContent of. These four strings are what
+  // a search result and a shared link show, so an untranslated head means a
+  // Korean page listed under an English title.
+  var HEAD = [
+    [/(<title>)[\s\S]*?(<\/title>)/, "meta_title", escapeText],
+    [/(<meta name="description" content=")[^"]*(")/, "meta_description", escapeAttr],
+    [/(<meta property="og:title" content=")[^"]*(")/, "meta_og_title", escapeAttr],
+    [/(<meta property="og:description" content=")[^"]*(")/, "meta_og_description", escapeAttr]
+  ];
+
+  for (var i = 0; i < HEAD.length; i++) {
+    var value = t(HEAD[i][1]);
+    if (value === null) { missing.push(HEAD[i][1]); continue; }
+    html = html.replace(HEAD[i][0], "$1" + HEAD[i][2](value).replace(/\$/g, "$$$$") + "$2");
+    b.applied++;
+  }
 
   html = html.replace(/<html lang="[^"]*">/, '<html lang="' + lang + '">');
 
@@ -230,6 +249,8 @@ function verify(res) {
   }
 
   if (!/<html lang="ko">/.test(html)) problems.push('<html lang="ko"> not set');
+  if (!/<title>[^<]*[가-힣]/.test(html)) problems.push("<title> is not Korean");
+  if (!/<meta name="description" content="[^"]*[가-힣]/.test(html)) problems.push("meta description is not Korean");
   if (html.indexOf('href="' + SITE + 'ko/"') < 0) problems.push("canonical not repointed to /ko/");
   if (/\s(?:href|src)="(?:style\.css|js\/)/.test(html)) problems.push("asset path not rebased to ../");
 

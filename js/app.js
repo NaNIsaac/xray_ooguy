@@ -1029,6 +1029,29 @@
     return cardNumbers;
   }
 
+  // Every input already carries an id and every label already sits beside it,
+  // but nothing connected the two: a screen reader read 111 unnamed number
+  // fields, and clicking a label focused nothing. The pairing is positional,
+  // which is exactly why it is done here instead of writing for="" into the
+  // markup 111 times and again into every card added after this one.
+  function linkLabels() {
+    var CONTROL = /^(INPUT|SELECT|TEXTAREA)$/;
+    var labels = document.querySelectorAll("label:not([for])");
+
+    for (var i = 0; i < labels.length; i++) {
+      var el = labels[i].nextElementSibling;
+      while (el && !CONTROL.test(el.tagName)) el = el.nextElementSibling;
+
+      // Labels wrapped a level up from their control — the unit span pattern
+      // puts a couple of elements between them — resolve inside the group.
+      if (!el && labels[i].parentNode) {
+        el = labels[i].parentNode.querySelector("input[id], select[id], textarea[id]");
+      }
+
+      if (el && el.id) labels[i].setAttribute("for", el.id);
+    }
+  }
+
   // "§ 3." for a card id, empty string for anything not in a numbered section.
   function cardNumber(cardId) {
     return cardNumbers[cardId] || "";
@@ -1066,6 +1089,7 @@
     // sidebar out of the contents block from its own DOMContentLoaded handler,
     // registered after this one, so the map is filled by the time it looks.
     renumberCards();
+    linkLabels();
 
     // History labels resolve through the numbering map, so this follows it.
     renderCalcHistory();

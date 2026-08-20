@@ -100,6 +100,31 @@ try {
 }
 
 // ---------------------------------------------------------------------------
+// 4. Every <label> has a control for linkLabels to name
+// ---------------------------------------------------------------------------
+// linkLabels() in app.js pairs each label with the first control that follows
+// it and writes the for="". That is positional, so it holds only while the
+// markup keeps the shape — label, then its input, before the next label. A
+// label with nothing to point at is an unnamed field for a screen reader, and
+// it is not the sort of thing anyone notices by looking at the page.
+var page = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+var LABEL = /<label\b[^>]*>/g;
+var hit;
+
+while ((hit = LABEL.exec(page))) {
+  var rest = page.slice(LABEL.lastIndex);
+  var nextLabel = rest.search(/<label\b/);
+  var scope = nextLabel < 0 ? rest : rest.slice(0, nextLabel);
+
+  if (!/<(?:input|select|textarea)\b[^>]*\bid="/.test(scope)) {
+    failures.push("index.html:" + page.slice(0, hit.index).split("\n").length +
+      " <label> has no control with an id before the next label, so linkLabels\n" +
+      "    cannot name it — give the control an id, or use <div class=\"form-label\">\n" +
+      "    if it heads a group of buttons rather than a field");
+  }
+}
+
+// ---------------------------------------------------------------------------
 if (failures.length) {
   console.error("\ncheck: " + failures.length + " problem" + (failures.length === 1 ? "" : "s") + "\n");
   failures.forEach(function (f) { console.error("  " + f + "\n"); });

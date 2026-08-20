@@ -128,7 +128,10 @@
 
   <noscript>
     <div style="background:#fdfcf8; color:#1a1a1a; padding:16px; font-family:Georgia, serif; font-size:13px; line-height:1.7; border-bottom:1px solid #1a1a1a;">
-      <strong>X-Ray Beamline Toolkit</strong> — calculators for synchrotron X-ray experiments.
+      <!-- Behind a key like everything else: this is the one screen a reader
+           who cannot run the calculators does get, so it is the last place
+           that should be English-only on the Korean page. -->
+      <div data-i18n-html="noscript_body"><strong>X-Ray Beamline Toolkit</strong> — calculators for synchrotron X-ray experiments.
       JavaScript is required to run them; the tools included are:
       <ul style="margin:8px 0 8px 18px;">
         <li><strong>Bragg angle</strong> — diffraction angle from photon energy and lattice plane spacing (&lambda; = 2d sin&theta;)</li>
@@ -142,6 +145,7 @@
         <li><strong>Photon flux</strong>, <strong>energy resolution</strong> and monochromator <strong>thermal drift</strong></li>
         <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>
       </ul>
+      </div>
       <span data-i18n="noscript_note">Enable JavaScript to use these calculators. Everything is computed inside your browser; nothing is uploaded.</span>
     </div>
   </noscript>
@@ -1012,7 +1016,7 @@
                 <div class="card-body">
                   <!-- Preset Buttons Bar -->
                   <div class="form-group" style="margin-bottom:10px;">
-                    <label class="form-label" data-i18n="lbl_presets">Common Crystal Reflection Presets</label>
+                    <div class="form-label" data-i18n="lbl_presets">Common Crystal Reflection Presets</div>
                     <div id="bragg-presets" class="preset-bar"></div>
                   </div>
 
@@ -1335,7 +1339,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-label" data-i18n="lbl_target_presets">Quick Target Energy Presets</label>
+                        <div class="form-label" data-i18n="lbl_target_presets">Quick Target Energy Presets</div>
                         <div class="preset-bar" style="margin-top:2px;">
                           <button type="button" class="preset-chip" onclick="setTargetEnergy(8.046)">8.05k (Cu)</button>
                           <button type="button" class="preset-chip" onclick="setTargetEnergy(10.0)">10.0k</button>
