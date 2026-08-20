@@ -220,12 +220,27 @@
       </div>
     </aside>
 
+    <!-- Only ever visible with the drawer open, and clicking it closes. -->
+    <div id="nav-backdrop" onclick="closeNavDrawer()"></div>
+
     <!-- Main View Wrapper -->
     <div id="main-wrapper">
 
       <!-- Top Masthead Header (Clean & Rock-Solid, Zero Shifting) -->
       <header id="top-header">
         <div class="header-brand-area">
+          <!-- Below 900px the sidebar is hidden, and it is where the search box
+               lives — without it the only way to reach 31 tools is scrolling.
+               This opens it as a drawer. The glyph is the same one the contents
+               entry uses; the name it is read out by is the sr-only span, since
+               "≡" is announced as "identical to". -->
+          <button type="button" id="nav-drawer-toggle" class="nav-drawer-toggle"
+                  aria-expanded="false" aria-controls="sidebar"
+                  onclick="toggleNavDrawer()">
+            <span aria-hidden="true">≡</span>
+            <span class="sr-only" data-i18n="nav_drawer_toggle">Navigation and search</span>
+          </button>
+
           <div class="page-breadcrumb">
             <span class="breadcrumb-brand" style="color:var(--ink-muted);">X-RAY BEAMLINE TOOLKIT</span>
             <span class="breadcrumb-sep">/</span>

@@ -125,6 +125,28 @@ while ((hit = LABEL.exec(page))) {
 }
 
 // ---------------------------------------------------------------------------
+// 5. The small-screen drawer is wired end to end
+// ---------------------------------------------------------------------------
+// The drawer is the only way to reach search below 900px, and it is spread
+// across three files that agree only by name: the button and backdrop in the
+// markup, the drawer-open rules in the stylesheet, the handlers in nav.js.
+// Any one of them renamed or dropped leaves a phone with no search and no
+// error — the button is simply inert.
+var css = fs.readFileSync(path.join(ROOT, "style.css"), "utf8");
+var nav = fs.readFileSync(path.join(ROOT, "js", "nav.js"), "utf8");
+
+[
+  [page, /id="nav-drawer-toggle"/, "index.html has no #nav-drawer-toggle button"],
+  [page, /id="nav-backdrop"/, "index.html has no #nav-backdrop"],
+  [css, /body\.drawer-open #sidebar/, "style.css never opens the sidebar for body.drawer-open"],
+  [css, /body\.drawer-open #nav-backdrop/, "style.css never shows the backdrop"],
+  [nav, /window\.toggleNavDrawer\s*=/, "nav.js does not expose toggleNavDrawer, so the button's onclick is dead"],
+  [nav, /window\.closeNavDrawer\s*=/, "nav.js does not expose closeNavDrawer, so the backdrop's onclick is dead"]
+].forEach(function (rule) {
+  if (!rule[1].test(rule[0])) failures.push(rule[2]);
+});
+
+// ---------------------------------------------------------------------------
 if (failures.length) {
   console.error("\ncheck: " + failures.length + " problem" + (failures.length === 1 ? "" : "s") + "\n");
   failures.forEach(function (f) { console.error("  " + f + "\n"); });

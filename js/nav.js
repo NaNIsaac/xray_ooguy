@@ -484,16 +484,102 @@
     }
   }
 
+  // ------------------------------------------------------------------
+  // The small-screen drawer
+  // ------------------------------------------------------------------
+  // Below 900px the sidebar is hidden, which also hides the only search box
+  // there is — 31 tools reachable only by scrolling. The drawer gives it back.
+  // Whether it is open is a class on <body>; the CSS decides what that means,
+  // so above 900px it means nothing and the sidebar just stays where it is.
+  function drawerAvailable() {
+    var toggle = document.getElementById("nav-drawer-toggle");
+    // offsetParent is null for a display:none element, which is how the media
+    // query tells us the viewport is narrow without duplicating 900 in JS.
+    return !!(toggle && toggle.offsetParent !== null);
+  }
+
+  function drawerOpen() {
+    return document.body.className.indexOf("drawer-open") >= 0;
+  }
+
+  function setDrawer(open) {
+    var body = document.body;
+    var classes = body.className.replace(/\s*drawer-open\b/g, "");
+    body.className = open ? classes + " drawer-open" : classes;
+
+    var toggle = document.getElementById("nav-drawer-toggle");
+    if (toggle) toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  function openNavDrawer() {
+    setDrawer(true);
+    var input = document.getElementById("nav-search");
+    if (input) input.focus();
+  }
+
+  function closeNavDrawer() {
+    if (!drawerOpen()) return;
+    setDrawer(false);
+    // Focus goes back where it came from, or it lands on <body> and the next
+    // Tab starts from the top of the page.
+    var toggle = document.getElementById("nav-drawer-toggle");
+    if (toggle && toggle.offsetParent !== null) toggle.focus();
+  }
+
+  function toggleNavDrawer() {
+    if (drawerOpen()) closeNavDrawer();
+    else openNavDrawer();
+  }
+
+  // The drawer covers the page but the page is still behind it, so Tab would
+  // walk straight out of the drawer into content the reader cannot see. The
+  // list is short and rebuilt per keypress: it changes as search filters it.
+  function trapTab(e) {
+    var sidebar = document.getElementById("sidebar");
+    if (!sidebar) return;
+
+    var focusable = [];
+    var candidates = sidebar.querySelectorAll("a[href], button, input, select, textarea");
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i].offsetParent !== null && !candidates[i].disabled) focusable.push(candidates[i]);
+    }
+    if (!focusable.length) return;
+
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    var here = document.activeElement;
+
+    if (e.shiftKey && (here === first || !sidebar.contains(here))) {
+      if (e.preventDefault) e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && here === last) {
+      if (e.preventDefault) e.preventDefault();
+      first.focus();
+    }
+  }
+
   // "/" reaches the box from anywhere that is not already a text field.
   function onGlobalKey(e) {
-    if ((e.key || "") !== "/") return;
+    var key = e.key || "";
+
+    if (drawerOpen()) {
+      if (key === "Escape") { closeNavDrawer(); return; }
+      if (key === "Tab") { trapTab(e); return; }
+    }
+
+    if (key !== "/") return;
     var tag = ((e.target && e.target.tagName) || "").toUpperCase();
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
 
     var input = document.getElementById("nav-search");
     if (!input) return;
     if (e.preventDefault) e.preventDefault();
-    input.focus();
+
+    // Narrow viewport: the box is inside the drawer, so the shortcut has to
+    // open it first. It used to focus an element that was display:none, which
+    // does nothing at all.
+    if (drawerAvailable()) openNavDrawer();
+    else input.focus();
   }
 
   function init() {
@@ -519,6 +605,9 @@
     window.addEventListener("scroll", onScroll);
 
     window.addEventListener("hashchange", function () {
+      // Picking something in the drawer is the drawer's whole job, so it is
+      // done once the route changes — including a link followed from search.
+      closeNavDrawer();
       syncExpanded();
       if (currentCard()) markCurrentCard(currentCard());
       setTimeout(highlightVisibleCard, 80);   // after the router has scrolled
@@ -527,6 +616,8 @@
 
   window.renderSidebarTree = init;
   window.runNavSearch = runNavSearch;
+  window.toggleNavDrawer = toggleNavDrawer;
+  window.closeNavDrawer = closeNavDrawer;
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

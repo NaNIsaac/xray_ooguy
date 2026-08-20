@@ -1758,8 +1758,53 @@ html[lang="ko"] .nav-ref-head {
   color: var(--bg-paper);
 }
 
+/* The drawer toggle and its backdrop are a small-screen affordance: on a
+   desktop the sidebar is always on screen and neither has anything to do. */
+.nav-drawer-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 24px;
+  margin-right: 10px;
+  padding: 0;
+  border: var(--rule-main);
+  background: var(--bg-paper);
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.nav-drawer-toggle:hover {
+  background: var(--ink-primary);
+  color: var(--bg-paper);
+}
+
+#nav-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;                    /* under the sidebar's 100, over everything else */
+  /* The ink colour at opacity rather than a literal rgba(): a scrim mixed from
+     the theme's own ink dims a parchment page and a CRT one by the same
+     amount, which one hardcoded black cannot. */
+  background: var(--ink-primary);
+  opacity: 0.45;
+}
+
 /* Responsive Breakpoint for Mobile / Small Screens (Consolidated & Bulletproof) */
 @media (max-width: 900px) {
+  .nav-drawer-toggle { display: inline-flex; }
+
+  /* Closed, the sidebar is display:none rather than parked off-canvas with a
+     transform: a panel that is out of sight but still holds a search box and
+     ten links puts all of them in the tab order of a page that does not show
+     them. Opening it is the same rule turned back on. */
   #sidebar {
     display: none !important;
     width: 0 !important;
@@ -1769,6 +1814,20 @@ html[lang="ko"] .nav-ref-head {
     margin: 0 !important;
     border: none !important;
   }
+
+  body.drawer-open {
+    overflow: hidden;             /* the page behind does not scroll under the drawer */
+  }
+
+  body.drawer-open #sidebar {
+    display: flex !important;
+    width: var(--sidebar-width) !important;
+    min-width: var(--sidebar-width) !important;
+    max-width: 80% !important;
+    border-right: var(--rule-main) !important;
+  }
+
+  body.drawer-open #nav-backdrop { display: block; }
   #main-wrapper {
     margin-left: 0 !important;
     width: 100% !important;
@@ -2356,7 +2415,7 @@ html[lang="ko"] .nav-ref-head {
   }
 
   /* Hide interactive chrome */
-  #sidebar, #top-header, #toast-container, .btn, button, input[type="button"], input[type="submit"], #bragg-presets, .preset-bar {
+  #sidebar, #nav-backdrop, #top-header, #toast-container, .btn, button, input[type="button"], input[type="submit"], #bragg-presets, .preset-bar {
     display: none !important;
   }
 
