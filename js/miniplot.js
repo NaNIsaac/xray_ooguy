@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Mini visualizers
+ * XRAY.OOGUY — Mini visualizers
  *
  * Small inline SVG plots attached to a few calculators, drawn from the same
  * formula the card already evaluates. They answer "how does this behave as I

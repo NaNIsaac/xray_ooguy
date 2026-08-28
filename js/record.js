@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — RECORD
+ * XRAY.OOGUY — RECORD
  *
  * Plain-text logbook headers and WYSIWYG memo-style in-situ timestamped event snippets.
  * Zero emojis, plain text formatting, English snippets.

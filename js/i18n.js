@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Direct Full-Page Bilingual Translation System (Korean / English)
+ * XRAY.OOGUY — Direct Full-Page Bilingual Translation System (Korean / English)
  * 100% Offline-Native, Zero-dependency, Compatible with CentOS 7 Firefox 60 ESR
  */
 (function (window) {
@@ -122,7 +122,7 @@
       lang_switch_code: "EN",
       noscript_note: "자바스크립트를 활성화하면 위 계산기를 사용할 수 있습니다. 모든 계산은 브라우저 안에서만 수행됩니다.",
       noscript_body:
-        "<strong>X선 빔라인 툴킷</strong> — 방사광 X선 실험용 계산기 모음입니다.\n" +
+        "<strong>xray.ooguy</strong> — 방사광 X선 실험용 계산기 모음입니다.\n" +
         "      계산에는 자바스크립트가 필요하며, 포함된 도구는 다음과 같습니다:\n" +
         "      <ul style=\"margin:8px 0 8px 18px;\">\n" +
         "        <li><strong>브래그 각도</strong> — 광자 에너지와 격자면 간격으로부터의 회절 각도 (&lambda; = 2d sin&theta;)</li>\n" +
@@ -137,11 +137,11 @@
         "        <li><strong>스캔 파일 뷰어</strong> — 2열 txt / csv를 선형 또는 로그 축으로, 그리고 스캔 구간의 겹침을 이용한 <strong>XRR 구간 이어붙이기</strong></li>\n" +
         "      </ul>\n" +
         "      ",
-      meta_title: "X선 빔라인 툴킷 — 브래그 각도, 격자면 간격, 방사광 계산기",
+      meta_title: "xray.ooguy — 브래그 각도, 격자면 간격, 방사광 계산기",
       meta_description: "방사광 X선 실험을 위한 오프라인 계산기: 브래그 각도, 에너지-파장 변환, 7개 결정계 격자면 간격, 산란 벡터 Q, 빔 풋프린트, 검출기 기하, BCDI 오버샘플링, XRR 구간 이어붙이기.",
-      meta_og_title: "X선 빔라인 툴킷 — 방사광 X선 계산기",
+      meta_og_title: "xray.ooguy — 방사광 X선 계산기",
       meta_og_description: "방사광 빔라인 작업을 위한 브래그 각도, 격자면 간격, Q 공간, 빔 풋프린트, BCDI 오버샘플링, XRR 구간 이어붙이기. 완전히 오프라인으로 동작하며 계정이 필요 없습니다.",
-      page_h1: "X선 빔라인 툴킷 — 브래그 각도, 격자면 간격, 상호공간 Q, 빔 풋프린트, BCDI 오버샘플링, XRR 세그먼트 이어붙이기 계산기",
+      page_h1: "xray.ooguy — 브래그 각도, 격자면 간격, 상호공간 Q, 빔 풋프린트, BCDI 오버샘플링, XRR 세그먼트 이어붙이기 계산기",
       theme_current_initial: "현재 테마: 학술 논문",
       set_card_theme_title: "화면 테마 설정",
       set_card_shortcuts_title: "키보드 단축키 안내",
@@ -971,7 +971,7 @@
       lang_switch_code: "KO",
       noscript_note: "Enable JavaScript to use these calculators. Everything is computed inside your browser; nothing is uploaded.",
       noscript_body:
-        "<strong>X-Ray Beamline Toolkit</strong> — calculators for synchrotron X-ray experiments.\n" +
+        "<strong>xray.ooguy</strong> — calculators for synchrotron X-ray experiments.\n" +
         "      JavaScript is required to run them; the tools included are:\n" +
         "      <ul style=\"margin:8px 0 8px 18px;\">\n" +
         "        <li><strong>Bragg angle</strong> — diffraction angle from photon energy and lattice plane spacing (&lambda; = 2d sin&theta;)</li>\n" +
@@ -986,11 +986,11 @@
         "        <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>\n" +
         "      </ul>\n" +
         "      ",
-      meta_title: "X-Ray Beamline Toolkit — Bragg Angle, d-spacing & Synchrotron Calculators",
+      meta_title: "xray.ooguy — Bragg Angle, d-spacing & Synchrotron Calculators",
       meta_description: "Offline calculators for synchrotron X-ray experiments: Bragg angle, energy-wavelength conversion, lattice d-spacing for all seven crystal systems, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.",
-      meta_og_title: "X-Ray Beamline Toolkit — Synchrotron X-ray Calculators",
+      meta_og_title: "xray.ooguy — Synchrotron X-ray Calculators",
       meta_og_description: "Bragg angle, d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching for synchrotron beamline work. Runs fully offline, no account required.",
-      page_h1: "X-Ray Beamline Toolkit — synchrotron X-ray calculators for Bragg angle, lattice d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching",
+      page_h1: "xray.ooguy — synchrotron X-ray calculators for Bragg angle, lattice d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching",
       theme_current_initial: "Current theme: Academic Paper",
       set_card_theme_title: "Display Theme Configuration",
       set_card_shortcuts_title: "Keyboard Shortcuts",

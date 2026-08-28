@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Optics Calculation Engine
+ * XRAY.OOGUY — Optics Calculation Engine
  * Academic Print Specification: Consolas/Mono outputs, sup tags (no unicode superscripts), zero emojis.
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
  */

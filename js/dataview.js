@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — DATA
+ * XRAY.OOGUY — DATA
  *
  * Reads two-column scan files off the beamline PC and plots them. The three
  * jobs it exists for, in order of how often they come up:

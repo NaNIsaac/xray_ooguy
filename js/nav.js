@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Sidebar section tree
+ * XRAY.OOGUY — Sidebar section tree
  *
  * The table of contents already lists every § item of every suite, with its
  * number, its translated name and the card it jumps to. This module reads that

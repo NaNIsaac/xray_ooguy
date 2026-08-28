@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Lattice parameters + Miller indices → d-spacing
+ * XRAY.OOGUY — Lattice parameters + Miller indices → d-spacing
  *
  * One code path covers all seven crystal systems: build the direct metric
  * tensor G from (a, b, c, alpha, beta, gamma), invert it to the reciprocal

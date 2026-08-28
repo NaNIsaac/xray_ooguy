@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Model validity & approximation disclosure
+ * XRAY.OOGUY — Model validity & approximation disclosure
  *
  * Every calculator here is a closed-form model, and every closed-form model is
  * only true inside a domain. This module states, on the card itself:

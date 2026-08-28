@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Main Application Controller & Hash Router
+ * XRAY.OOGUY — Main Application Controller & Hash Router
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
  * Note: No optional chaining (?.), no CSS Grid, no external libraries.
  */
@@ -567,39 +567,39 @@
   // time.
   var routes = {
     radiometry: {
-      seoTitle: "Photon Flux, Dose & Attenuation Calculators | X-Ray Beamline Toolkit",
+      seoTitle: "Photon Flux, Dose & Attenuation Calculators | xray.ooguy",
       seoDesc: "Photons per second delivered to the sample, slit acceptance for a Gaussian beam, absorber stacks, radiation dose and the exposure time a sample can take."
     },
     optics: {
-      seoTitle: "Energy, Wavelength & X-ray Transmittance Calculators | X-Ray Beamline Toolkit",
+      seoTitle: "Energy, Wavelength & X-ray Transmittance Calculators | xray.ooguy",
       seoDesc: "Convert photon energy to wavelength, compute the complex refractive index and transmittance with absorption-edge warnings, the critical angle, grating dispersion, monochromator resolution and thermal drift."
     },
     geometry: {
-      seoTitle: "Bragg Angle, d-spacing & Scattering Vector Q Calculators | X-Ray Beamline Toolkit",
+      seoTitle: "Bragg Angle, d-spacing & Scattering Vector Q Calculators | xray.ooguy",
       seoDesc: "Bragg diffraction angle, lattice d-spacing from Miller indices for all seven crystal systems, reciprocal-space scattering vector Q, beam footprint, detector angular resolution and Eulerian cradle corrections."
     },
     coherence: {
-      seoTitle: "BCDI Oversampling & Coherence Length Calculators | X-Ray Beamline Toolkit",
+      seoTitle: "BCDI Oversampling & Coherence Length Calculators | xray.ooguy",
       seoDesc: "Transverse and longitudinal coherence lengths at the sample, the Nyquist oversampling ratio for Bragg coherent diffraction imaging, and the real-space resolution a detector geometry can reach."
     },
     data: {
-      seoTitle: "Scan Data Viewer & XRR Stitching | X-Ray Beamline Toolkit",
+      seoTitle: "Scan Data Viewer & XRR Stitching | xray.ooguy",
       seoDesc: "Open two-column scan files in the browser, plot them on a linear or log axis, normalise, crop the range and stitch overlapping XRR segments into one curve."
     },
     record: {
-      seoTitle: "Beamtime Logbook Headers & Calculation History | X-Ray Beamline Toolkit",
+      seoTitle: "Beamtime Logbook Headers & Calculation History | xray.ooguy",
       seoDesc: "Plain-text beamtime logbook headers, one-click in-situ event snippets with real-time timestamps, and the log of recent calculations."
     },
     dashboard: {
-      seoTitle: "All Calculators — Index | X-Ray Beamline Toolkit",
+      seoTitle: "All Calculators — Index | xray.ooguy",
       seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
     },
     settings: {
-      seoTitle: "Settings | X-Ray Beamline Toolkit",
-      seoDesc: "Language, display theme and keyboard shortcuts for the X-Ray Beamline Toolkit."
+      seoTitle: "Settings | xray.ooguy",
+      seoDesc: "Language, display theme and keyboard shortcuts for xray.ooguy."
     },
     about: {
-      seoTitle: "About | X-Ray Beamline Toolkit",
+      seoTitle: "About | xray.ooguy",
       seoDesc: "A lightweight, offline-first toolkit of synchrotron X-ray calculators and session logging, built for beamline researchers."
     }
   };

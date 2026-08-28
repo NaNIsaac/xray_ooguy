@@ -1,5 +1,5 @@
 /**
- * BEAMLINE TOOLKIT — Internal Reference Data & Physical Constants
+ * XRAY.OOGUY — Internal Reference Data & Physical Constants
  * Compatibility: CentOS 7 (Firefox 60 ESR, Chrome 60~70)
  * Note: No fetch API used, all constants and datasets are embedded in-memory.
  */

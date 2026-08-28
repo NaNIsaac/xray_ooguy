@@ -1,4 +1,4 @@
-# X-Ray Beamline Toolkit
+# xray.ooguy
 
 > 방사광 빔라인 실험자를 위한 오프라인 X선 계산기 및 빔타임 기록 도구
 
