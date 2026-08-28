@@ -22,20 +22,25 @@
   
   --ink-primary: #1a1a1a;
   --ink-secondary: #4a4a4a;
-  --ink-muted: #737373;
+  --ink-muted: #62615d;
   --ink-faint: #999999;
   --ink-inverse: #fdfcf8;
 
   /* Single Accent Color (Deep Oxford Navy Ink) */
-  --accent-ink: #003366;
+  --accent-ink: #003b70;
   --accent-ink-hover: #002244;
-  --accent-ink-subtle: #edf3f8;
+  --accent-ink-subtle: #eef3f6;
 
   /* Fine Boundary Lines */
   --rule-heavy: 1.5px solid #1a1a1a;
   --rule-main: 1px solid #1a1a1a;
-  --rule-light: 1px solid #d5d3cc;
+  --rule-light: 1px solid #d7d3c9;
   --rule-faint: 1px solid #e8e5dc;
+
+  /* Controls read as controls without a black frame: the grey is dark enough
+     to hold an edge, light enough that a row of buttons is not a row of
+     rules. --line-control is the colour-only companion, per theme. */
+  --rule-control: 1px solid var(--line-control);
 
   /* Academic & Engineering Typography Stack (Zero Metric Jitter Across Themes) */
   --font-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Arial, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
@@ -66,7 +71,8 @@
 :root, [data-theme="light"], html[data-theme="light"],
 [data-theme="paper"], html[data-theme="paper"] {
   --line-strong: #1a1a1a;
-  --line-soft: #d5d3cc;
+  --line-soft: #d7d3c9;
+  --line-control: #aaa79f;
 
   /* Out-of-domain input and unreachable-condition messages. Dark palettes
      lighten it below; every other theme inherits this one. */
@@ -100,6 +106,7 @@ body[data-theme="parchment"],
 
   --line-strong: #3b2f21;
   --line-soft: #c8b48d;
+  --line-control: #a8916a;
 }
 
 /* CRT Green/Amber Terminal — phosphor on black, monospace throughout */
@@ -131,6 +138,7 @@ body[data-theme="crt"],
 
   --line-strong: #33ff66;
   --line-soft: #17652c;
+  --line-control: #1f8a3d;
 }
 
 /* Tokyo Night — modern neon dark, developer terminal monospace interface */
@@ -166,6 +174,7 @@ body[data-theme="tokyo"],
 
   --line-strong: #c0caf5;
   --line-soft: #414868;
+  --line-control: #565f89;
 }
 
 /* Engineering Datasheet — cool white technical spec sheet, drafting navy on millimetre grid */
@@ -195,6 +204,7 @@ body[data-theme="datasheet"],
 
   --line-strong: #14375e;
   --line-soft: #a8c2de;
+  --line-control: #8fb0d0;
 }
 
 /* Authentic Cyanotype Blueprint — deep Prussian blue drafting board, chalk white & cyan lines */
@@ -224,6 +234,7 @@ body[data-theme="blueprint"],
 
   --line-strong: #7dd3fc;
   --line-soft: #1e4976;
+  --line-control: #2f6ca8;
 }
 
 /* Beamline Control Room — EPICS console, very high contrast on near-black */
@@ -255,6 +266,7 @@ body[data-theme="console"],
 
   --line-strong: #8fa2b5;
   --line-soft: #303a45;
+  --line-control: #48525e;
 }
 
 /* --------------------------------------------------------------------------
@@ -284,19 +296,39 @@ html[data-theme] .result-box {
   color: var(--ink-primary) !important;
 }
 
-html[data-theme] .card, html[data-theme] .card-body, html[data-theme] .tab-pill, html[data-theme] input, html[data-theme] select, html[data-theme] textarea, html[data-theme] table, html[data-theme] th, html[data-theme] td, html[data-theme] .lab-table tr, html[data-theme] .nav-item, html[data-theme] .btn, html[data-theme] .btn-secondary, html[data-theme] .preset-chip {
+html[data-theme] .card, html[data-theme] .card-body, html[data-theme] input, html[data-theme] select, html[data-theme] textarea, html[data-theme] table, html[data-theme] th, html[data-theme] td, html[data-theme] .lab-table tr, html[data-theme] .nav-item {
   background-color: var(--bg-paper) !important;
   color: var(--ink-primary) !important;
   border-color: var(--line-strong);
+}
+
+/* A control is not a rule. The frame around a button, a tab or a preset chip
+   is grey; the black is kept for the structure it actually divides. */
+html[data-theme] .tab-pill, html[data-theme] .btn, html[data-theme] .btn-secondary, html[data-theme] .preset-chip {
+  background-color: var(--bg-paper) !important;
+  color: var(--ink-primary) !important;
+  border-color: var(--line-control);
 }
 
 html[data-theme] .result-box.highlight {
   background-color: var(--accent-ink-subtle) !important;
 }
 
-html[data-theme] .tab-pill:hover, html[data-theme] .tab-pill.active, html[data-theme] .btn:hover, html[data-theme] .btn-secondary:hover, html[data-theme] .preset-chip:hover {
+html[data-theme] .btn:hover, html[data-theme] .btn-secondary:hover, html[data-theme] .preset-chip:hover {
   background-color: var(--ink-primary) !important;
   color: var(--ink-inverse) !important;
+}
+
+html[data-theme] .tab-pill:hover {
+  background-color: var(--accent-ink-subtle) !important;
+  color: var(--accent-ink) !important;
+  border-color: var(--accent-ink);
+}
+
+html[data-theme] .tab-pill.active {
+  background-color: var(--accent-ink) !important;
+  color: var(--ink-inverse) !important;
+  border-color: var(--accent-ink);
 }
 
 html[data-theme] .btn-primary {
@@ -312,7 +344,7 @@ html[data-theme] .btn-primary:hover {
 }
 
 html[data-theme] .nav-item.active {
-  background-color: var(--bg-paper) !important;
+  background-color: var(--accent-ink-subtle) !important;
   color: var(--accent-ink) !important;
   border-left-color: var(--accent-ink);
 }
@@ -522,13 +554,14 @@ sub {
   border-left-color: var(--ink-muted);
 }
 
+/* Three signals, no more: the tinted ground, the navy margin rule, the navy
+   weight. The pair of hairlines above and below was a fourth, and read as a
+   box around the item rather than as its selection. */
 .nav-item.active {
-  background-color: var(--bg-paper);
+  background-color: var(--accent-ink-subtle);
   color: var(--accent-ink);
   font-weight: 700;
   border-left: 3px solid var(--accent-ink);
-  border-top: var(--rule-light);
-  border-bottom: var(--rule-light);
 }
 
 /* Sidebar Navigation Hierarchy */
@@ -662,21 +695,12 @@ sub {
   background-color: transparent;
 }
 
+/* The current entry goes navy, like everything else that says "here". The
+   black margin tick that used to mark it was a second vocabulary for the
+   same fact. Weight is deliberately left alone: bolding a Korean line at this
+   size thickens it into a blob and shifts the whole column. */
 .nav-sub-item.active {
-  color: var(--ink-primary);
-}
-
-/* The margin rule darkens beside the current entry. Weight is deliberately
-   left alone: bolding a Korean line at 10.5px thickens it into a blob and
-   shifts the whole column. */
-.nav-sub-item.active::before {
-  content: "";
-  position: absolute;
-  left: -12px;
-  top: 0.35em;
-  width: 1.5px;
-  height: 1em;
-  background-color: var(--ink-primary);
+  color: var(--accent-ink);
 }
 
 .nav-sub-num {
@@ -690,7 +714,7 @@ sub {
 }
 
 .nav-sub-item.active .nav-sub-num {
-  color: var(--ink-primary);
+  color: var(--accent-ink);
 }
 
 .nav-sub-name {
@@ -839,7 +863,7 @@ sub {
   font-weight: 600;
   padding: 5px 13px;
   margin-right: 6px;
-  border: var(--rule-main);
+  border: var(--rule-control);
   background-color: var(--bg-paper);
   color: var(--ink-primary);
   cursor: pointer;
@@ -852,16 +876,20 @@ sub {
   line-height: 1.3;
 }
 
+/* Navy carries "you can act on this" and "you are here"; the tab strip is
+   where both are read fastest. A filled black pill said neither — it was the
+   heaviest thing on the page whichever tab you were on. */
 .tab-pill:hover {
-  background-color: var(--ink-primary);
-  color: var(--bg-paper);
+  background-color: var(--accent-ink-subtle);
+  color: var(--accent-ink);
+  border-color: var(--accent-ink);
 }
 
 .tab-pill.active {
-  background-color: var(--ink-primary);
-  color: var(--bg-paper);
+  background-color: var(--accent-ink);
+  color: var(--ink-inverse);
   font-weight: 700;
-  border: 1.5px solid var(--ink-primary);
+  border: 1.5px solid var(--accent-ink);
 }
 
 /* Index Tab Pill (Borderless, subtle index trigger) */
@@ -884,7 +912,7 @@ sub {
 }
 
 .tab-pill-index.active {
-  background-color: var(--bg-paper-hover) !important;
+  background-color: var(--accent-ink-subtle) !important;
   color: var(--accent-ink) !important;
   font-weight: 700;
   border: none !important;
@@ -928,16 +956,17 @@ sub {
 
 .tab-pill-minor:hover {
   opacity: 1;
-  background-color: var(--ink-primary);
-  color: var(--bg-paper);
+  background-color: var(--accent-ink-subtle);
+  color: var(--accent-ink);
+  border-color: var(--accent-ink);
 }
 
 .tab-pill-minor.active {
   opacity: 1;
   font-weight: 700;
-  background-color: var(--ink-primary);
-  color: var(--bg-paper);
-  border: 1.5px solid var(--ink-primary);
+  background-color: var(--accent-ink);
+  color: var(--ink-inverse);
+  border: 1.5px solid var(--accent-ink);
 }
 
 .header-right {
@@ -1239,7 +1268,7 @@ select.form-control {
   font-size: 0.75rem;
   line-height: 1.25;
   min-height: 1.35rem;
-  border: var(--rule-main);
+  border: var(--rule-control);
   background-color: var(--bg-paper);
   color: var(--ink-primary);
   padding: 0.15rem 0.4rem;
@@ -1435,7 +1464,7 @@ select.form-control {
   text-decoration: none;
   cursor: pointer;
   padding: 0.3rem 0.8rem;
-  border: var(--rule-main);
+  border: var(--rule-control);
   background-color: var(--bg-paper);
   color: var(--ink-primary);
   outline: none;
@@ -2154,7 +2183,7 @@ html[lang="ko"] .nav-ref-head {
 
 .toc-pretitle {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -2263,7 +2292,7 @@ html[lang="ko"] .nav-ref-head {
 .toc-roman-badge {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--ink-muted);
   margin-right: 9px;
@@ -2325,7 +2354,7 @@ html[lang="ko"] .nav-ref-head {
 .toc-item-num {
   font-family: var(--font-mono);
   font-weight: 400;
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--ink-faint);
   min-width: 34px;
   flex-shrink: 0;
@@ -2351,7 +2380,7 @@ html[lang="ko"] .nav-ref-head {
 
 .toc-item-formula {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--ink-muted);
   line-height: 1.35;
   margin-top: 1px;
@@ -2464,7 +2493,7 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-quick-head {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -2480,11 +2509,18 @@ html[lang="ko"] .nav-ref-head {
   margin: 0 -4px;
 }
 
+/* Four of one thing, so they are one size: each takes an equal share of the
+   row and wraps to two when the share drops under a readable width. */
 .dash-quick-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1 1 190px;
+  min-height: 2.4rem;
   margin: 0 4px 8px 4px;
   padding: 7px 13px;
-  border: var(--rule-main);
+  border: var(--rule-control);
   background-color: var(--bg-paper);
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -2492,13 +2528,13 @@ html[lang="ko"] .nav-ref-head {
   text-decoration: none;
 }
 
-/* The global a:hover drops the bottom border on its way to inverting; a
-   button that loses one side of its frame under the pointer looks broken. */
+/* The global a:hover inverts to black and drops the bottom border on the way.
+   A control answers in navy instead, and keeps its frame. */
 .dash-quick-item:hover,
 .dash-quick-item:focus {
-  border: var(--rule-main);
-  background-color: var(--ink-primary);
-  color: var(--ink-inverse);
+  border: 1px solid var(--accent-ink);
+  background-color: var(--accent-ink-subtle);
+  color: var(--accent-ink);
 }
 
 .dash-group {
@@ -2507,13 +2543,16 @@ html[lang="ko"] .nav-ref-head {
   box-sizing: border-box;
 }
 
+/* A short navy rule over the heading rather than a heavy black one under it:
+   the group is marked, and the page keeps four black bars fewer. */
 .dash-group-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  border-bottom: var(--rule-heavy);
+  border-top: 2px solid var(--accent-ink);
+  border-bottom: var(--rule-light);
   background-color: var(--bg-paper-subtle);
-  padding: 6px 10px 5px 10px;
+  padding: 8px 12px 6px 12px;
 }
 
 .dash-group-title {
@@ -2527,7 +2566,7 @@ html[lang="ko"] .nav-ref-head {
 .dash-group-count {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--ink-muted);
   margin-left: 10px;
@@ -2536,7 +2575,7 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-group-ask {
   display: block;
-  padding: 7px 10px 3px 10px;
+  padding: 8px 12px 4px 12px;
   font-size: 11px;
   line-height: 1.5;
   color: var(--ink-secondary);
@@ -2547,7 +2586,7 @@ html[lang="ko"] .nav-ref-head {
    pointer by darkening, not by inverting a block of type. */
 .dash-tool {
   display: block;
-  padding: 7px 10px;
+  padding: 8px 12px;
   border-bottom: none;
   text-decoration: none;
   color: var(--ink-primary);
@@ -2576,9 +2615,9 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-tool-tech {
   display: block;
-  margin-top: 1px;
+  margin-top: 2px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   line-height: 1.35;
   color: var(--ink-muted);
 }
@@ -2597,14 +2636,14 @@ html[lang="ko"] .nav-ref-head {
   width: 100%;
   min-height: 0;
   margin-top: 9px;
-  padding: 6px 10px 0 10px;
+  padding: 7px 12px 2px 12px;
   border: none;
   border-top: var(--rule-light);
   background: none;
   text-align: left;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.1px;
   text-transform: uppercase;
@@ -2631,7 +2670,7 @@ html[lang="ko"] .nav-ref-head {
 }
 
 .dash-recent-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
