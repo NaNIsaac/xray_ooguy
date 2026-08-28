@@ -4,9 +4,9 @@
   <meta name="google-site-verification" content="...">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xray.ooguy — Bragg Angle, d-spacing &amp; Synchrotron Calculators</title>
-  <meta name="description" content="Offline calculators for synchrotron X-ray experiments: Bragg angle, energy-wavelength conversion, lattice d-spacing for all seven crystal systems, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.">
-  <meta name="keywords" content="X-ray beamline calculator, Bragg angle calculator, d-spacing calculator, Q-space calculator, BCDI oversampling calculator, Eulerian cradle chi-phi correction, beam footprint calculator, XRR stitching, X-ray reflectivity, synchrotron, 방사광 빔라인 계산기, 브래그 각도 계산, 격자면 간격, 산란 벡터, XRR 이어붙이기, 결맞음 회절">
+  <title>xray.ooguy — XRD d-spacing, Bragg Angle &amp; Synchrotron Calculators</title>
+  <meta name="description" content="Offline XRD and synchrotron X-ray calculators: lattice d-spacing from Miller indices for all seven crystal systems, Bragg angle, energy-wavelength conversion, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.">
+  <meta name="keywords" content="X-ray beamline calculator, XRD calculator, XRD d spacing calculator, d-spacing calculator, d spacing calculator, lattice spacing calculator, Bragg angle calculator, Q-space calculator, BCDI oversampling calculator, Eulerian cradle chi-phi correction, beam footprint calculator, XRR stitching, X-ray reflectivity, synchrotron, 방사광 빔라인 계산기, 브래그 각도 계산, 격자면 간격, 산란 벡터, XRR 이어붙이기, 결맞음 회절">
   <meta name="author" content="Isaac Yong">
   <link rel="canonical" href="https://xray.ooguy.com/">
 
@@ -93,7 +93,7 @@
           { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "X-ray Slit Acceptance Calculator", "url": "https://xray.ooguy.com/#radiometry/card-beamline-slit", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Slit opening for a Gaussian beam: size at the slit from source size, divergence and distance, with 3-sigma and 4-sigma acceptance." } },
           { "@type": "ListItem", "position": 8, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy Scaling and Angle Calculator", "url": "https://xray.ooguy.com/#geometry/card-optics-scaling", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Where a reflection moves when the photon energy changes, holding the same lattice plane." } },
           { "@type": "ListItem", "position": 9, "item": { "@type": "SoftwareApplication", "name": "X-ray Energy to Wavelength Converter", "url": "https://xray.ooguy.com/#optics/card-optics-energy", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Photon energy, wavelength and frequency conversion using hc = 12398.41984 eV angstrom." } },
-          { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "Lattice d-spacing Calculator from Miller Indices", "url": "https://xray.ooguy.com/#geometry/card-lattice-dspacing", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plane spacing from the lattice constants and Miller indices through the reciprocal metric tensor, covering all seven crystal systems including triclinic and monoclinic." } },
+          { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "XRD d-spacing Calculator from Lattice Constants and Miller Indices", "url": "https://xray.ooguy.com/#geometry/card-lattice-dspacing", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Plane spacing from the lattice constants and Miller indices through the reciprocal metric tensor, covering all seven crystal systems including triclinic and monoclinic." } },
           { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "X-ray Transmission and Refractive Index Calculator", "url": "https://xray.ooguy.com/#optics/card-optics-refraction", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Complex refractive index n = 1 - delta + i beta, attenuation length and Beer-Lambert transmittance through a material." } },
           { "@type": "ListItem", "position": 12, "item": { "@type": "SoftwareApplication", "name": "X-ray Critical Angle Calculator", "url": "https://xray.ooguy.com/#optics/card-optics-reflection", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Critical angle for total external reflection from the refractive index decrement." } },
           { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "X-ray Diffraction Grating Calculator", "url": "https://xray.ooguy.com/#optics/card-optics-grating", "applicationCategory": "EducationalApplication", "operatingSystem": "Web browser", "isAccessibleForFree": true, "description": "Grating equation and angular dispersion for soft X-ray and VUV monochromator gratings." } },
@@ -152,8 +152,8 @@
   <!-- Names the page once, in its own language, for readers and crawlers that
        arrive without the visible headings. -->
   <h1 class="sr-only" data-i18n="page_h1">
-    xray.ooguy — synchrotron X-ray calculators for Bragg angle, lattice
-    d-spacing, Q-space, beam footprint, BCDI oversampling and XRR segment stitching
+    xray.ooguy — XRD and synchrotron X-ray calculators for lattice d-spacing,
+    Bragg angle, Q-space, beam footprint, BCDI oversampling and XRR segment stitching
   </h1>
 
   <div id="app-layout">
