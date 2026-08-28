@@ -233,6 +233,30 @@ var BANNER = "<!--\n" +
   "      node tools/build-i18n.js\n" +
   "-->\n";
 
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+// The sitemap's lastmod is a claim about when these two pages last changed,
+// and the only thing that changes them is this build. Kept by hand it says
+// whatever it said the last time someone remembered, which is worse than
+// saying nothing: a crawler that trusts a stale date has no reason to come
+// back for what was just published.
+function stampSitemap() {
+  var file = path.join(ROOT, "sitemap.xml");
+  if (!fs.existsSync(file)) return null;
+
+  // Local date, not toISOString(): UTC is a day behind for most of the working
+  // day in Seoul, and a lastmod dated yesterday for something published today
+  // is the same stale claim in a smaller size.
+  var now = new Date();
+  var today = now.getFullYear() + "-" + pad2(now.getMonth() + 1) + "-" + pad2(now.getDate());
+  var xml = fs.readFileSync(file, "utf8");
+  var stamped = xml.replace(/<lastmod>[^<]*<\/lastmod>/g, "<lastmod>" + today + "</lastmod>");
+
+  if (stamped === xml) return null;
+  fs.writeFileSync(file, stamped);
+  return today;
+}
+
 function build() {
   var res = translate(fs.readFileSync(SRC, "utf8"), "ko", { dir: "ko" });
   res.html = res.html.replace(/^<!DOCTYPE html>\s*/i, "<!DOCTYPE html>\n" + BANNER);
@@ -285,6 +309,9 @@ if (require.main === module) {
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR);
   fs.writeFileSync(OUT, res.html);
   console.log("build-i18n: wrote ko/index.html — " + res.applied + " strings translated");
+
+  var stamped = stampSitemap();
+  if (stamped) console.log("build-i18n: sitemap lastmod → " + stamped);
 }
 
 module.exports = { translate: translate };
