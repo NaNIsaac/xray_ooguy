@@ -166,8 +166,9 @@
     var html = '<div class="col-6"><div class="dash-group" data-group="' + group.key + '">' +
       '<div class="dash-group-head">' +
       '<span class="dash-group-title">' + esc(t("dash_g_" + group.key)) + "</span>" +
-      '<span class="dash-group-ask">' + esc(t("dash_q_" + group.key)) + "</span>" +
+      '<span class="dash-group-count">' + esc(t("dash_count").replace("{n}", group.cards.length)) + "</span>" +
       "</div>" +
+      '<span class="dash-group-ask">' + esc(t("dash_q_" + group.key)) + "</span>" +
       '<div class="dash-group-items">';
 
     for (var i = 0; i < group.cards.length; i++) {

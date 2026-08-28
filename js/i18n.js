@@ -151,6 +151,7 @@
       dash_more: "{n}개 더 보기",
       dash_less: "접기",
       dash_recent: "최근 사용",
+      dash_count: "도구 {n}개",
       dash_browse_all: "CONTENTS 에서 전체 도구 보기",
 
       dash_g_plan: "측정 계획",
@@ -1062,6 +1063,7 @@
       dash_more: "View {n} more",
       dash_less: "Show fewer",
       dash_recent: "Recently used",
+      dash_count: "{n} TOOLS",
       dash_browse_all: "Browse every tool in the Index",
 
       dash_g_plan: "PLAN A MEASUREMENT",

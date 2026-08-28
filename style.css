@@ -2406,45 +2406,59 @@ html[lang="ko"] .nav-ref-head {
    questions, three answers each, the rest folded away — so the first screen
    is a choice between four things instead of thirty-one.
 
-   One accent, as everywhere else: colour here means "you can click this",
-   never "this one belongs to Optics".
+   Set as type, like the contents, and at the same weight: masthead rules
+   around the question, a heavy rule under each group heading, entries as
+   lines rather than panels. It was lighter than the rest of the site once
+   and read as a placeholder next to it.
+
+   One accent, as everywhere else: colour means "you can click this", never
+   "this one belongs to Optics".
    ========================================================================== */
 .dash-head {
-  border-bottom: var(--rule-heavy);
-  padding-bottom: 10px;
-  margin-bottom: 18px;
+  border-top: 2px solid var(--ink-primary);
+  border-bottom: 1.5px solid var(--ink-primary);
+  padding: 16px 14px 14px 14px;
+  margin-bottom: 22px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dash-question {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
   color: var(--ink-primary);
-  margin: 0 0 5px;
+  margin: 0 0 6px 0;
 }
 
 .dash-lede {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-secondary);
   margin: 0;
-  max-width: 64ch;
-  font-size: 12.5px;
-  line-height: 1.6;
-  color: var(--ink-muted);
+  max-width: 70em;
 }
 
 /* The four opened over and over. Command buttons rather than cards: a
    returning reader should not have to read a heading to convert an energy. */
 .dash-quick {
-  margin-bottom: 20px;
+  margin-bottom: 26px;
 }
 
 .dash-quick-head {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin-bottom: 7px;
+  border-bottom: var(--rule-light);
+  padding-bottom: 5px;
+  margin-bottom: 9px;
 }
 
 .dash-quick-row {
@@ -2455,78 +2469,106 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-quick-item {
   display: block;
-  margin: 0 4px 8px;
-  padding: 6px 12px;
+  margin: 0 4px 8px 4px;
+  padding: 7px 13px;
   border: var(--rule-main);
+  background-color: var(--bg-paper);
   font-family: var(--font-mono);
   font-size: 11.5px;
   color: var(--ink-primary);
   text-decoration: none;
 }
 
+/* The global a:hover drops the bottom border on its way to inverting; a
+   button that loses one side of its frame under the pointer looks broken. */
 .dash-quick-item:hover,
 .dash-quick-item:focus {
+  border: var(--rule-main);
   background-color: var(--ink-primary);
   color: var(--ink-inverse);
 }
 
 .dash-group {
-  border-top: var(--rule-heavy);
-  padding-top: 9px;
-  margin-bottom: 22px;
+  margin-bottom: 26px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dash-group-head {
-  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: var(--rule-heavy);
+  padding-bottom: 5px;
 }
 
 .dash-group-title {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 11px;
+  font-family: var(--font-serif);
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
   color: var(--ink-primary);
+}
+
+.dash-group-count {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  margin-left: 10px;
+  flex-shrink: 0;
 }
 
 .dash-group-ask {
   display: block;
-  margin-top: 2px;
-  font-size: 11.5px;
-  color: var(--ink-muted);
+  padding: 7px 0 3px 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-secondary);
 }
 
-/* Two lines per tool: the verb to read, the name to recognise. The whole row
-   is the target. */
+/* Two lines per entry: the verb to read, the name to recognise. The whole
+   row is the target, and the global anchor fill is off — an index answers a
+   pointer by darkening, not by inverting a block of type. */
 .dash-tool {
   display: block;
   padding: 7px 0;
-  border-bottom: var(--rule-faint);
+  border-bottom: none;
   text-decoration: none;
+  color: var(--ink-primary);
 }
 
-.dash-tool:hover .dash-tool-action,
-.dash-tool:focus .dash-tool-action {
+.dash-tool + .dash-tool {
+  border-top: var(--rule-faint);
+}
+
+.dash-tool:hover,
+.dash-tool:focus {
+  background-color: transparent;
   color: var(--accent-ink);
 }
 
 .dash-tool-action {
   display: block;
+  font-family: var(--font-serif);
   font-size: 13px;
   font-weight: 700;
-  color: var(--ink-primary);
+  color: inherit;
 }
 
 .dash-tool-tech {
   display: block;
   margin-top: 1px;
+  font-family: var(--font-mono);
   font-size: 10.5px;
-  color: var(--ink-faint);
+  line-height: 1.35;
+  color: var(--ink-muted);
 }
 
-.dash-tool-formula {
-  font-family: var(--font-mono);
+.dash-tool:hover .dash-tool-tech,
+.dash-tool:focus .dash-tool-tech {
+  color: var(--ink-secondary);
 }
 
 .dash-tool-formula::before {
@@ -2537,16 +2579,17 @@ html[lang="ko"] .nav-ref-head {
   display: block;
   width: 100%;
   min-height: 0;
-  margin-top: 7px;
-  padding: 0;
-  background: none;
+  margin-top: 9px;
+  padding: 6px 0 0 0;
   border: none;
+  border-top: var(--rule-light);
+  background: none;
   text-align: left;
   cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.6px;
+  letter-spacing: 1.1px;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
@@ -2562,28 +2605,25 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-recent {
   border-top: var(--rule-light);
-  padding-top: 8px;
-  margin-bottom: 12px;
-  font-size: 11.5px;
+  border-bottom: var(--rule-light);
+  padding: 8px 0;
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
 }
 
 .dash-recent-label {
-  font-family: var(--font-sans);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .dash-recent-item {
   color: var(--accent-ink);
-  text-decoration: none;
-}
-
-.dash-recent-item:hover {
-  text-decoration: underline;
+  border-bottom: none;
 }
 
 .dash-recent-sep {
@@ -2593,18 +2633,15 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-all {
   display: inline-block;
-  font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
   color: var(--accent-ink);
-  text-decoration: none;
+  border-bottom: none;
 }
 
 .dash-all::after {
   content: " \2192";
-}
-
-.dash-all:hover {
-  text-decoration: underline;
 }
 
 /* ==========================================================================
