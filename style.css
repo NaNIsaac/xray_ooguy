@@ -2146,7 +2146,7 @@ html[lang="ko"] .nav-ref-head {
   border-top: 2px solid var(--ink-primary);
   border-bottom: 1.5px solid var(--ink-primary);
   padding: 16px 14px 14px 14px;
-  background-color: var(--bg-paper);
+  background-color: var(--bg-paper-subtle);
   margin-bottom: 20px;
   width: 100%;
   box-sizing: border-box;
@@ -2280,8 +2280,14 @@ html[lang="ko"] .nav-ref-head {
 }
 
 /* TOC Item Links (Section § Items) */
+/* The entries sit on tinted stock while the chapter heading stays type on
+   paper. The section groups were built as calculator cards once — border,
+   filled header bar and all — and read as things you could compute in; the
+   tint gives the page its tonal relief back without putting that frame
+   around them again. */
 .toc-items-container {
-  padding: 2px 0 0 0;
+  padding: 5px 10px 4px 10px;
+  background-color: var(--bg-paper-subtle);
   width: 100%;
   box-sizing: border-box;
 }
@@ -2289,7 +2295,7 @@ html[lang="ko"] .nav-ref-head {
 .toc-item-link {
   display: flex;
   align-items: baseline;
-  padding: 4px 0;
+  padding: 4px 6px;
   text-decoration: none;
   color: var(--ink-primary);
   cursor: pointer;
@@ -2302,7 +2308,7 @@ html[lang="ko"] .nav-ref-head {
 /* No fill on hover — the ink darkens and the entry underlines, the way a
    line of type answers to a pointer. */
 .toc-item-link:hover {
-  background-color: transparent;
+  background-color: var(--bg-paper-hover);
   color: var(--accent-ink);
 }
 
@@ -2417,6 +2423,7 @@ html[lang="ko"] .nav-ref-head {
 .dash-head {
   border-top: 2px solid var(--ink-primary);
   border-bottom: 1.5px solid var(--ink-primary);
+  background-color: var(--bg-paper-subtle);
   padding: 16px 14px 14px 14px;
   margin-bottom: 22px;
   width: 100%;
@@ -2445,7 +2452,13 @@ html[lang="ko"] .nav-ref-head {
 
 /* The four opened over and over. Command buttons rather than cards: a
    returning reader should not have to read a heading to convert an energy. */
+/* A tinted panel, the same construction as the calculator input groups: on a
+   page made only of paper-white the eye has nothing to land on, and this view
+   has no cards of its own to provide it. */
 .dash-quick {
+  border: var(--rule-light);
+  background-color: var(--bg-paper-subtle);
+  padding: 10px 12px 4px 12px;
   margin-bottom: 26px;
 }
 
@@ -2499,7 +2512,8 @@ html[lang="ko"] .nav-ref-head {
   justify-content: space-between;
   align-items: baseline;
   border-bottom: var(--rule-heavy);
-  padding-bottom: 5px;
+  background-color: var(--bg-paper-subtle);
+  padding: 6px 10px 5px 10px;
 }
 
 .dash-group-title {
@@ -2522,7 +2536,7 @@ html[lang="ko"] .nav-ref-head {
 
 .dash-group-ask {
   display: block;
-  padding: 7px 0 3px 0;
+  padding: 7px 10px 3px 10px;
   font-size: 11px;
   line-height: 1.5;
   color: var(--ink-secondary);
@@ -2533,7 +2547,7 @@ html[lang="ko"] .nav-ref-head {
    pointer by darkening, not by inverting a block of type. */
 .dash-tool {
   display: block;
-  padding: 7px 0;
+  padding: 7px 10px;
   border-bottom: none;
   text-decoration: none;
   color: var(--ink-primary);
@@ -2543,9 +2557,12 @@ html[lang="ko"] .nav-ref-head {
   border-top: var(--rule-faint);
 }
 
+/* The global anchor rule inverts the whole row, which hides two spans that
+   set their own colour. A tint is the feedback instead — the same one the
+   sidebar uses. */
 .dash-tool:hover,
 .dash-tool:focus {
-  background-color: transparent;
+  background-color: var(--bg-paper-hover);
   color: var(--accent-ink);
 }
 
@@ -2580,7 +2597,7 @@ html[lang="ko"] .nav-ref-head {
   width: 100%;
   min-height: 0;
   margin-top: 9px;
-  padding: 6px 0 0 0;
+  padding: 6px 10px 0 10px;
   border: none;
   border-top: var(--rule-light);
   background: none;
@@ -2603,10 +2620,11 @@ html[lang="ko"] .nav-ref-head {
   content: " \2192";
 }
 
+/* Set like a result: tinted ground, accent rule down the inner edge. */
 .dash-recent {
-  border-top: var(--rule-light);
-  border-bottom: var(--rule-light);
-  padding: 8px 0;
+  border-left: 2px solid var(--accent-ink);
+  background-color: var(--bg-paper-subtle);
+  padding: 8px 12px;
   margin-bottom: 16px;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -2658,6 +2676,13 @@ html[lang="ko"] .nav-ref-head {
     color: #000000 !important;
     font-size: 10pt !important;
     line-height: 1.4 !important;
+  }
+
+  /* The tinted grounds on the dashboard and the contents exist to break up a
+     screen of paper-white. Printed, they come out as grey blocks. */
+  .dash-head, .dash-quick, .dash-group-head, .dash-recent,
+  .toc-masthead, .toc-items-container {
+    background-color: transparent !important;
   }
 
   /* Hide interactive chrome */
