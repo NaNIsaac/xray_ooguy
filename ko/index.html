@@ -187,8 +187,13 @@
       </div>
 
       <nav class="sidebar-nav">
-        <!-- 0. Table of Contents / Index -->
+        <!-- 0. Two ways in, not two copies: the dashboard groups the tools by
+             the job in front of you, the contents lists every one of them by
+             suite. Both are built from the same markup. -->
         <a class="nav-item nav-item-index" data-route="dashboard" href="#dashboard">
+          <span><span class="nav-index-icon">▣</span> <span data-i18n="nav_dashboard">DASHBOARD</span></span>
+        </a>
+        <a class="nav-item nav-item-index" data-route="index" href="#index">
           <span><span class="nav-index-icon">≡</span> <span data-i18n="nav_dashboard_index">CONTENTS</span></span>
         </a>
 
@@ -285,6 +290,9 @@
       <nav id="top-tab-strip">
         <div class="tab-strip-scroll">
           <button class="tab-pill tab-pill-index" data-route="dashboard">
+            <span class="tab-index-icon">▣</span> <span data-i18n="nav_dashboard">DASHBOARD</span>
+          </button>
+          <button class="tab-pill tab-pill-index" data-route="index">
             <span class="tab-index-icon">≡</span> <span data-i18n="nav_dashboard_index">CONTENTS</span>
           </button>
           <button class="tab-pill tab-pill-major active" data-route="radiometry" data-i18n="nav_radiometry">I. RADIOMETRY</button>
@@ -1870,9 +1878,34 @@
         </section>
 
         <!-- =================================================================
-             1. DASHBOARD VIEW
+             1a. DASHBOARD VIEW — the toolkit grouped by what you are doing
+
+             Filled by js/dashboard.js out of the contents block below, so the
+             tool list lives in one place. Without JavaScript this view is a
+             heading and a link to the Index, which is the complete list.
              ================================================================= -->
         <section id="view-dashboard" class="view-section">
+
+          <div class="dash-head">
+            <h2 class="dash-question" data-i18n="dash_question">무엇을 하려고 하나요?</h2>
+            <p class="dash-lede" data-i18n="dash_lede">빔라인 작업에서 반복되는 계산과 도구를 물리 분야가 아니라 하는 일 기준으로 묶었습니다. 전체 목록은 CONTENTS 에 있습니다.</p>
+          </div>
+
+          <div id="dash-quick" class="dash-quick"></div>
+          <div id="dash-groups" class="flex-row dash-groups"></div>
+          <div id="dash-recent-slot"></div>
+
+          <a class="dash-all" href="#index" data-i18n="dash_browse_all">CONTENTS 에서 전체 도구 보기</a>
+        </section>
+
+        <!-- =================================================================
+             1b. INDEX VIEW — the full contents, by suite
+
+             The section list every other part of the interface is built from:
+             nav.js reads these links for the sidebar tree and the search
+             index, dashboard.js reads them for its labels and hrefs.
+             ================================================================= -->
+        <section id="view-index" class="view-section">
 
           <!-- Academic Table of Contents Frontmatter Masthead -->
           <div class="toc-masthead">
@@ -2228,7 +2261,7 @@
                     <span class="toc-item-num">§ 3.</span>
                     <div class="toc-item-body">
                       <span class="toc-item-name" data-i18n="toc_tool_set_5">키보드 단축키 안내</span>
-                      <span class="toc-item-formula">Alt + 1 ~ 7 Quick Tab Switcher</span>
+                      <span class="toc-item-formula">Alt + 0 ~ 9 Quick Tab Switcher</span>
                     </div>
                   </a>
                 </div>
@@ -2868,7 +2901,11 @@
                       </tr>
                       <tr>
                         <td><code class="mono">[Alt + 9]</code></td>
-                        <td data-i18n="sc_go_dashboard">CONTENTS 이동</td>
+                        <td data-i18n="sc_go_dashboard">DASHBOARD 이동</td>
+                      </tr>
+                      <tr>
+                        <td><code class="mono">[Alt + 0]</code></td>
+                        <td data-i18n="sc_go_index">CONTENTS 이동</td>
                       </tr>
                     </tbody>
                   </table>
@@ -2981,5 +3018,6 @@
   <script src="../js/record.js?v=1.5"></script>
   <script src="../js/dataview.js?v=1.5"></script>
   <script src="../js/nav.js?v=1.5"></script>
+  <script src="../js/dashboard.js?v=1.5"></script>
 </body>
 </html>

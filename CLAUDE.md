@@ -145,12 +145,29 @@ inside the header once, and narrow viewports clipped it away entirely under
 
 `js/nav.js` builds the sidebar tree and its search index by **reading the in-page table of
 contents markup** — the section list is not duplicated in JS. A new calculator added to the
-contents block appears in the sidebar automatically.
+contents block appears in the sidebar automatically. `js/dashboard.js` reads the same
+markup for the same reason: it holds card ids and nothing else, and takes every label,
+href and formula from the contents at render time.
+
+Four ways in, for four kinds of arrival, and none of them a second copy of the tool list:
+
+| Route | What it answers |
+|:---|:---|
+| `#dashboard` | "I don't know what this is called" — 31 tools under four jobs, three shown per group |
+| `#index` | "show me everything" — the full contents by suite, with formulas |
+| sidebar | "I know the discipline" — the suites and their sections |
+| search | "I know the name" |
+
+`dashboard` is the landing route: an address with no fragment, and any unknown one, ends
+up there. It deliberately carries no `seoTitle`/`seoDesc` — `applyRouteMeta` restores the
+head the page was authored with, which is already in the page's own language. Every other
+route's strings are English literals, so a route that overwrites the head renames the
+Korean page in English.
 
 Routes, in the order a beamtime runs: `radiometry`, `optics`, `geometry`, `coherence`,
-`data`, `record`, then `settings`, `about`, `dashboard` (`Alt`+`1`–`9`). One route per
-view section, no aliases. Adding a route means touching four places: `routes` and the
-`Alt` keymap in `app.js`, the sidebar item and tab pill in `index.html`, the roman
+`data`, `record`, then `settings`, `about`, `dashboard`, `index` (`Alt`+`1`–`9`, `Alt`+`0`).
+One route per view section, no aliases. Adding a route means touching four places: `routes`
+and the `Alt` keymap in `app.js`, the sidebar item and tab pill in `index.html`, the roman
 numerals on every later suite, and the shortcut table in Settings.
 
 Retiring or renaming a route means adding it to `LEGACY_ROUTES` in `app.js`, mapping each
@@ -196,6 +213,10 @@ labels had drifted out of step with the interface.
    absorbs.
 6. Pass the card id to `recordCalculation`, never a printed label — the history resolves
    the number and the wording at render time.
-7. Publish it: a `ListItem` in the `ItemList` structured data, and keep `numberOfItems`,
+7. Put the card id in a group in `GROUPS` (`js/dashboard.js`) and add its
+   `dash_act_<card_id>` action label — the verb, "Find a Bragg angle", not the name.
+   `tools/check.js` fails if the contents and the dashboard disagree about which tools
+   exist, in either direction.
+8. Publish it: a `ListItem` in the `ItemList` structured data, and keep `numberOfItems`,
    the `MODULES:` value in the masthead and the actual card count agreeing.
-8. Check: both languages, several themes, print preview, narrow viewport, `node tools/check.js`.
+9. Check: both languages, several themes, print preview, narrow viewport, `node tools/check.js`.

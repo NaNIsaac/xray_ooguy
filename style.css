@@ -2399,6 +2399,215 @@ html[lang="ko"] .nav-ref-head {
    palette variables, so it repaints itself when the theme changes. */
 
 /* ==========================================================================
+   Dashboard — the toolkit by the job, not by the discipline
+
+   The Index is a contents page: every tool at the same weight, which is what
+   a contents page is for. This view is deliberately the opposite — four
+   questions, three answers each, the rest folded away — so the first screen
+   is a choice between four things instead of thirty-one.
+
+   One accent, as everywhere else: colour here means "you can click this",
+   never "this one belongs to Optics".
+   ========================================================================== */
+.dash-head {
+  border-bottom: var(--rule-heavy);
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+}
+
+.dash-question {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin: 0 0 5px;
+}
+
+.dash-lede {
+  margin: 0;
+  max-width: 64ch;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* The four opened over and over. Command buttons rather than cards: a
+   returning reader should not have to read a heading to convert an energy. */
+.dash-quick {
+  margin-bottom: 20px;
+}
+
+.dash-quick-head {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 7px;
+}
+
+.dash-quick-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -4px;
+}
+
+.dash-quick-item {
+  display: block;
+  margin: 0 4px 8px;
+  padding: 6px 12px;
+  border: var(--rule-main);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-primary);
+  text-decoration: none;
+}
+
+.dash-quick-item:hover,
+.dash-quick-item:focus {
+  background-color: var(--ink-primary);
+  color: var(--ink-inverse);
+}
+
+.dash-group {
+  border-top: var(--rule-heavy);
+  padding-top: 9px;
+  margin-bottom: 22px;
+}
+
+.dash-group-head {
+  margin-bottom: 6px;
+}
+
+.dash-group-title {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-primary);
+}
+
+.dash-group-ask {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+
+/* Two lines per tool: the verb to read, the name to recognise. The whole row
+   is the target. */
+.dash-tool {
+  display: block;
+  padding: 7px 0;
+  border-bottom: var(--rule-faint);
+  text-decoration: none;
+}
+
+.dash-tool:hover .dash-tool-action,
+.dash-tool:focus .dash-tool-action {
+  color: var(--accent-ink);
+}
+
+.dash-tool-action {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.dash-tool-tech {
+  display: block;
+  margin-top: 1px;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+}
+
+.dash-tool-formula {
+  font-family: var(--font-mono);
+}
+
+.dash-tool-formula::before {
+  content: " \00b7  ";
+}
+
+.dash-more {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  margin-top: 7px;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.dash-more:hover,
+.dash-more:focus {
+  color: var(--accent-ink);
+}
+
+.dash-more-label::after {
+  content: " \2192";
+}
+
+.dash-recent {
+  border-top: var(--rule-light);
+  padding-top: 8px;
+  margin-bottom: 12px;
+  font-size: 11.5px;
+}
+
+.dash-recent-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-right: 8px;
+}
+
+.dash-recent-item {
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.dash-recent-item:hover {
+  text-decoration: underline;
+}
+
+.dash-recent-sep {
+  margin: 0 6px;
+  color: var(--ink-faint);
+}
+
+.dash-all {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.dash-all::after {
+  content: " \2192";
+}
+
+.dash-all:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
    @media print — Physical Monograph & Datasheet Printing
    ========================================================================== */
 @media print {

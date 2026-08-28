@@ -21,6 +21,8 @@
       nav_settings: "VII. SETTINGS",
       nav_about: "VIII. ABOUT",
       nav_dashboard_index: "CONTENTS",
+      nav_dashboard: "DASHBOARD",
+      nav_index: "CONTENTS",
 
       // Calculator views
       b_rad_title: "RADIOMETRY — 플럭스·감쇠·선량·노출 시간",
@@ -137,6 +139,64 @@
         "        <li><strong>스캔 파일 뷰어</strong> — 2열 txt / csv를 선형 또는 로그 축으로, 그리고 스캔 구간의 겹침을 이용한 <strong>XRR 구간 이어붙이기</strong></li>\n" +
         "      </ul>\n" +
         "      ",
+      // ----------------------------------------------------------------
+      // Dashboard — the toolkit by the job in front of you
+      // ----------------------------------------------------------------
+      // The verb a reader arrives with. The tool's own name is read out of
+      // the contents block beside it, so these say what it is *for*, not what
+      // it is called.
+      dash_question: "무엇을 하려고 하나요?",
+      dash_lede: "빔라인 작업에서 반복되는 계산과 도구를 물리 분야가 아니라 하는 일 기준으로 묶었습니다. 전체 목록은 CONTENTS 에 있습니다.",
+      dash_quick: "빠른 계산",
+      dash_more: "{n}개 더 보기",
+      dash_less: "접기",
+      dash_recent: "최근 사용",
+      dash_browse_all: "CONTENTS 에서 전체 도구 보기",
+
+      dash_g_plan: "측정 계획",
+      dash_q_plan: "이 측정이 가능한가?",
+      dash_g_geometry: "기하 설정",
+      dash_q_geometry: "시료와 검출기를 어디에 둘까?",
+      dash_g_beam: "빔 확인",
+      dash_q_beam: "시료에 실제로 무엇이 도달하나?",
+      dash_g_result: "결과 처리",
+      dash_q_result: "측정한 결과를 어떻게 처리하나?",
+
+      dash_act_rad_scantime: "스캔 시간 추정",
+      dash_act_rad_dose: "선량 한계 확인",
+      dash_act_rad_absorber: "감쇠체 스택 구성",
+      dash_act_beamline_footprint: "빔 풋프린트 확인",
+      dash_act_beamline_cdi: "결맞음 오버샘플링 확인",
+      dash_act_coh_resolution: "도달 가능한 분해능 추정",
+      dash_act_coh_length: "결맞음 길이 추정",
+
+      dash_act_lattice_dspacing: "격자면 간격 계산",
+      dash_act_optics_scaling: "에너지 변경 보정",
+      dash_act_beamline_detector: "검출기 기하 확인",
+      dash_act_optics_bragg: "브래그 각도 찾기",
+      dash_act_optics_energy: "에너지 ↔ 파장 변환",
+      dash_act_optics_qspace: "각도 ↔ Q 변환",
+      dash_act_optics_euler: "오일러 크래들 χ·φ 보정",
+      dash_act_opt_calibration: "모노크로미터 에너지 보정",
+
+      dash_act_optics_refraction: "투과율 계산",
+      dash_act_beamline_flux: "광자 플럭스 추정",
+      dash_act_beamline_slit: "슬릿 개구 설정",
+      dash_act_optics_reflection: "임계각 찾기",
+      dash_act_beamline_resolution: "에너지 분해능 확인",
+      dash_act_beamline_drift: "열 드리프트 추정",
+      dash_act_optics_grating: "격자 각분산 계산",
+
+      dash_act_data_plot: "스캔 데이터 그리기",
+      dash_act_data_stitch: "XRR 구간 이어붙이기",
+      dash_act_record_headers: "로그북 헤더 복사",
+      dash_act_data_load: "스캔 파일 열기",
+      dash_act_data_kiessig: "박막 두께 추정",
+      dash_act_geo_pixelq: "검출기 픽셀 → Q 변환",
+      dash_act_geo_strain: "피크 이동에서 변형률 계산",
+      dash_act_record_snippets: "빔타임 이벤트 기록",
+      dash_act_record_history: "계산 기록 확인",
+
       meta_title: "xray.ooguy — XRD 격자면 간격(d-spacing), 브래그 각도, 방사광 계산기",
       meta_description: "XRD·방사광 X선 실험을 위한 오프라인 계산기: 7개 결정계 격자면 간격(d-spacing), 브래그 각도, 에너지-파장 변환, 산란 벡터 Q, 빔 풋프린트, 검출기 기하, BCDI 오버샘플링, XRR 구간 이어붙이기.",
       meta_og_title: "xray.ooguy — 방사광 X선 계산기",
@@ -182,7 +242,8 @@
       sc_go_record: "RECORD 이동",
       sc_go_settings: "SETTINGS 이동",
       sc_go_about: "ABOUT 이동",
-      sc_go_dashboard: "CONTENTS 이동",
+      sc_go_dashboard: "DASHBOARD 이동",
+      sc_go_index: "CONTENTS 이동",
 
       res_scatt_q: "산란 벡터 Q",
 
@@ -634,6 +695,8 @@
       nav_settings: "VII. SETTINGS",
       nav_about: "VIII. ABOUT",
       nav_dashboard_index: "CONTENTS",
+      nav_dashboard: "DASHBOARD",
+      nav_index: "CONTENTS",
 
       // Calculator views
       b_rad_title: "RADIOMETRY — Flux, Attenuation, Dose & Exposure Time",
@@ -759,7 +822,8 @@
       sc_go_record: "Jump to RECORD",
       sc_go_settings: "Jump to SETTINGS",
       sc_go_about: "Jump to ABOUT",
-      sc_go_dashboard: "Jump to CONTENTS",
+      sc_go_dashboard: "Jump to DASHBOARD",
+      sc_go_index: "Jump to CONTENTS",
 
       res_scatt_q: "Scattering Vector Q",
 
@@ -986,6 +1050,64 @@
         "        <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>\n" +
         "      </ul>\n" +
         "      ",
+      // ----------------------------------------------------------------
+      // Dashboard — the toolkit by the job in front of you
+      // ----------------------------------------------------------------
+      // The verb a reader arrives with. The tool's own name is read out of
+      // the contents block beside it, so these say what it is *for*, not what
+      // it is called.
+      dash_question: "What do you need to do?",
+      dash_lede: "Calculators and utilities for recurring beamline work, grouped by the job rather than by the physics. The Index lists all of them by suite.",
+      dash_quick: "QUICK CALCULATIONS",
+      dash_more: "View {n} more",
+      dash_less: "Show fewer",
+      dash_recent: "Recently used",
+      dash_browse_all: "Browse every tool in the Index",
+
+      dash_g_plan: "PLAN A MEASUREMENT",
+      dash_q_plan: "Can this measurement work?",
+      dash_g_geometry: "SET THE GEOMETRY",
+      dash_q_geometry: "Where do the sample and detector go?",
+      dash_g_beam: "CHECK THE BEAM",
+      dash_q_beam: "What actually reaches the sample?",
+      dash_g_result: "HANDLE THE RESULT",
+      dash_q_result: "What happens to the measurement?",
+
+      dash_act_rad_scantime: "Estimate scan time",
+      dash_act_rad_dose: "Check the dose limit",
+      dash_act_rad_absorber: "Build an absorber stack",
+      dash_act_beamline_footprint: "Check the beam footprint",
+      dash_act_beamline_cdi: "Check coherent oversampling",
+      dash_act_coh_resolution: "Estimate reachable resolution",
+      dash_act_coh_length: "Estimate coherence length",
+
+      dash_act_lattice_dspacing: "Calculate lattice d-spacing",
+      dash_act_optics_scaling: "Correct for an energy change",
+      dash_act_beamline_detector: "Check detector geometry",
+      dash_act_optics_bragg: "Find a Bragg angle",
+      dash_act_optics_energy: "Convert energy and wavelength",
+      dash_act_optics_qspace: "Convert angle to Q",
+      dash_act_optics_euler: "Correct chi and phi on a cradle",
+      dash_act_opt_calibration: "Calibrate the monochromator energy",
+
+      dash_act_optics_refraction: "Calculate transmission",
+      dash_act_beamline_flux: "Estimate photon flux",
+      dash_act_beamline_slit: "Set a slit opening",
+      dash_act_optics_reflection: "Find the critical angle",
+      dash_act_beamline_resolution: "Check energy resolution",
+      dash_act_beamline_drift: "Estimate thermal drift",
+      dash_act_optics_grating: "Work out grating dispersion",
+
+      dash_act_data_plot: "Plot scan data",
+      dash_act_data_stitch: "Stitch XRR segments",
+      dash_act_record_headers: "Copy a logbook header",
+      dash_act_data_load: "Open a scan file",
+      dash_act_data_kiessig: "Estimate film thickness",
+      dash_act_geo_pixelq: "Convert detector pixels to Q",
+      dash_act_geo_strain: "Measure strain from a peak shift",
+      dash_act_record_snippets: "Record a beamtime event",
+      dash_act_record_history: "Review calculation history",
+
       meta_title: "xray.ooguy — XRD d-spacing, Bragg Angle & Synchrotron Calculators",
       meta_description: "Offline XRD and synchrotron X-ray calculators: lattice d-spacing from Miller indices for all seven crystal systems, Bragg angle, energy-wavelength conversion, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.",
       meta_og_title: "xray.ooguy — Synchrotron X-ray Calculators",
@@ -1292,6 +1414,8 @@
       // History rows name their calculator through the card's title key, so
       // they follow the language like everything else on the page.
       if (window.renderCalcHistory) window.renderCalcHistory();
+      // The dashboard's action labels are built in JS from the same table.
+      if (window.renderDashboard) window.renderDashboard();
     },
 
     applyTranslations: function () {

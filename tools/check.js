@@ -125,7 +125,51 @@ while ((hit = LABEL.exec(page))) {
 }
 
 // ---------------------------------------------------------------------------
-// 5. The small-screen drawer is wired end to end
+// 6. The dashboard and the contents describe the same set of tools
+// ---------------------------------------------------------------------------
+// js/dashboard.js holds card ids and nothing else — every label, href and
+// formula it shows is read out of the contents block at render time. That
+// keeps one list, but it also means a tool added to the contents and not to a
+// dashboard group is simply missing from the front page, silently, and a card
+// id left behind in a group renders nothing. Neither is visible by looking at
+// the page, so it is checked here.
+//
+// Settings panels are in the contents but are not tools, so the dashboard
+// does not carry them.
+var dash = fs.readFileSync(path.join(ROOT, "js", "dashboard.js"), "utf8");
+
+var contentsCards = [];
+var LINK = /class="toc-item-link" href="#([a-z]+)\/(card-[a-z0-9-]+)"/g;
+var link;
+while ((link = LINK.exec(page))) {
+  if (link[1] === "settings") continue;
+  contentsCards.push(link[2]);
+}
+
+var dashCards = (dash.match(/"card-[a-z0-9-]+"/g) || []).map(function (q) {
+  return q.replace(/"/g, "");
+});
+
+function missingFrom(wanted, have, message) {
+  var gaps = wanted.filter(function (id) { return have.indexOf(id) < 0; });
+  gaps = gaps.filter(function (id, i) { return gaps.indexOf(id) === i; });
+  if (gaps.length) failures.push(message + "\n    " + gaps.join("\n    "));
+}
+
+if (!contentsCards.length) {
+  failures.push("no .toc-item-link entries found in index.html — the contents block is the\n" +
+    "    source for the sidebar, the search index and the dashboard");
+} else {
+  missingFrom(contentsCards, dashCards,
+    "these tools are in the contents but in no dashboard group, so they are\n" +
+    "    missing from the front page — add them to GROUPS in js/dashboard.js:");
+  missingFrom(dashCards, contentsCards,
+    "js/dashboard.js names cards that are not in the contents block, so they\n" +
+    "    render as nothing — remove them or add the contents entry:");
+}
+
+// ---------------------------------------------------------------------------
+// 7. The small-screen drawer is wired end to end
 // ---------------------------------------------------------------------------
 // The drawer is the only way to reach search below 900px, and it is spread
 // across three files that agree only by name: the button and backdrop in the

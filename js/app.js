@@ -590,7 +590,11 @@
       seoTitle: "Beamtime Logbook Headers & Calculation History | xray.ooguy",
       seoDesc: "Plain-text beamtime logbook headers, one-click in-situ event snippets with real-time timestamps, and the log of recent calculations."
     },
-    dashboard: {
+    // The landing route. Deliberately carries no strings: applyRouteMeta keeps
+    // the head the page was authored with, which is already this language's
+    // title and description.
+    dashboard: {},
+    index: {
       seoTitle: "All Calculators — Index | xray.ooguy",
       seoDesc: "Index of every synchrotron X-ray calculator in the toolkit: Bragg's law, d-spacing, Q-space, refraction, beam geometry and detector parameters."
     },
@@ -604,14 +608,25 @@
     }
   };
 
-  // The first suite, and what an unknown route falls back to.
-  var DEFAULT_ROUTE = "radiometry";
+  // Where an address with no route lands, and what an unknown one falls back
+  // to. The dashboard rather than the first suite: someone arriving without a
+  // fragment has not told us what they came for, and asking them to pick a
+  // discipline is a worse first question than asking what they are doing.
+  // index.html marks the first suite active in the markup so a reader without
+  // JavaScript still gets calculators; this runs on load and switches to it.
+  var DEFAULT_ROUTE = "dashboard";
 
   // Links and bookmarks made before the suites were reorganised. A hash is the
   // only address a card ever had, so dropping these would break every link
   // anyone has saved or published. Each card moved to a known suite, so the
   // redirect is exact rather than a guess at the nearest section.
   var LEGACY_ROUTES = {
+    // #dashboard is still a route — it is the action view now — so this entry
+    // redirects only the card that moved out of it into the contents, and
+    // deliberately has no "" fallback: a bare #dashboard stays where it is.
+    dashboard: {
+      "card-physical-constants": "index"
+    },
     spectroscopy: {
       "card-optics-energy": "optics",
       "card-optics-refraction": "optics",
@@ -682,7 +697,26 @@
     if (ogDesc) ogDesc.setAttribute("content", descText);
   }
 
+  // The head as it was authored: this page's own language, and the title the
+  // search result is meant to carry. The per-route strings above are English
+  // literals, so the landing route restores this instead of overwriting it —
+  // otherwise arriving at /ko/ renamed the Korean page in English before the
+  // reader had clicked anything.
+  var homeMeta = null;
+
+  function captureHomeMeta() {
+    var desc = document.querySelector('meta[name="description"]');
+    homeMeta = {
+      title: document.title,
+      desc: desc ? desc.getAttribute("content") : ""
+    };
+  }
+
   function applyRouteMeta(route) {
+    if (route === DEFAULT_ROUTE && homeMeta) {
+      setPageMeta(homeMeta.title, homeMeta.desc);
+      return;
+    }
     var meta = routes[route];
     if (!meta || !meta.seoTitle) return;
     setPageMeta(meta.seoTitle, meta.seoDesc);
@@ -718,6 +752,10 @@
     if (targetSection) {
       targetSection.classList.add("active");
     }
+
+    // The recently-used line reads the calculation history, which changes
+    // while the reader is on another view.
+    if (route === "dashboard" && window.renderDashboard) window.renderDashboard();
 
     // Update Sidebar Navigation active status
     var navLinks = document.querySelectorAll(".nav-item");
@@ -959,7 +997,7 @@
   // Keyboard Shortcuts Setup
   function setupShortcuts() {
     document.addEventListener("keydown", function (e) {
-      // Alt + 1 ~ 7 for tab switching
+      // Alt + 1 ~ 0 for tab switching
       if (e.altKey && !e.ctrlKey && !e.metaKey) {
         var keyMap = {
           "1": "radiometry",
@@ -970,7 +1008,8 @@
           "6": "record",
           "7": "settings",
           "8": "about",
-          "9": "dashboard"
+          "9": "dashboard",
+          "0": "index"
         };
         if (keyMap[e.key]) {
           e.preventDefault();
@@ -1094,9 +1133,17 @@
     // History labels resolve through the numbering map, so this follows it.
     renderCalcHistory();
 
+    // The dashboard reads the contents block, which is static markup, but it
+    // reads the translated text out of it — so it runs after i18n.init above.
+    if (window.renderDashboard) window.renderDashboard();
+
     // Load theme (migrates old "light"/"dark" values on the way in)
     var savedTheme = Storage.get("theme", "paper");
     applyTheme(savedTheme);
+
+    // Read before the first route is applied: after that the head belongs to
+    // whichever view is open.
+    captureHomeMeta();
 
     // Setup routes & listeners
     window.addEventListener("hashchange", handleHashChange);
