@@ -102,8 +102,6 @@
     "card-beamline-footprint"
   ];
 
-  // How many past calculations to look through for the recently-used line.
-  var RECENT_SCAN = 40;
   var RECENT_SHOW = 3;
 
   function t(key) {
@@ -215,14 +213,11 @@
       list = [];
     }
 
-    var seen = {};
+    // The store holds card ids, newest first, one entry per card — so the only
+    // thing to do here is skip any that are no longer in the contents.
     var cards = [];
-
-    for (var i = 0; i < list.length && i < RECENT_SCAN && cards.length < RECENT_SHOW; i++) {
-      var card = list[i] && list[i].card;
-      if (!card || seen[card] || !index[card]) continue;
-      seen[card] = true;
-      cards.push(card);
+    for (var i = 0; i < list.length && cards.length < RECENT_SHOW; i++) {
+      if (typeof list[i] === "string" && index[list[i]]) cards.push(list[i]);
     }
 
     if (!cards.length) return "";

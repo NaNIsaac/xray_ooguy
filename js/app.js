@@ -31,21 +31,8 @@
       } catch (e) {
         console.warn("localStorage write failed:", e);
       }
-    },
-    drop: function (key) {
-      try {
-        localStorage.removeItem("bl_toolkit_" + key);
-      } catch (e) {
-        console.warn("localStorage remove failed:", e);
-      }
     }
   };
-
-  // Keys this build no longer writes. Dropped on load so a browser that used
-  // an older build does not keep the data forever: nothing reads it, and a
-  // reader who cleared their history would be surprised to find it still in
-  // storage. Safe to delete this list once no one is coming from that build.
-  var RETIRED_KEYS = ["calc_history"];
 
   // ------------------------------------------------------------------
   // Calculator input persistence
@@ -432,10 +419,14 @@
   // language. An entry made this morning in Korean names itself this
   // afternoon in English under its current number.
   //
-  // Calculators pass their inputs and result as well; those arguments are
-  // ignored. They were read by a calculation-history table that is gone, and
-  // are left in the signature so no engine has to be edited to drop them.
-  var RECENT_LIMIT = 25;
+  // Engines still call this with the inputs and the result after the id. Those
+  // arguments went to a calculation-history table that is gone; they are not
+  // in the signature any more and are simply dropped, which was a smaller
+  // change than editing forty-eight call sites to say the same thing.
+  //
+  // Eight is generous: the dashboard shows three, and only needs the spare in
+  // case the top of the list names a card that has since been renamed away.
+  var RECENT_LIMIT = 8;
 
   // Every calculator runs once on load to fill its result box with a default
   // answer, and again when the theme or the language changes. That is the page
@@ -462,14 +453,13 @@
     if (Date.now() - lastUserEdit > USER_EDIT_WINDOW_MS) return;
     try {
       var list = Storage.get("recent_cards", []);
-      // One entry per card: opening a calculator again moves it to the front
+      // One entry per card: running a calculator again moves it to the front
       // rather than adding a second mention of it to a list three items long.
-      var kept = [];
-      for (var i = 0; i < list.length && kept.length < RECENT_LIMIT; i++) {
-        if (list[i] && list[i].card !== cardId) kept.push(list[i]);
+      var kept = [cardId];
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] && list[i] !== cardId) kept.push(list[i]);
       }
-      kept.unshift({ id: Date.now(), card: cardId });
-      Storage.set("recent_cards", kept);
+      Storage.set("recent_cards", kept.slice(0, RECENT_LIMIT));
     } catch (e) {
       console.error("Failed to record calculation:", e);
     }
@@ -1056,7 +1046,10 @@
       window.i18n.init();
     }
 
-    for (var r = 0; r < RETIRED_KEYS.length; r++) Storage.drop(RETIRED_KEYS[r]);
+    // The calculation history this build no longer keeps. Nothing reads it and
+    // a reader who cleared it would not expect to still have it. Delete this
+    // line once no one is arriving from a build that wrote it.
+    try { localStorage.removeItem("bl_toolkit_calc_history"); } catch (e) {}
 
     // Capture phase, so the mark is set before the inline oninput handler on
     // the field runs its calculator and asks to be recorded.
