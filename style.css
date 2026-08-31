@@ -3107,63 +3107,6 @@ html[lang="ko"] .dt-unit {
    Its own scroll container. #content-area is overflow-x: hidden so that a wide
    table cannot push the whole page sideways; the table has to carry the scroll
    itself, and the input column is the one that gets long. */
-.rec-history-scroll {
-  overflow-x: auto;
-  border-top: var(--rule-main);
-}
-
-.rec-history-table {
-  min-width: 34rem;
-}
-
-.rec-history-time {
-  white-space: nowrap;
-  color: var(--ink-muted);
-  width: 1%;
-}
-
-.rec-history-tool {
-  white-space: nowrap;
-}
-
-/* A row goes back to the calculator that wrote it. The whole row is the
-   target, not a link inside it — a table row is already a shape the pointer
-   can find, and an extra "open" column would be a fifth column of chrome in a
-   table whose four columns are all content. The name takes the accent, since
-   that is the part naming where the row leads. */
-.rec-history-row {
-  cursor: pointer;
-}
-
-.rec-history-row:hover {
-  background-color: var(--bg-paper-hover);
-}
-
-.rec-history-row:hover .rec-history-tool {
-  color: var(--accent-ink);
-}
-
-.rec-history-result {
-  font-weight: 700;
-  color: var(--accent-ink);
-}
-
-/* Which of a multi-way card produced the number — quieter than the card name
-   it follows, on the same line. */
-.rec-history-variant {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 400;
-  color: var(--ink-muted);
-  white-space: nowrap;
-}
-
-.rec-history-empty {
-  text-align: center;
-  color: var(--ink-muted);
-  padding: 14px 8px;
-}
-
 /* In-Situ Snippet Memo Cards */
 .rec-memo-grid {
   display: grid;

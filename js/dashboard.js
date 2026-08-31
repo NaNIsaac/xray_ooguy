@@ -87,8 +87,7 @@
         "card-data-kiessig",
         "card-geo-pixelq",
         "card-geo-strain",
-        "card-record-snippets",
-        "card-record-history"
+        "card-record-snippets"
       ]
     }
   ];
@@ -206,13 +205,12 @@
   // ------------------------------------------------------------------
   // Recently used
   // ------------------------------------------------------------------
-  // Read out of the calculation history rather than kept as its own list:
-  // every calculator already records what it ran there, so a second store
-  // would be a second thing to keep in step and a second thing to back up.
+  // Read out of the list every calculator writes to when it runs, rather than
+  // kept as its own: a second store would be a second thing to keep in step.
   function recentHtml(index) {
     var list = [];
     try {
-      list = (window.Storage && window.Storage.get("calc_history", [])) || [];
+      list = (window.Storage && window.Storage.get("recent_cards", [])) || [];
     } catch (e) {
       list = [];
     }

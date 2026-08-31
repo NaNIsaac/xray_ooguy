@@ -41,19 +41,6 @@
       rec_c1_tag: "일반 텍스트 형식",
       rec_c2_title: "실시간 빔타임 이벤트 스니펫",
       rec_c2_tag: "타임스탬프 1클릭 복사",
-      rec_c3_title: "계산 이력",
-      rec_hist_desc: "직접 값을 바꿔 실행한 계산 25건, 최신순. 이 브라우저에만 남습니다. 행을 누르면 그 계산기로 돌아가고, 로그로 복사하면 오래된 것부터 순서대로 로그북에 붙여 넣을 수 있습니다.",
-      rec_hist_th_time: "시각",
-      rec_hist_th_tool: "계산기",
-      rec_hist_th_in: "입력",
-      rec_hist_th_out: "결과",
-      rec_hist_empty: "아직 기록된 계산이 없습니다.",
-      rec_hist_clear: "이력 지우기",
-      rec_hist_copy: "로그로 복사",
-      rec_hist_copied: "계산 이력을 클립보드에 복사했습니다.",
-      rec_hist_log_head: "계산 이력 — xray.ooguy",
-      rec_hist_confirm: "계산 이력을 모두 지울까요?",
-      rec_hist_cleared: "계산 이력을 지웠습니다.",
       rec_copied: "클립보드에 복사되었습니다.",
       btn_copy_results: "결과값 전체 복사",
 
@@ -198,7 +185,6 @@
       dash_act_geo_pixelq: "검출기 픽셀 → Q 변환",
       dash_act_geo_strain: "피크 이동에서 변형률 계산",
       dash_act_record_snippets: "빔타임 이벤트 기록",
-      dash_act_record_history: "계산 기록 확인",
 
       meta_title: "xray.ooguy — XRD 격자면 간격(d-spacing), 브래그 각도, 방사광 계산기",
       meta_description: "XRD·방사광 X선 실험을 위한 오프라인 계산기: 7개 결정계 격자면 간격(d-spacing), 브래그 각도, 에너지-파장 변환, 산란 벡터 Q, 빔 풋프린트, 검출기 기하, BCDI 오버샘플링, XRR 구간 이어붙이기.",
@@ -387,7 +373,7 @@
       toc_meta_docno: "문서 번호:",
       toc_meta_suites: "총 편수:",
       toc_meta_modules: "모듈:",
-      toc_meta_modules_val: "계산기 및 도구 31종",
+      toc_meta_modules_val: "계산기 및 도구 30종",
       toc_meta_calib: "교정 기준:",
       toc_meta_status: "상태:",
       toc_meta_status_val: "클라이언트 오프라인 동작",
@@ -423,7 +409,6 @@
       toc_sec_record_desc: "연구 노트용 표준 로그북 서식 템플릿과 빔타임 실시간 이벤트 1클릭 복사 스니펫",
       toc_tool_rec_1: "빔타임 로그북 서식 프리셋",
       toc_tool_rec_2: "실시간 빔타임 이벤트 스니펫",
-      toc_tool_rec_3: "계산 이력",
       toc_sec_data_title: "스캔 데이터 판독 및 플롯",
       toc_sec_data_desc: "2열 스캔 파일 자동 판독, XY 플롯과 로그 축, 정규화와 구간 자르기, XRR 세그먼트 이어붙이기",
       toc_tool_opt_cal: "모노크로메이터 에너지 교정",
@@ -712,19 +697,6 @@
       rec_c1_tag: "Plain Text Format",
       rec_c2_title: "In-Situ Beamtime Event Snippets",
       rec_c2_tag: "One-Click Timestamped Copy",
-      rec_c3_title: "Calculation History",
-      rec_hist_desc: "The last 25 calculations you ran yourself, newest first, held in this browser only. A row is a way back to the calculator that produced it, and Copy as log hands the whole run to your logbook, oldest first.",
-      rec_hist_th_time: "Time",
-      rec_hist_th_tool: "Calculator",
-      rec_hist_th_in: "Inputs",
-      rec_hist_th_out: "Result",
-      rec_hist_empty: "No calculations recorded yet.",
-      rec_hist_clear: "Clear history",
-      rec_hist_copy: "Copy as log",
-      rec_hist_copied: "Calculation history copied to clipboard.",
-      rec_hist_log_head: "Calculation history — xray.ooguy",
-      rec_hist_confirm: "Clear the whole calculation history?",
-      rec_hist_cleared: "Calculation history cleared.",
       rec_copied: "Copied to clipboard.",
       btn_copy_results: "Copy all results",
 
@@ -965,7 +937,7 @@
       toc_meta_docno: "DOC NO:",
       toc_meta_suites: "TOTAL SUITES:",
       toc_meta_modules: "MODULES:",
-      toc_meta_modules_val: "31 Calculators & Tools",
+      toc_meta_modules_val: "30 Calculators & Tools",
       toc_meta_calib: "CALIBRATION:",
       toc_meta_status: "STATUS:",
       toc_meta_status_val: "Client Offline-Native",
@@ -1001,7 +973,6 @@
       toc_sec_record_desc: "Standard logbook templates for lab notebooks and 1-click in-situ beamtime event snippets",
       toc_tool_rec_1: "Beamtime Logbook Header Presets",
       toc_tool_rec_2: "In-Situ Quick Log Snippets",
-      toc_tool_rec_3: "Calculation History",
       toc_sec_data_title: "Scan Data Viewer",
       toc_sec_data_desc: "Two-column scan files read automatically, XY plot with a log axis, normalisation, range crop and XRR segment stitching",
       toc_tool_opt_cal: "Monochromator Energy Calibration",
@@ -1101,7 +1072,6 @@
       dash_act_geo_pixelq: "Convert detector pixels to Q",
       dash_act_geo_strain: "Measure strain from a peak shift",
       dash_act_record_snippets: "Record a beamtime event",
-      dash_act_record_history: "Review calculation history",
 
       meta_title: "xray.ooguy — XRD d-spacing, Bragg Angle & Synchrotron Calculators",
       meta_description: "Offline XRD and synchrotron X-ray calculators: lattice d-spacing from Miller indices for all seven crystal systems, Bragg angle, energy-wavelength conversion, scattering vector Q, beam footprint, detector geometry, BCDI oversampling and XRR segment stitching.",
@@ -1405,9 +1375,6 @@
       if (window.renderValidity) window.renderValidity();
       if (window.renderMiniPlots) window.renderMiniPlots();
       if (window.initDataView) window.initDataView();
-      // History rows name their calculator through the card's title key, so
-      // they follow the language like everything else on the page.
-      if (window.renderCalcHistory) window.renderCalcHistory();
       // The dashboard's action labels are built in JS from the same table.
       if (window.renderDashboard) window.renderDashboard();
     },

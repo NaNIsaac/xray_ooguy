@@ -153,7 +153,7 @@ Four ways in, for four kinds of arrival, and none of them a second copy of the t
 
 | Route | What it answers |
 |:---|:---|
-| `#dashboard` | "I don't know what this is called" — 31 tools under four jobs, three shown per group |
+| `#dashboard` | "I don't know what this is called" — 30 tools under four jobs, three shown per group |
 | `#index` | "show me everything" — the full contents by suite, with formulas |
 | sidebar | "I know the discipline" — the suites and their sections |
 | search | "I know the name" |
@@ -179,8 +179,8 @@ ever had, so a rename without that entry breaks every saved and published link.
 in its view (`renumberCards` in `app.js`, drawn by `.card-title[data-num]::before`);
 contents and shortcut keys are named after their route and destination, not their
 position; the breadcrumb reads `nav_<route>`. This is not tidiness — the previous scheme
-had four hand-kept copies of the § number and twelve of the thirteen calculation-history
-labels had drifted out of step with the interface.
+had four hand-kept copies of the § number, and twelve of the thirteen labels stored
+alongside past calculations had drifted out of step with the interface.
 
 ## Physics
 
@@ -211,8 +211,10 @@ labels had drifted out of step with the interface.
 5. Validity entry in `js/validity.js`. Attenuation goes through `muOf` in `beamline.js`,
    so a new card cannot disagree with the transmittance card about how much a material
    absorbs.
-6. Pass the card id to `recordCalculation`, never a printed label — the history resolves
-   the number and the wording at render time.
+6. Call `recordCalculation(cardId)` — never a printed label. It feeds the dashboard's
+   recently-used line, which resolves the number and the wording at render time. The
+   engines still pass inputs and result after the id; those arguments are ignored, left
+   in place so removing them was not an edit to forty-eight call sites.
 7. Put the card id in a group in `GROUPS` (`js/dashboard.js`) and add its
    `dash_act_<card_id>` action label — the verb, "Find a Bragg angle", not the name.
    `tools/check.js` fails if the contents and the dashboard disagree about which tools
