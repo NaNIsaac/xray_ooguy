@@ -432,12 +432,47 @@
   // returning to a card later is recorded as the separate run it is.
   var HISTORY_MERGE_MS = 4000;
 
+  // Every calculator runs once on load to fill its result box with the default
+  // answer, and again whenever the language changes. Those are the page talking
+  // to itself, and they were being written down: a first visit arrived at a
+  // history already full, twenty-five rows deep, every one of them stamped the
+  // same second and none of them anything the reader had done. A log of the
+  // application starting up is worse than no log, because it buries the real
+  // entries under a burst that looks exactly like them.
+  //
+  // So a calculation is only history if a person caused it. The events that
+  // count are the ones raised inside a card body — a field edited, a preset or
+  // a material chosen. Navigation and language switching happen elsewhere in
+  // the document and leave this untouched, so the recalculations they trigger
+  // pass through unrecorded. The window is wide enough to cover a calculator
+  // that redraws on a timer after the keystroke that caused it.
+  var USER_EDIT_WINDOW_MS = 1500;
+  var lastUserEdit = 0;
+
+  function noteUserEdit(e) {
+    if (!e || e.isTrusted === false) return;
+    var el = e.target;
+    if (!el || !el.closest || !el.closest(".card-body")) return;
+    lastUserEdit = Date.now();
+  }
+
+  // 24-hour, zero-padded, the same in both languages. toLocaleTimeString gave
+  // "오전 11:25:31" on the Korean page and "11:25:31 AM" on the English one, so
+  // a column of monospaced numbers was neither monospaced nor a column, and an
+  // entry written in one language read differently in the other — which is the
+  // thing this history is built to avoid.
+  function clockStamp(d) {
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    return pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+  }
+
   function recordCalculation(cardId, inputsStr, resultStr, variant) {
+    if (Date.now() - lastUserEdit > USER_EDIT_WINDOW_MS) return;
     try {
       var now = Date.now();
       var item = {
         id: now,
-        timestamp: new Date().toLocaleTimeString(),
+        timestamp: clockStamp(new Date()),
         card: cardId,
         inputs: inputsStr,
         result: resultStr
@@ -522,8 +557,13 @@
       if (it.variant) {
         label += ' <span class="rec-history-variant">' + escapeHtml(it.variant) + "</span>";
       }
+      // A row that names a card that is still in the page is a way back to it.
+      // Reading a history entry almost always ends in wanting the calculator
+      // that produced it, and the address of that calculator is the one thing
+      // the entry already knows.
+      var href = historyHref(it);
       rows.push(
-        "<tr>" +
+        (href ? '<tr class="rec-history-row" data-href="' + escapeHtml(href) + '">' : "<tr>") +
         '<td class="mono rec-history-time">' + escapeHtml(it.timestamp || "") + "</td>" +
         '<td class="rec-history-tool">' + label + "</td>" +
         '<td class="mono">' + escapeHtml(it.inputs || "") + "</td>" +
@@ -535,6 +575,47 @@
       );
     }
     body.innerHTML = rows.join("");
+  }
+
+  // #route/card, derived from where the card actually sits rather than stored
+  // beside the entry — a card that moves to another suite keeps its history.
+  // Entries from an older build store a printed label in .card and match no
+  // element; those stay as plain rows.
+  function historyHref(item) {
+    if (!item.card) return "";
+    var card = document.getElementById(item.card);
+    var view = card && card.closest ? card.closest(".view-section") : null;
+    if (!view || !view.id || view.id.indexOf("view-") !== 0) return "";
+    return "#" + view.id.slice(5) + "/" + item.card;
+  }
+
+  // The other two cards in this suite exist to hand you text for a logbook.
+  // This one had the session's actual numbers in it and no way to get them out,
+  // which is most of why it read as something to look at rather than use.
+  function copyCalcHistory() {
+    var list = Storage.get("calc_history", []);
+    var t = (window.i18n && window.i18n.t) ? function (k) { return window.i18n.t(k); }
+                                           : function (k) { return k; };
+    if (!list.length) {
+      if (window.showToast) window.showToast(t("rec_hist_empty"), "info");
+      return;
+    }
+
+    var lines = [t("rec_hist_log_head") + "  " + new Date().toISOString().slice(0, 10), ""];
+    for (var i = list.length - 1; i >= 0; i--) {
+      var it = list[i];
+      var name = historyLabel(it);
+      if (it.variant) name += " (" + it.variant + ")";
+      // The result column is stored as markup; the logbook wants the words.
+      var probe = document.createElement("span");
+      probe.innerHTML = it.result || "";
+      lines.push(
+        (it.timestamp || "") + "  " + name +
+        "\n    " + (it.inputs || "") +
+        "\n    -> " + (probe.textContent || probe.innerText || "")
+      );
+    }
+    copyTextToClipboard(lines.join("\n"), t("rec_hist_copied"));
   }
 
   function clearCalcHistory() {
@@ -1119,6 +1200,7 @@
   window.cardNumber = cardNumber;
   window.renderCalcHistory = renderCalcHistory;
   window.clearCalcHistory = clearCalcHistory;
+  window.copyCalcHistory = copyCalcHistory;
   window.setPageMeta = setPageMeta;
   window.applyTheme = applyTheme;
   window.THEMES = THEMES;
@@ -1134,6 +1216,26 @@
     // Initialize i18n
     if (window.i18n && window.i18n.init) {
       window.i18n.init();
+    }
+
+    // Capture phase, so the mark is set before the inline oninput handler on
+    // the field runs its calculator and asks to be recorded.
+    document.addEventListener("input", noteUserEdit, true);
+    document.addEventListener("change", noteUserEdit, true);
+    document.addEventListener("click", noteUserEdit, true);
+
+    var historyBody = document.getElementById("rec-history-body");
+    if (historyBody) {
+      historyBody.addEventListener("click", function (e) {
+        var row = e.target && e.target.closest ? e.target.closest(".rec-history-row") : null;
+        if (!row) return;
+        // nav.js marks whichever card was clicked in and rewrites the address
+        // to it. That is right everywhere else and exactly wrong here: the
+        // card clicked in is the history, and the address wanted is the one
+        // the row points at. Stop the click before it reaches that handler.
+        if (e.stopPropagation) e.stopPropagation();
+        window.location.hash = row.getAttribute("data-href");
+      });
     }
 
     // Numbering runs before anything asks for a number. nav.js builds the

@@ -2563,7 +2563,7 @@
                   <span class="card-tag"><span id="rec-history-count" class="mono">0</span> / 25</span>
                 </div>
                 <div class="card-body">
-                  <p class="dv-explain" data-i18n="rec_hist_desc">최근 계산 25건, 최신순. 이 브라우저에만 남습니다. 각 행은 어느 계산기에서 나왔는지를 카드로 지목하므로, 수트를 재편하거나 언어를 바꿔도 항목의 의미가 유지됩니다.</p>
+                  <p class="dv-explain" data-i18n="rec_hist_desc">직접 값을 바꿔 실행한 계산 25건, 최신순. 이 브라우저에만 남습니다. 행을 누르면 그 계산기로 돌아가고, 로그로 복사하면 오래된 것부터 순서대로 로그북에 붙여 넣을 수 있습니다.</p>
                   <div class="rec-history-scroll">
                     <table class="lab-table rec-history-table">
                       <thead>
@@ -2580,6 +2580,7 @@
                     </table>
                   </div>
                   <div style="margin-top:10px;">
+                    <button class="btn btn-sm btn-primary" onclick="copyCalcHistory()" style="margin-right:6px;" data-i18n="rec_hist_copy">로그로 복사</button>
                     <button class="btn btn-sm" onclick="clearCalcHistory()" data-i18n="rec_hist_clear">이력 지우기</button>
                   </div>
                 </div>

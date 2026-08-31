@@ -3126,6 +3126,23 @@ html[lang="ko"] .dt-unit {
   white-space: nowrap;
 }
 
+/* A row goes back to the calculator that wrote it. The whole row is the
+   target, not a link inside it — a table row is already a shape the pointer
+   can find, and an extra "open" column would be a fifth column of chrome in a
+   table whose four columns are all content. The name takes the accent, since
+   that is the part naming where the row leads. */
+.rec-history-row {
+  cursor: pointer;
+}
+
+.rec-history-row:hover {
+  background-color: var(--bg-paper-hover);
+}
+
+.rec-history-row:hover .rec-history-tool {
+  color: var(--accent-ink);
+}
+
 .rec-history-result {
   font-weight: 700;
   color: var(--accent-ink);
