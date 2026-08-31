@@ -1064,13 +1064,6 @@
                     </div>
                     <div class="flex-row">
                       <div class="col-4">
-                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
-                          <div class="result-label" data-i18n="res_calc_d" style="font-size:10px;">계산된 격자면 간격 (d)</div>
-                          <div id="bragg-r2-res-d" class="result-value primary" style="font-size:13px; line-height:1.2;">3.1356 Å</div>
-                          <div id="bragg-r2-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
-                        </div>
-                      </div>
-                      <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ</span> <span class="unit">(°)</span></label>
                           <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" oninput="calcBraggRow2()" min="0.1" max="179.9" step="0.1">
@@ -1082,6 +1075,13 @@
                           <input type="number" id="bragg-r2-e" class="form-control mono" value="10.000" oninput="calcBraggRow2()" min="0.1" max="1000" step="any">
                         </div>
                       </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n-html="res_calc_d" style="font-size:10px;">계산된 격자면 간격 (<i class="formula">d</i>)</div>
+                          <div id="bragg-r2-res-d" class="result-value primary" style="font-size:13px; line-height:1.2;">3.1356 Å</div>
+                          <div id="bragg-r2-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -1091,15 +1091,8 @@
                     </div>
                     <div class="flex-row">
                       <div class="col-4">
-                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
-                          <div class="result-label" data-i18n="res_calc_tth" style="font-size:10px;">계산된 회절각 2θ</div>
-                          <div id="bragg-r3-res-tth" class="result-value primary" style="font-size:13px; line-height:1.2;">2θ = 22.806°</div>
-                          <div id="bragg-r3-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
-                        </div>
-                      </div>
-                      <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
-                          <label class="form-label"><span data-i18n="lbl_dspacing">격자면 간격 d</span> <span class="unit">(Å)</span></label>
+                          <label class="form-label"><span data-i18n-html="lbl_dspacing">격자면 간격 <i class="formula">d</i></span> <span class="unit">(Å)</span></label>
                           <input type="number" id="bragg-r3-d" class="form-control mono" value="3.1356" oninput="calcBraggRow3()" min="0.01" max="1000" step="any">
                         </div>
                       </div>
@@ -1107,6 +1100,13 @@
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_inc_energy">입사 에너지</span> <span class="unit">(keV)</span></label>
                           <input type="number" id="bragg-r3-e" class="form-control mono" value="10.000" oninput="calcBraggRow3()" min="0.1" max="1000" step="any">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n-html="res_calc_tth" style="font-size:10px;">계산된 회절각 <i class="formula">2θ</i></div>
+                          <div id="bragg-r3-res-tth" class="result-value primary" style="font-size:13px; line-height:1.2;">2θ = 22.806°</div>
+                          <div id="bragg-r3-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
                         </div>
                       </div>
                     </div>
@@ -1118,15 +1118,8 @@
                     </div>
                     <div class="flex-row">
                       <div class="col-4">
-                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
-                          <div class="result-label" data-i18n="res_calc_energy" style="font-size:10px;">계산된 에너지 (E)</div>
-                          <div id="bragg-r1-res-e" class="result-value primary" style="font-size:13px; line-height:1.2;">10.000 keV</div>
-                          <div id="bragg-r1-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | λ = 0.12398 nm</div>
-                        </div>
-                      </div>
-                      <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
-                          <label class="form-label"><span data-i18n="lbl_dspacing">격자면 간격 d</span> <span class="unit">(Å)</span></label>
+                          <label class="form-label"><span data-i18n-html="lbl_dspacing">격자면 간격 <i class="formula">d</i></span> <span class="unit">(Å)</span></label>
                           <input type="number" id="bragg-r1-d" class="form-control mono" value="3.1356" oninput="calcBraggRow1()" min="0.01" max="1000" step="any">
                         </div>
                       </div>
@@ -1134,6 +1127,13 @@
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">회절각 2θ</span> <span class="unit">(°)</span></label>
                           <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" oninput="calcBraggRow1()" min="0.1" max="179.9" step="0.1">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_energy" style="font-size:10px;">계산된 에너지 (E)</div>
+                          <div id="bragg-r1-res-e" class="result-value primary" style="font-size:13px; line-height:1.2;">10.000 keV</div>
+                          <div id="bragg-r1-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | λ = 0.12398 nm</div>
                         </div>
                       </div>
                     </div>
@@ -1248,15 +1248,15 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="lat_r_d">격자면 간격 d</div>
+                        <div class="result-label" data-i18n-html="lat_r_d">격자면 간격 <i class="formula">d</i></div>
                         <div id="lat-res-d" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="lat_r_q">산란 벡터 |Q| = 2π/d</div>
+                        <div class="result-label" data-i18n-html="lat_r_q">산란 벡터 <i class="formula">|Q| = 2π/d</i></div>
                         <div id="lat-res-q" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="lat_r_theta">브래그 각도 θ (2θ)</div>
+                        <div class="result-label" data-i18n-html="lat_r_theta">브래그 각도 <i class="formula">θ (2θ)</i></div>
                         <div id="lat-res-theta" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
@@ -1278,9 +1278,9 @@
                     <table class="lab-table refl-table">
                       <thead>
                         <tr>
-                          <th data-i18n="lat_refl_hkl">h k l</th>
-                          <th class="dt-val" data-i18n="lat_refl_d">d (Å)</th>
-                          <th class="dt-val" data-i18n="lat_refl_tth">2θ (°)</th>
+                          <th data-i18n-html="lat_refl_hkl"><i class="formula">h k l</i></th>
+                          <th class="dt-val" data-i18n-html="lat_refl_d"><i class="formula">d</i> (Å)</th>
+                          <th class="dt-val" data-i18n-html="lat_refl_tth"><i class="formula">2θ</i> (°)</th>
                           <th class="dt-val" data-i18n="lat_refl_q">|Q| (Å⁻¹)</th>
                         </tr>
                       </thead>
@@ -1393,11 +1393,11 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_target_twotheta">목표 회절각 2θ</div>
+                        <div class="result-label" data-i18n-html="res_target_twotheta">목표 회절각 <i class="formula">2θ</i></div>
                         <div id="ea-res-tth2" class="result-value primary">18.962°</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_target_theta">목표 브래그각 θ</div>
+                        <div class="result-label" data-i18n-html="res_target_theta">목표 브래그각 <i class="formula">θ</i></div>
                         <div id="ea-res-th2" class="result-value">9.481°</div>
                       </div>
                       <div class="result-item">
@@ -1582,7 +1582,7 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_strain_eps">변형률 ε</div>
+                        <div class="result-label" data-i18n-html="res_strain_eps">변형률 <i class="formula">ε</i></div>
                         <div id="str-res-eps" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
@@ -1590,11 +1590,11 @@
                         <div id="str-res-micro" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_strain_d">측정된 d</div>
+                        <div class="result-label" data-i18n-html="res_strain_d">측정된 <i class="formula">d</i></div>
                         <div id="str-res-d" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_strain_shift">피크 이동 Δ2θ</div>
+                        <div class="result-label" data-i18n-html="res_strain_shift">피크 이동 <i class="formula">Δ2θ</i></div>
                         <div id="str-res-shift" class="result-value">-</div>
                       </div>
                     </div>
@@ -1653,11 +1653,11 @@
                         <div id="pxq-res-q" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_pxq_tth">산란각 2θ</div>
+                        <div class="result-label" data-i18n-html="res_pxq_tth">산란각 <i class="formula">2θ</i></div>
                         <div id="pxq-res-tth" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_pxq_d">면간 거리 d</div>
+                        <div class="result-label" data-i18n-html="res_pxq_d">면간 거리 <i class="formula">d</i></div>
                         <div id="pxq-res-d" class="result-value">-</div>
                       </div>
                       <div class="result-item">
@@ -1853,7 +1853,7 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n-html="res_cres_dr">실공간 분해능 Δr</div>
+                        <div class="result-label" data-i18n-html="res_cres_dr">실공간 분해능 <i class="formula">Δr</i></div>
                         <div id="cres-res-dr" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
@@ -1892,8 +1892,13 @@
           </div>
 
           <div id="dash-quick" class="dash-quick"></div>
-          <div id="dash-groups" class="flex-row dash-groups"></div>
+          <!-- Above the groups, not after them: it is the one line on this
+               view that knows who is reading, and it was set last, below the
+               fold, behind thirty-one tools it exists to let you skip. Empty
+               until something has been calculated, so it costs nothing on a
+               first visit. -->
           <div id="dash-recent-slot"></div>
+          <div id="dash-groups" class="flex-row dash-groups"></div>
 
           <a class="dash-all" href="#index" data-i18n="dash_browse_all">CONTENTS 에서 전체 도구 보기</a>
         </section>
@@ -2274,7 +2279,7 @@
                     <span data-i18n="toc_sec_about_title">연구자 프로필 및 후원</span>
                   </div>
                 </a>
-                <div class="toc-sec-desc" data-i18n="toc_sec_about_desc">연구자 약력, X선 광학·BCDI 연구 분야, 연락처 및 프로젝트 후원</div>
+                <div class="toc-sec-desc" data-i18n="toc_sec_about_desc">각 스위트에 무엇이 들어 있는지, 설계 원칙, 만든 사람과 계산 근거</div>
               </div>
             </div>
 
@@ -2738,7 +2743,7 @@
                         <div id="kie-res-raw" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_kie_spacing">프린지 간격 Δθ</div>
+                        <div class="result-label" data-i18n-html="res_kie_spacing">프린지 간격 <i class="formula">Δθ</i></div>
                         <div id="kie-res-spacing" class="result-value">-</div>
                       </div>
                       <div class="result-item">
@@ -2775,7 +2780,6 @@
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
-                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current" data-i18n="lang_current">현재 언어: 한국어</div>
                       <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc" data-i18n="lang_desc">인터페이스 언어를 전환합니다. 언어마다 주소가 다르므로 페이지가 다시 열립니다.</div>
                     </div>
                     <div style="margin-top:6px;">
@@ -2794,64 +2798,42 @@
                   <span class="card-title" data-i18n="set_card_theme_title">화면 테마 설정</span>
                 </div>
                 <div class="card-body">
-                  <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current" data-i18n="theme_current_initial">현재 테마: 학술 논문</div>
                   <div style="font-size:11px; color:var(--ink-secondary); margin-bottom:10px;" id="settings-theme-desc" data-i18n="theme_desc">일곱 가지 테마 중 하나를 선택합니다. 레이아웃과 인쇄 규격은 모든 테마에서 동일하게 유지됩니다.</div>
 
                   <div class="theme-picker">
                     <button id="btn-theme-paper" class="theme-swatch" onclick="applyTheme('paper')">
                       <span class="theme-chip theme-chip-paper"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_paper_name">학술 논문 (Academic Paper)</strong>
-                        <em data-i18n="theme_paper_desc">미색 종이 + 잉크 블랙 + 옥스퍼드 네이비 — 기본 인쇄 규격</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_paper_name">종이</span>
                     </button>
 
                     <button id="btn-theme-parchment" class="theme-swatch" onclick="applyTheme('parchment')">
                       <span class="theme-chip theme-chip-parchment"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_parchment_name">빈티지 양피지 (Vintage Parchment)</strong>
-                        <em data-i18n="theme_parchment_desc">누렇게 바랜 연구 노트 + 짙은 밤색 잉크 — 눈이 편안한 휴식용</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_parchment_name">양피지</span>
                     </button>
 
                     <button id="btn-theme-datasheet" class="theme-swatch" onclick="applyTheme('datasheet')">
                       <span class="theme-chip theme-chip-datasheet"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_datasheet_name">공학 데이터시트 (Technical Datasheet)</strong>
-                        <em data-i18n="theme_datasheet_desc">쿨 화이트 종이 + 제도용 네이비 잉크 + 밀리미터 방안 그리드 스펙시트</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_datasheet_name">데이터시트</span>
                     </button>
 
                     <button id="btn-theme-blueprint" class="theme-swatch" onclick="applyTheme('blueprint')">
                       <span class="theme-chip theme-chip-blueprint"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_blueprint_name">사이아노타입 청사진 (Cyanotype Blueprint)</strong>
-                        <em data-i18n="theme_blueprint_desc">딥 프러시안 블루 도면 + 초크 화이트/시안 선화 엔지니어링 청사진</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_blueprint_name">청사진</span>
                     </button>
 
                     <button id="btn-theme-crt" class="theme-swatch" onclick="applyTheme('crt')">
                       <span class="theme-chip theme-chip-crt"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_crt_name">CRT 터미널 (Green / Amber)</strong>
-                        <em data-i18n="theme_crt_desc">80년대 실험실 CRT 인광 녹색 + 앰버 강조, 전면 모노스페이스</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_crt_name">터미널</span>
                     </button>
 
                     <button id="btn-theme-tokyo" class="theme-swatch" onclick="applyTheme('tokyo')">
                       <span class="theme-chip theme-chip-tokyo"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_tokyo_name">도쿄 나이트 (Neon Dark)</strong>
-                        <em data-i18n="theme_tokyo_desc">모던 네온 블루/퍼플 다크, 고가독성</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_tokyo_name">도쿄</span>
                     </button>
 
                     <button id="btn-theme-console" class="theme-swatch" onclick="applyTheme('console')">
                       <span class="theme-chip theme-chip-console"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_console_name">제어실 콘솔 (Beamline Control Room)</strong>
-                        <em data-i18n="theme_console_desc">실제 가속기 제어실(EPICS) 스타일의 초고대비 산업용 다크 모드</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_console_name">콘솔</span>
                     </button>
                   </div>
                 </div>
@@ -2941,14 +2923,23 @@
 
                 <h3 class="about-sub" data-i18n="about_what_title">구성</h3>
                 <dl class="about-list">
-                  <dt data-i18n="about_f1_t">SPECTROSCOPY</dt>
-                  <dd data-i18n="about_f1_d">에너지·파장 변환, 격자면 간격, 복소 굴절률과 투과율, 에너지 분해능과 광자 플럭스.</dd>
+                  <dt data-i18n="about_f1_t">RADIOMETRY</dt>
+                  <dd data-i18n="about_f1_d">광자 플럭스와 슬릿 수용각, 흡수체 스택, 흡수 선량과 노출 시간 예산.</dd>
 
-                  <dt data-i18n="about_f2_t">GONIOMETRY</dt>
-                  <dd data-i18n="about_f2_d">브래그 각도, 상호공간 Q 벡터, 빔 풋프린트, 디텍터 기하와 슬릿 수용각, 오일러 크래들 보정.</dd>
+                  <dt data-i18n="about_f2_t">OPTICS</dt>
+                  <dd data-i18n="about_f2_d">에너지·파장 변환, 복소 굴절률과 투과율, 회절 격자, 에너지 분해능과 열 드리프트.</dd>
 
-                  <dt data-i18n="about_f3_t">RECORD</dt>
-                  <dd data-i18n="about_f3_d">한 번의 클릭으로 남기는 실험 로그와 세션 맥락. 외부 로그북에 붙여넣을 세션 헤더를 자동 생성합니다.</dd>
+                  <dt data-i18n="about_f3_t">GEOMETRY</dt>
+                  <dd data-i18n="about_f3_d">브래그 각도, 격자면 간격, 상호공간 Q 벡터, 빔 풋프린트, 검출기 기하와 오일러 크래들 보정.</dd>
+
+                  <dt data-i18n="about_f4_t">COHERENCE</dt>
+                  <dd data-i18n="about_f4_d">시료 위 결맞음 길이, CDI / BCDI 오버샘플링, 그 기하가 도달할 수 있는 실공간 분해능.</dd>
+
+                  <dt data-i18n="about_f5_t">DATA</dt>
+                  <dd data-i18n="about_f5_d">두 열 스캔 파일 자동 인식, 로그 축 XY 플롯, 정규화와 구간 자르기, XRR 세그먼트 이어붙이기.</dd>
+
+                  <dt data-i18n="about_f6_t">RECORD</dt>
+                  <dd data-i18n="about_f6_d">한 번의 클릭으로 남기는 실험 로그와 세션 맥락. 외부 로그북에 붙여넣을 세션 헤더를 자동 생성합니다.</dd>
                 </dl>
 
                 <h3 class="about-sub" data-i18n="about_design_title">설계 원칙</h3>
@@ -2971,14 +2962,6 @@
 
                 <p class="about-person-note" data-i18n="about_person_note">빔타임 현장에서 매번 같은 계산을 반복하다가, 필요한 도구를 한곳에 모으려고 시작한 프로젝트입니다.</p>
 
-                <h3 class="about-sub" data-i18n="about_research_title">연구 분야</h3>
-                <ul class="about-tags">
-                  <li>X-ray Optics &amp; Wave Propagation</li>
-                  <li>Coherent Diffraction Imaging (CDI / BCDI)</li>
-                  <li>Phase Retrieval &amp; 3D Strain Mapping</li>
-                  <li>Beamline Instrumentation &amp; DAQ</li>
-                </ul>
-
                 <h3 class="about-sub" data-i18n="about_sciencetitle">계산 근거</h3>
                 <p class="about-person-note" data-i18n="about_science">물리 상수는 CODATA 권장값을, 결정 격자 상수와 산란 인자는 공개된 결정학 데이터를 사용합니다. 계산 결과는 실험 계획과 현장 판단을 돕기 위한 것이며, 발표·출판에 사용하기 전에는 직접 검증하시기 바랍니다.</p>
               </div>
@@ -2990,9 +2973,6 @@
             <div class="about-footer-meta">
               <span data-i18n="about_developed_by">Developed by</span>
               <a href="mailto:isaacyong@naver.com">Isaac Yong</a>
-              <span class="about-footer-sep">&middot;</span>
-              <span data-i18n="about_supported_by">Supported by</span>
-              <a class="sponsor-btn" href="https://github.com/sponsors/SJB7777" target="_blank" rel="noopener noreferrer" data-i18n="about_sponsor_btn">Sponsor</a>
             </div>
           </div>
         </section>

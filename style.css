@@ -429,7 +429,12 @@ a:hover {
 .toc-item-link:focus,
 .toc-sec-header:focus,
 .result-box-copy-btn:focus,
-.lang-toggle:focus {
+.lang-toggle:focus,
+.dash-quick-item:focus,
+.dash-tool:focus,
+.dash-more:focus,
+.dash-recent-item:focus,
+.dash-all:focus {
   outline: 2px solid var(--accent-ink);
   outline-offset: 2px;
 }
@@ -442,7 +447,12 @@ a:hover {
 .toc-item-link:focus:not(:focus-visible),
 .toc-sec-header:focus:not(:focus-visible),
 .result-box-copy-btn:focus:not(:focus-visible),
-.lang-toggle:focus:not(:focus-visible) {
+.lang-toggle:focus:not(:focus-visible),
+.dash-quick-item:focus:not(:focus-visible),
+.dash-tool:focus:not(:focus-visible),
+.dash-more:focus:not(:focus-visible),
+.dash-recent-item:focus:not(:focus-visible),
+.dash-all:focus:not(:focus-visible) {
   outline: none;
 }
 
@@ -450,6 +460,22 @@ a:hover {
 i, em, var, .formula {
   font-family: var(--font-serif);
   font-style: italic;
+}
+
+/* A symbol is not a word, and text-transform does not know the difference.
+   Every uppercase micro-label on the site runs its content through
+   text-transform: uppercase, which turned σ into Σ, Δr into ΔR, ε into Ε and
+   2π/d into 2Π/D — Β and Ε are pixel-identical to Latin B and E, so the label
+   did not even look wrong. The symbols are already marked up; exempt them. */
+.formula {
+  text-transform: none;
+}
+
+/* Same for every subscript, without exception: a subscript is an index, never
+   a word. θ<sub>c</sub> was reading as θ_C and the two coherence lengths,
+   ξ<sub>t</sub> and ξ<sub>l</sub>, came out ξ_T and ξ_L. */
+sub, sup {
+  text-transform: none;
 }
 
 sup, sub {
@@ -1146,14 +1172,24 @@ sub {
   color: var(--ink-muted);
 }
 
+/* The slot at the right of a card header holds one of two things: the formula
+   the card evaluates, or a caption naming what it does ("Delivered Flux",
+   "Delimiter & header auto-detect"). Both were set in the accent, which is the
+   link colour on every other surface — eleven captions that read as links and
+   click nowhere. The accent stays on the notation, which earns it; the prose
+   drops to muted, where a caption belongs. */
 .card-tag {
   font-family: var(--font-mono);
   font-size: 0.785rem;
-  color: var(--accent-ink);
+  color: var(--ink-muted);
   font-style: normal;
   line-height: 1.3;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.card-tag .formula {
+  color: var(--accent-ink);
 }
 
 .card-body {
@@ -1518,6 +1554,11 @@ select.form-control {
 }
 
 /* Academic Badges & Status Indicators (Monochrome) */
+/* No uppercase here, unlike the other micro-labels. A badge does not carry a
+   two-word caption, it carries a verdict with the numbers that earned it, and
+   the transform ate the units along with the case: "Fits (7 h 51 min 19 s
+   spare)" was set as "FITS (7 H 51 MIN 19 S SPARE)", which is not a duration
+   anyone reads. Mono, bold and boxed is already enough to mark it. */
 .badge {
   display: inline-block;
   font-family: var(--font-mono);
@@ -1527,7 +1568,6 @@ select.form-control {
   border: var(--rule-main);
   background-color: var(--bg-paper);
   color: var(--ink-primary);
-  text-transform: uppercase;
 }
 
 .badge-subtle {
@@ -1763,6 +1803,26 @@ html[lang="ko"] .nav-ref-head {
   color: var(--ink-muted);
 }
 
+/* And in every other tracked micro-label, which is most of them: result
+   captions, plot titles, the dashboard's headings and counts. These keep
+   their size and weight — only the tracking stands down, since that is the
+   part that does the damage to Hangul. uppercase is left in place because it
+   is a no-op on syllable blocks and these labels still carry Latin. */
+html[lang="ko"] .result-label,
+html[lang="ko"] .miniplot-title,
+html[lang="ko"] .refl-title,
+html[lang="ko"] .about-sub,
+html[lang="ko"] .dash-quick-head,
+html[lang="ko"] .dash-recent-label,
+html[lang="ko"] .dash-group-count,
+html[lang="ko"] .dash-more-label,
+html[lang="ko"] .datasheet-table th,
+html[lang="ko"] .dt-sym,
+html[lang="ko"] .dt-val,
+html[lang="ko"] .dt-unit {
+  letter-spacing: 0.01em;
+}
+
 /* Toast Notifications */
 #toast-container {
   position: fixed;
@@ -1857,6 +1917,7 @@ html[lang="ko"] .nav-ref-head {
   }
 
   body.drawer-open #nav-backdrop { display: block; }
+
   #main-wrapper {
     margin-left: 0 !important;
     width: 100% !important;
@@ -1864,9 +1925,16 @@ html[lang="ko"] .nav-ref-head {
     min-width: 0 !important;
     flex: 1 1 100% !important;
   }
+  /* Here the tab strip is the whole of the navigation, so it has to stay on
+     screen — and position:sticky cannot do it, for the reason the sidebar is
+     position:fixed. Bounding the layout to the viewport hands the scrolling to
+     #content-area, which already has overflow-y:auto: the header and the strip
+     are then above the scroll rather than in it, with no fixed positioning and
+     no padding to keep in step with their height. */
   #app-layout {
     width: 100% !important;
     max-width: 100% !important;
+    height: 100% !important;
   }
   #content-area {
     padding: 10px 8px 40px 8px !important;
@@ -2480,15 +2548,20 @@ html[lang="ko"] .nav-ref-head {
 }
 
 /* The four opened over and over. Command buttons rather than cards: a
-   returning reader should not have to read a heading to convert an energy. */
-/* A tinted panel, the same construction as the calculator input groups: on a
-   page made only of paper-white the eye has nothing to land on, and this view
-   has no cards of its own to provide it. */
+   returning reader should not have to read a heading to convert an energy.
+
+   A rail, not a panel. The tint on this view means one thing — "this is a
+   heading's ground" — and these are not a heading, they are the four things
+   most worth clicking. Tinted, they were the sixth grey band on a page of
+   six and ranked level with the group headings above the tools they lead to.
+   Left on paper between two rules they are the brightest thing here, which
+   is the right answer for the most-used controls; the buttons carry their own
+   frames, so the ground was never what was holding them together. */
 .dash-quick {
-  border: var(--rule-light);
-  background-color: var(--bg-paper-subtle);
-  padding: 10px 12px 4px 12px;
-  margin-bottom: 26px;
+  border-top: var(--rule-light);
+  border-bottom: var(--rule-light);
+  padding: 9px 0 1px 0;
+  margin-bottom: 22px;
 }
 
 .dash-quick-head {
@@ -2498,8 +2571,6 @@ html[lang="ko"] .nav-ref-head {
   letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--ink-muted);
-  border-bottom: var(--rule-light);
-  padding-bottom: 5px;
   margin-bottom: 9px;
 }
 
@@ -2509,14 +2580,18 @@ html[lang="ko"] .nav-ref-head {
   margin: 0 -4px;
 }
 
-/* Four of one thing, so they are one size: each takes an equal share of the
-   row and wraps to two when the share drops under a readable width. */
+/* Four of one thing, so they are one size: a fixed quarter of the row, not a
+   flexible basis. A basis wraps at whatever count happens to fit, and between
+   roughly 900px and 1050px that count was three — three across and a fourth
+   alone on a full-width line, which reads as a fifth control rather than the
+   last of four. Quarters step 4 to 2 to 1 and never land on three. */
 .dash-quick-item {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  flex: 1 1 190px;
+  flex: 0 0 auto;
+  width: calc(25% - 8px);
   min-height: 2.4rem;
   margin: 0 4px 8px 4px;
   padding: 7px 13px;
@@ -2524,8 +2599,23 @@ html[lang="ko"] .nav-ref-head {
   background-color: var(--bg-paper);
   font-family: var(--font-mono);
   font-size: 11.5px;
-  color: var(--ink-primary);
+  /* Navy because it is a link, like every other link on the site. These were
+     the only anchors on this view set in body ink, which made the four
+     primary actions the four least action-coloured things on the page. */
+  color: var(--accent-ink);
   text-decoration: none;
+}
+
+/* Two across once a quarter would drop under the ~190px the longest label
+   needs, one across when a half would. The first step is set on the viewport
+   the sidebar is still showing at; below 900px the sidebar is gone and the
+   content is wide again, but two wide controls are the right answer there too. */
+@media (max-width: 1044px) {
+  .dash-quick-item { width: calc(50% - 8px); }
+}
+
+@media (max-width: 600px) {
+  .dash-quick-item { width: calc(100% - 8px); }
 }
 
 /* The global a:hover inverts to black and drops the bottom border on the way.
@@ -2543,16 +2633,18 @@ html[lang="ko"] .nav-ref-head {
   box-sizing: border-box;
 }
 
-/* A short navy rule over the heading rather than a heavy black one under it:
-   the group is marked, and the page keeps four black bars fewer. */
+/* A hairline over the heading rather than a heavy black bar under it: the
+   group is marked, and the page keeps four black bars fewer. It was navy
+   once, which spent the loudest colour on this view — four of them — on the
+   one thing in a group you cannot click. Grey is structure, charcoal is
+   text, navy is action; a heading rule is structure. */
 .dash-group-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  border-top: 2px solid var(--accent-ink);
-  border-bottom: var(--rule-light);
+  border-top: 1px solid var(--line-strong);
   background-color: var(--bg-paper-subtle);
-  padding: 8px 12px 6px 12px;
+  padding: 8px 12px 4px 12px;
 }
 
 .dash-group-title {
@@ -2573,10 +2665,19 @@ html[lang="ko"] .nav-ref-head {
   flex-shrink: 0;
 }
 
+/* The question the group answers, and the reason this view exists at all —
+   so it is set like the other two questions on the page, in italic serif,
+   and it shares the heading's ground rather than sitting on paper below a
+   rule that cut it off from the title it belongs to. Heading and question
+   are one block; the rule closing it is the rule closing them both. */
 .dash-group-ask {
   display: block;
-  padding: 8px 12px 4px 12px;
-  font-size: 11px;
+  background-color: var(--bg-paper-subtle);
+  border-bottom: var(--rule-light);
+  padding: 0 12px 7px 12px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
   line-height: 1.5;
   color: var(--ink-secondary);
 }
@@ -2638,7 +2739,9 @@ html[lang="ko"] .nav-ref-head {
   margin-top: 9px;
   padding: 7px 12px 2px 12px;
   border: none;
-  border-top: var(--rule-light);
+  /* Faint, not light: this rule separates a group from its own folded tail,
+     so it must not read heavier than the rule between two groups. */
+  border-top: var(--rule-faint);
   background: none;
   text-align: left;
   cursor: pointer;
@@ -2659,12 +2762,13 @@ html[lang="ko"] .nav-ref-head {
   content: " \2192";
 }
 
-/* Set like a result: tinted ground, accent rule down the inner edge. */
+/* Set like a result: accent rule down the inner edge, on paper. The tint is
+   the heading ground on this view and this is not a heading — the navy edge
+   and the navy links are what mark it, and they are enough. */
 .dash-recent {
   border-left: 2px solid var(--accent-ink);
-  background-color: var(--bg-paper-subtle);
-  padding: 8px 12px;
-  margin-bottom: 16px;
+  padding: 4px 12px 14px 12px;
+  margin-bottom: 22px;
   font-family: var(--font-mono);
   font-size: 11px;
 }
@@ -2719,7 +2823,7 @@ html[lang="ko"] .nav-ref-head {
 
   /* The tinted grounds on the dashboard and the contents exist to break up a
      screen of paper-white. Printed, they come out as grey blocks. */
-  .dash-head, .dash-quick, .dash-group-head, .dash-recent,
+  .dash-head, .dash-group-head, .dash-group-ask,
   .toc-masthead, .toc-items-container {
     background-color: transparent !important;
   }
@@ -2813,24 +2917,30 @@ html[lang="ko"] .nav-ref-head {
    palette regardless of which theme is currently active.
    ========================================================================== */
 
+/* Seven squares in a row, not seven rows of prose. Each theme used to be a
+   240px card carrying its name and a sentence about it — "1980s lab phosphor
+   green with amber accent" — which is copy for a shop window, not a control.
+   Nobody reads a paragraph to pick a colour; they look at the chip. What is
+   left is the chip, a one-word name under it, and the frame that says which
+   one is on. Seven at 74px also fit one line, so the picker stops breaking
+   3-3-1 with a lone card on the bottom row. */
 .theme-picker {
   display: flex;
   flex-wrap: wrap;
-  margin-left: -8px;
+  margin-left: -6px;
 }
 
 .theme-swatch {
-  display: flex;
-  align-items: center;
-  flex: 1 1 240px;
-  margin: 0 0 8px 8px;
-  padding: 8px 10px;
+  display: block;
+  flex: 0 0 auto;
+  width: 74px;
+  margin: 0 0 6px 6px;
+  padding: 7px 4px 6px 4px;
   border: var(--rule-light);
   border-radius: 0 !important;
   background-color: var(--bg-paper);
   color: var(--ink-primary);
-  font-family: var(--font-serif);
-  text-align: left;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -2844,34 +2954,29 @@ html[lang="ko"] .nav-ref-head {
   background-color: var(--bg-paper-subtle);
 }
 
-.theme-swatch-text {
+.theme-swatch-name {
   display: block;
-  padding-left: 10px;
-  min-width: 0;
-}
-
-.theme-swatch-text strong {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.theme-swatch-text em {
-  display: block;
-  font-style: normal;
+  font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--ink-muted);
-  line-height: 1.4;
+  line-height: 1.3;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-swatch.active .theme-swatch-name {
+  color: var(--ink-primary);
+  font-weight: 700;
 }
 
 .theme-chip {
   display: block;
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 6px auto;
   border-style: solid;
-  border-width: 2px 7px 2px 2px;
+  border-width: 2px 8px 2px 2px;
 }
 
 .theme-chip-paper {
@@ -3252,6 +3357,10 @@ html[lang="ko"] .nav-ref-head {
   padding: 0 6px;
 }
 
+/* The same 70ch the prose under it is set to. Without it the rule under each
+   heading ran the full width of the column while every paragraph stopped two
+   thirds of the way across, so the page looked like text that had failed to
+   fill its box rather than text set to a measure. */
 .about-sub {
   font-family: var(--font-serif);
   font-size: 11px;
@@ -3262,6 +3371,7 @@ html[lang="ko"] .nav-ref-head {
   border-bottom: var(--rule-light);
   padding-bottom: 4px;
   margin: 24px 0 10px 0;
+  max-width: 70ch;
 }
 
 .about-list {
@@ -3333,23 +3443,6 @@ html[lang="ko"] .nav-ref-head {
   margin: 8px 0 0 0;
 }
 
-.about-tags {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.about-tags li {
-  font-size: 11px;
-  color: var(--ink-secondary);
-  padding: 3px 0;
-  border-bottom: var(--rule-faint);
-}
-
-.about-tags li:last-child {
-  border-bottom: none;
-}
-
 @media (max-width: 860px) {
   .about-side {
     border-left: none;
@@ -3358,31 +3451,6 @@ html[lang="ko"] .nav-ref-head {
     padding-top: 12px;
     margin-top: 12px;
   }
-}
-
-/* Sponsor link: GitHub's own button is a cross-origin iframe, so its heart
-   cannot be removed and it fails offline. This is the same 114x32 footprint
-   drawn in the site's own ink. */
-.sponsor-btn {
-  display: inline-block;
-  min-width: 114px;
-  box-sizing: border-box;
-  text-align: center;
-  padding: 6px 12px;
-  border: var(--rule-light) !important;
-  background-color: var(--bg-paper);
-  color: var(--ink-secondary) !important;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.6px;
-  text-decoration: none;
-  vertical-align: middle;
-  margin-left: 4px;
-}
-
-.sponsor-btn:hover {
-  border-color: var(--accent-ink) !important;
-  color: var(--accent-ink) !important;
 }
 
 /* ==========================================================================

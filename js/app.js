@@ -862,17 +862,29 @@
     }
   }
 
+  // Where the first line a reader can actually see begins. Below 900px the
+  // header and the tab strip stay put and #content-area scrolls beneath them,
+  // so a card parked 12px from y=0 would be behind both. Where <body> scrolls
+  // instead, the header goes with it and this is 0.
+  function scrollTargetTop() {
+    var contentArea = document.getElementById("content-area");
+    if (contentArea && contentArea.scrollHeight > contentArea.clientHeight) {
+      return contentArea.getBoundingClientRect().top;
+    }
+    return 0;
+  }
+
   // The calculators redraw their plots just after a view opens, which changes
   // the height of everything above the target and leaves a single scroll short
   // of the mark. Re-measure a couple of times and close the gap.
   function scrollCardIntoView(cardEl, attempt) {
-    scrollBy(cardEl.getBoundingClientRect().top - 12);
+    scrollBy(cardEl.getBoundingClientRect().top - scrollTargetTop() - 12);
 
     attempt = attempt || 1;
     if (attempt >= 4) return;
 
     setTimeout(function () {
-      if (Math.abs(cardEl.getBoundingClientRect().top - 12) > 4) {
+      if (Math.abs(cardEl.getBoundingClientRect().top - scrollTargetTop() - 12) > 4) {
         scrollCardIntoView(cardEl, attempt + 1);
       }
     }, 120 * attempt);

@@ -1058,13 +1058,6 @@
                     </div>
                     <div class="flex-row">
                       <div class="col-4">
-                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
-                          <div class="result-label" data-i18n="res_calc_d" style="font-size:10px;">Calculated d-spacing (d)</div>
-                          <div id="bragg-r2-res-d" class="result-value primary" style="font-size:13px; line-height:1.2;">3.1356 Å</div>
-                          <div id="bragg-r2-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
-                        </div>
-                      </div>
-                      <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">Diffraction Angle 2θ</span> <span class="unit">(°)</span></label>
                           <input type="number" id="bragg-r2-tth" class="form-control mono" value="22.806" oninput="calcBraggRow2()" min="0.1" max="179.9" step="0.1">
@@ -1076,6 +1069,13 @@
                           <input type="number" id="bragg-r2-e" class="form-control mono" value="10.000" oninput="calcBraggRow2()" min="0.1" max="1000" step="any">
                         </div>
                       </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n-html="res_calc_d" style="font-size:10px;">Calculated d-spacing (<i class="formula">d</i>)</div>
+                          <div id="bragg-r2-res-d" class="result-value primary" style="font-size:13px; line-height:1.2;">3.1356 Å</div>
+                          <div id="bragg-r2-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -1085,15 +1085,8 @@
                     </div>
                     <div class="flex-row">
                       <div class="col-4">
-                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
-                          <div class="result-label" data-i18n="res_calc_tth" style="font-size:10px;">Calculated Angle 2θ</div>
-                          <div id="bragg-r3-res-tth" class="result-value primary" style="font-size:13px; line-height:1.2;">2θ = 22.806°</div>
-                          <div id="bragg-r3-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
-                        </div>
-                      </div>
-                      <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
-                          <label class="form-label"><span data-i18n="lbl_dspacing">Lattice d-spacing d</span> <span class="unit">(Å)</span></label>
+                          <label class="form-label"><span data-i18n-html="lbl_dspacing">Lattice d-spacing <i class="formula">d</i></span> <span class="unit">(Å)</span></label>
                           <input type="number" id="bragg-r3-d" class="form-control mono" value="3.1356" oninput="calcBraggRow3()" min="0.01" max="1000" step="any">
                         </div>
                       </div>
@@ -1101,6 +1094,13 @@
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_inc_energy">Incident Energy</span> <span class="unit">(keV)</span></label>
                           <input type="number" id="bragg-r3-e" class="form-control mono" value="10.000" oninput="calcBraggRow3()" min="0.1" max="1000" step="any">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n-html="res_calc_tth" style="font-size:10px;">Calculated Angle <i class="formula">2&theta;</i></div>
+                          <div id="bragg-r3-res-tth" class="result-value primary" style="font-size:13px; line-height:1.2;">2θ = 22.806°</div>
+                          <div id="bragg-r3-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | Q = 2.0038 Å⁻¹</div>
                         </div>
                       </div>
                     </div>
@@ -1112,15 +1112,8 @@
                     </div>
                     <div class="flex-row">
                       <div class="col-4">
-                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
-                          <div class="result-label" data-i18n="res_calc_energy" style="font-size:10px;">Calculated Energy (E)</div>
-                          <div id="bragg-r1-res-e" class="result-value primary" style="font-size:13px; line-height:1.2;">10.000 keV</div>
-                          <div id="bragg-r1-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | λ = 0.12398 nm</div>
-                        </div>
-                      </div>
-                      <div class="col-4">
                         <div class="form-group" style="margin-bottom:6px;">
-                          <label class="form-label"><span data-i18n="lbl_dspacing">Lattice d-spacing d</span> <span class="unit">(Å)</span></label>
+                          <label class="form-label"><span data-i18n-html="lbl_dspacing">Lattice d-spacing <i class="formula">d</i></span> <span class="unit">(Å)</span></label>
                           <input type="number" id="bragg-r1-d" class="form-control mono" value="3.1356" oninput="calcBraggRow1()" min="0.01" max="1000" step="any">
                         </div>
                       </div>
@@ -1128,6 +1121,13 @@
                         <div class="form-group" style="margin-bottom:6px;">
                           <label class="form-label"><span data-i18n="lbl_tth">Diffraction Angle 2θ</span> <span class="unit">(°)</span></label>
                           <input type="number" id="bragg-r1-tth" class="form-control mono" value="22.806" oninput="calcBraggRow1()" min="0.1" max="179.9" step="0.1">
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="result-box" style="margin-top:0; padding:6px 8px;">
+                          <div class="result-label" data-i18n="res_calc_energy" style="font-size:10px;">Calculated Energy (E)</div>
+                          <div id="bragg-r1-res-e" class="result-value primary" style="font-size:13px; line-height:1.2;">10.000 keV</div>
+                          <div id="bragg-r1-res-sub" style="font-size:10px; color:var(--ink-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">θ = 11.403° | λ = 0.12398 nm</div>
                         </div>
                       </div>
                     </div>
@@ -1242,15 +1242,15 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="lat_r_d">Plane spacing d</div>
+                        <div class="result-label" data-i18n-html="lat_r_d">Plane spacing <i class="formula">d</i></div>
                         <div id="lat-res-d" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="lat_r_q">Scattering vector |Q| = 2π/d</div>
+                        <div class="result-label" data-i18n-html="lat_r_q">Scattering vector <i class="formula">|Q| = 2&pi;/d</i></div>
                         <div id="lat-res-q" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="lat_r_theta">Bragg angle θ (2θ)</div>
+                        <div class="result-label" data-i18n-html="lat_r_theta">Bragg angle <i class="formula">&theta; (2&theta;)</i></div>
                         <div id="lat-res-theta" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
@@ -1272,9 +1272,9 @@
                     <table class="lab-table refl-table">
                       <thead>
                         <tr>
-                          <th data-i18n="lat_refl_hkl">h k l</th>
-                          <th class="dt-val" data-i18n="lat_refl_d">d (Å)</th>
-                          <th class="dt-val" data-i18n="lat_refl_tth">2θ (°)</th>
+                          <th data-i18n-html="lat_refl_hkl"><i class="formula">h k l</i></th>
+                          <th class="dt-val" data-i18n-html="lat_refl_d"><i class="formula">d</i> (Å)</th>
+                          <th class="dt-val" data-i18n-html="lat_refl_tth"><i class="formula">2&theta;</i> (&deg;)</th>
                           <th class="dt-val" data-i18n="lat_refl_q">|Q| (Å⁻¹)</th>
                         </tr>
                       </thead>
@@ -1387,11 +1387,11 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_target_twotheta">Target Angle 2θ</div>
+                        <div class="result-label" data-i18n-html="res_target_twotheta">Target Angle <i class="formula">2&theta;</i></div>
                         <div id="ea-res-tth2" class="result-value primary">18.962°</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_target_theta">Target Angle θ</div>
+                        <div class="result-label" data-i18n-html="res_target_theta">Target Angle <i class="formula">&theta;</i></div>
                         <div id="ea-res-th2" class="result-value">9.481°</div>
                       </div>
                       <div class="result-item">
@@ -1576,7 +1576,7 @@
                   <div class="result-box">
                     <div class="result-grid">
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_strain_eps">Strain &epsilon;</div>
+                        <div class="result-label" data-i18n-html="res_strain_eps">Strain <i class="formula">&epsilon;</i></div>
                         <div id="str-res-eps" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
@@ -1584,11 +1584,11 @@
                         <div id="str-res-micro" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_strain_d">Measured d</div>
+                        <div class="result-label" data-i18n-html="res_strain_d">Measured <i class="formula">d</i></div>
                         <div id="str-res-d" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_strain_shift">Peak shift &Delta;2&theta;</div>
+                        <div class="result-label" data-i18n-html="res_strain_shift">Peak shift <i class="formula">&Delta;2&theta;</i></div>
                         <div id="str-res-shift" class="result-value">-</div>
                       </div>
                     </div>
@@ -1647,11 +1647,11 @@
                         <div id="pxq-res-q" class="result-value primary">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_pxq_tth">Scattering angle 2&theta;</div>
+                        <div class="result-label" data-i18n-html="res_pxq_tth">Scattering angle <i class="formula">2&theta;</i></div>
                         <div id="pxq-res-tth" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_pxq_d">Plane spacing d</div>
+                        <div class="result-label" data-i18n-html="res_pxq_d">Plane spacing <i class="formula">d</i></div>
                         <div id="pxq-res-d" class="result-value">-</div>
                       </div>
                       <div class="result-item">
@@ -1886,8 +1886,13 @@
           </div>
 
           <div id="dash-quick" class="dash-quick"></div>
-          <div id="dash-groups" class="flex-row dash-groups"></div>
+          <!-- Above the groups, not after them: it is the one line on this
+               view that knows who is reading, and it was set last, below the
+               fold, behind thirty-one tools it exists to let you skip. Empty
+               until something has been calculated, so it costs nothing on a
+               first visit. -->
           <div id="dash-recent-slot"></div>
+          <div id="dash-groups" class="flex-row dash-groups"></div>
 
           <a class="dash-all" href="#index" data-i18n="dash_browse_all">Browse every tool in the Index</a>
         </section>
@@ -2268,7 +2273,7 @@
                     <span data-i18n="toc_sec_about_title">About the Creator &amp; Research</span>
                   </div>
                 </a>
-                <div class="toc-sec-desc" data-i18n="toc_sec_about_desc">Researcher profile, Coherent X-ray Optics / BCDI domain expertise, and GitHub Sponsors</div>
+                <div class="toc-sec-desc" data-i18n="toc_sec_about_desc">What is in each suite, the design principles, the author and the sources behind the numbers</div>
               </div>
             </div>
 
@@ -2732,7 +2737,7 @@
                         <div id="kie-res-raw" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n="res_kie_spacing">Fringe spacing &Delta;&theta;</div>
+                        <div class="result-label" data-i18n-html="res_kie_spacing">Fringe spacing <i class="formula">&Delta;&theta;</i></div>
                         <div id="kie-res-spacing" class="result-value">-</div>
                       </div>
                       <div class="result-item">
@@ -2769,7 +2774,6 @@
                 <div class="card-body">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
                     <div>
-                      <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-lang-current" data-i18n="lang_current">Current language: English</div>
                       <div style="font-size:11px; color:var(--ink-secondary);" id="settings-lang-desc" data-i18n="lang_desc">Switch the interface language. Each language has its own address, so the page reloads.</div>
                     </div>
                     <div style="margin-top:6px;">
@@ -2788,64 +2792,42 @@
                   <span class="card-title" data-i18n="set_card_theme_title">Display Theme Configuration</span>
                 </div>
                 <div class="card-body">
-                  <div style="font-weight:700; font-size:13px; margin-bottom:4px;" id="settings-theme-current" data-i18n="theme_current_initial">Current theme: Academic Paper</div>
                   <div style="font-size:11px; color:var(--ink-secondary); margin-bottom:10px;" id="settings-theme-desc" data-i18n="theme_desc">Pick one of seven themes. Layout and print specification stay identical across all themes.</div>
 
                   <div class="theme-picker">
                     <button id="btn-theme-paper" class="theme-swatch" onclick="applyTheme('paper')">
                       <span class="theme-chip theme-chip-paper"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_paper_name">Academic Paper</strong>
-                        <em data-i18n="theme_paper_desc">Off-white paper, ink black, Oxford navy — the default print specification</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_paper_name">Paper</span>
                     </button>
 
                     <button id="btn-theme-parchment" class="theme-swatch" onclick="applyTheme('parchment')">
                       <span class="theme-chip theme-chip-parchment"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_parchment_name">Vintage Parchment</strong>
-                        <em data-i18n="theme_parchment_desc">Aged notebook stock with deep sepia ink — warm and easy on the eyes</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_parchment_name">Parchment</span>
                     </button>
 
                     <button id="btn-theme-datasheet" class="theme-swatch" onclick="applyTheme('datasheet')">
                       <span class="theme-chip theme-chip-datasheet"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_datasheet_name">Technical Datasheet</strong>
-                        <em data-i18n="theme_datasheet_desc">Cool white paper, drafting navy ink &amp; millimetre graph spec sheet</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_datasheet_name">Datasheet</span>
                     </button>
 
                     <button id="btn-theme-blueprint" class="theme-swatch" onclick="applyTheme('blueprint')">
                       <span class="theme-chip theme-chip-blueprint"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_blueprint_name">Cyanotype Blueprint</strong>
-                        <em data-i18n="theme_blueprint_desc">Deep Prussian blue drafting board with chalk white &amp; cyan lines</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_blueprint_name">Blueprint</span>
                     </button>
 
                     <button id="btn-theme-crt" class="theme-swatch" onclick="applyTheme('crt')">
                       <span class="theme-chip theme-chip-crt"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_crt_name">CRT Terminal (Green / Amber)</strong>
-                        <em data-i18n="theme_crt_desc">1980s lab phosphor green with amber accent, monospace throughout</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_crt_name">Terminal</span>
                     </button>
 
                     <button id="btn-theme-tokyo" class="theme-swatch" onclick="applyTheme('tokyo')">
                       <span class="theme-chip theme-chip-tokyo"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_tokyo_name">Tokyo Night (Neon Dark)</strong>
-                        <em data-i18n="theme_tokyo_desc">Modern neon blue/purple dark theme, high legibility</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_tokyo_name">Tokyo</span>
                     </button>
 
                     <button id="btn-theme-console" class="theme-swatch" onclick="applyTheme('console')">
                       <span class="theme-chip theme-chip-console"></span>
-                      <span class="theme-swatch-text">
-                        <strong data-i18n="theme_console_name">Beamline Control Room</strong>
-                        <em data-i18n="theme_console_desc">Very high contrast industrial dark mode, styled after an EPICS console</em>
-                      </span>
+                      <span class="theme-swatch-name" data-i18n="theme_console_name">Console</span>
                     </button>
                   </div>
                 </div>
@@ -2935,14 +2917,23 @@
 
                 <h3 class="about-sub" data-i18n="about_what_title">What is inside</h3>
                 <dl class="about-list">
-                  <dt data-i18n="about_f1_t">SPECTROSCOPY</dt>
-                  <dd data-i18n="about_f1_d">Energy-wavelength conversion, lattice plane spacing, complex refractive index and transmittance, energy resolution and photon flux.</dd>
+                  <dt data-i18n="about_f1_t">RADIOMETRY</dt>
+                  <dd data-i18n="about_f1_d">Photon flux and slit acceptance, absorber stacks, absorbed dose and the exposure-time budget.</dd>
 
-                  <dt data-i18n="about_f2_t">GONIOMETRY</dt>
-                  <dd data-i18n="about_f2_d">Bragg angles, reciprocal-space Q, beam footprint, detector geometry and slit acceptance, Eulerian cradle correction.</dd>
+                  <dt data-i18n="about_f2_t">OPTICS</dt>
+                  <dd data-i18n="about_f2_d">Energy-wavelength conversion, complex refractive index and transmittance, gratings, energy resolution and thermal drift.</dd>
 
-                  <dt data-i18n="about_f3_t">RECORD</dt>
-                  <dd data-i18n="about_f3_d">One-click experiment logs with session context, plus a formatted session header ready to paste into an external logbook.</dd>
+                  <dt data-i18n="about_f3_t">GEOMETRY</dt>
+                  <dd data-i18n="about_f3_d">Bragg angles, lattice d-spacing, reciprocal-space Q, beam footprint, detector geometry and Eulerian cradle correction.</dd>
+
+                  <dt data-i18n="about_f4_t">COHERENCE</dt>
+                  <dd data-i18n="about_f4_d">Coherence lengths at the sample, CDI / BCDI oversampling and the real-space resolution the geometry can reach.</dd>
+
+                  <dt data-i18n="about_f5_t">DATA</dt>
+                  <dd data-i18n="about_f5_d">Two-column scan files read automatically, XY plotting with a log axis, normalisation, range crop and XRR segment stitching.</dd>
+
+                  <dt data-i18n="about_f6_t">RECORD</dt>
+                  <dd data-i18n="about_f6_d">One-click experiment logs with session context, plus a formatted session header ready to paste into an external logbook.</dd>
                 </dl>
 
                 <h3 class="about-sub" data-i18n="about_design_title">Design principles</h3>
@@ -2965,14 +2956,6 @@
 
                 <p class="about-person-note" data-i18n="about_person_note">Started after repeating the same calculations one beamtime too many, to put the tools that were actually needed in one place.</p>
 
-                <h3 class="about-sub" data-i18n="about_research_title">Research interests</h3>
-                <ul class="about-tags">
-                  <li>X-ray Optics &amp; Wave Propagation</li>
-                  <li>Coherent Diffraction Imaging (CDI / BCDI)</li>
-                  <li>Phase Retrieval &amp; 3D Strain Mapping</li>
-                  <li>Beamline Instrumentation &amp; DAQ</li>
-                </ul>
-
                 <h3 class="about-sub" data-i18n="about_sciencetitle">Sources</h3>
                 <p class="about-person-note" data-i18n="about_science">Physical constants use CODATA recommended values; lattice parameters and scattering factors come from published crystallographic data. Results are meant to support experiment planning and on-site decisions — verify them yourself before using them in a presentation or publication.</p>
               </div>
@@ -2984,9 +2967,6 @@
             <div class="about-footer-meta">
               <span data-i18n="about_developed_by">Developed by</span>
               <a href="mailto:isaacyong@naver.com">Isaac Yong</a>
-              <span class="about-footer-sep">&middot;</span>
-              <span data-i18n="about_supported_by">Supported by</span>
-              <a class="sponsor-btn" href="https://github.com/sponsors/SJB7777" target="_blank" rel="noopener noreferrer" data-i18n="about_sponsor_btn">Sponsor</a>
             </div>
           </div>
         </section>
