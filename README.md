@@ -4,7 +4,7 @@
 
 - **사이트:** [https://xray.ooguy.com](https://xray.ooguy.com)
 - **제작:** Isaac Yong (용이삭) — 서강대학교 물리학과 (CUPT 연구실)
-- **연락:** [isaacyong@naver.com](mailto:isaacyong@naver.com) · [@SJB7777](https://github.com/SJB7777) · [GitHub Sponsors](https://github.com/sponsors/SJB7777)
+- **연락:** [isaacyong@naver.com](mailto:isaacyong@naver.com) · [@NaNIsaac](https://github.com/NaNIsaac) · [GitHub Sponsors](https://github.com/sponsors/NaNIsaac)
 
 ---
 
