@@ -85,8 +85,6 @@ xray/
 ├── ko/index.html   한국어판 — tools/build-i18n.js가 생성. 직접 고치지 말 것 (/ko/)
 ├── style.css       Academic print 디자인 시스템
 ├── CNAME           커스텀 도메인 (xray.ooguy.com)
-├── CLAUDE.md       코드 수정 시 지켜야 하는 제약 (사람·AI 공통)
-├── docs/PLAN.md    제품 방향 및 백로그
 ├── tools/
 │   └── build-i18n.js ko/index.html 생성기 (node, 의존성 0)
 └── js/
@@ -144,7 +142,6 @@ git config core.hooksPath .githooks
 
 `ko/index.html`은 생성물이므로 직접 편집하면 다음 생성 때 사라진다.
 
-**코드를 고치기 전에 [`CLAUDE.md`](CLAUDE.md)를 읽을 것.** 구형 브라우저 호환성과 디자인 시스템 제약이
-문서화되어 있고, 이 제약들은 무심코 어기기 쉽다.
+코드를 고칠 때는 ES5 문법만 쓰고 런타임 네트워크 요청을 넣지 않는다. 구형 빔라인 PC에서 동작해야 하기 때문이다.
 
 배포는 `main` 브랜치 push → GitHub Pages 자동 서빙이다.
