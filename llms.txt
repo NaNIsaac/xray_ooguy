@@ -1,0 +1,62 @@
+# xray.ooguy
+
+> Offline X-ray calculators and beamtime record tools for synchrotron and XRD work, in a single static page. No server, no account and no network requests at runtime; written in ES5 so it runs on old beamline control-room browsers (Firefox 60 ESR, Chrome 60+). English at /, Korean at /ko/. MIT license.
+
+Made by Isaac Yong (용이삭, GitHub NaNIsaac), M.S. in physics, Sogang University; works on X-ray scattering/diffraction and scientific software. Each calculator lives at a #route/card fragment of the same page, not at a separate URL. Settings and calculation history are kept only in the browser's localStorage. Constants follow CODATA (hc = 12398.41984 eV·Å); each calculator states its model assumptions and validity range.
+
+## Pages
+
+- [xray.ooguy (English)](https://xray.ooguy.com/): the full toolkit; landing view is a dashboard of 30 tools grouped by task
+- [xray.ooguy (Korean)](https://xray.ooguy.com/ko/): the same toolkit in Korean, generated from the English page
+- [Contents](https://xray.ooguy.com/#index): every calculator by suite, with its formula
+
+## Calculators
+
+- [Energy-wavelength conversion](https://xray.ooguy.com/#optics/card-optics-energy): photon energy, wavelength and frequency
+- [Refractive index and transmission](https://xray.ooguy.com/#optics/card-optics-refraction): n = 1 - δ + iβ, attenuation length, Beer-Lambert transmittance
+- [Critical angle](https://xray.ooguy.com/#optics/card-optics-reflection): total external reflection from the refractive index decrement
+- [Grating dispersion](https://xray.ooguy.com/#optics/card-optics-grating): grating equation for soft X-ray and VUV monochromators
+- [Energy resolution](https://xray.ooguy.com/#optics/card-beamline-resolution): dE/E from Darwin width and beam divergence
+- [Thermal drift](https://xray.ooguy.com/#optics/card-beamline-drift): Bragg angle and energy shift from monochromator crystal expansion
+- [Energy calibration](https://xray.ooguy.com/#optics/card-opt-calibration): delivered energy from a measured Bragg angle on a known reflection
+- [Photon flux](https://xray.ooguy.com/#radiometry/card-beamline-flux): photons per second at the sample
+- [Slit acceptance](https://xray.ooguy.com/#radiometry/card-beamline-slit): Gaussian beam size at a slit, 3σ and 4σ openings
+- [Scan time](https://xray.ooguy.com/#radiometry/card-rad-scantime): scan and map duration from points, dwell and overhead
+- [Absorbed dose](https://xray.ooguy.com/#radiometry/card-rad-dose): dose rate, total dose and time to a damage limit
+- [Absorber stack](https://xray.ooguy.com/#radiometry/card-rad-absorber): transmission of up to four foils, thickness for a target attenuation
+- [Bragg angle](https://xray.ooguy.com/#geometry/card-optics-bragg): nλ = 2d sin θ solved three ways, with the reflection list
+- [d-spacing](https://xray.ooguy.com/#geometry/card-lattice-dspacing): from lattice constants and Miller indices, all seven crystal systems
+- [Q-space](https://xray.ooguy.com/#geometry/card-optics-qspace): momentum transfer Q from angle and energy, and back
+- [Energy scaling](https://xray.ooguy.com/#geometry/card-optics-scaling): where a reflection moves when the energy changes
+- [Beam footprint](https://xray.ooguy.com/#geometry/card-beamline-footprint): illuminated length at grazing incidence and spillover
+- [Detector resolution](https://xray.ooguy.com/#geometry/card-beamline-detector): angle subtended by one pixel
+- [Chi-phi correction](https://xray.ooguy.com/#geometry/card-optics-euler): phi correction for a tilted Eulerian cradle
+- [Lattice strain](https://xray.ooguy.com/#geometry/card-geo-strain): strain from a peak shift against a reference spacing
+- [Pixel to Q](https://xray.ooguy.com/#geometry/card-geo-pixelq): 2θ, Q and d for a pixel of a flat area detector
+- [Coherence length](https://xray.ooguy.com/#coherence/card-coh-length): transverse and longitudinal coherence at the sample
+- [CDI resolution](https://xray.ooguy.com/#coherence/card-coh-resolution): real-space resolution reachable by a detector geometry
+- [BCDI oversampling](https://xray.ooguy.com/#coherence/card-beamline-cdi): oversampling ratio from pixel size, sample size and distance
+- [Scan file reader](https://xray.ooguy.com/#data/card-data-load): two-column txt/csv/dat files, read locally, nothing uploaded
+- [XY plotter](https://xray.ooguy.com/#data/card-data-plot): linear or log plot with normalisation and cropping
+- [XRR stitching](https://xray.ooguy.com/#data/card-data-stitch): joins reflectivity segments by the median ratio over each overlap
+- [Kiessig thickness](https://xray.ooguy.com/#data/card-data-kiessig): film thickness from fringe spacing, refraction-corrected
+- [Logbook headers](https://xray.ooguy.com/#record/card-record-headers): plain-text beamtime logbook headers
+- [Event snippets](https://xray.ooguy.com/#record/card-record-snippets): timestamped entries for beam dump, mount, alignment, scan start
+
+## Software
+
+- [codigest](https://github.com/NaNIsaac/codigest): CLI that extracts, structures and tracks codebase context for LLMs (PyPI: codigest)
+- [roi_rectangle](https://github.com/NaNIsaac/roi_rectangle): Lightweight rectangular ROI handling for images (PyPI: roi-rectangle)
+- [hanfix](https://github.com/NaNIsaac/hanfix): re-runs a shell command typed with the Korean keyboard layout on, converted back to QWERTY
+- [deai](https://github.com/NaNIsaac/deai): removes AI co-author credits from git history without changing code
+- [TraTT](https://github.com/NaNIsaac/TraTT): Takagi-Taupin study of how acoustic Bragg satellites form in a crystal (KPS 2026 Fall poster)
+- [QoraFlow](https://github.com/NaNIsaac/QoraFlow): toolkit for time-resolved XFEL pump-probe data, tailored to PAL-XFEL
+- [QoraPhase](https://github.com/NaNIsaac/QoraPhase): JAX-native, composable phase-retrieval framework for coherent diffraction imaging
+- [QoraDFXM](https://github.com/NaNIsaac/QoraDFXM): dark-field X-ray microscopy image analysis; Python engine, CLI and PySide6 app
+- [CXD](https://github.com/NaNIsaac/CXD): coherent X-ray diffraction analysis: SPEC parsing, Timepix frames, q-space regridding
+- [ReflectoLearn](https://github.com/NaNIsaac/ReflectoLearn): XRR inverse modeling with a differentiable Abeles simulator and a 1D CNN
+
+## Optional
+
+- [Isaac Yong](https://nanisaac.github.io/): author's personal site, projects and notes
+- [Source](https://github.com/NaNIsaac/xray_ooguy): repository of this site
