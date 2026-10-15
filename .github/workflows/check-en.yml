@@ -1,9 +1,9 @@
 name: checks
 
-# The English page is generated, so the only way it can be wrong is by being
+# The Korean page is generated, so the only way it can be wrong is by being
 # stale. CI verifies rather than generates: it never writes to the repository,
-# it just refuses a commit where en/index.html does not match what
-# tools/build-en.js would produce from the current index.html and i18n table.
+# it just refuses a commit where ko/index.html does not match what
+# tools/build-i18n.js would produce from the current index.html and i18n table.
 on:
   push:
     branches: [main]

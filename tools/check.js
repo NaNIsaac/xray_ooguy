@@ -6,7 +6,7 @@
  *
  *   1. every script parses as ES5-era syntax node can load
  *   2. no modern syntax that is a parse error on the CentOS 7 browsers
- *   3. en/index.html is in step with index.html and the translation table
+ *   3. ko/index.html is in step with index.html and the translation table
  *
  * Exits non-zero on the first category that fails, with the fix printed.
  */

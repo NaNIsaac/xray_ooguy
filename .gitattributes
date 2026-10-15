@@ -2,3 +2,9 @@
 # — the interpreter line ends up as "/bin/sh\r", which is not a program.
 .githooks/** text eol=lf
 *.sh text eol=lf
+
+# check.js compares ko/index.html byte for byte with what build-i18n.js writes,
+# and the build copies line endings from its inputs, so CRLF on checkout made
+# every Windows clone report the page as stale.
+*.html text eol=lf
+*.js text eol=lf
