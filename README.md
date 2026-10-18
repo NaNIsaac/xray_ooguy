@@ -10,8 +10,8 @@ Offline X-ray calculators and beamtime logging tools for synchrotron beamline us
 
 ## 무엇인가
 
-빔라인 제어실에서 바로 쓰는 단일 페이지 계산기 모음이다. 빌드 도구도, 서버도, 외부 라이브러리도 없다.
-`index.html`을 브라우저로 열면 그대로 동작한다.
+빔라인 제어실 PC는 인터넷이 막혀 있고 CentOS 7 같은 오래된 OS를 쓰는 경우가 많다. 이 사이트는 그런 PC에서
+설치 없이 `index.html`을 브라우저로 열기만 하면 동작하는 단일 페이지 계산기 모음이다. 빌드 도구도, 서버도, 외부 라이브러리도 없다.
 
 - **오프라인 전용** — 런타임 `fetch` 0건. 물리 상수와 결정 데이터는 `js/data.js`에 내장.
 - **구형 브라우저 대응** — CentOS 7 기본 브라우저(Firefox 60 ESR, Chrome 60~70)에서 동작. ES5 문법만 사용.
@@ -90,7 +90,7 @@ Offline X-ray calculators and beamtime logging tools for synchrotron beamline us
 ### VI. RECORD
 
 빔타임 로그북 헤더 프리셋과, 실시간 타임스탬프가 붙는 1클릭 이벤트 스니펫.
-외부 노트(ELN / Google Docs / 종이 노트)에 붙여넣는 용도이며, 이 사이트가 노트를 대체하지 않는다.
+외부 노트(ELN / Google Docs / 종이 노트)에 붙여넣는 용도.
 
 ## 파일 구조
 
@@ -154,11 +154,8 @@ node .\tools\build-i18n.js
 git config core.hooksPath .githooks
 ```
 
-이러면 커밋할 때마다 `tools/check.js`가 돌고, 실패하면 커밋이 막힌다.
-급할 때는 `git commit --no-verify`로 건너뛸 수 있고, 그래도 CI가 같은 검사를 한다.
+이러면 커밋할 때마다 `tools/check.js`가 돌고, 실패하면 커밋이 막힌다. CI도 같은 검사를 한다.
 
-`ko/index.html`은 생성물이므로 직접 편집하면 다음 생성 때 사라진다.
-
-코드를 고칠 때는 ES5 문법만 쓰고 런타임 네트워크 요청을 넣지 않는다. 구형 빔라인 PC에서 동작해야 하기 때문이다.
+코드를 고칠 때는 ES5 문법만 쓰고 런타임 네트워크 요청을 넣지 않는다.
 
 배포는 `main` 브랜치 push → GitHub Pages 자동 서빙이다.
