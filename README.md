@@ -4,6 +4,8 @@
 
 Offline X-ray calculators and beamtime logging tools for synchrotron beamline users, in one static page (English and Korean).
 
+![대시보드 첫 화면](docs/screenshot-dashboard.png)
+
 - **사이트:** [https://xray.ooguy.com](https://xray.ooguy.com)
 - **제작:** Isaac Yong (용이삭) — 서강대학교 물리학과 (CUPT 연구실)
 - **연락:** [isaacyong@naver.com](mailto:isaacyong@naver.com) · [@NaNIsaac](https://github.com/NaNIsaac) · [GitHub Sponsors](https://github.com/sponsors/NaNIsaac)
@@ -36,6 +38,8 @@ Offline X-ray calculators and beamtime logging tools for synchrotron beamline us
 | **VIII. ABOUT** | `Alt+8` | 제작자 및 계산 근거 |
 | **DASHBOARD** | `Alt+9` | 도구를 하는 일 기준으로 묶은 첫 화면 (측정 계획, 기하 설정, 빔 확인, 결과 처리) |
 | **CONTENTS** | `Alt+0` | 전체 도구 목차와 수식 |
+
+![브래그 법칙 계산기: Si(111), 12 keV 입력 예](docs/screenshot-bragg.png)
 
 ### I. RADIOMETRY
 
