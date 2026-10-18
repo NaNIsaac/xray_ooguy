@@ -8,3 +8,4 @@
 # every Windows clone report the page as stale.
 *.html text eol=lf
 *.js text eol=lf
+* text=auto eol=lf
