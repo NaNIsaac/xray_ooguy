@@ -7,6 +7,7 @@
  *   1. every script parses as ES5-era syntax node can load
  *   2. no modern syntax that is a parse error on the CentOS 7 browsers
  *   3. ko/index.html is in step with index.html and the translation table
+ *   4. node --test (tests/): the calculators give independently derived values
  *
  * Exits non-zero on the first category that fails, with the fix printed.
  */
@@ -274,10 +275,25 @@ function renderGauge(spec) {
 });
 
 // ---------------------------------------------------------------------------
+// 8. The calculators give the right numbers
+// ---------------------------------------------------------------------------
+// tests/ runs the page's own scripts against a stub DOM and compares the cards'
+// outputs with values derived independently of js/. It is the only check here
+// that looks at a result rather than at the shape of the code.
+var run = cp.spawnSync(process.execPath, ["--test"], { cwd: ROOT, encoding: "utf8" });
+if (run.status !== 0) {
+  var report = (String(run.stdout || "") + String(run.stderr || ""))
+    .split("\n")
+    .filter(function (line) { return /^\s*(✖|AssertionError|Error)/.test(line); })
+    .slice(0, 20);
+  failures.push("tests/ failed (node --test):\n    " + report.join("\n    "));
+}
+
+// ---------------------------------------------------------------------------
 if (failures.length) {
   console.error("\ncheck: " + failures.length + " problem" + (failures.length === 1 ? "" : "s") + "\n");
   failures.forEach(function (f) { console.error("  " + f + "\n"); });
   process.exit(1);
 }
 
-console.log("check: " + scripts.length + " scripts parse, no modern syntax, ko/index.html in step");
+console.log("check: " + scripts.length + " scripts parse, no modern syntax, ko/index.html in step, calculator tests pass");

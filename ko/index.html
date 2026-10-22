@@ -755,7 +755,7 @@
                         <div id="refract-res-atten-len" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n-html="res_crit_ang">임계각 <i class="formula">θ</i><sub>c</sub></div>
+                        <div class="result-label" data-i18n-html="res_crit_ang">임계각 <i class="formula">θ</i><sub>c</sub> (표의 <i class="formula">δ</i>)</div>
                         <div id="refract-res-crit" class="result-value">-</div>
                       </div>
                     </div>
@@ -775,10 +775,16 @@
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_crit_mat">재료</span></label>
+                        <select id="crit-mat" class="form-control" onchange="applyCriticalMaterial()"><option value="" data-i18n="opt_crit_custom">직접 입력</option></select>
+                      </div>
+                    </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_density">밀도 <i class="formula">ρ</i></span> <span class="unit">(g/cm<sup>3</sup>)</span></label>
-                        <input type="number" id="crit-density" class="form-control mono" value="19.32" oninput="calcCriticalAngle()" min="0.01" max="30" step="any">
+                        <input type="number" id="crit-density" class="form-control mono" value="19.32" oninput="editCriticalInput()" min="0.001" max="30" step="any">
                       </div>
                     </div>
                     <div class="col-4">
@@ -790,7 +796,7 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_z_over_a"><i class="formula">Z/A</i> 비</span></label>
-                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.401" oninput="calcCriticalAngle()" min="0.2" max="1" step="any">
+                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.4011" oninput="editCriticalInput()" min="0.2" max="1" step="any">
                       </div>
                     </div>
                   </div>
@@ -813,6 +819,7 @@
                     <div class="result-formula">
                       <i class="formula">δ</i> = <span id="crit-res-delta">-</span>
                     </div>
+                    <div class="refl-note" id="crit-model-note" data-i18n-html="crit_model_note">δ는 자유전자 값 r<sub>e</sub>λ²n<sub>e</sub>/2π로, f′를 무시한다. 10 keV에서 θ<sub>c</sub>는 표 값과 최대 약 8 % 다르고, 흡수단 1 keV 이내에서는 믿을 수 없다. 굴절 카드는 표의 δ를 쓰므로 값이 다를 수 있다.</div>
                   </div>
                 </div>
               </div>

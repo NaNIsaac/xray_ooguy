@@ -749,7 +749,7 @@
                         <div id="refract-res-atten-len" class="result-value">-</div>
                       </div>
                       <div class="result-item">
-                        <div class="result-label" data-i18n-html="res_crit_ang">Critical Angle <i class="formula">θ</i><sub>c</sub></div>
+                        <div class="result-label" data-i18n-html="res_crit_ang">Critical Angle <i class="formula">θ</i><sub>c</sub> (tabulated <i class="formula">δ</i>)</div>
                         <div id="refract-res-crit" class="result-value">-</div>
                       </div>
                     </div>
@@ -769,10 +769,16 @@
                 </div>
                 <div class="card-body">
                   <div class="flex-row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="form-label"><span data-i18n="lbl_crit_mat">Material</span></label>
+                        <select id="crit-mat" class="form-control" onchange="applyCriticalMaterial()"><option value="" data-i18n="opt_crit_custom">Custom</option></select>
+                      </div>
+                    </div>
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_density">Density <i class="formula">ρ</i></span> <span class="unit">(g/cm<sup>3</sup>)</span></label>
-                        <input type="number" id="crit-density" class="form-control mono" value="19.32" oninput="calcCriticalAngle()" min="0.01" max="30" step="any">
+                        <input type="number" id="crit-density" class="form-control mono" value="19.32" oninput="editCriticalInput()" min="0.001" max="30" step="any">
                       </div>
                     </div>
                     <div class="col-4">
@@ -784,7 +790,7 @@
                     <div class="col-4">
                       <div class="form-group">
                         <label class="form-label"><span data-i18n-html="lbl_z_over_a"><i class="formula">Z/A</i> Ratio</span></label>
-                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.401" oninput="calcCriticalAngle()" min="0.2" max="1" step="any">
+                        <input type="number" id="crit-z-over-a" class="form-control mono" value="0.4011" oninput="editCriticalInput()" min="0.2" max="1" step="any">
                       </div>
                     </div>
                   </div>
@@ -807,6 +813,7 @@
                     <div class="result-formula">
                       <i class="formula">δ</i> = <span id="crit-res-delta">-</span>
                     </div>
+                    <div class="refl-note" id="crit-model-note" data-i18n-html="crit_model_note">δ is the free-electron value r<sub>e</sub>λ²n<sub>e</sub>/2π, which ignores f′: θ<sub>c</sub> differs from the tabulated value by up to about 8 % at 10 keV and is unreliable within about 1 keV of an absorption edge. The refraction card uses tabulated δ and can differ.</div>
                   </div>
                 </div>
               </div>
