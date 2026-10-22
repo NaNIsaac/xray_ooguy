@@ -650,8 +650,8 @@
       lbl_therm_mat: "모노크로메이터 재질",
       lbl_temp_change: "온도 변화 <i class=\"formula\">ΔT</i>",
       lbl_op_energy: "동작 에너지",
-      res_th_shift: "브래그 각도 시프트 (<i class=\"formula\">Δθ</i>)",
-      res_e_shift: "유효 에너지 시프트 (<i class=\"formula\">ΔE</i>)",
+      res_th_shift: "브래그 각도 시프트 (<i class=\"formula\">Δθ</i>, 에너지 고정)",
+      res_e_shift: "유효 에너지 시프트 (<i class=\"formula\">ΔE</i>, 각도 고정)",
 
       res_lambda: "파장 <i class=\"formula\">λ</i>",
       res_grating_unreachable: "회절 불가 (|sin β| > 1)",
@@ -1305,8 +1305,8 @@
       lbl_therm_mat: "Monochromator Material",
       lbl_temp_change: "Temperature Change <i class=\"formula\">ΔT</i>",
       lbl_op_energy: "Operating Energy",
-      res_th_shift: "Bragg Angle Drift (<i class=\"formula\">Δθ</i>)",
-      res_e_shift: "Effective Energy Shift (<i class=\"formula\">ΔE</i>)",
+      res_th_shift: "Bragg Angle Drift (<i class=\"formula\">Δθ</i>, energy fixed)",
+      res_e_shift: "Effective Energy Shift (<i class=\"formula\">ΔE</i>, angle fixed)",
 
       res_lambda: "Wavelength <i class=\"formula\">λ</i>",
       res_grating_unreachable: "No diffraction (|sin β| > 1)",

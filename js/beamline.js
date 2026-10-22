@@ -444,7 +444,9 @@
     var deltaTheta_rad = -alpha * deltaTemp_C * tanTheta;
     var deltaTheta_urad = deltaTheta_rad * 1e6;
     var deltaTheta_arcsec = (deltaTheta_rad * 180 / Math.PI) * 3600;
-    var deltaE_eV = alpha * deltaTemp_C * energy_keV * 1000;
+    // Held at the same angle, a larger d lowers E = hc / (2 d sin θ): the sign is
+    // opposite to ΔT, and ΔE / E = -α ΔT exactly to first order.
+    var deltaE_eV = -alpha * deltaTemp_C * energy_keV * 1000;
 
     document.getElementById("therm-res-urad").innerHTML = fmt(deltaTheta_urad, 3) + " μrad";
     document.getElementById("therm-res-de").innerHTML = deltaE_eV.toFixed(3) + " eV";

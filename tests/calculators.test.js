@@ -206,7 +206,8 @@ test("thermal drift: heating lowers both the Bragg angle and the energy, cooling
       var r = drift(page, mat, dT, E);
 
       // Fixed angle: E ~ 1/d, so dE/E = -alpha dT.
-      close(r.eV, -m.alpha * dT * E * 1000, 2e-3, mat + " dE at " + dT + " K, " + E + " keV");
+      // The card prints eV to three decimals, so allow half a unit of the last digit.
+      assert.ok(Math.abs(r.eV - (-m.alpha * dT * E * 1000)) <= 5.01e-4, mat + " dE at " + dT + " K, " + E + " keV: got " + r.eV);
       // Fixed energy: dtheta = -alpha dT tan(theta).
       var theta = Math.asin(HC_EV_A / (E * 1000) / (2 * m.d));
       close(r.urad, -m.alpha * dT * Math.tan(theta) * 1e6, 2e-3, mat + " dtheta at " + dT + " K, " + E + " keV");
