@@ -394,6 +394,26 @@
   }
 
   // --- 7. Critical Angle & Total External Reflection ---
+  // Picking a material fills density and the electron-to-mass ratio from the same
+  // list the refraction card uses. The card still computes delta from the free
+  // electron density, so the two cards differ where f' matters; the note on the
+  // card says so. Typing into either field leaves the list on "Custom".
+  function applyCriticalMaterial() {
+    var sel = document.getElementById("crit-mat");
+    var mat = sel && sel.value !== "" ? MATERIALS_DB[parseInt(sel.value, 10)] : null;
+    if (mat) {
+      document.getElementById("crit-density").value = mat.density_g_cm3;
+      document.getElementById("crit-z-over-a").value = mat.z_over_a.toFixed(4);
+    }
+    calcCriticalAngle();
+  }
+
+  function editCriticalInput() {
+    var sel = document.getElementById("crit-mat");
+    if (sel) sel.value = "";
+    calcCriticalAngle();
+  }
+
   function calcCriticalAngle() {
     var density = readField("crit-density");
     var energy_keV = readField("crit-energy");
@@ -713,6 +733,17 @@
   }
 
   function initOpticsView() {
+    var critSelect = document.getElementById("crit-mat");
+    if (critSelect && critSelect.options.length <= 1) {   // "Custom" is in the markup
+      for (var c = 0; c < MATERIALS_DB.length; c++) {
+        var copt = document.createElement("option");
+        copt.value = c;
+        copt.textContent = MATERIALS_DB[c].name + " (ρ = " + MATERIALS_DB[c].density_g_cm3 + " g/cm³)";
+        critSelect.appendChild(copt);
+      }
+      critSelect.value = "2";   // Gold: the density and Z/A the card opens with
+    }
+
     var refractSelect = document.getElementById("refract-mat");
     if (refractSelect && refractSelect.options.length === 0) {
       for (var i = 0; i < MATERIALS_DB.length; i++) {
@@ -743,7 +774,7 @@
     calcRefractive();
     calcEnergyScaling();
     calcChiPhi();
-    calcCriticalAngle();
+    applyCriticalMaterial();
     calcQSpace("theta");
     calcEnergyCalibration();
     calcStrain();
@@ -751,6 +782,8 @@
     calcKiessig();
   }
 
+  window.applyCriticalMaterial = applyCriticalMaterial;
+  window.editCriticalInput = editCriticalInput;
   window.initOpticsView = initOpticsView;
 
   if (document.readyState === "loading") {

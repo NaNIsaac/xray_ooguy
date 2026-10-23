@@ -165,7 +165,7 @@
   var CENTERINGS = {
     P: function () { return true; },
     F: function (h, k, l) {
-      var eo = (h % 2) + (k % 2) + (l % 2);
+      var eo = Math.abs(h % 2) + Math.abs(k % 2) + Math.abs(l % 2);
       return eo === 0 || eo === 3;
     },
     I: function (h, k, l) { return (h + k + l) % 2 === 0; },
@@ -213,18 +213,32 @@
     return a.l >= b.l ? a : b;
   }
 
+  // The octant h, k, l >= 0 holds every distinct spacing only while the cell
+  // is symmetric under each index changing sign. In a monoclinic cell (h k l)
+  // and (h k -l) differ, and in a triclinic cell all eight sign combinations
+  // do, so those two systems list the half space their symmetry leaves: the
+  // Friedel partner (-h -k -l) always shares d and is left out.
+  function inAsymmetricRange(system, h, k, l) {
+    if (system === "monoclinic") return k >= 0;
+    if (system === "triclinic") return h > 0 || (h === 0 && (k > 0 || (k === 0 && l > 0)));
+    return h >= 0 && k >= 0 && l >= 0;
+  }
+
   // One row per distinct spacing: different index triplets that share a d are
   // the same ring, so listing them all would just pad the table.
   function reflectionList(Gstar, lambda) {
     var allowed = CENTERINGS[currentCentering()];
+    var system = currentSystem();
+    var lowest = (system === "monoclinic" || system === "triclinic") ? -MAX_INDEX : 0;
     var byD = {};
     var order = [];
     var extinct = 0;
 
-    for (var h = 0; h <= MAX_INDEX; h++) {
-      for (var k = 0; k <= MAX_INDEX; k++) {
-        for (var l = 0; l <= MAX_INDEX; l++) {
+    for (var h = lowest; h <= MAX_INDEX; h++) {
+      for (var k = lowest; k <= MAX_INDEX; k++) {
+        for (var l = lowest; l <= MAX_INDEX; l++) {
           if (h === 0 && k === 0 && l === 0) continue;
+          if (!inAsymmetricRange(system, h, k, l)) continue;
           if (!allowed(h, k, l)) { extinct++; continue; }
 
           var d = dFromGstar(Gstar, h, k, l);

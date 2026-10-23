@@ -111,6 +111,9 @@ xray_ooguy/
 ├── tools/
 │   ├── build-i18n.js generates ko/index.html (node, no dependencies)
 │   └── check.js      pre-commit checks (shared by the hook and CI)
+├── tests/          calculator regression tests (node --test, no dependencies)
+│   ├── dom.js      builds a stub DOM from index.html and runs js/ in a vm
+│   └── calculators.test.js  compares card outputs with formulas and constants independent of js/
 └── js/
     ├── app.js      hash router, tab and sidebar sync, shortcuts, calculation history
     ├── nav.js      builds the sidebar tree and search from the page outline
@@ -144,9 +147,10 @@ There is one check. Before committing:
 node .\tools\check.js
 ```
 
-It checks three things: every script parses, no modern syntax that old browsers fail to parse has
+It checks four things: every script parses, no modern syntax that old browsers fail to parse has
 slipped in (`let`/`const`, arrow functions, template literals, `?.`, `.includes()` and so on),
-and `ko/index.html` is up to date.
+`ko/index.html` is up to date, and the calculator tests in `tests/` pass (`node --test`).
+To run only the tests, use `node --test` from the repository root.
 
 After changing Korean entries in `index.html` or `js/i18n.js`, regenerate the Korean page and commit it too:
 

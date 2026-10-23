@@ -111,6 +111,9 @@ xray_ooguy/
 ├── tools/
 │   ├── build-i18n.js ko/index.html 생성기 (node, 의존성 0)
 │   └── check.js      커밋 전 검사 (hook과 CI가 같이 씀)
+├── tests/          계산기 회귀 검사 (node --test, 의존성 0)
+│   ├── dom.js      index.html로 stub DOM을 만들어 js/를 vm에서 실행
+│   └── calculators.test.js  카드 출력을 js/와 무관한 식·상수와 비교
 └── js/
     ├── app.js      해시 라우터, 탭·사이드바 동기화, 단축키, 계산 기록
     ├── nav.js      본문 목차를 읽어 사이드바 트리·검색 생성
@@ -144,9 +147,10 @@ python -m http.server 8000
 node .\tools\check.js
 ```
 
-세 가지를 본다 — 모든 스크립트가 파싱되는가, 구형 브라우저에서 파스 에러를 내는 최신 문법이
+네 가지를 본다 — 모든 스크립트가 파싱되는가, 구형 브라우저에서 파스 에러를 내는 최신 문법이
 섞이지 않았는가(`let`/`const`, 화살표 함수, 템플릿 리터럴, `?.`, `.includes()` 등),
-그리고 `ko/index.html`이 최신인가.
+`ko/index.html`이 최신인가, 그리고 `tests/`의 계산기 검사(`node --test`)가 통과하는가.
+테스트만 돌리려면 저장소 루트에서 `node --test`.
 
 `index.html`이나 `js/i18n.js`의 한국어 항목을 고쳤으면 한국어판을 다시 생성해서 함께 커밋한다:
 
