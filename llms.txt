@@ -49,7 +49,7 @@ Made by Isaac Yong (용이삭, GitHub NaNIsaac), M.S. in physics, Sogang Univers
 - [roi_rectangle](https://github.com/NaNIsaac/roi_rectangle): Lightweight rectangular ROI handling for images (PyPI: roi-rectangle)
 - [hanfix](https://github.com/NaNIsaac/hanfix): re-runs a shell command typed with the Korean keyboard layout on, converted back to QWERTY
 - [deai](https://github.com/NaNIsaac/deai): removes AI co-author credits from git history without changing code (PyPI: git-deai)
-- [TraTT](https://github.com/NaNIsaac/TraTT): time-dependent Takagi-Taupin solver for transient acoustic Bragg satellites (PyPI: tratt; KPS 2026 Fall poster)
+- [TraTT](https://github.com/NaNIsaac-Research/TraTT): time-dependent Takagi-Taupin solver for transient acoustic Bragg satellites (PyPI: tratt; KPS 2026 Fall poster)
 - [QoraFlow](https://github.com/NaNIsaac/QoraFlow): toolkit for time-resolved XFEL pump-probe data, tailored to PAL-XFEL
 - [QoraPhase](https://github.com/NaNIsaac/QoraPhase): JAX-native, composable phase-retrieval framework for coherent diffraction imaging (PyPI: qoraphase)
 - [QoraDFXM](https://github.com/NaNIsaac/QoraDFXM): dark-field X-ray microscopy image analysis; Python engine, CLI and PySide6 app
