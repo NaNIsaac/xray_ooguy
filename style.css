@@ -2618,6 +2618,17 @@ html[lang="ko"] .dt-unit {
   .dash-quick-item { width: calc(100% - 8px); }
 }
 
+/* The labels wrap to two lines at half width, which is still shorter than four
+   full-width rows; the controls also reach 40px for touch. The tab strip keeps
+   its own scroll. */
+@media (max-width: 600px) {
+  .dash-quick-item { width: calc(50% - 8px); padding: 7px 8px; font-size: 14px; }
+  .tab-pill { min-height: 40px; }
+  .nav-drawer-toggle { width: 40px; height: 40px; }
+  .preset-chip { position: relative; }
+  .preset-chip::after { content: ""; position: absolute; left: 0; right: 0; top: -9px; bottom: -9px; }
+}
+
 /* The global a:hover inverts to black and drops the bottom border on the way.
    A control answers in navy instead, and keeps its frame. */
 .dash-quick-item:hover,
