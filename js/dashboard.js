@@ -121,9 +121,7 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  // ------------------------------------------------------------------
   // The tool list, read from the contents block
-  // ------------------------------------------------------------------
   // Same source nav.js uses. The names it returns are already translated,
   // because applyTranslations has run over that markup by the time this does.
   function tocIndex() {
@@ -200,9 +198,6 @@
     return html + "</div>";
   }
 
-  // ------------------------------------------------------------------
-  // Recently used
-  // ------------------------------------------------------------------
   // Read out of the list every calculator writes to when it runs, rather than
   // kept as its own: a second store would be a second thing to keep in step.
   function recentHtml(index) {
@@ -235,9 +230,6 @@
     return html + "</div>";
   }
 
-  // ------------------------------------------------------------------
-  // Render
-  // ------------------------------------------------------------------
   function renderDashboard() {
     var quick = document.getElementById("dash-quick");
     var groups = document.getElementById("dash-groups");

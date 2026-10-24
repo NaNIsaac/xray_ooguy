@@ -155,9 +155,7 @@
       : '';
   }
 
-  // ------------------------------------------------------------------
   // Gauge — one number against the limit that decides it
-  // ------------------------------------------------------------------
   // Not a plot. Several cards end in a comparison rather than a curve: does the
   // scan fit in the time left, is the beam coherent across the feature. Both
   // numbers are already printed, and the reader still has to divide them in
@@ -220,9 +218,7 @@
 
   window.renderGauge = gauge;
 
-  // ------------------------------------------------------------------
   // Transmittance vs photon energy, over the range the model is valid in
-  // ------------------------------------------------------------------
   // This used to be T against thickness, which is exp(-mu z): the attenuation
   // length printed on the card is the whole curve, and nobody needs a picture
   // of an exponential they can already read off a number.
@@ -313,9 +309,7 @@
     draw("card-optics-refraction", "mp_transmit", html);
   }
 
-  // ------------------------------------------------------------------
   // CDI / BCDI: where the oversampling condition starts being met
-  // ------------------------------------------------------------------
   // sigma = lambda D / (S p) is linear in the detector distance, so the line
   // itself says little. The useful part is where it crosses 2: that reads off
   // as "move the detector to at least this far", which is the decision being
@@ -389,9 +383,7 @@
     draw("card-beamline-cdi", "mp_cdi", html);
   }
 
-  // ------------------------------------------------------------------
   // Lattice: where this cell puts its reflections
-  // ------------------------------------------------------------------
   // Not a curve — a stick at every accessible reflection, which is what the
   // detector will actually see. Called by lattice.js, which owns the rows.
   function plotReflections(rows) {

@@ -34,9 +34,6 @@
     }
   };
 
-  // ------------------------------------------------------------------
-  // Calculator input persistence
-  // ------------------------------------------------------------------
   // Every calculator ships with working defaults in the markup, so a card
   // always shows a real result the first time it is opened. Once the user
   // edits a field the value is remembered, and the next visit restores it and
@@ -180,9 +177,6 @@
     }, 3200);
   }
 
-  // ------------------------------------------------------------------
-  // Clipboard Copy & Universal Result Box Copy System
-  // ------------------------------------------------------------------
   function copyTextToClipboard(text, successMsg) {
     if (!text) return;
     var trimmed = String(text).trim();
@@ -255,7 +249,6 @@
     if (!box) return "";
     var lines = [];
 
-    // 1. Bragg calc row
     var braggRow = findClosest(box, ".bragg-calc-row");
     if (braggRow) {
       var headerEl = braggRow.querySelector("div");
@@ -277,7 +270,6 @@
       return lines.join("\n");
     }
 
-    // 2. Card title context
     var card = findClosest(box, ".card");
     var cardTitle = card ? card.querySelector(".card-title") : null;
     if (cardTitle) {
@@ -285,14 +277,12 @@
       if (tText) lines.push("[" + tText + "]");
     }
 
-    // 3. Single summary (e.g. optics-conv-summary)
     var singleSummary = box.querySelector("#optics-conv-summary");
     if (singleSummary) {
       lines.push(cleanElementText(singleSummary));
       return lines.join("\n");
     }
 
-    // 4. Result grid items
     var items = box.querySelectorAll(".result-item");
     if (items.length > 0) {
       for (var j = 0; j < items.length; j++) {
@@ -314,7 +304,6 @@
       }
     }
 
-    // 5. Result formula and notes
     var formula = box.querySelector(".result-formula");
     if (formula) {
       var fText = cleanElementText(formula);
@@ -406,9 +395,6 @@
     }
   }
 
-  // ------------------------------------------------------------------
-  // Recently used
-  // ------------------------------------------------------------------
   // What every calculator writes when it runs, and the only thing anything
   // reads back: the id of the card, newest first. The dashboard turns the top
   // few into the line that names what this reader was last doing.
@@ -581,9 +567,6 @@
     return moved || table[""] || null;
   }
 
-  // ------------------------------------------------------------------
-  // Document metadata per route
-  // ------------------------------------------------------------------
   // Hash fragments are not indexed as separate URLs, so this exists for the
   // browser tab, bookmarks, shared links and social unfurls rather than for
   // ranking. Pure DOM, no ES6, so it behaves the same on Firefox 60 ESR.
@@ -747,9 +730,6 @@
     }
   }
 
-  // ------------------------------------------------------------------
-  // Scrolling
-  // ------------------------------------------------------------------
   // html and body are both height:100% and overflow-x is hidden, which makes
   // <body> the scroll container rather than the viewport. Against that layout
   // window.scrollTo does nothing, window.pageYOffset stays 0 forever, and a
@@ -943,9 +923,6 @@
     });
   }
 
-  // ------------------------------------------------------------------
-  // Section numbers
-  // ------------------------------------------------------------------
   // The § number used to be typed into three separate places: the card title
   // string in both languages, the contents markup, and the label passed to
   // recordCalculation. Three copies of one fact, kept in step by hand.

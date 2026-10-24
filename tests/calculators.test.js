@@ -34,8 +34,6 @@ function markup() {
   return fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 }
 
-// --- lattice: single reflection and reflection list --------------------------
-
 function setCell(page, system, cell, centering, energy_keV) {
   var full = { a: 1, b: 1, c: 1, alpha: 90, beta: 90, gamma: 90 };
   Object.keys(cell).forEach(function (k) { full[k] = cell[k]; });
@@ -171,8 +169,6 @@ test("reflection list: centering extinction treats negative indices like positiv
   assert.deepEqual(listedRows(page).map(function (r) { return r[1]; }), expectedSpacings(cell, fcc, 6, 12));
 });
 
-// --- thermal drift ------------------------------------------------------------
-
 var MONO = {
   si: { alpha: 2.6e-6, d: 3.1356 },
   diamond: { alpha: 1.0e-6, d: 2.0594 },
@@ -224,8 +220,6 @@ test("thermal drift: result labels say which of angle and energy is held fixed (
   assert.match(theta[1], /energy fixed/i);
   assert.match(energy[1], /angle fixed/i);
 });
-
-// --- critical angle -----------------------------------------------------------
 
 function refractionCriticalDeg(page, materialIndex, energy_keV) {
   page.set("refract-mat", materialIndex);

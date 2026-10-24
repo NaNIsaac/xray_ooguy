@@ -57,9 +57,7 @@
     return MATERIALS_DB[idx] || null;
   }
 
-  // ------------------------------------------------------------------
   // Per-calculator model declarations
-  // ------------------------------------------------------------------
   // `model`  — i18n keys, always shown.
   // `check`  — returns i18n keys (optionally with a `text` suffix) for inputs
   //            that have left the model's domain.
@@ -457,9 +455,6 @@
     }
   ];
 
-  // ------------------------------------------------------------------
-  // Rendering
-  // ------------------------------------------------------------------
   function panelId(card) { return card + "-validity"; }
 
   function renderPanel(spec) {

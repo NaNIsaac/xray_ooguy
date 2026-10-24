@@ -189,9 +189,6 @@
     }, 120);
   }
 
-  // ------------------------------------------------------------------
-  // Working on a card makes it the current one
-  // ------------------------------------------------------------------
   // Clicking anywhere in a card marks it in the sidebar and names it in the
   // URL, so the address bar always points at what is being worked on. The hash
   // is rewritten in place rather than assigned: assigning it would send the
@@ -235,9 +232,7 @@
   }
 
 
-  // ------------------------------------------------------------------
   // Search
-  // ------------------------------------------------------------------
   // The results are the tree itself: typing hides the entries that do not
   // match and opens the suites that do, so a hit is always read in the context
   // of the suite it belongs to, and no floating panel is needed to hold it.
@@ -484,9 +479,6 @@
     }
   }
 
-  // ------------------------------------------------------------------
-  // The small-screen drawer
-  // ------------------------------------------------------------------
   // Below 900px the sidebar is hidden, which also hides the only search box
   // there is — 31 tools reachable only by scrolling. The drawer gives it back.
   // Whether it is open is a class on <body>; the CSS decides what that means,

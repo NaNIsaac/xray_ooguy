@@ -128,9 +128,7 @@
         "        <li><strong>스캔 파일 뷰어</strong> — 2열 txt / csv를 선형 또는 로그 축으로, 그리고 스캔 구간의 겹침을 이용한 <strong>XRR 구간 이어붙이기</strong></li>\n" +
         "      </ul>\n" +
         "      ",
-      // ----------------------------------------------------------------
       // Dashboard — the toolkit by the job in front of you
-      // ----------------------------------------------------------------
       // The verb a reader arrives with. The tool's own name is read out of
       // the contents block beside it, so these say what it is *for*, not what
       // it is called.
@@ -1018,9 +1016,7 @@
         "        <li><strong>Scan file viewer</strong> — two-column txt / csv on a linear or log axis, and <strong>XRR segment stitching</strong> across the overlap between scans</li>\n" +
         "      </ul>\n" +
         "      ",
-      // ----------------------------------------------------------------
       // Dashboard — the toolkit by the job in front of you
-      // ----------------------------------------------------------------
       // The verb a reader arrives with. The tool's own name is read out of
       // the contents block beside it, so these say what it is *for*, not what
       // it is called.
@@ -1355,7 +1351,7 @@
 
     // Every wording a key has, in every language. Search matches against all
     // of them, so a Korean interface still finds "goniometry" and an English
-    // one still finds "고니오메트리".
+    // one still finds the Korean spelling.
     allText: function (key) {
       var out = [];
       for (var lang in translations) {
@@ -1388,7 +1384,6 @@
     applyTranslations: function () {
       var t = translations[this.lang] || translations.ko;
 
-      // 1. Process all elements with data-i18n (textContent)
       var i18nElements = document.querySelectorAll("[data-i18n]");
       for (var i = 0; i < i18nElements.length; i++) {
         var el = i18nElements[i];
@@ -1398,7 +1393,6 @@
         }
       }
 
-      // 2. Process all elements with data-i18n-html (innerHTML)
       var i18nHtmlElements = document.querySelectorAll("[data-i18n-html]");
       for (var h = 0; h < i18nHtmlElements.length; h++) {
         var hel = i18nHtmlElements[h];
@@ -1408,7 +1402,6 @@
         }
       }
 
-      // 3. Process all elements with data-i18n-placeholder (placeholder attribute)
       var i18nPlaceholders = document.querySelectorAll("[data-i18n-placeholder]");
       for (var p = 0; p < i18nPlaceholders.length; p++) {
         var pel = i18nPlaceholders[p];
@@ -1418,7 +1411,6 @@
         }
       }
 
-      // 4. Process all elements with data-i18n-title (title attribute)
       var i18nTitles = document.querySelectorAll("[data-i18n-title]");
       for (var tt = 0; tt < i18nTitles.length; tt++) {
         var tel = i18nTitles[tt];
@@ -1428,10 +1420,9 @@
         }
       }
 
-      // 5. Settings Language Card Dynamic Update & Button Highlights
-      //    No "Current language: X" line: the active button is already the
-      //    answer, and a sentence restating it is one more string to keep in
-      //    step with the control beside it.
+      // No "Current language: X" line: the active button is already the
+      // answer, and a sentence restating it is one more string to keep in
+      // step with the control beside it.
       var langDesc = document.getElementById("settings-lang-desc");
       if (langDesc) langDesc.textContent = t.lang_desc;
 
@@ -1447,7 +1438,6 @@
         }
       }
 
-      // 6. Theme picker: current-theme label, swatch state, sidebar buttons
       var themeList = window.THEMES || ["paper", "parchment", "datasheet", "blueprint", "crt", "tokyo", "console"];
       var activeTheme = document.documentElement.getAttribute("data-theme") || "paper";
 
@@ -1462,11 +1452,10 @@
         }
       }
 
-      // 7-9. Sidebar section titles, tab pills and nav items are translated
-      //      through their own data-i18n attributes (see step 1). The former
-      //      positional mapping broke whenever navigation entries changed.
+      // Sidebar section titles, tab pills and nav items are translated
+      // through their own data-i18n attributes. The former positional
+      // mapping broke whenever navigation entries changed.
 
-      // 10. Header Breadcrumb
       if (window.App && window.App.currentRoute) {
         var breadcrumb = document.getElementById("breadcrumb-current");
         if (breadcrumb) {
@@ -1477,7 +1466,6 @@
         }
       }
 
-      // 11. Refresh copy buttons and tooltips
       if (window.initResultBoxCopy) {
         window.initResultBoxCopy();
       }

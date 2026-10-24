@@ -33,9 +33,6 @@ var ROOT = path.resolve(__dirname, "..");
 var SRC = path.join(ROOT, "index.html");
 var SITE = "https://xray.ooguy.com/";
 
-// ---------------------------------------------------------------------------
-// The translation table, straight out of i18n.js
-// ---------------------------------------------------------------------------
 function loadTable(lang) {
   var sandbox = {
     window: {},
@@ -65,9 +62,6 @@ function loadTable(lang) {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Markup rewriting
-// ---------------------------------------------------------------------------
 function escapeAttr(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -217,9 +211,6 @@ function translate(html, lang, opts) {
   return { html: html, missing: missing, applied: a.applied + b.applied };
 }
 
-// ---------------------------------------------------------------------------
-// CLI: build the Korean page
-// ---------------------------------------------------------------------------
 var OUT_DIR = path.join(ROOT, "ko");
 var OUT = path.join(OUT_DIR, "index.html");
 
