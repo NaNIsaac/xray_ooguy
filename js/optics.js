@@ -17,7 +17,6 @@
     return window.fmt ? window.fmt(value, digits) : String(value);
   }
 
-  // --- 1. Energy - Wavelength - Frequency Converter ---
   function calcEnergyConverter(sourceField) {
     var hc_eV_A = CONSTANTS.hc_eV_A;
     var hc_keV_nm = CONSTANTS.hc_keV_nm;
@@ -62,7 +61,6 @@
     }
   }
 
-  // --- 2. Bragg's Law 3-Way Multi-Directional Calculator ---
   // Row 1: d + 2theta (tth) -> Energy E
   function calcBraggRow1() {
     var hc_eV_A = CONSTANTS.hc_eV_A;
@@ -197,7 +195,6 @@
     calcBraggRow3();
   }
 
-  // --- 3. Grating Diffraction Calculator (mλ = d(sin α + sin β)) ---
   function calcGrating() {
     var linesPerMm = readField("grating-lines");
     var energy_keV = readField("grating-energy");
@@ -240,7 +237,6 @@
     }
   }
 
-  // --- 4. Refractive Index & Transmittance (n = 1 - δ + iβ) ---
   function calcRefractive() {
     var matSelect = document.getElementById("refract-mat");
     var matIdx = parseInt(matSelect.value, 10);
@@ -275,7 +271,6 @@
     }
   }
 
-  // --- 5. Energy Scaling Calculation (Reference E_ref, th_ref -> Target E_target -> 2th, th, Q) ---
   function syncRefAngle(source) {
     var th1Input = document.getElementById("ea-th1");
     var tth1Input = document.getElementById("ea-tth1");
@@ -373,7 +368,6 @@
     }
   }
 
-  // --- 6. Chi-Phi Diffractometer Tilt Correction ---
   function calcChiPhi() {
     var braggDeg = readField("chiphi-theta");
     var deltaChiDeg = readField("chiphi-chi");
@@ -393,7 +387,6 @@
     document.getElementById("chiphi-res-phi").innerHTML = deltaPhiDeg.toFixed(4) + "°";
   }
 
-  // --- 7. Critical Angle & Total External Reflection ---
   // Picking a material fills density and the electron-to-mass ratio from the same
   // list the refraction card uses. The card still computes delta from the free
   // electron density, so the two cards differ where f' matters; the note on the
@@ -439,7 +432,6 @@
     document.getElementById("crit-res-qc").innerHTML = q_c.toFixed(4) + " Å<sup>-1</sup>";
   }
 
-  // --- 8. Q-Space & Reciprocal Space Converter ---
   function calcQSpace(source) {
     var energy_keV = readField("q-energy");
     var inputTheta = document.getElementById("q-theta");
@@ -519,9 +511,7 @@
   window.calcPixelQ = calcPixelQ;
   window.calcKiessig = calcKiessig;
 
-  // ==================================================================
   // Monochromator energy calibration
-  // ==================================================================
   // The inverse of the thermal drift card. Measure a reflection whose d is
   // known and the Bragg condition hands back the energy the monochromator is
   // really delivering, whatever the control system believes. The angle offset
@@ -577,9 +567,7 @@
     }
   }
 
-  // ==================================================================
   // Lattice strain from a peak shift
-  // ==================================================================
   // The same measurement the Bragg card does, framed the way a nanocrystal
   // result is reported. Computed as d/d0 - 1 rather than through the
   // differential -cot(theta) dtheta, which only agrees for small shifts and is
@@ -624,9 +612,7 @@
     }
   }
 
-  // ==================================================================
   // Detector pixel to Q
-  // ==================================================================
   // The angular resolution card gives the step one pixel is worth. This gives
   // where a particular pixel is: the radius from the beam centre, through the
   // scattering angle, into reciprocal space.
@@ -669,9 +655,7 @@
     }
   }
 
-  // ==================================================================
   // Kiessig fringes to film thickness
-  // ==================================================================
   // What anyone does next with a stitched reflectivity curve. Two adjacent
   // minima obey
   //

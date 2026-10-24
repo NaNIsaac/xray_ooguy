@@ -151,9 +151,6 @@
     ];
   }
 
-  // ------------------------------------------------------------------
-  // Which reflections exist, and which are reachable
-  // ------------------------------------------------------------------
   // The metric tensor gives d for any (hkl), but most of those planes do not
   // diffract: the lattice centring extinguishes whole families, and Bragg's law
   // rules out everything with 2d < lambda. Listing what survives both is the

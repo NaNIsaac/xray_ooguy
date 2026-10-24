@@ -48,7 +48,6 @@
     }
   }
 
-  // --- 1. Plain Text Logbook Templates ---
   // Three built-in headers, plus any the user writes. Their own presets live in
   // localStorage next to the rest of the toolkit's state and are edited in
   // place; the built-ins stay read-only and can be used as a starting point.
@@ -286,7 +285,6 @@
     copyToClipboard(expandTokens(activeBody()), "Logbook header copied to clipboard.");
   }
 
-  // --- 2. In-Situ Quick Snippets (WYSIWYG Memo Cards) ---
   var SNIPPET_TEMPLATES = {
     beam_dump: function (ts) {
       return "[" + ts + "] BEAM DUMP: Storage ring beam lost (0 mA). Beamline standby.";

@@ -31,9 +31,6 @@
       .replace(/"/g, "&quot;");
   }
 
-  // ------------------------------------------------------------------
-  // State
-  // ------------------------------------------------------------------
   var traces = [];          // parsed files, in load order
   var nextId = 1;
   var nextColor = 0;        // never reused: removing a trace must not recolour the rest
@@ -48,9 +45,6 @@
 
   var PALETTE = 6;          // dv-c1 .. dv-c6 in style.css
 
-  // ------------------------------------------------------------------
-  // Parsing
-  // ------------------------------------------------------------------
   // Anything a beamline control system might leave at the top of a scan file.
   // ';' is only a comment when it opens the line, because it is also a
   // plausible delimiter.
@@ -230,9 +224,6 @@
     };
   }
 
-  // ------------------------------------------------------------------
-  // Derived series
-  // ------------------------------------------------------------------
   function effScale(tr) {
     return (tr.manualScale !== null && isFinite(tr.manualScale)) ? tr.manualScale : tr.autoScale;
   }
@@ -336,9 +327,6 @@
     return out;
   }
 
-  // ------------------------------------------------------------------
-  // Stitching
-  // ------------------------------------------------------------------
   function interpAt(pts, x) {
     if (!pts.length) return NaN;
     if (x < pts[0][0] || x > pts[pts.length - 1][0]) return NaN;
@@ -429,9 +417,6 @@
     }
   }
 
-  // ------------------------------------------------------------------
-  // Plot
-  // ------------------------------------------------------------------
   var W = 760, H = 430;
   var PAD_L = 74, PAD_R = 18, PAD_T = 18, PAD_B = 50;
 
@@ -574,9 +559,6 @@
     return { svg: svg, empty: false, dropped: dropped, xMin: xMin, xMax: xMax };
   }
 
-  // ------------------------------------------------------------------
-  // Rendering
-  // ------------------------------------------------------------------
   function el(id) { return document.getElementById(id); }
 
   function renderPlot() {
@@ -702,9 +684,6 @@
     renderSummary();
   }
 
-  // ------------------------------------------------------------------
-  // File input
-  // ------------------------------------------------------------------
   // Columns 1 and 2 are the usual answer, but a results table can open with a
   // label column. Default to the first two columns that actually hold numbers.
   function defaultColumns(cols) {
@@ -783,9 +762,6 @@
     }
   }
 
-  // ------------------------------------------------------------------
-  // Export
-  // ------------------------------------------------------------------
   // One curve out, whatever went in: visible traces, scaled, cropped,
   // normalised, merged and sorted — the thing on screen, as numbers.
   function exportText() {
@@ -807,9 +783,6 @@
     return head + lines.join("\n") + "\n";
   }
 
-  // ------------------------------------------------------------------
-  // Handlers (global — called from markup)
-  // ------------------------------------------------------------------
   window.dvFilesPicked = function (input) {
     readFiles(input.files);
     input.value = "";        // same file twice in a row must still fire change
@@ -934,9 +907,6 @@
     }
   };
 
-  // ------------------------------------------------------------------
-  // Init
-  // ------------------------------------------------------------------
   function bindDropZone() {
     var zone = el("dv-drop");
     if (!zone || zone.getAttribute("data-bound")) return;

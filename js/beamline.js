@@ -22,8 +22,6 @@
     return window.fmt ? window.fmt(value, digits) : String(value);
   }
 
-  // --- 2.1 Beam Footprint Calculator & Geometric Diagram ---
-  //
   // Two things the schematic has to get right, and they pull against each other:
   //
   //   * A grazing beam must look grazing. Drawing the true angle is useless
@@ -267,7 +265,6 @@
     }
   }
 
-  // --- 2.2 Beam Flux & Attenuation Calculator ---
   function calcBeamFlux() {
     var ringCurrent_mA = readField("flux-current");
     var baseFlux_per_mA = readField("flux-source-base");
@@ -290,7 +287,6 @@
     }
   }
 
-  // --- 2.3 Energy Resolution (ΔE / E) ---
   function calcEnergyResolution() {
     var crystalType = document.getElementById("res-crystal").value;
     var energy_keV = readField("res-energy");
@@ -333,7 +329,6 @@
     }
   }
 
-  // --- 2.4 Angular Resolution (Δθ = Pixel / Distance) ---
   function calcAngularResolution() {
     var pixelSize_um = readField("ang-pixel");
     var distance_mm = readField("ang-dist");
@@ -354,7 +349,6 @@
     }
   }
 
-  // --- 2.5 CDI / BCDI Oversampling Calculator ---
   function calcCDIOversampling() {
     var energy_keV = readField("cdi-energy");
     var dist_m = readField("cdi-dist");
@@ -391,7 +385,6 @@
     }
   }
 
-  // --- 2.6 Slit Size & Geometric Acceptance ---
   function calcSlitAcceptance() {
     var sourceSize_um = readField("slit-source");
     var distSourceToSlit_m = readField("slit-dist");
@@ -415,7 +408,6 @@
     }
   }
 
-  // --- 2.7 Thermal Expansion Correction ---
   function calcThermalShift() {
     var matSelect = document.getElementById("therm-mat").value;
     var deltaTemp_C = readField("therm-temp");
@@ -470,9 +462,6 @@
   window.calcCoherenceLength = calcCoherenceLength;
   window.calcRealSpaceResolution = calcRealSpaceResolution;
 
-  // ==================================================================
-  // Shared: linear attenuation coefficient
-  // ==================================================================
   // Same power-law extrapolation from the tabulated 10 keV beta that the
   // transmittance card uses, so the dose and absorber cards cannot disagree
   // with it. The absorption-edge caveat is the same one too, and each card
@@ -530,9 +519,6 @@
     return m + " min " + sec + " s";
   }
 
-  // ==================================================================
-  // Scan time & shift budget
-  // ==================================================================
   // Points times dwell plus per-point overhead. The overhead is the term people
   // leave out and then wonder where the shift went: a motor that settles for
   // 0.3 s costs two extra minutes on a 401-point scan, and forty on a map.
@@ -603,9 +589,6 @@
     }
   }
 
-  // ==================================================================
-  // Absorbed dose & exposure limit
-  // ==================================================================
   // D = F t E (1 - T) / (rho A d). The numerator is the energy stopped in the
   // illuminated volume, the denominator its mass.
   //
@@ -660,9 +643,7 @@
     }
   }
 
-  // ==================================================================
   // Absorber stack
-  // ==================================================================
   // Four foils in series, and the inverse: the thickness of the first material
   // that would reach the attenuation asked for. A foil left at zero thickness
   // contributes a transmission of 1 and is simply not in the stack.
@@ -719,9 +700,6 @@
     }
   }
 
-  // ==================================================================
-  // Coherence lengths at the sample
-  // ==================================================================
   // The oversampling card asks whether the detector samples the fringes finely
   // enough. It cannot ask whether there are fringes to sample. A geometry can
   // pass sigma >= 2 and still be un-invertible, because the illumination was
@@ -815,9 +793,6 @@
     }
   }
 
-  // ==================================================================
-  // Reachable real-space resolution
-  // ==================================================================
   // Delta r = lambda D / (N p): the detector extent used sets the highest
   // spatial frequency recorded, and that sets the smallest feature a
   // reconstruction can carry. This is the number a BCDI result is quoted at,
