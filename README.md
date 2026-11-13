@@ -98,6 +98,10 @@ Open a finished scan file on the spot. Files never leave the browser (only `File
 Beamtime logbook header presets and one-click event snippets stamped with the current time,
 for pasting into an external notebook (ELN, Google Docs or paper).
 
+## History
+
+xray.ooguy grew out of `calculate` ([NaNIsaac/calculate](https://github.com/NaNIsaac/calculate), private, January 2026), an earlier scratch repository of X-ray calculations: a Takagi-Taupin sketch for a crystal with a traveling acoustic wave and a notebook of sideband and satellite-angle estimates. No code was carried over; `calculate` is Python and this site is ES5 JavaScript, started in August 2026. The Takagi-Taupin part of `calculate` is related to [TraTT](https://github.com/NaNIsaac/TraTT), not to this site.
+
 ## Files
 
 ```text

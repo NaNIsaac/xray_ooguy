@@ -98,6 +98,10 @@ Offline X-ray calculators and beamtime logging tools for synchrotron beamline us
 빔타임 로그북 헤더 프리셋과, 실시간 타임스탬프가 붙는 1클릭 이벤트 스니펫.
 외부 노트(ELN / Google Docs / 종이 노트)에 붙여넣는 용도.
 
+## 이력
+
+xray.ooguy는 그보다 앞선 X선 계산 저장소 `calculate`([NaNIsaac/calculate](https://github.com/NaNIsaac/calculate), 비공개, 2026년 1월)에서 시작되었습니다. `calculate`에는 진행하는 음향파가 있는 결정의 Takagi-Taupin 스케치와, 측파대와 위성 피크 각도를 어림하는 노트북이 있습니다. 코드는 옮겨지지 않았습니다. `calculate`는 Python이고 이 사이트는 2026년 8월에 시작한 ES5 JavaScript입니다. `calculate`의 Takagi-Taupin 부분은 이 사이트가 아니라 [TraTT](https://github.com/NaNIsaac/TraTT)와 관련됩니다.
+
 ## 파일 구조
 
 ```text
