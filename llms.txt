@@ -54,7 +54,7 @@ Made by Isaac Yong (용이삭, GitHub NaNIsaac), M.S. in physics, Sogang Univers
 - [QoraPhase](https://github.com/NaNIsaac/QoraPhase): JAX-native, composable phase-retrieval framework for coherent diffraction imaging (PyPI: qoraphase)
 - [QoraDFXM](https://github.com/NaNIsaac/QoraDFXM): dark-field X-ray microscopy image analysis; Python engine, CLI and PySide6 app
 - [CXD](https://github.com/NaNIsaac/CXD): coherent X-ray diffraction analysis: SPEC parsing, Timepix frames, q-space regridding
-- [ReflectoLearn](https://github.com/NaNIsaac/ReflectoLearn): XRR inverse modeling with a differentiable Abeles simulator and a 1D CNN
+- [ReflectoLearn](https://github.com/NaNIsaac-Research/ReflectoLearn): XRR inverse modeling with a differentiable Abeles simulator and a 1D CNN
 
 ## Optional
 
